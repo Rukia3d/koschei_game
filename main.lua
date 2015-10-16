@@ -19,25 +19,32 @@ local midlayer3 = display.newGroup()
 midlayer3.anchorX = 0 midlayer3.anchorY = 0 
 local textLayers = display.newGroup()
 
--- Set up characters
+-----------------------------------------------------------------------------------------
+--
+-- CHARACTERS
+--
+-----------------------------------------------------------------------------------------
+-- Small characters for stage, initial
 local AlenaS = display.newImage( characters, "images/alena_f_small.png") AlenaS.x = 200 AlenaS.y = -400
 local IvanS = display.newImage( characters, "images/ivan_s_small.png") IvanS.x = 130 IvanS.y = -400
 local KosheiS = display.newImage( characters, "images/kosh_chained.png") KosheiS.x = 400 KosheiS.y = 400 KosheiS.isVisible = false;
-local MotherS = display.newImage( characters, "images/mother_s_small.png") MotherS.x = 600 MotherS.y = 400  MotherS.isVisible = false;
+local MotherS = display.newImage( characters, "images/mother_s_small.png") MotherS.x = 540 MotherS.y = -400 
 
-
+-- Small characters  changed state
 local AlenaCry = display.newImage( characters, "images/alena_cry_small.png") AlenaCry.x = 550 AlenaCry.y = 430  AlenaCry.isVisible = false;
 local MotherWar = display.newImage( characters, "images/mother_f_small.png") MotherWar.x = 300 MotherWar.y = 350  MotherWar.isVisible = false;
 
+-- Background for dialogue stage
 local dialBack = display.newImage(characters, "images/dialBack.png", true )
 dialBack.anchorX = 0 dialBack.anchorY = 0 
-dialBack.isVisible = false;
+dialBack.y=-800
 
-local Alena = display.newImage( characters, "images/alena_f_dialogue.png") Alena.x = 400 Alena.y = 400 Alena.isVisible = false;
-local Ivan = display.newImage( characters, "images/ivan_s_dialogue.png") Ivan.x = 200 Ivan.y = 430 Ivan.isVisible = false;
-local Mother = display.newImage( characters, "images/mother_s_dialogue.png", false) Mother.x = 400 Mother.y = 400 Mother.isVisible = false;
-local MotherW = display.newImage( characters, "images/mother_f_dialogue.png", false) MotherW.x = 400 MotherW.y = 400 MotherW.isVisible = false;
-local Koschei = display.newImage( characters, "images/koschei_f_big.png", false) Koschei.x = 300 Koschei.y = 400 Koschei.isVisible = false;
+-- Big characters for dialogue stage
+local Alena = display.newImage( characters, "images/alena_f_dialogue.png") Alena.x = 400 Alena.y = 800 
+local Ivan = display.newImage( characters, "images/ivan_s_dialogue.png") Ivan.x = 200 Ivan.y = 800
+local Mother = display.newImage( characters, "images/mother_s_dialogue.png", false) Mother.x = 400 Mother.y = 800 
+local MotherW = display.newImage( characters, "images/mother_f_dialogue.png", false) MotherW.x = 400 MotherW.y = 800
+local Koschei = display.newImage( characters, "images/koschei_f_big.png", false) Koschei.x = 300 Koschei.y = 800
 
 -- Set main screen
 local background = display.newImage( "images/startScreen.png") background.x = display.contentWidth / 2 background.y = display.contentHeight / 2
@@ -116,7 +123,6 @@ scenes[1] = {
     text = "In a small house on the edge of the dark forest, there lived a brother and sister, Ivan and Alena.",
     follows = 2,
     animations = function()
-            print('scene1 animation called')
             transition.to(landscape3, {x=0, time=1000, delay=1000})
             transition.to(landscape2, {x=-15, time=1000, delay=1000})
             transition.to(landscape1, {y=630, time=500, delay=2000})
@@ -135,6 +141,7 @@ scenes[1] = {
         houseOutside.y = 0
         IvanS.y=290
         AlenaS.y=270
+        foreground.y = 0
     end
 }
 scenes[2] = {
@@ -142,28 +149,23 @@ scenes[2] = {
     text = 'Their mother goes into the city every morning, leaving before the golden eye of the sun peeps over the horizon, returning only as the dying light turns the trees of the forest orange and red, as if kindling a fire deep in their depths.',
     follows = 3,
     animations = function()
-            print('scene2 animation called')
-            sun.isVisible = true
             transition.to(sun, {y=-100, time=1000})
             transition.to(background, {y=-250, time=1000})
         end,
     animationComplete = function()
-
+        background.y = -250
+        sun.y = -100
     end
 }
 scenes[3] = {
     sName = 3,
-    setStage = 'set3',
     text = "Alena, as the oldest, has to watch over her little brother, and every morning before going to the city, her mother gives her a set of three instructions to follow throughout the day.",
     follows = 4,
-    backgr = 'background3.png',
     animations = function()
-        print('scene3 animation called')
-        --showDialogue(Mother)
-        MotherS.isVisible = true
+        transition.to(MotherS, {y=270, time=1000})
     end,
     animationComplete = function()
-        MotherS.isVisible = true
+        MotherS.y = 270
     end
 }
 scenes[4] = {
@@ -174,11 +176,9 @@ scenes[4] = {
         [2] = {'Remind me, please, just in case.', 7}
     },
     animations = function()
-        print('scene4 animation called')
         showDialogue(Mother)
     end,
     animationComplete = function()
-        hideDialogue()
     end 
 }
 scenes[5] = {
@@ -653,16 +653,17 @@ end
 
 -- Display charDialogur
 function showDialogue(name)
-    dialBack.isVisible = true
-    name.isVisible = true
+    transition.to(dialBack, {y=0, time=500})
+    --transition.to(name, {y=400, time=500})
+    if name==Mother or name==MotherW then transition.to(name, {y=400, time=500}) end
+    if name==Alena or name==AlenaCry then transition.to(name, {y=500, time=500}) end
+
 end
 
 function hideDialogue()
-    dialBack.isVisible = false
-    Alena.isVisible = false
-    Ivan.isVisible = false
-    Mother.isVisible = false MotherW.isVisible = false
-    Koschei.isVisible = false
+    local characters = {'Mother', 'Alena', 'Ivan'}
+    for i=1, characters do characters[i].y = -700 end
+    dialBack.y = -800
 end
 
 
@@ -728,10 +729,6 @@ local function setStageObjects(stage)
             landscape1.rotation=-90
 
             shadowLayer = display.newImage(midlayer2, "images/act1_shadowLayer.png", true) setAnchor(shadowLayer) shadowLayer.alpha = 0
-        end,
-        set3 = function()
-            clearStage()
-            print('setting scene 3')
         end,
         set9 = function()
             clearStage()
