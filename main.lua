@@ -55,11 +55,11 @@ local settings
 
 -- Variables for selections
 local select1Container = display.newImage(textLayers, "images/selection_back.png")
-select1Container.x = 700 select1Container.y = 130
+select1Container.x = 850 select1Container.y = 130
 select1Container.isVisible = false;
 
 local select2Container = display.newImage(textLayers, "images/selection_back.png")
-select2Container.x = 700 select2Container.y = 200
+select2Container.x = 850 select2Container.y = 200
 select2Container.isVisible = false;
 local select1Text
 local select2Text
@@ -179,6 +179,7 @@ scenes[4] = {
         showDialogue(Mother)
     end,
     animationComplete = function()
+        hideDialogue()
     end 
 }
 scenes[5] = {
@@ -196,12 +197,10 @@ scenes[6] = {
     text = 'Mom: Promise me you\'ll follow the rules.',
     follows = 8,
     animations = function()
-        print('scene6 animation called')
         showDialogue(Mother)
     end,
     animationComplete = function()
         bless = true
-        hideDialogue()
     end
 }
 scenes[7] = {
@@ -210,11 +209,9 @@ scenes[7] = {
     follows = 8,
     clearSelection = true,
     animations = function()
-        print('scene7 animation called')
         showDialogue(Mother)
     end,
     animationComplete = function()
-        hideDialogue()
     end
 }
 scenes[8] = {
@@ -222,23 +219,20 @@ scenes[8] = {
     text = 'Alena: I\'ll follow your rules, I promise.',
     follows = 9,
     animations = function()
-        print('scene8 animation called')
+        hideDialogue()
         showDialogue(Alena)
     end,
     animationComplete = function()
-        hideDialogue()
     end
     
 }
 scenes[9] = {
     sName = 9,
-    setStage = 'set9',
+    --setStage = 'set9',
     text = 'After hearing that reassurance, her mother leaves, and Alena is alone with her brother. She does all her chores - cleaning the dishes, sweeping the floors, and dusting all the knick-knacks. Then she sits down near the window overlooking the forest, while her brother plays on the floor. ',
-    backgr = 'background2.png',
-    foregr = 'foreground2.png',
     follows = 10,
     animations = function()
-        print('scene9 animation called')
+        hideDialogue()
         MotherS.isVisible = false
         AlenaS.isVisible = true
         IvanS.isVisible = true
@@ -661,9 +655,10 @@ function showDialogue(name)
 end
 
 function hideDialogue()
-    local characters = {'Mother', 'Alena', 'Ivan'}
-    for i=1, characters do characters[i].y = -700 end
-    dialBack.y = -800
+    local characters = {Mother, Alena, Ivan}
+    for i=1, table.getn(characters) do characters[i].y = -700 end
+    transition.to(dialBack, {y = -800, time=500})
+    --dialBack.y = -800
 end
 
 
@@ -815,10 +810,14 @@ function sceneTextTouch(event)
     if event.phase == "began" and event.target.follows then
         print(event.target.index)
         print(scenes[event.target.index])
+        --event.target.y = event.target.y+100
+
         scenes[event.target.index].animationComplete()
         transition.cancel()
+        --event.target.y = event.target.y-100
         loadScene(scenes[event.target.follows])
     end
+
     return true
 end
 
@@ -910,12 +909,12 @@ local myListener = function( event )
     -- Runtime:removeEventListener("touch", myListener)
 
     textContainer = display.newImage(textLayers, "images/text_back.png") setAnchor(textContainer)
-    textContainer.x = 10 textContainer.y = 570 
+    textContainer.x = 10 textContainer.y = 560 
     textContainer.isVisible = false;
 
-    select1Text = display.newText(textLayers, '', 730, 110, 250, display.contentHeight * 0.5, 'PTSans-Regular', 18) 
-    select2Text = display.newText(textLayers, '', 730, 190, 0, display.contentHeight * 0.5, 'PTSans-Regular', 18)
-    sceneText = display.newText(textLayers, '', 50, 610, 930, display.contentHeight * 0.5, 'PTSans-Regular', 18)
+    select1Text = display.newText(textLayers, '', 755, 110, 250, display.contentHeight * 0.5, 'PTSans-Regular', 18) 
+    select2Text = display.newText(textLayers, '', 755, 175, 0, display.contentHeight * 0.5, 'PTSans-Regular', 18)
+    sceneText = display.newText(textLayers, '', 50, 610, 900, display.contentHeight * 0.5, 'PTSans-Regular', 18)
 
     select1Text:addEventListener( "touch", sceneTextTouch)
     select2Text:addEventListener( "touch", sceneTextTouch)
