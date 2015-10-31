@@ -25,13 +25,12 @@ local textLayers = display.newGroup()
 --
 -----------------------------------------------------------------------------------------
 -- Small characters for stage, initial
-local AlenaS = display.newImage( characters, "images/alena_f_small.png") AlenaS.x = 200 AlenaS.y = -400
+local AlenaS = display.newImage( characters, "images/alena_f_small.png") AlenaS.x = 200 AlenaS.y = -400 
 local IvanS = display.newImage( characters, "images/ivan_s_small.png") IvanS.x = 130 IvanS.y = -400
-local KosheiS = display.newImage( characters, "images/kosh_chained.png") KosheiS.x = 400 KosheiS.y = 400 KosheiS.isVisible = false;
 local MotherS = display.newImage( characters, "images/mother_s_small.png") MotherS.x = 540 MotherS.y = -400 
 
--- Small characters  changed state
-local AlenaCry = display.newImage( characters, "images/alena_cry_small.png") AlenaCry.x = 550 AlenaCry.y = 430  AlenaCry.isVisible = false;
+-- Small characters  changed images
+local AlenaCry = display.newImage( characters, "images/alena_cry_small.png") AlenaCry.x = 500 AlenaCry.y =-400 
 local MotherWar = display.newImage( characters, "images/mother_f_small.png") MotherWar.x = 300 MotherWar.y = 350  MotherWar.isVisible = false;
 
 -- Background for dialogue stage
@@ -41,10 +40,11 @@ dialBack.y=-800
 
 -- Big characters for dialogue stage
 local Alena = display.newImage( characters, "images/alena_f_dialogue.png") Alena.x = 400 Alena.y = 800 
-local Ivan = display.newImage( characters, "images/ivan_s_dialogue.png") Ivan.x = 200 Ivan.y = 800
+local Ivan = display.newImage( characters, "images/ivan_s_dialogue.png") Ivan.x = 300 Ivan.y = 800
 local Mother = display.newImage( characters, "images/mother_s_dialogue.png", false) Mother.x = 400 Mother.y = 800 
-local MotherW = display.newImage( characters, "images/mother_f_dialogue.png", false) MotherW.x = 400 MotherW.y = 800
+local MotherW = display.newImage( characters, "images/mother_f_dialogue.png", false) MotherW.x = 400 MotherW.y = 900
 local Koschei = display.newImage( characters, "images/koschei_f_big.png", false) Koschei.x = 300 Koschei.y = 800
+local KoscheiPlea = display.newImage( characters, "images/kosh_plea_dialogue.png", false) KoscheiPlea.x = 900 KoscheiPlea.y = 800
 
 -- Set main screen
 local background = display.newImage( "images/startScreen.png") background.x = display.contentWidth / 2 background.y = display.contentHeight / 2
@@ -75,28 +75,44 @@ local sceneText
 --
 -----------------------------------------------------------------------------------------
 local function animateBucket()
-    bucketEmpty.isVisible = false 
-    bucketEmpty.isVisible = true
-    bucketEmpty.alpha = 1
-    bucketEmpty.x = 250 bucketEmpty.y = 400
-    bucketWater.alpha = 0
-    bucketEmpty.isVisible = true
-    transition.to(bucketEmpty, {time=1000, rotation=90, x=750, y=300})
-    transition.to(bucketEmpty, {time=0, delay=1000, alpha=0})
+    transition.to(bucketTread, {y=-100, time=700, delay=500})
+    transition.to(bucket2, {rotation=-80, y=415, time=700, delay=500})
+    transition.to(bucketTread, {y=-300, x=580, time=700, delay=1200})
+    transition.to(bucket2, {rotation=-80, y=215, x=675, time=700, delay=1200})
+    transition.to(bucketTread, {y=-100, x=680, time=1000, delay=2200})
+    transition.to(bucket2, {rotation=-80, y=415, x=775, time=1000, delay=2200})
 
-    bucketWater.x = 700 bucketWater.y = 300
-    transition.to(bucketWater, {time=0, rotation=90})
-    transition.to(bucketWater, {alpha=1, time=0, delay=1000})
-    transition.to(bucketWater, {alpha=1, time=1000, delay=1100, rotation=0, x=850, y=500})
-    transition.fadeOut(bucketWater, {delay=2100, time=500, x=850, y=500})
 end
 
-function openingAnimation()
+local function setStageHome()
+    transition.to(bed, {y=0, time=1000, delay=500})
+    transition.to(tableCloth, {y=5, time=1000, delay=1000})
+    transition.to(shadowLayer2, {alpha=1, time=1000, delay=2500})
+end
+
+local function setBasementStage()
+    transition.to(basementStage, {alpha=1, time=3000, delay=1000})
+    transition.to(icyCurtain, {alpha=1, time=3000, delay=1000})
+    transition.to(lights3, {y=0, time=1000, delay=2000})
+    transition.to(bucket1, {y=-50, time=1000, delay=2000})
+    transition.to(bucket2, {y=470, time=1000, delay=2000})
+    transition.to(bucketTread, {y=-50, time=1000, delay=2000})
+    transition.to(waterFount, {y=0, time=1000, delay=3000})
+    transition.to(koshPrisoner, {y=0, time=1000, delay=3500})
+end    
+
+function openingAnimation(backg, foregr)
+    clearStage()
+    hideDialogue()
+    removeCharacters()
     background:removeSelf()
     background = nil
-    background = display.newImage( "images/background1.png", true ) setAnchor(background) 
+    foreground:removeSelf()
+    foreground = nil
+    background = display.newImage( "images/"..backg, true ) setAnchor(background) 
     background.isVisible = true
-    foreground = display.newImage( "images/foreground1.png", true ) setAnchor(foreground)
+
+    foreground = display.newImage( "images/"..foregr, true ) setAnchor(foreground)
     foreground.y = -700
     transition.to(foreground, {y=0, time=1000})
 end
@@ -118,8 +134,11 @@ local choices = {
 local scenes = {}; 
 scenes[1] = {
     sName = 1,
+    openingAnimation = {
+        [1] = 'background1.png', 
+        [2] = 'foreground1.png'
+        },
     setStage = 'set1',
-    --sound: sounds['forest'],
     text = "In a small house on the edge of the dark forest, there lived a brother and sister, Ivan and Alena.",
     follows = 2,
     animations = function()
@@ -127,7 +146,7 @@ scenes[1] = {
             transition.to(landscape2, {x=-15, time=1000, delay=1000})
             transition.to(landscape1, {y=630, time=500, delay=2000})
             transition.to(landscape1, {rotation=0, y=630, time=1000, delay=2500})
-            transition.to(shadowLayer, {alpha=1, time=1000, delay=3500})
+            transition.to(shadowLayer1, {alpha=1, time=1000, delay=3500})
             transition.to(houseOutside, {y=0, time=1000, delay=3700})
             transition.to(AlenaS, {y=270, time=1000, delay=4500})
             transition.to(IvanS, {y=290, time=1000, delay=4500})
@@ -137,7 +156,7 @@ scenes[1] = {
         landscape3.x= 0
         landscape2.x= -15
         landscape1.rotation= 0 landscape1.y=630
-        shadowLayer.alpha=1
+        shadowLayer1.alpha=1
         houseOutside.y = 0
         IvanS.y=290
         AlenaS.y=270
@@ -223,45 +242,44 @@ scenes[8] = {
         showDialogue(Alena)
     end,
     animationComplete = function()
+        hideDialogue()
     end
     
 }
 scenes[9] = {
     sName = 9,
-    --setStage = 'set9',
-    text = 'After hearing that reassurance, her mother leaves, and Alena is alone with her brother. She does all her chores - cleaning the dishes, sweeping the floors, and dusting all the knick-knacks. Then she sits down near the window overlooking the forest, while her brother plays on the floor. ',
+    setStage = 'set9',
+    openingAnimation = {
+        [1] = 'background2.png', 
+        [2] = 'foreground2.png'
+    },
+    text = 'After hearing that reassurance, her mother leaves, and Alena is alone with her brother. She is soon bored, but being an obedient daughter, she refrains from running around the house and dutifully keeps an eye on her brother. ',
     follows = 10,
     animations = function()
-        hideDialogue()
-        MotherS.isVisible = false
-        AlenaS.isVisible = true
-        IvanS.isVisible = true
-        AlenaS.x = 490
-        IvanS.x = 360
-        transition.fadeOut(dishes, {time = 1000, delay=1000})
-        transition.to(dishes, {x=145, y=208, delay=2000})
-        transition.fadeIn(dishes, {time=1000, x=145, y=208, delay=3000})
-        transition.to(broom, {time=1000, x=480, delay=4000})
-        transition.to(broom, {time=1000, x=180, delay=5000})      
+        setStageHome()
     end,
     animationComplete = function()
-        dishes.x = 145 dishes.y = 208
-        broom.x = 180
-
-        hideDialogue()
-        AlenaS.x = 490
-        IvanS.x = 360
-
-        MotherS.isVisible = false
-        AlenaS.isVisible = true
-        IvanS.isVisible = true
+        bed.y=0
+        tableCloth.y=5
+        shadowLayer2.alpha=1
+        foreground.y = 0
     end
 }
 scenes[10] = {
     sName =  10,
-    text = 'There\'s nothing going on outside. Alena is soon bored, but being an obedient daughter, she refrains from running around the house and dutifully keeps an eye on her brother.',
+    text = 'Alena does all her chores - cleaning the dishes, sweeping the floors, and dusting all the knick-knacks. Then she sits down near the window overlooking the forest, while her brother plays on the floor. There\'s nothing going on outside.',
     follows = 11,
+    animations = function() 
+        --shadowLayer2:toFront()
+        transition.to(broom, {y=-30, time=700, delay=300})
+        transition.to(dishes, {y=-25, time=500, delay=1000})
+        transition.to(dishes, {x=150, y=-180, time=500, delay=2000})
+        transition.to(broom, {x=500, time=500, delay=2500})
+        transition.to(broom, {x=200, time=500, delay=3000})
+    end,
     animationComplete = function()
+        broom.y=-30 broom.x=200
+        dishes.y=-180 dishes.x=150
     end
 }
 scenes[11] = {
@@ -269,10 +287,16 @@ scenes[11] = {
     text = 'Once the sun climbs higher in the sky, the sweltering heat beats upon the house, which grows further and further from the shortening reach of the forest shade. Ivan grows tired of playing with his toys under his sister\'s watchful gaze.',
     follows = 12,
     animations = function()
-        transition.fadeIn(sunWindow, {time = 2000})
+        transition.to(shadowLayer2, {alpha=0.5, time=1000, delay=100})
+        AlenaS.x = 450 
+        IvanS.x = 350
+        transition.to(AlenaS, {y=270, time=1000, delay=1000})
+        transition.to(IvanS, {y=290, time=1000, delay=1500}) 
     end,
     animationComplete = function()
-        sunWindow.alpha = 1
+        AlenaS.x = 450  AlenaS.y = 270 
+        IvanS.x = 350 IvanS.y = 290
+        shadowLayer2.alpha=0.5
     end
 }
 scenes[12] = {
@@ -280,15 +304,17 @@ scenes[12] = {
     text = 'Ivan: Alena, can I go and play near the basement door? It is cooler there than in the rest of the house.',
     selection = {
         [1] = {'Sure, but promise me you won\'t open the basement door.', 13},
-        [2] = {'No, stay here in the greatroom.', 16}
+        [2] = {'No, stay here in the greatroom.', 15}
     },
     animations = function()
-        Ivan.x = 400
         showDialogue(Ivan)
+        broom.isVisible = false
+        dishes.isVisible = false
     end,
     animationComplete = function()
         hideDialogue()
-        Ivan.x = 400
+        broom.isVisible = false
+        dishes.isVisible = false
     end
 }
 scenes[13] = {
@@ -296,61 +322,92 @@ scenes[13] = {
     text = 'Ivan runs happily to the door and plays with his toys for a while. He likes it here. Despite the sunny day outside, there is frost in the air that comes creeping out from under the basement\'s thick wooden door.',
     follows = 14,
     clearSelection = true,
-    animations = function() IvanS.isVisible = false end,
-    animationComplete = function() IvanS.isVisible = false choices.basement = true end
+    animations = function() 
+        hideDialogue()
+        IvanS.xScale = -1 
+        transition.to(IvanS, {x=-50, time=1000, delay=500}) 
+    end,
+    animationComplete = function() 
+        choices.basement = true 
+        IvanS.xScale = 1 IvanS.x = -50
+    end
 }
 scenes[14] = {
     sName = 14,
     text = 'When it is time for lunch, Alena calls to her brother, but he doesn\'t answer. “He is probably too busy with his toys!” thinks Alena. Then, she goes looking for him.',
     follows = 18,
     clearSelection = true,
-    animations = function() transition.fadeIn(cookOven, {time=1000}) end,
-    animationComplete = function() cookOven.alpha = 1 end
+    animations = function() 
+        transition.to(firePot, {y=0, time=1000, delay=500}) 
+    end,
+    animationComplete = function()
+        firePot.y=0 
+    end
 }
 scenes[15] = {
     sName = 15,
     text = 'Ivan is not happy but stays in chamber dutifully obeying his big sister.',
     follows = 16,
     clearSelection = true,
-    animations = function() end,
-    animationComplete = function()end
+    animations = function()
+        hideDialogue()
+        IvanS.xScale = -1 
+    end,
+    animationComplete = function()
+        choices.basement = false 
+        IvanS.xScale = 1 IvanS.x = -50
+    end
 }
 scenes[16] = {
     sName = 16,
     text = 'Around noon, Alena cooks lunch, and when she finishes, she calls for her brother, but gets no reply. “Foolish boy!” she thinks.',
     follows = 17,
     clearSelection = true,
-    animations = function() IvanS.isVisible = false transition.fadeIn(cookOven, {time=1000})  end,
-    animationComplete = function() IvanS.isVisible = false cookOven.alpha = 1 end
+    animations = function()
+        hideDialogue()
+        transition.to(firePot, {y=0, time=1000, delay=500})  
+    end,
+    animationComplete = function()
+        firePot.y=0 
+    end
 }
 scenes[17] = {
     sName = 17,
     text = '“He probably went to play near the basement door anyway. The midday heat doesn\'t reach there, so it stays nice and cool.” So she heads for the basement door.',
     follows = 18,
     clearSelection = true,
-    animations = function() end,
-    animationComplete = function()end
+    animations = function()
+    end,
+    animationComplete = function()
+    end
 }
 scenes[18] = {
     sName = 18,
     setStage = 'set18',
-    foregr = 'foreground3.png',
-    backgr ='background4.png',
+    openingAnimation = {
+        [1] = 'background3.png', 
+        [2] = 'foreground3.png'
+    },
     text = 'Suddenly, Alena sees that the heavy wooden door to the basement is ajar, and she hears a faint whispering “Water, please, give me some water..”',
     follows = 19,
     clearSelection = true,
     animations = function()
-        AlenaS.isVisible = true 
-        AlenaS.x = 195 AlenaS.y = 210
+        setBasementStage()
     end,
     animationComplete = function()
-        AlenaS.isVisible = true 
-        AlenaS.x = 195 AlenaS.y = 210
+        foreground.y = 0
+        basementStage.alpha=1
+        icyCurtain.alpha=1
+        lights3.y=0
+        waterFount.y=0
+        koshPrisoner.y=0
+        bucket1.y=-50
+        bucket2.y=470
+        bucketTread.y=-50
     end
 }
 scenes[19] = {
-    sName = 19,
-    backgr ='background5.png',
+    sName = 19, 
     text = 'Ivan is within, standing in front of an old man, all skin and bones, and bound to the wall with twelve iron chains. “Water, please, give me some water..” pleads the old man.',
     selection = {
         [1] = {'Who are you? What are you doing here?', 20},
@@ -358,16 +415,15 @@ scenes[19] = {
     },
     clearSelection = true,
     animations = function() 
-        IvanS.isVisible = true 
-        IvanS.x = 550 IvanS.y = 400
-        koshPrisoner.isVisible = true
-        bucketsFloor.isVisible = true 
+        IvanS.x=560
+        AlenaS.x=240
+        transition.to(IvanS, {y=270, time=1000})
+        transition.to(AlenaS, {y=60, time=1000})
     end,
     animationComplete = function()
-        IvanS.isVisible = true 
-        IvanS.x = 550 IvanS.y = 400
-        koshPrisoner.isVisible = true
-        bucketsFloor.isVisible = true 
+        IvanS.x=560
+        IvanS.y=270
+        AlenaS.y=60
     end
 }
 scenes[20] = {
@@ -378,8 +434,14 @@ scenes[20] = {
         [1] = {'Give the old man some water', 22},
         [2] = {'Don\'t give him anything', 26}
     },
-    animations = function() end,
-    animationComplete = function()end
+    animations = function()
+        icyCurtain.isVisible = false 
+        showDialogue(KoscheiPlea)
+    end,
+    animationComplete = function()
+        hideDialogue()
+        icyCurtain.isVisible = true
+    end
 }
 scenes[21] = {
     sName = 21,
@@ -389,8 +451,14 @@ scenes[21] = {
         [1] = {'Give the old man some water', 22},
         [2] = {'Don\'t give him anything', 26}
     },
-    animations = function() end,
-    animationComplete = function() end
+    animations = function() 
+        icyCurtain.isVisible = false 
+        showDialogue(KoscheiPlea)
+    end,
+    animationComplete = function() 
+        hideDialogue()
+        icyCurtain.isVisible = true
+    end
 }
 scenes[22] = {
     sName = 22,
@@ -403,16 +471,17 @@ scenes[22] = {
         [1] = {'Give the old man more water', 23},
         [2] = {'Don\'t give him anything', 26}
     },
-    animations = function() 
-        bucketsFloor.isVisible = false
-        bucketFloor.isVisible = true
+    animations = function()
+        hideDialogue() 
         animateBucket()
     end,
-    animationComplete = function() 
-        bucketsFloor.isVisible = false
-        bucketFloor.isVisible = true
-        bucketWater.alpha = 0
-        bucketEmpty.alpha = 0
+    animationComplete = function()
+        hideDialogue() 
+        bucket2.y=470
+        bucketTread.y=-50
+        bucket2.x=275
+        bucketTread.x=180
+        bucket2.rotation=0
     end
 } 
 scenes[23] = {
@@ -427,15 +496,16 @@ scenes[23] = {
         [2] = {'Don\'t give him anything', 26}
     },
     animations = function()
-        bucketsFloor.isVisible = false
-        bucketFloor.isVisible = true
+        hideDialogue()
         animateBucket() 
     end,
-    animationComplete = function() 
-        bucketsFloor.isVisible = false
-        bucketFloor.isVisible = true
-        bucketWater.alpha = 0
-        bucketEmpty.alpha = 0
+    animationComplete = function()
+    hideDialogue()
+        bucket2.y=470
+        bucketTread.y=-50
+        bucket2.x=275
+        bucketTread.x=180
+        bucket2.rotation=0 
     end
 }
 scenes[24] = {
@@ -444,14 +514,13 @@ scenes[24] = {
     follows = 25,
     clearSelection = true,
     animations = function()
-        showDialogue(Koschei) 
+        icyCurtain.isVisible = false 
+        showDialogue(Koschei)
     end,
     animationComplete = function()
-        bucketsFloor.isVisible = false
-        bucketFloor.isVisible = true
-        bucketWater.alpha = 0
-        bucketEmpty.alpha = 0
         hideDialogue()
+        bucket2.isVisible=false
+        bucketTread.isVisible=false
     end
 }
 scenes[25] = {
@@ -460,17 +529,19 @@ scenes[25] = {
     follows = 31,
     clearSelection = true,
     animations = function() 
-        transition.fadeIn(iceEffect1, {time=500})
-        transition.fadeIn(iceEffect2, {time=500, delay=500})
-        transition.fadeIn(iceEffect3, {time=500, delay=1000})
-        transition.fadeOut(IvanS, {time=500, delay=1500})
-        koshPrisoner.isVisible = false
-        bucketSide.alpha = 1
+        icyCurtain.isVisible = true
+
+        transition.to(icyCurtain, {y=-1000, time=1500})
+        transition.to(chains, {alpha=1, time=1000, delay=500})
+        transition.to(koshPrisoner, {y = -600, time=500, delay=500})
+        transition.to(IvanS, {y = -600, time=500, delay=500})
     end,
     animationComplete = function()
-        IvanS.isVisible = false
-        koshPrisoner.isVisible = false
-        bucketSide.alpha = 1
+        icyCurtain.y=-1000
+        chains.alpha=1
+        koshPrisoner.y=-600
+        IvanS.y=-600
+        hideDialogue()
     end
 }
 scenes[26] = {
@@ -488,29 +559,36 @@ scenes[26] = {
         elseif choices.bucket == 2 then scenes[26].selection[1][2] = 24
         end
     end,
-    animations = function() end,
-    animationComplete = function()end
+    animations = function()
+        icyCurtain.isVisible = false 
+        showDialogue(KoscheiPlea)
+    end,
+    animationComplete = function()
+        hideDialogue()
+        icyCurtain.isVisible = false 
+    end
 }
 scenes[27] = {
     sName = 27,
-    foregr = 'foreground2.png',
-    backgr ='background2.png',
+    setStage = 'set9',
+    openingAnimation = {
+        [1] = 'background2.png', 
+        [2] = 'foreground2.png'
+    },
     text = 'Alena takes her brother and closes the door to the basement. When they go up, Ivan reproaches her for being so harsh on the prisoner. “Aren\'t we supposed to respect our elders?” asks Ivan.',
     follows = 28,
     clearSelection = true,
-    animations = function() 
-        koshPrisoner.isVisible = false
-        bucketFloor.isVisible = false
-        bucketsFloor.isVisible = false
-        IvanS.x = 350 IvanS.y = 400
-        AlenaS.x = 440 AlenaS.y = 410
+    animations = function()
+        hideDialogue()
+        shadowLayer2.alpha=0
+        setStageHome()
+        shadowLayer2.alpha=0.5
     end,
     animationComplete = function()
-        koshPrisoner.isVisible = false
-        bucketFloor.isVisible = false
-        bucketsFloor.isVisible = false
-        IvanS.x = 350 IvanS.y = 400
-        AlenaS.x = 440 AlenaS.y = 410
+        bed.y=0
+        tableCloth.y=5
+        shadowLayer2.alpha=0.5
+        foreground.y = 0
     end
 }
 scenes[28] = {
@@ -518,30 +596,47 @@ scenes[28] = {
     text = 'Alena says that they should follow mother\'s orders first and foremost. Back in the greatroom, she puts Ivan to bed and nestles near him. In a second, her eyes close and she falls fast asleep.',
     follows = 29,
     animations = function() 
-        transition.fadeOut(AlenaS, {time=2000})
-        transition.fadeOut(IvanS, {time=1000})
+        AlenaS.x = 450 
+        IvanS.x = 350
+        transition.to(AlenaS, {y=270, time=1000, delay=1000})
+        transition.to(IvanS, {y=290, time=1000, delay=1500}) 
     end,
     animationComplete = function()
-        IvanS.alpha = 1
-        AlenaS.alpha = 1
-        IvanS.x = 550 IvanS.y = 400
-        AlenaS.x = 195 AlenaS.y = 210
-        koshPrisoner.isVisible = true
-        bucketFloor.isVisible = true
-        bucketSide.isVisible = true
-        bucketSide.alpha = 1
+        AlenaS.x = 450  AlenaS.y = 270 
+        IvanS.x = 350 IvanS.y = 290
     end
 }
 scenes[29] = {
     sName = 29,
-    foregr = 'foreground3.png',
-    backgr ='background5.png',
-    text = 'When she wakes up, her brother is nowhere to be found. Panic-stricken, she runs to the basement and sees the open door and an empty buсket on the floor near the prisoner',
+    setStage = 'set18',
+    openingAnimation = {
+        [1] = 'background3.png', 
+        [2] = 'foreground3.png'
+    },
+    text = 'When she wakes up, her brother is nowhere to be found. Panic-stricken, she runs to the basement and sees the open door and an empty buсket on the floor near the prisoner.',
     follows = 30,
     clearSelection = true,
     animations = function() 
+        setBasementStage()
+        IvanS.x=560
+        AlenaS.x=240
+        transition.to(AlenaS, {y=60, time=1000, delay=1000})
+        transition.to(IvanS, {y=290, time=1000, delay=1500})
     end,
-    animationComplete = function()end
+    animationComplete = function()
+        foreground.y = 0
+        basementStage.alpha=1
+        icyCurtain.alpha=1
+        lights3.y=0
+        waterFount.y=0
+        koshPrisoner.y=0
+        bucket1.y=-50
+        bucket2.y=470
+        bucketTread.y=-50
+        IvanS.x=560
+        IvanS.y=270
+        AlenaS.y=60
+    end
 }
 scenes[30] = {
     sName = 30,
@@ -549,36 +644,38 @@ scenes[30] = {
     follows = 31,
     clearSelection = true,
     animations = function() 
-        transition.fadeIn(iceEffect1, {time=500})
-        transition.fadeIn(iceEffect2, {time=500, delay=500})
-        transition.fadeIn(iceEffect3, {time=500, delay=1000})
-        transition.fadeOut(IvanS, {time=500, delay=1500})
-        koshPrisoner.isVisible = false
+        icyCurtain.isVisible = true
+
+        transition.to(icyCurtain, {y=-1000, time=1500})
+        transition.to(chains, {alpha=1, time=1000, delay=500})
+        transition.to(koshPrisoner, {y = -600, time=500, delay=500})
+        transition.to(IvanS, {y = -600, time=500, delay=500})
     end,
     animationComplete = function()
-        IvanS.isVisible = false
-        koshPrisoner.isVisible = false
+        icyCurtain.y=-1000
+        chains.alpha=1
+        koshPrisoner.y=-600
+        IvanS.y=-600
+        hideDialogue()
     end
 }
 scenes[31] = {
     sName = 31,
     text = "Alena runs outside, screaming her brother\'s name, but gets only the moaning of the wind and the whispering of the forest in reply.",
     follows = 32,
-    foregr = 'foreground4.png',
-    backgr ='background7.png',
-    setStage = 'set31',
+    openingAnimation = {
+        [1] = 'background5.png', 
+        [2] = 'foreground1.png'
+        },
+    setStage = 'set1',
     animations = function()
-        AlenaCry.alpha = 0
-        AlenaCry.isVisible = true 
-        AlenaS.y = 400
-        AlenaS.x = 500
-        transition.fadeOut(AlenaS, {delay=1000, time=1000})
-        transition.fadeIn(AlenaCry, {delay=2000, time=1000})
+        transition.to(AlenaCry, {y=270, time=1000, delay=500})
+        leaves.alpha = 1
+        transition.to(leaves, {y=550, x=500, time=3000, delay=1000})
     end,
     animationComplete = function()
-        AlenaCry.isVisible = true
-        AlenaCry.alpha = 1 
-        AlenaS.isVisible = false
+        AlenaCry.y=270
+        leaves.alpha=1 leaves.x=500 leaves.y=550
     end
 }
 scenes[32] = {
@@ -586,13 +683,10 @@ scenes[32] = {
     text = 'Alena\'s mother returns home early, with the strange feeling that something might have happened. Alena can\'t look her in the eyes. She stumbles and mumbles but eventually tells the whole truth.',
     follows = 33,
     animations = function()
-        MotherWar.alpha = 0
-        MotherWar.isVisible = true
-        transition.fadeIn(MotherWar, {time=1000})
+
     end,
     animationComplete = function()
-        MotherWar.isVisible = true
-        MotherWar.alpha = 1
+
     end
 }
 scenes[33] = {
@@ -648,14 +742,20 @@ end
 -- Display charDialogur
 function showDialogue(name)
     transition.to(dialBack, {y=0, time=500})
-    --transition.to(name, {y=400, time=500})
-    if name==Mother or name==MotherW then transition.to(name, {y=400, time=500}) end
-    if name==Alena or name==AlenaCry then transition.to(name, {y=500, time=500}) end
+    --Re-center the object
+    name.x = 400 name.y = 800
+
+    --Change position based on the onject
+    if name==Mother then transition.to(name, {y=400, time=500}) end
+    if name==Alena then transition.to(name, {y=400, time=500}) end
+    if name==Ivan then transition.to(name, {y=400, time=500}) end
+    if name==KoscheiPlea then KoscheiPlea.x=200 transition.to(name, {y=400, time=500}) end
+    if name==Koschei then transition.to(name, {y=400, time=500}) end
 
 end
 
 function hideDialogue()
-    local characters = {Mother, Alena, Ivan}
+    local characters = {Mother, Alena, Ivan, KoscheiPlea, Koschei}
     for i=1, table.getn(characters) do characters[i].y = -700 end
     transition.to(dialBack, {y = -800, time=500})
     --dialBack.y = -800
@@ -691,6 +791,14 @@ function clearStage()
     end
 end
 
+function removeCharacters()
+    AlenaS.x = 200 AlenaS.y = -400
+    IvanS.x = 130 IvanS.y = -400
+    MotherS.x = 540 MotherS.y = -400 
+    AlenaCry.x = 500 AlenaCry.y = -400
+    MotherWar.x = 300 MotherWar.y = 350
+end
+
 -- Move layers in the right order
 local function organizeStage()
     background:toFront()
@@ -723,83 +831,67 @@ local function setStageObjects(stage)
             landscape1.x = 1020 landscape1.y = 1300
             landscape1.rotation=-90
 
-            shadowLayer = display.newImage(midlayer2, "images/act1_shadowLayer.png", true) setAnchor(shadowLayer) shadowLayer.alpha = 0
+            shadowLayer1 = display.newImage(midlayer2, "images/act1_shadowLayer.png", true) setAnchor(shadowLayer1) shadowLayer1.alpha = 0
+
+            leaves = display.newImage(midlayer3,"images/act3_leavesFall.png", true) setAnchor(leaves) leaves.alpha = 0
+            leaves.x=700 leaves.y=-550
+            organizeStage()
         end,
         set9 = function()
-            clearStage()
-            print('setting scene 9')
-            sunWindow = display.newImage("images/h_window_light.png", 512, 100)
-            sunWindow.anchorX = 0 sunWindow.anchorY = 0 
-            sunWindow.alpha = 0
-            midlayer2:insert(sunWindow)
 
-            dishes = display.newImage("images/dishes.png", 560, 350)
-            dishes.anchorX = 0 dishes.anchorY = 0 
-            midlayer2:insert(dishes)
+            bed = display.newImage(midlayer1, "images/act2_bed.png", true) setAnchor(bed)
+            bed.x=280 bed.y = -500
 
-            cookOven = display.newImage("images/oven_fire.png", 45, 265)
-            cookOven.anchorX = 0 cookOven.anchorY = 0
-            cookOven.alpha = 0
-            midlayer2:insert(cookOven) 
+            tableCloth = display.newImage(midlayer1, "images/act2_table.png", true) setAnchor(tableCloth)
+            tableCloth.x = 520 tableCloth.y=-500
 
-            broom = display.newImage("images/broom.png", 180, 290)
-            broom.anchorX = 0 broom.anchorY = 0 
-            midlayer3:insert(broom)
+            shadowLayer2 = display.newImage(midlayer2, "images/act2_shadowLayer.png", true) setAnchor(shadowLayer2) 
+            shadowLayer2.alpha = 0
+
+            broom = display.newImage(midlayer2, "images/act2_broom.png", true) setAnchor(broom)
+            broom.x=200 broom.y = -600
+
+            dishes = display.newImage(midlayer2, "images/act2_dishes.png", true) setAnchor(dishes)
+            dishes.x=580 dishes.y = -500
+
+            firePot = display.newImage(midlayer2, "images/act2_firePot.png", true) setAnchor(firePot)
+            firePot.x=120 firePot.y = -500
+
+
+            organizeStage()
         end,
         set18 = function()
             clearStage()
-            print('setting scene 18')
-            koshPrisoner = display.newImage("images/kosh_chained.png", 675, 4)
-            koshPrisoner.anchorX = 0 koshPrisoner.anchorY = 0
-            koshPrisoner.isVisible = false
-            midlayer2:insert(koshPrisoner)
+            basementStage = display.newImage(midlayer1, "images/background4.png", true) setAnchor(basementStage)
+            basementStage.x=0 basementStage.y = 0 basementStage.alpha=0
+            
+            waterFount = display.newImage(midlayer1, "images/act3_water.png", true) setAnchor(waterFount)
+            waterFount.x=640 waterFount.y = -500
 
-            bucketsFloor = display.newImage("images/buckets_2.png", 130, 430)
-            bucketsFloor.anchorX = 0 bucketsFloor.anchorY = 0
-            bucketsFloor.isVisible = false
-            midlayer2:insert(bucketsFloor)
+            lights3 = display.newImage(midlayer1, "images/act3_lights.png", true) setAnchor(lights3)
+            lights3.x=280 lights3.y = -500
 
-            bucketFloor = display.newImage("images/buckets_1.png", 130, 430)
-            bucketFloor.anchorX = 0 bucketFloor.anchorY = 0
-            bucketFloor.isVisible = false
-            midlayer2:insert(bucketFloor)
+            bucket1 = display.newImage(midlayer2, "images/act2_bucket1.png", true) setAnchor(bucket1)
+            bucket1.x=130 bucket1.y = -550
 
-            bucketEmpty  = display.newImage("images/bucket_empty.png", 250, 400)
-            bucketEmpty.anchorX = 0 bucketEmpty.anchorY = 0
-            bucketEmpty.isVisible = false
-            midlayer3:insert(bucketEmpty)
+            koshPrisoner = display.newImage(midlayer2, "images/kosh_chained.png", true) setAnchor(koshPrisoner)
+            koshPrisoner.x=680 koshPrisoner.y = -600
 
-            bucketWater  = display.newImage("images/bucket_water.png", 300, 300)
-            bucketWater.anchorX = 0 bucketEmpty.anchorY = 0
-            bucketWater.alpha = 0
-            midlayer3:insert(bucketWater)
+            chains = display.newImage(midlayer2, "images/act2_chains.png", true) setAnchor(chains)
+            chains.x=680 chains.y = 0 chains.alpha=0
 
-            bucketSide  = display.newImage("images/bicket_side.png", 600, 450)
-            bucketSide.anchorX = 0 bucketSide.anchorY = 0
-            bucketSide.alpha = 0
-            midlayer3:insert(bucketSide)
+            bucket2 = display.newImage(midlayer2, "images/act2_bucket2.png", true) bucket2.anchorY = 0.5 bucket2.anchorX = 1
+            bucket2.x=275 bucket2.y = -55
 
-            iceEffect1 = display.newImage("images/iceLayer1.png", 400, 0)
-            iceEffect1.anchorX = 0 iceEffect1.anchorY = 0
-            iceEffect1.alpha = 0
-            midlayer3:insert(iceEffect1)
+            bucketTread = display.newImage(midlayer2, "images/act2_bucketTread.png", true) setAnchor(bucketTread)
+            bucketTread.x=180 bucketTread.y = -600
 
-            iceEffect2 = display.newImage("images/iceLayer2.png", 400, 300)
-            iceEffect2.anchorX = 0 iceEffect2.anchorY = 0
-            iceEffect2.alpha = 0
-            midlayer3:insert(iceEffect2)
+            icyCurtain = display.newImage(midlayer3, "images/icyCurtain.png", true) setAnchor(icyCurtain)
+            icyCurtain.x=350 icyCurtain.y = 50 icyCurtain.alpha=0
 
-            iceEffect3 = display.newImage("images/iceLayer3.png", 400, 300)
-            iceEffect3.anchorX = 0 iceEffect3.anchorY = 0
-            iceEffect3.alpha = 0
-            midlayer3:insert(iceEffect3)
+            organizeStage()
+
         end,
-        set31 = function()
-            clearStage()
-            orangeLight = display.newImage("images/orange_sun.png", 680, 400)
-            orangeLight.alpha = 0.5
-            midlayer2:insert(orangeLight)
-        end
     }
     stages[stage]()
 end
@@ -821,14 +913,12 @@ function sceneTextTouch(event)
     return true
 end
 
-function opening()
-    openingAnimation()
-    loadScene(scenes[1])
-end
 
 function loadScene(s)
     print('Start displaying scene '..s.sName)
-    if(s.changeFlow) then s.changeFlow() end
+    if s.openingAnimation then openingAnimation(s.openingAnimation[1], s.openingAnimation[2]) 
+    end
+    if s.changeFlow then s.changeFlow() end
 
     if not s.follows then
         print('Scene has selection One is: '..s.selection[1][2]..' Second is '..s.selection[2][2])
@@ -920,7 +1010,7 @@ local myListener = function( event )
     select2Text:addEventListener( "touch", sceneTextTouch)
     sceneText:addEventListener( "touch", sceneTextTouch)
 
-    opening()
+    loadScene(scenes[28])
 end
 
 background:addEventListener( "touch", myListener )
