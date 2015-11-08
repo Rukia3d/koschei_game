@@ -33,6 +33,8 @@ local WolfS = display.newImage( characters, "images/wolf_s_small.png") WolfS.x =
 -- Small characters  changed images
 local AlenaCryS = display.newImage( characters, "images/alena_cry_small.png") AlenaCryS.x = 400 AlenaCryS.y =-400 
 local MotherWarS = display.newImage( characters, "images/mother_f_small.png") MotherWarS.x = 600 MotherWarS.y = -400  
+local AlenaOnWolf = display.newImage( characters, "images/alena_on_wolf.png") AlenaOnWolf.x = 1200 AlenaOnWolf.y = 270  
+
 -- Background for dialogue stage
 local dialBack = display.newImage(characters, "images/dialBack.png", true )
 dialBack.anchorX = 0 dialBack.anchorY = 0 
@@ -63,7 +65,7 @@ select2Container.x = 850 select2Container.y = 200
 select2Container.isVisible = false;
 
 local select3Container = display.newImage(textLayers, "images/selection_back.png")
-select3Container.x = 850 select3Container.y = 200
+select3Container.x = 850 select3Container.y = 270
 select3Container.isVisible = false;
 
 local select1Text
@@ -123,6 +125,13 @@ function openingAnimation(backg, foregr)
     transition.to(foreground, {y=0, time=1000})
 end
 
+function ridingWolfNightBlue()
+    transition.to(landscape2, {x=-500, time=3000 })
+    transition.to(landscape1, {x=0, time=3000 })
+    transition.to(starsAndMoon, {y=0, time=1000})
+    transition.to(AlenaOnWolf, {x=600, time=3000})
+end
+
 
 -----------------------------------------------------------------------------------------
 --
@@ -135,6 +144,7 @@ local choices = {
     bless = false,
     basement = false,
     bucket = 0,
+    brother = 1,
 }
 
 local scenes = {}; 
@@ -795,13 +805,14 @@ scenes[39] = {
         transition.to(landscape3, {x=0, time=1000, delay=500})
         transition.to(landscape2, {x=0, time=1000, delay=1000})
         transition.to(landscape1, {x=0, time=1000, delay=1500})
-        transition.to(shadowLayer5, {alpha=1, time=500, delay=2000})
+        transition.to(shadowLayer5, {alpha=1, time=1000, delay=2500})
     end,
     animationComplete = function()
         landscape3.x=0
         landscape2.x=0
         landscape1.x=0
         shadowLayer5.alpha=1
+        foreground.y=0
     end
 }
 
@@ -811,28 +822,81 @@ scenes[40] = {
     follows = 41,
     animations = function()
         transition.to(stone,{y=0, time=1000})
-        WolfS.x = 700 AlenaS.x=500
+        WolfS.x=700 AlenaS.x=500
         transition.to(WolfS,{y=255, time=1000, delay=1000})
         transition.to(AlenaS,{y=230, time=1000, delay=1000})
     end,
     animationComplete = function()
+        stone.y=0
+        WolfS.x=700 WolfS.y=255 
+        AlenaS.x=500 AlenaS.y=230
     end
 }
 
 scenes[41] = {
-    sName = 26,
+    sName = 41,
     text = '“If you ride to the left, you will lose your horse. If you ride to the right, you will lose your head. If you ride straight ahead, you will lose both.”',
     selection = {
-        [1] = {'Give the old man some water', 23},
-        [2] = {'Don\'t give him anything', 27},
-        [3] = {'Don\'t give him anything', 27}
+        [1] = {'Choose to go left', 42},
+        [2] = {'Choose to go straight', 43},
+        [3] = {'Choose to go right', 44}
     },
     changeFlow = function()
     end,
     animations = function()
     end,
     animationComplete = function()
+        stone.isVisible = false
+        landscape2.x=-1700
+        landscape1.x=-2500
+        WolfS.y=-400 
+        AlenaS.y=-400
     end
+}
+
+scenes[42] = {
+    sName = 42,
+    follows = 45,
+    clearSelection = true,
+    text = 'After the crossroads, they ride for a while, as the sky blackens and the starry space above stares down on Alena and Gray Wolf. They are approaching a wooden fortress.', 
+    changeFlow = function()
+        choices.brother = 'Eagle'
+    end,
+    animations = function()
+        ridingWolfNightBlue()
+    end, 
+    animationComplete = function()
+    end 
+}
+
+scenes[43] = {
+    sName = 43,
+    clearSelection = true,
+    follows = 45,
+    text = 'After the crossroads, they ride for a while, as the sky blackens and the starry space above stares down on Alena and Gray Wolf. They are approaching a wooden fortress.', 
+    changeFlow = function()
+        choices.brother = 'Raven'
+    end,
+    animations = function()
+        ridingWolfNightBlue()
+    end, 
+    animationComplete = function()
+    end   
+}
+
+scenes[44] = {
+    sName = 44,
+    follows = 45,
+    clearSelection = true,
+    text = 'After the crossroads, they ride for a while, as the sky blackens and the starry space above stares down on Alena and Gray Wolf. They are approaching a wooden fortress.', 
+    changeFlow = function()
+        choices.brother = 'Falcon'
+    end,
+    animations = function()
+        ridingWolfNightBlue()
+    end, 
+    animationComplete = function()
+    end   
 }
 
 -----------------------------------------------------------------------------------
@@ -911,6 +975,7 @@ function removeCharacters()
     AlenaCryS.x = 400 AlenaCryS.y = -400
     MotherWarS.x = 600 MotherWarS.y = -400
     WolfS.x=-300 WolfS.y=-400
+    AlenaOnWolf.x=1200 AlenaOnWolf.y=270
 end
 
 -- Move layers in the right order
@@ -1007,6 +1072,8 @@ local function setStageObjects(stage)
         end,
         set39 = function()
             clearStage()
+            starsAndMoon = display.newImage(midlayer1, "images/act5_stars.png", true) setAnchor(starsAndMoon )
+            starsAndMoon.x = 100 starsAndMoon.y = -500
 
             landscape3 = display.newImage(midlayer1, "images/act5_landscape3.png", true) setAnchor(landscape3)
             landscape3.x = -1000 landscape3.y = 230
@@ -1054,36 +1121,41 @@ function loadScene(s)
     if s.changeFlow then s.changeFlow() end
 
     if not s.follows then
-        print('Scene has selection One is: '..s.selection[1][2]..' Second is '..s.selection[2][2])
-        select1Container.isVisible = true
-        select1Text.isVisible = true
-        select1Text.text = s.selection[1][1]
-        setAnchor(select1Text)
-        select1Text.alpha = 0
-        transition.to(select1Text, {alpha=1, time=2000}) 
-        select1Text:setFillColor( 0, 0, 0 )
-        select1Text.follows = s.selection[1][2]
-        select1Text.index = s.sName
+        if(s.selection[1]) then
+            select1Container.isVisible = true
+            select1Text.isVisible = true
+            select1Text.text = s.selection[1][1]
+            setAnchor(select1Text)
+            select1Text.alpha = 0
+            transition.to(select1Text, {alpha=1, time=2000}) 
+            select1Text:setFillColor( 0, 0, 0 )
+            select1Text.follows = s.selection[1][2]
+            select1Text.index = s.sName
+        end
 
-        select2Container.isVisible = true
-        select2Text.isVisible = true
-        select2Text.text = s.selection[2][1]
-        setAnchor(select2Text)
-        select2Text.alpha = 0
-        transition.to(select2Text, {alpha=1, time=2000}) 
-        select2Text:setFillColor( 0, 0, 0 )
-        select2Text.follows = s.selection[2][2]
-        select2Text.index = s.sName
+        if(s.selection[2]) then
+            select2Container.isVisible = true
+            select2Text.isVisible = true
+            select2Text.text = s.selection[2][1]
+            setAnchor(select2Text)
+            select2Text.alpha = 0
+            transition.to(select2Text, {alpha=1, time=2000}) 
+            select2Text:setFillColor( 0, 0, 0 )
+            select2Text.follows = s.selection[2][2]
+            select2Text.index = s.sName
+        end
 
-        select3Container.isVisible = true
-        select3Text.isVisible = true
-        select3Text.text = s.selection[3][1]
-        setAnchor(select3Text)
-        select3Text.alpha = 0
-        transition.to(select3Text, {alpha=1, time=2000}) 
-        select3Text:setFillColor( 0, 0, 0 )
-        select3Text.follows = s.selection[3][2]
-        select3Text.index = s.sName
+        if(s.selection[3]) then
+            select3Container.isVisible = true
+            select3Text.isVisible = true
+            select3Text.text = s.selection[3][1]
+            setAnchor(select3Text)
+            select3Text.alpha = 0
+            transition.to(select3Text, {alpha=1, time=2000}) 
+            select3Text:setFillColor( 0, 0, 0 )
+            select3Text.follows = s.selection[3][2]
+            select3Text.index = s.sName
+        end
 
         textContainer.isVisible = true;
         sceneText.text = s.text
@@ -1148,11 +1220,15 @@ local myListener = function( event )
     textContainer.isVisible = false;
 
     select1Text = display.newText(textLayers, '', 755, 110, 250, display.contentHeight * 0.5, 'PTSans-Regular', 18) 
-    select2Text = display.newText(textLayers, '', 755, 175, 0, display.contentHeight * 0.5, 'PTSans-Regular', 18)
+    select2Text = display.newText(textLayers, '', 755, 180, 250, display.contentHeight * 0.5, 'PTSans-Regular', 18)
+    select3Text = display.newText(textLayers, '', 755, 250, 250, display.contentHeight * 0.5, 'PTSans-Regular', 18)
+
     sceneText = display.newText(textLayers, '', 50, 610, 900, display.contentHeight * 0.5, 'PTSans-Regular', 18)
 
     select1Text:addEventListener( "touch", sceneTextTouch)
     select2Text:addEventListener( "touch", sceneTextTouch)
+    select3Text:addEventListener( "touch", sceneTextTouch)
+    
     sceneText:addEventListener( "touch", sceneTextTouch)
 
     loadScene(scenes[39])
