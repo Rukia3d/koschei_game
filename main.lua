@@ -29,11 +29,14 @@ local AlenaS = display.newImage( characters, "images/alena_f_small.png") AlenaS.
 local IvanS = display.newImage( characters, "images/ivan_s_small.png") IvanS.x = 130 IvanS.y = -400
 local MotherS = display.newImage( characters, "images/mother_s_small.png") MotherS.x = 540 MotherS.y = -400 
 local WolfS = display.newImage( characters, "images/wolf_s_small.png") WolfS.x = -200 WolfS.y = -400 
+--local EagleS = display.newImage( characters, "images/eagle_f_small.png") EagleS.x = -200 EagleS.y = -400 
+--local FalconS = display.newImage( characters, "images/falcon_f_small.png") FalconS.x = -200 FalconS.y = -400 
+--local RavenS = display.newImage( characters, "images/raven_f_small.png") RavenS.x = -200 RavenS.y = -400 
 
 -- Small characters  changed images
 local AlenaCryS = display.newImage( characters, "images/alena_cry_small.png") AlenaCryS.x = 400 AlenaCryS.y =-400 
 local MotherWarS = display.newImage( characters, "images/mother_f_small.png") MotherWarS.x = 600 MotherWarS.y = -400  
-local AlenaOnWolf = display.newImage( characters, "images/alena_on_wolf.png") AlenaOnWolf.x = 1200 AlenaOnWolf.y = 270  
+local AlenaOnWolf = display.newImage( characters, "images/alena_on_wolf.png") AlenaOnWolf.x = 1200 AlenaOnWolf.y = 270 
 
 -- Background for dialogue stage
 local dialBack = display.newImage(characters, "images/dialBack.png", true )
@@ -47,6 +50,10 @@ local Mother = display.newImage( characters, "images/mother_s_dialogue.png", fal
 local MotherWar = display.newImage( characters, "images/mother_f_dialogue.png", false) MotherWar.x = 400 MotherWar.y = 900
 local Koschei = display.newImage( characters, "images/koschei_f_big.png", false) Koschei.x = 300 Koschei.y = 800
 local KoscheiPlea = display.newImage( characters, "images/kosh_plea_dialogue.png", false) KoscheiPlea.x = 900 KoscheiPlea.y = 800
+local Wolf  = display.newImage( characters, "images/wolf_dialogue.png", false) Wolf.x = 700 Wolf.y = 800
+--local Eagle = display.newImage( characters, "images/eagle_dialogue.png") Eagle.x = 400 Eagle.y = 800 
+--local Falcon = display.newImage( characters, "images/falcon_dialogue.png") Falcon.x = 400 Falcon.y = 800
+--local Raven = display.newImage( characters, "images/raven_dialogue.png") Raven.x = 400 Raven.y = 800  
 
 -- Set main screen
 local background = display.newImage( "images/startScreen.png") background.x = display.contentWidth / 2 background.y = display.contentHeight / 2
@@ -129,9 +136,25 @@ function ridingWolfNightBlue()
     transition.to(landscape2, {x=-500, time=3000 })
     transition.to(landscape1, {x=0, time=3000 })
     transition.to(starsAndMoon, {y=0, time=1000})
-    transition.to(AlenaOnWolf, {x=600, time=3000})
+    transition.to(AlenaOnWolf, {x=800, time=3000})
 end
 
+-----------------------------------------------------------------------------------------
+--
+-- ORGANISING
+--
+-----------------------------------------------------------------------------------------
+
+-- Move layers in the right order
+local function organizeStage()
+    background:toFront()
+    midlayer1:toFront()
+    midlayer2:toFront()
+    characters:toFront()
+    midlayer3:toFront()
+    foreground:toFront()
+    textLayers:toFront()
+end
 
 -----------------------------------------------------------------------------------------
 --
@@ -140,11 +163,12 @@ end
 -----------------------------------------------------------------------------------------
 
 
-local choices = {
+choices = {
     bless = false,
     basement = false,
     bucket = 0,
-    brother = 1,
+    brother = 'Eagle',
+    brother1 = 'an eagle',
 }
 
 local scenes = {}; 
@@ -161,14 +185,14 @@ local scenes = {};
         text = "In a small house on the edge of the dark forest, there lived a brother and sister, Ivan and Alena.",
         follows = 2,
         animations = function()
-                transition.to(landscape3, {x=0, time=1000, delay=1000})
-                transition.to(landscape2, {x=-15, time=1000, delay=1000})
-                transition.to(landscape1, {y=630, time=500, delay=2000})
-                transition.to(landscape1, {rotation=0, y=630, time=1000, delay=2500})
-                transition.to(shadowLayer1, {alpha=1, time=1000, delay=3500})
-                transition.to(houseOutside, {y=0, time=1000, delay=3700})
-                transition.to(AlenaS, {y=270, time=1000, delay=4500})
-                transition.to(IvanS, {y=290, time=1000, delay=4500})
+            transition.to(landscape3, {x=0, time=1000, delay=1000})
+            transition.to(landscape2, {x=-15, time=1000, delay=1000})
+            transition.to(landscape1, {y=630, time=500, delay=2000})
+            transition.to(landscape1, {rotation=0, y=630, time=1000, delay=2500})
+            transition.to(shadowLayer1, {alpha=1, time=1000, delay=3500})
+            transition.to(houseOutside, {y=0, time=1000, delay=3700})
+            transition.to(AlenaS, {y=270, time=1000, delay=4500})
+            transition.to(IvanS, {y=290, time=1000, delay=4500})
                 
         end,
         animationComplete = function()
@@ -187,9 +211,9 @@ local scenes = {};
         text = 'Their mother goes into the city every morning, leaving before the golden eye of the sun peeps over the horizon, returning only as the dying light turns the trees of the forest orange and red, as if kindling a fire deep in their depths.',
         follows = 3,
         animations = function()
-                transition.to(sun, {y=-100, time=1000})
-                transition.to(background, {y=-250, time=1000})
-            end,
+            transition.to(sun, {y=-100, time=1000})
+            transition.to(background, {y=-250, time=1000})
+        end,
         animationComplete = function()
             background.y = -250
             sun.y = -100
@@ -204,6 +228,7 @@ local scenes = {};
         end,
         animationComplete = function()
             MotherS.y = 270
+            --organizeStage()
         end
     }
     scenes[4] = {
@@ -861,9 +886,12 @@ scenes[42] = {
     text = 'After the crossroads, they ride for a while, as the sky blackens and the starry space above stares down on Alena and Gray Wolf. They are approaching a wooden fortress.', 
     changeFlow = function()
         choices.brother = 'Eagle'
+        choices.brother1 = 'an eagle'
     end,
     animations = function()
         ridingWolfNightBlue()
+        transition.to(fortress, {x=-300, time=1000, delay=2500})
+        transition.to(fortress2, {x=185, time=1000, delay=2500})
     end, 
     animationComplete = function()
     end 
@@ -876,9 +904,12 @@ scenes[43] = {
     text = 'After the crossroads, they ride for a while, as the sky blackens and the starry space above stares down on Alena and Gray Wolf. They are approaching a wooden fortress.', 
     changeFlow = function()
         choices.brother = 'Raven'
+        choices.brother1 = 'a raven'
     end,
     animations = function()
         ridingWolfNightBlue()
+        transition.to(fortress2, {x=185, time=1000, delay=2500})
+        transition.to(fortress, {x=-300, time=1000, delay=2500})
     end, 
     animationComplete = function()
     end   
@@ -891,12 +922,156 @@ scenes[44] = {
     text = 'After the crossroads, they ride for a while, as the sky blackens and the starry space above stares down on Alena and Gray Wolf. They are approaching a wooden fortress.', 
     changeFlow = function()
         choices.brother = 'Falcon'
+        choices.brother1 = 'a falcon'
     end,
     animations = function()
         ridingWolfNightBlue()
+        transition.to(fortress, {x=-300, time=1000, delay=2500})
+        transition.to(fortress2, {x=185, time=1000, delay=2500})
     end, 
     animationComplete = function()
     end   
+}
+
+scenes[45] = {
+    sName = 45,
+    follows = 46,
+    text = '“Is that a Koschei stronghold?” wonders Alena. The night is cold, so Alena shivers, but the walls in front of her don’t look like they are made from ice.',
+    animations = function() 
+        transition.to(fortress, {x=0, time=1000})
+        transition.to(fortress2, {x=485, time=1000})
+    end,
+    animationComplete = function()
+        fortress.x=0
+        fortress2.x=485
+    end
+
+}
+
+scenes[46] = {
+    sName = 46,
+    text = function() 
+        return '“Don’t get scared, daughter of Marya, it is not Koschei’s lair. It is the domain of your mother’s brother, the shape-shifting wizard who can turn into '..choices.brother1..',” says the Gray Wolf suddenly.'
+    end,
+    selection = {
+        [1] = {'You can talk?', 47},
+    },
+    animations = function()
+        showDialogue(Wolf)
+    end,
+    animationComplete =  function()
+        hideDialogue() 
+    end
+}
+
+scenes[47] = {
+    sName = 47,
+    text = 'Wolf: “I can do many things and before the sun rises, you will see that, daughter of Marya. Before you have to deal with consequences of your choices.”',
+    selection = {
+        [1] = {'My mother has a brother?', 48}
+    },
+    animations = function()
+        showDialogue(Wolf)
+    end,
+    animationComplete =  function()
+        hideDialogue()
+    end
+}
+
+scenes[48] = {
+    sName = 48,
+    clearSelection = true,
+    text = 'Wolf: “Yes, she has three brothers, all wizards who can turn into birds of prey - Eagle, Raven or Falcon. They were inseparable a long time ago, but after traveling to Koschei’s stronghold, they had a falling out.“',
+    follows = 49,
+    animations = function()
+        showDialogue(Wolf)
+    end,
+    animationComplete =  function()
+        hideDialogue()
+    end
+}
+
+scenes[49] = {
+    sName = 49,
+    text = 'It’s getting colder and night is almost upon them, so Alena and Wolf decide to ask her uncle for shelter. His servants open the gate and escort her into the main hall.',
+    follows = 50,
+    clearSelection = true,
+    animations = function()
+        hideDialogue()
+        bridge.alpha=1
+        transition.to(bridge, {rotation=90, time=1000})
+    end,
+    animationComplete = function() 
+        hideDialogue()
+        bridge.alpha=1
+        bridge.rotation=90
+    end
+}
+
+scenes[50] = {
+    sName = 50,
+    setStage = 'set50',
+    openingAnimation = {
+        [1] = 'background7.png', 
+        [2] = 'foreground3.png'
+    },
+    text = 'Her uncle is seated in a great hall wearing a gloomy look. Alena tells him her sad story, but he doesn’t seem to be affected by it, because he is lost in his own thoughts. “Looks like I won’t get any help from him,” sighs Alena.',
+    follows = 51,
+    animations = function() 
+        transition.to(landscape2, {y=0, time=1000, delay=1000})
+        transition.to(shadowLayer6, {alpha=1, time=1000, delay=2000})
+    end,
+    animationComplete =  function()
+        landscape2.y=0
+        shadowLayer6.alpha=1
+        foreground.y=0
+    end
+
+}
+
+scenes[51] = {
+    sName = 51,
+    text = 'text51',
+    selection = {
+        [1] = {'Choice1', 52},
+        [2] = {'Choice2', 53},
+    },
+    animations = function() 
+    end,
+    animationComplete =  function()
+    end
+}
+
+scenes[52] = {
+    sName = 52,
+    text = 'text52',
+    follows = 54,
+    clearSelection = true,
+    animations = function() 
+    end,
+    animationComplete =  function()
+    end
+}
+
+scenes[53] = {
+    sName = 53,
+    text = 'text53',
+    follows = 54,
+    clearSelection = true,
+    animations = function() 
+    end,
+    animationComplete =  function()
+    end
+}
+
+scenes[54] = {
+    sName = 54,
+    text = 'text54',
+    follows = 55,
+    animations = function() 
+    end,
+    animationComplete =  function()
+    end
 }
 
 -----------------------------------------------------------------------------------
@@ -928,11 +1103,12 @@ function showDialogue(name)
     if name==Ivan then transition.to(name, {y=400, time=500}) end
     if name==KoscheiPlea then KoscheiPlea.x=200 transition.to(name, {y=400, time=500}) end
     if name==Koschei then transition.to(name, {y=400, time=500}) end
+    if name==Wolf then Wolf.x=700 transition.to(name, {y=430, time=500}) end
 
 end
 
 function hideDialogue()
-    local characters = {Mother, Alena, Ivan, KoscheiPlea, Koschei, MotherWar}
+    local characters = {Mother, Alena, Ivan, KoscheiPlea, Koschei, MotherWar, Wolf}
     for i=1, table.getn(characters) do characters[i].y = -700 end
     transition.to(dialBack, {y = -800, time=500})
     --dialBack.y = -800
@@ -1014,6 +1190,7 @@ local function setStageObjects(stage)
 
             leaves = display.newImage(midlayer3,"images/act3_leavesFall.png", true) setAnchor(leaves) leaves.alpha = 0
             leaves.x=700 leaves.y=-550
+
             organizeStage()
         end,
         set9 = function()
@@ -1035,7 +1212,6 @@ local function setStageObjects(stage)
 
             firePot = display.newImage(midlayer2, "images/act2_firePot.png", true) setAnchor(firePot)
             firePot.x=120 firePot.y = -500
-
 
             organizeStage()
         end,
@@ -1085,6 +1261,17 @@ local function setStageObjects(stage)
             landscape1 = display.newImage(midlayer1, "images/act5_landscape1.png", true) setAnchor(landscape1)
             landscape1.x = 1000 landscape1.y = 400
 
+            fortress2 = display.newImage(midlayer1, "images/act5_fortress2.png", true) setAnchor(fortress2)
+            fortress2.x = -115 fortress2.y = 190
+
+            bridge = display.newImage(midlayer1, "images/act5_bridge.png", true) setAnchor(bridge)
+            bridge.alpha = 0
+            bridge.x = 480 bridge.y = 480
+            bridge.anchorX = 1 bridge.anchorY = 1
+
+            fortress = display.newImage(midlayer1, "images/act5_fortress.png", true) setAnchor(fortress)
+            fortress.x = -600 fortress.y = 100
+
             shadowLayer5 = display.newImage(midlayer2, "images/act5_shadowLayer.png", true) setAnchor(shadowLayer5) shadowLayer5.alpha=0
 
             stone = display.newImage(midlayer2, "images/act5_stone.png", true) setAnchor(stone)
@@ -1092,6 +1279,23 @@ local function setStageObjects(stage)
 
             organizeStage()
         end,
+        set50 = function()
+            clearStage()
+
+            if choices.brother=='Falcon' then
+                landscape2 = display.newImage(midlayer1, "images/act6_landscape2y.png", true)
+            elseif choices.brother=='Raven' then
+                landscape2 = display.newImage(midlayer1, "images/act6_landscape2b.png", true)
+            else
+                landscape2 = display.newImage(midlayer1, "images/act6_landscape2r.png", true)
+            end
+
+            setAnchor(landscape2) landscape2.x = 0 landscape2.y = -1000
+
+            shadowLayer6 = display.newImage(midlayer2, "images/act6_shadowLayer.png", true) setAnchor(shadowLayer6) shadowLayer6.alpha=0
+
+            organizeStage() 
+        end
     }
     stages[stage]()
 end
@@ -1100,13 +1304,19 @@ end
 -- Main text listener
 function sceneTextTouch(event)
     if event.phase == "began" and event.target.follows then
-        print(event.target.index)
-        print(scenes[event.target.index])
-        --event.target.y = event.target.y+100
+        -- Stats display
+        print('Let us add listener!')
+        print('Adding to scene:') print(event.target.index)
+        print('Scene that should follow:') print(event.target.follows)
 
+        print(scenes[event.target.index])
+        -- effects on clicked block go here
+
+        -- move everything into the place it is supposed to be at the end of the scene
         scenes[event.target.index].animationComplete()
         transition.cancel()
-        --event.target.y = event.target.y-100
+
+        -- load relevant scene we attached earlier
         loadScene(scenes[event.target.follows])
     end
 
@@ -1121,55 +1331,75 @@ function loadScene(s)
     if s.changeFlow then s.changeFlow() end
 
     if not s.follows then
+        print('This sceene has Selection')
         if(s.selection[1]) then
+            print('This sceene has 1 selection')
             select1Container.isVisible = true
             select1Text.isVisible = true
+            -- Show text of selection from the scene
             select1Text.text = s.selection[1][1]
             setAnchor(select1Text)
             select1Text.alpha = 0
             transition.to(select1Text, {alpha=1, time=2000}) 
             select1Text:setFillColor( 0, 0, 0 )
+            -- Attach the number of the scene to follow
             select1Text.follows = s.selection[1][2]
+            print(s.selection[1][2])
+            -- Attach the name of the scene we are working in
             select1Text.index = s.sName
         end
 
         if(s.selection[2]) then
+            print('This sceene has 2 selections')
             select2Container.isVisible = true
             select2Text.isVisible = true
+            -- Show text of selection from the scene
             select2Text.text = s.selection[2][1]
             setAnchor(select2Text)
             select2Text.alpha = 0
             transition.to(select2Text, {alpha=1, time=2000}) 
             select2Text:setFillColor( 0, 0, 0 )
+            -- Attach the number of the scene to follow
             select2Text.follows = s.selection[2][2]
+            print(s.selection[2][2])
+            -- Attach the name of the scene we are working in
             select2Text.index = s.sName
         end
 
         if(s.selection[3]) then
+            print('This sceene has 3 selections')
             select3Container.isVisible = true
             select3Text.isVisible = true
+            -- Show text of selection from the scene
             select3Text.text = s.selection[3][1]
             setAnchor(select3Text)
             select3Text.alpha = 0
             transition.to(select3Text, {alpha=1, time=2000}) 
             select3Text:setFillColor( 0, 0, 0 )
+            -- Attach the number of the scene to follow
             select3Text.follows = s.selection[3][2]
+            print(s.selection[3][2])
+            -- Attach the name of the scene we are working in
             select3Text.index = s.sName
         end
 
         textContainer.isVisible = true;
-        sceneText.text = s.text
+
+        -- Set the text or call it depending on the type
+        if type(s.text)=='function' then sceneText.text = s.text() else sceneText.text = s.text end
         setAnchor(sceneText)
         sceneText.alpha = 0
         transition.to(sceneText, {alpha=1, time=2000}) 
         sceneText:setFillColor( 0, 0, 0 )
 
+        -- Nullify the link from the main text in the scene
         sceneText.follows = nil
         sceneText.index = nil
 
 
     else
-        if s.clearSelection then 
+        if s.clearSelection then
+            -- Clearing leftovers from the right blocks 
             print('This sceene needs clearSelection')
             select1Container.isVisible = false
             select1Text.isVisible = false
@@ -1178,14 +1408,16 @@ function loadScene(s)
             select3Container.isVisible = false
             select3Text.isVisible = false
         end 
+
+        -- Set Main Text
         print('Scene has no selection')
         textContainer.isVisible = true;
-        -- Set Text
         sceneText.text = s.text
         setAnchor(sceneText)
         sceneText.alpha = 0
         transition.to(sceneText, {alpha=1, time=1000}) 
         sceneText:setFillColor( 0, 0, 0 )
+        -- Attaching following scene number and name of the scene we are working in
         sceneText.follows = s.follows
         sceneText.index = s.sName
     end
@@ -1213,7 +1445,6 @@ end
 -- Loading game for a first time
 local myListener = function( event )
     print("myListener called")
-    -- Runtime:removeEventListener("touch", myListener)
 
     textContainer = display.newImage(textLayers, "images/text_back.png") setAnchor(textContainer)
     textContainer.x = 10 textContainer.y = 560 
@@ -1225,10 +1456,13 @@ local myListener = function( event )
 
     sceneText = display.newText(textLayers, '', 50, 610, 900, display.contentHeight * 0.5, 'PTSans-Regular', 18)
 
+    print('Now adding Listeners in main')
+    -- listeners for the right blocks
     select1Text:addEventListener( "touch", sceneTextTouch)
     select2Text:addEventListener( "touch", sceneTextTouch)
     select3Text:addEventListener( "touch", sceneTextTouch)
     
+    -- listener for the main text
     sceneText:addEventListener( "touch", sceneTextTouch)
 
     loadScene(scenes[39])
