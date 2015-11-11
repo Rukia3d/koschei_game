@@ -860,7 +860,7 @@ scenes[40] = {
 
 scenes[41] = {
     sName = 41,
-    text = '<i>"If you ride to the left, you will lose your horse. If you ride to the right, you will lose your head. If you ride straight ahead, you will lose both."</i>',
+    text = '"If you ride to the left, you will lose your horse. If you ride to the right, you will lose your head. If you ride straight ahead, you will lose both."',
     selection = {
         [1] = {'Choose to go left', 42},
         [2] = {'Choose to go straight', 43},
@@ -1022,10 +1022,12 @@ scenes[50] = {
         transition.to(landscape2, {y=0, time=1000, delay=2000})
         transition.to(shadowLayer6, {alpha=1, time=1000, delay=3000})
         transition.to(throne, {y=-30, time=500, delay=4000})
+        transition.to(birdSymbol, {y=320, time=500, delay=4000})
     end,
     animationComplete =  function()
         landscape2.y=0
         shadowLayer6.alpha=1
+        throne.y=-30
         foreground.y=0
     end
 
@@ -1290,12 +1292,18 @@ local function setStageObjects(stage)
             if choices.brother=='Falcon' then
                 landscape2 = display.newImage(midlayer1, "images/act6_landscape2y.png", true)
                 throne = display.newImage(midlayer2, "images/act6_chairRed.png", true)
+                birdSymbol = display.newImage(midlayer2, "images/act6_Falcon_stand.png", true)
+                setAnchor(birdSymbol) birdSymbol.x = 210 birdSymbol.y = -200
             elseif choices.brother=='Raven' then
                 landscape2 = display.newImage(midlayer1, "images/act6_landscape2b.png", true)
                 throne = display.newImage(midlayer2, "images/act6_chairBlue.png", true)
+                birdSymbol = display.newImage(midlayer2, "images/act6_Raven_stand.png", true)
+                setAnchor(birdSymbol) birdSymbol.x = 215 birdSymbol.y = -200
             else
                 landscape2 = display.newImage(midlayer1, "images/act6_landscape2r.png", true)
                 throne = display.newImage(midlayer2, "images/act6_chairGold.png", true)
+                birdSymbol = display.newImage(midlayer2, "images/act6_Eagle_stand.png", true)
+                setAnchor(birdSymbol) birdSymbol.x = 200 birdSymbol.y = -200
             end
 
             setAnchor(landscape2) landscape2.x = 0 landscape2.y = -1000
@@ -1474,7 +1482,7 @@ local myListener = function( event )
     -- listener for the main text
     sceneText:addEventListener( "touch", sceneTextTouch)
 
-    loadScene(scenes[50])
+    loadScene(scenes[39])
 end
 
 background:addEventListener( "touch", myListener )
