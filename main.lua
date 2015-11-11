@@ -233,10 +233,10 @@ local scenes = {};
     }
     scenes[4] = {
         sName = 4,
-        text = 'Alena, I\'m going to Tsar-gorod, so keep an eye on your brother. I\'ll be back before the sun goes down. Do you remember the rules?',
+        text = '"Alena, I\'m going to Tsar-gorod, so keep an eye on your brother. I\'ll be back before the sun goes down. Do you remember the rules?"',
         selection = {
-            [1] = {'Yes, I do.', 5},
-            [2] = {'Remind me, please, just in case.', 7}
+            [1] = {'"Yes, I do."', 5},
+            [2] = {'"Remind me, please, just in case."', 7}
         },
         animations = function()
             showDialogue(Mother)
@@ -345,10 +345,10 @@ local scenes = {};
     }
     scenes[12] = {
         sName = 12,
-        text = 'Ivan: Alena, can I go and play near the basement door? It is cooler there than in the rest of the house.',
+        text = 'Ivan: "Alena, can I go and play near the basement door? It is cooler there than in the rest of the house."',
         selection = {
-            [1] = {'Sure, but promise me you won\'t open the basement door.', 13},
-            [2] = {'No, stay here in the greatroom.', 15}
+            [1] = {'"Sure, but promise me you won\'t open the basement door."', 13},
+            [2] = {'"No, stay here in the greatroom."', 15}
         },
         animations = function()
             showDialogue(Ivan)
@@ -378,7 +378,7 @@ local scenes = {};
     }
     scenes[14] = {
         sName = 14,
-        text = 'When it is time for lunch, Alena calls to her brother, but he doesn\'t answer. “He is probably too busy with his toys!” thinks Alena. Then, she goes looking for him.',
+        text = 'When it is time for lunch, Alena calls to her brother, but he doesn\'t answer. "He is probably too busy with his toys!" thinks Alena. Then, she goes looking for him.',
         follows = 18,
         clearSelection = true,
         animations = function() 
@@ -404,7 +404,7 @@ local scenes = {};
     }
     scenes[16] = {
         sName = 16,
-        text = 'Around noon, Alena cooks lunch, and when she finishes, she calls for her brother, but gets no reply. “Foolish boy!” she thinks.',
+        text = 'Around noon, Alena cooks lunch, and when she finishes, she calls for her brother, but gets no reply. "Foolish boy!" she thinks.',
         follows = 17,
         clearSelection = true,
         animations = function()
@@ -417,7 +417,7 @@ local scenes = {};
     }
     scenes[17] = {
         sName = 17,
-        text = '“He probably went to play near the basement door anyway. The midday heat doesn\'t reach there, so it stays nice and cool.” So she heads for the basement door.',
+        text = '"He probably went to play near the basement door anyway. The midday heat doesn\'t reach there, so it stays nice and cool." So she heads for the basement door.',
         follows = 18,
         clearSelection = true,
         animations = function()
@@ -432,7 +432,7 @@ local scenes = {};
             [1] = 'background3.png', 
             [2] = 'foreground3.png'
         },
-        text = 'Suddenly, Alena sees that the heavy wooden door to the basement is ajar, and she hears a faint whispering “Water, please, give me some water..”',
+        text = 'Suddenly, Alena sees that the heavy wooden door to the basement is ajar, and she hears a faint whispering "Water, please, give me some water..."',
         follows = 19,
         clearSelection = true,
         animations = function()
@@ -452,10 +452,10 @@ local scenes = {};
     }
     scenes[19] = {
         sName = 19, 
-        text = 'Ivan is within, standing in front of an old man, all skin and bones, and bound to the wall with twelve iron chains. “Water, please, give me some water..” pleads the old man.',
+        text = 'Ivan is within, standing in front of an old man, all skin and bones, and bound to the wall with twelve iron chains. "Water, please, give me some water.." pleads the old man.',
         selection = {
-            [1] = {'Who are you? What are you doing here?', 20},
-            [2] = {'Ivan, step back, don’t get closer!', 21}
+            [1] = {'"Who are you? What are you doing here?"', 20},
+            [2] = {'"Ivan, step back, don’t get closer!"', 21}
         },
         clearSelection = true,
         animations = function() 
@@ -472,7 +472,7 @@ local scenes = {};
     }
     scenes[20] = {
         sName = 20,
-        text = '“I am just an old man… Your mother imprisoned me long ago for my evil deeds. I haven\'t seen the sunlight in years. Be a good girl, give me some water…”',
+        text = 'Prisoner: "I am just an old man… Your mother imprisoned me long ago for my evil deeds. I haven\'t seen the sunlight in years. Be a good girl, give me some water..."',
         clearSelection = true,
         selection = {
             [1] = {'Give the old man some water', 22},
@@ -489,7 +489,7 @@ local scenes = {};
     }
     scenes[21] = {
         sName = 21,
-        text = '“Have no fear of me, children. I am old and famished. I mean you no harm. All I ask is a bucket of water to wet my throat. Have mercy, help me please.”',
+        text = 'Prisoner: "Have no fear of me, children. I am old and famished. I mean you no harm. All I ask is a bucket of water to wet my throat. Have mercy, help me please."',
         clearSelection = true,
         selection = {
             [1] = {'Give the old man some water', 22},
@@ -509,7 +509,7 @@ local scenes = {};
         changeFlow = function()
             choices.bucket=1
         end,
-        text = '“Thank you child. (He drinks the bucket in one gulp.) Neither food nor drink has passed my lips for ages. Please, will you fetch me another bucket?”',
+        text = 'Prisoner: "Thank you child. (He drinks the bucket in one gulp.) Neither food nor drink has passed my lips for ages. Please, will you fetch me another bucket?"',
         clearSelection = true,
         selection = {
             [1] = {'Give the old man more water', 23},
@@ -533,7 +533,7 @@ local scenes = {};
         changeFlow = function()
             choices.bucket = 2
         end,
-        text = '“Thank you child. (He drinks the bucket in one gulp.) Neither food nor drink has passed my lips for ages. Please, will you fetch me another bucket?”',
+        text = 'Prisoner: "Thank you child. (He drinks the bucket in one gulp.) Neither food nor drink has passed my lips for ages. Please, will you fetch me another bucket?"',
         clearSelection = true,
         selection = {
             [1] = {'Give the old man more water', 24},
@@ -554,7 +554,7 @@ local scenes = {};
     }
     scenes[24] = {
         sName = 24,
-        text = '“Thank you, girl, for your kindness. For that I won\'t eat you. But you are a disobedient daughter, so I don\'t need you. I\'ll take your brother instead!”',
+        text = 'Prisoner: "Thank you, girl, for your kindness. For that I won\'t eat you. But you are a disobedient daughter, so I don\'t need you. I\'ll take your brother instead!"',
         follows = 25,
         clearSelection = true,
         animations = function()
@@ -591,7 +591,7 @@ local scenes = {};
     }
     scenes[26] = {
         sName = 26,
-        text = '“Aren\'t you tired of always listening to your mother? Don\'t you want to think for yourself and make decisions like a grown up?” he tries to persuade Alena.',
+        text = 'Prisoner: "Aren\'t you tired of always listening to your mother? Don\'t you want to think for yourself and make decisions like a grown up?" he tries to persuade Alena.',
         clearSelection = true,
         selection = {
             [1] = {'Give the old man some water', 23},
@@ -620,7 +620,7 @@ local scenes = {};
             [1] = 'background2.png', 
             [2] = 'foreground2.png'
         },
-        text = 'Alena takes her brother and closes the door to the basement. When they go up, Ivan reproaches her for being so harsh on the prisoner. “Aren\'t we supposed to respect our elders?” asks Ivan.',
+        text = 'Alena takes her brother and closes the door to the basement. When they go up, Ivan reproaches her for being so harsh on the prisoner. "Aren\'t we supposed to respect our elders?" asks Ivan.',
         follows = 28,
         clearSelection = true,
         animations = function()
@@ -685,7 +685,7 @@ local scenes = {};
     }
     scenes[30] = {
         sName = 30,
-        text = '“Thank you, Ivan, for your kindness. For that I’ll take you with me!” says the bony prisoner and tears off all twelve of his chains, grabs Ivan, swirls on the spot, and in the next second, both are gone.',
+        text = '"Thank you, Ivan, for your kindness. For that I’ll take you with me!" says the bony prisoner and tears off all twelve of his chains, grabs Ivan, swirls on the spot, and in the next second, both are gone.',
         follows = 31,
         clearSelection = true,
         animations = function() 
@@ -738,7 +738,7 @@ local scenes = {};
     }
     scenes[33] = {
         sName = 33,
-        text = 'Mom: Now Koschei will summon his armies and storm the Tsar-gorod. He\'s had dozen of years to plan his revenge for his imprisonment. The Tsar will need my help, so you have to find your brother on your own.',
+        text = 'Mom: "Now Koschei will summon his armies and storm the Tsar-gorod. He\'s had dozen of years to plan his revenge for his imprisonment. The Tsar will need my help, so you have to find your brother on your own."',
         follows = 34,
         animations = function()
             showDialogue(Mother)
@@ -769,7 +769,7 @@ local scenes = {};
     }
     scenes[35] = {
         sName = 35,
-        text='Mom:“That\'s my old friend and loyal companion, Grey Wolf. He helped me to imprison the Koschei last time. He will serve you as good as he served me.” says Alena\'s mother. ',
+        text='Mom: "That\'s my old friend and loyal companion, Grey Wolf. He helped me to imprison the Koschei last time. He will serve you as good as he served me."" says Alena\'s mother. ',
         follows = 36,
         animations = function()
             showDialogue(MotherWar)
@@ -783,7 +783,7 @@ local scenes = {};
         changeFlow = function()
             if choices.bless==true then scenes[36].follows=37 else scenes[36].follows=38 end
         end,
-        text='Mom: “Koschei lives in an icy stronghold to the north. He is Deathless, so there\'s no killing him, but you can get into his castle to save your brother, while he is busy fighting me and the Tsar.”',
+        text='Mom: "Koschei lives in an icy stronghold to the north. He is Deathless, so there\'s no killing him, but you can get into his castle to save your brother, while he is busy fighting me and the Tsar."',
         follows = 37,
         animations = function()
             showDialogue(MotherWar)
@@ -794,7 +794,7 @@ local scenes = {};
     }
     scenes[37] = {
         sName = 37,
-        text='Alena promises that she’ll find her brother, though the road to Koschei’s stronghold is unknown and untrodden. Her mother kisses her on forehead and gives her a motherly blessing.',
+        text='Alena promises that she\'ll find her brother, though the road to Koschei\'s stronghold is unknown and untrodden. Her mother kisses her on forehead and gives her a motherly blessing.',
         follows = 39,
         animations = function()
             hideDialogue()
@@ -805,7 +805,7 @@ local scenes = {};
     }
     scenes[38] = {
         sName = 38,
-        text='Alena promises that she’ll find her brother, though the road to Koschei’s stronghold is unknown and untrodden. Her mother opens a big trunk, takes out her sword and armor. Mother and daughter say their goodbyes.',
+        text='Alena promises that she\'ll find her brother, though the road to Koschei\'s stronghold is unknown and untrodden. Her mother opens a big trunk, takes out her sword and armor. Mother and daughter say their goodbyes.',
         follows = 39,
         animations = function()
             hideDialogue()
@@ -824,7 +824,7 @@ scenes[39] = {
         [2] = 'foreground6.png'
         },
     setStage = 'set39',
-    text='Alena sits on Grey Wolf’s back, hugs his massive neck, and he starts to run - so fast that before the sun touches down on the treetops to the west, they have already reached the crossroads on the other side of the forest.',
+    text='Alena sits on Grey Wolf\'s back, hugs his massive neck, and he starts to run - so fast that before the sun touches down on the treetops to the west, they have already reached the crossroads on the other side of the forest.',
     follows = 40,
     animations = function()
         transition.to(landscape3, {x=0, time=1000, delay=500})
@@ -860,7 +860,7 @@ scenes[40] = {
 
 scenes[41] = {
     sName = 41,
-    text = '“If you ride to the left, you will lose your horse. If you ride to the right, you will lose your head. If you ride straight ahead, you will lose both.”',
+    text = '<i>"If you ride to the left, you will lose your horse. If you ride to the right, you will lose your head. If you ride straight ahead, you will lose both."</i>',
     selection = {
         [1] = {'Choose to go left', 42},
         [2] = {'Choose to go straight', 43},
@@ -936,7 +936,7 @@ scenes[44] = {
 scenes[45] = {
     sName = 45,
     follows = 46,
-    text = '“Is that a Koschei stronghold?” wonders Alena. The night is cold, so Alena shivers, but the walls in front of her don’t look like they are made from ice.',
+    text = '"Is that a Koschei stronghold?"" wonders Alena. The night is cold, so Alena shivers, but the walls in front of her don\'t look like they are made from ice.',
     animations = function() 
         transition.to(fortress, {x=0, time=1000})
         transition.to(fortress2, {x=485, time=1000})
@@ -951,7 +951,7 @@ scenes[45] = {
 scenes[46] = {
     sName = 46,
     text = function() 
-        return '“Don’t get scared, daughter of Marya, it is not Koschei’s lair. It is the domain of your mother’s brother, the shape-shifting wizard who can turn into '..choices.brother1..',” says the Gray Wolf suddenly.'
+        return '"Don’t get scared, daughter of Marya, it is not Koschei\'s lair. It is the domain of your mother\'s brother, the shape-shifting wizard who can turn into '..choices.brother1..'," says the Gray Wolf suddenly.'
     end,
     selection = {
         [1] = {'You can talk?', 47},
@@ -966,7 +966,7 @@ scenes[46] = {
 
 scenes[47] = {
     sName = 47,
-    text = 'Wolf: “I can do many things and before the sun rises, you will see that, daughter of Marya. Before you have to deal with consequences of your choices.”',
+    text = 'Grey Wolf: "I can do many things and before the sun rises, you will see that, daughter of Marya. Before you have to deal with consequences of your choices."',
     selection = {
         [1] = {'My mother has a brother?', 48}
     },
@@ -981,7 +981,7 @@ scenes[47] = {
 scenes[48] = {
     sName = 48,
     clearSelection = true,
-    text = 'Wolf: “Yes, she has three brothers, all wizards who can turn into birds of prey - Eagle, Raven or Falcon. They were inseparable a long time ago, but after traveling to Koschei’s stronghold, they had a falling out.“',
+    text = 'Grey Wolf: "Yes, she has three brothers, all wizards who can turn into birds of prey - Eagle, Raven or Falcon. They were inseparable a long time ago, but after traveling to Koschei\'s stronghold, they had a falling out."',
     follows = 49,
     animations = function()
         showDialogue(Wolf)
@@ -993,7 +993,7 @@ scenes[48] = {
 
 scenes[49] = {
     sName = 49,
-    text = 'It’s getting colder and night is almost upon them, so Alena and Wolf decide to ask her uncle for shelter. His servants open the gate and escort her into the main hall.',
+    text = 'It\'s getting colder and night is almost upon them, so Alena and Wolf decide to ask her uncle for shelter. His servants open the gate and escort her into the main hall.',
     follows = 50,
     clearSelection = true,
     animations = function()
@@ -1015,11 +1015,13 @@ scenes[50] = {
         [1] = 'background7.png', 
         [2] = 'foreground3.png'
     },
-    text = 'Her uncle is seated in a great hall wearing a gloomy look. Alena tells him her sad story, but he doesn’t seem to be affected by it, because he is lost in his own thoughts. “Looks like I won’t get any help from him,” sighs Alena.',
+    text = 'Her uncle is standing in a great hall wearing a gloomy look. Alena tells him her sad story, but he doesn\'t seem to be affected by it, because he is lost in his own thoughts. “Looks like I won\'t get any help from him,” sighs Alena.',
     follows = 51,
     animations = function() 
-        transition.to(landscape2, {y=0, time=1000, delay=1000})
-        transition.to(shadowLayer6, {alpha=1, time=1000, delay=2000})
+        transition.to(landscape3, {x=0, time=1000, delay=1000})
+        transition.to(landscape2, {y=0, time=1000, delay=2000})
+        transition.to(shadowLayer6, {alpha=1, time=1000, delay=3000})
+        transition.to(throne, {y=-30, time=500, delay=4000})
     end,
     animationComplete =  function()
         landscape2.y=0
@@ -1031,10 +1033,10 @@ scenes[50] = {
 
 scenes[51] = {
     sName = 51,
-    text = 'text51',
+    text = 'Uncle: "That’s a very sad story indeed. I remember my own journey to Koschei’s stronghold... It is not a place for a young girl. And if what you told me is true, I need to concentrate on protecting my kingdom, not on helping you."',
     selection = {
-        [1] = {'Choice1', 52},
-        [2] = {'Choice2', 53},
+        [1] = {'"That\'s the reception I get from my own uncle?"', 52},
+        [2] = {' Ask for Gray Wolf\'s advice', 53},
     },
     animations = function() 
     end,
@@ -1282,17 +1284,24 @@ local function setStageObjects(stage)
         set50 = function()
             clearStage()
 
+            landscape3 = display.newImage(midlayer1, "images/act6_landscape3.png", true) setAnchor(landscape3)
+            landscape3.x = -1000 landscape3.y = 130
+
             if choices.brother=='Falcon' then
                 landscape2 = display.newImage(midlayer1, "images/act6_landscape2y.png", true)
+                throne = display.newImage(midlayer2, "images/act6_chairRed.png", true)
             elseif choices.brother=='Raven' then
                 landscape2 = display.newImage(midlayer1, "images/act6_landscape2b.png", true)
+                throne = display.newImage(midlayer2, "images/act6_chairBlue.png", true)
             else
                 landscape2 = display.newImage(midlayer1, "images/act6_landscape2r.png", true)
+                throne = display.newImage(midlayer2, "images/act6_chairGold.png", true)
             end
 
             setAnchor(landscape2) landscape2.x = 0 landscape2.y = -1000
+            setAnchor(throne) throne.x = 250 throne.y = -600
 
-            shadowLayer6 = display.newImage(midlayer2, "images/act6_shadowLayer.png", true) setAnchor(shadowLayer6) shadowLayer6.alpha=0
+            shadowLayer6 = display.newImage(midlayer1, "images/act6_shadowLayer.png", true) setAnchor(shadowLayer6) shadowLayer6.alpha=0
 
             organizeStage() 
         end
@@ -1465,7 +1474,7 @@ local myListener = function( event )
     -- listener for the main text
     sceneText:addEventListener( "touch", sceneTextTouch)
 
-    loadScene(scenes[39])
+    loadScene(scenes[50])
 end
 
 background:addEventListener( "touch", myListener )
