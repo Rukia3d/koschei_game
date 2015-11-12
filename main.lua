@@ -29,9 +29,9 @@ local AlenaS = display.newImage( characters, "images/alena_f_small.png") AlenaS.
 local IvanS = display.newImage( characters, "images/ivan_s_small.png") IvanS.x = 130 IvanS.y = -400
 local MotherS = display.newImage( characters, "images/mother_s_small.png") MotherS.x = 540 MotherS.y = -400 
 local WolfS = display.newImage( characters, "images/wolf_s_small.png") WolfS.x = -200 WolfS.y = -400 
---local EagleS = display.newImage( characters, "images/eagle_f_small.png") EagleS.x = -200 EagleS.y = -400 
---local FalconS = display.newImage( characters, "images/falcon_f_small.png") FalconS.x = -200 FalconS.y = -400 
---local RavenS = display.newImage( characters, "images/raven_f_small.png") RavenS.x = -200 RavenS.y = -400 
+local EagleS = display.newImage( characters, "images/eagle_f_small.png") EagleS.x = -200 EagleS.y = -400 
+local FalconS = display.newImage( characters, "images/falcon_f_small.png") FalconS.x = -200 FalconS.y = -400 
+local RavenS = display.newImage( characters, "images/raven_f_small.png") RavenS.x = -200 RavenS.y = -400 
 
 -- Small characters  changed images
 local AlenaCryS = display.newImage( characters, "images/alena_cry_small.png") AlenaCryS.x = 400 AlenaCryS.y =-400 
@@ -51,9 +51,9 @@ local MotherWar = display.newImage( characters, "images/mother_f_dialogue.png", 
 local Koschei = display.newImage( characters, "images/koschei_f_big.png", false) Koschei.x = 300 Koschei.y = 800
 local KoscheiPlea = display.newImage( characters, "images/kosh_plea_dialogue.png", false) KoscheiPlea.x = 900 KoscheiPlea.y = 800
 local Wolf  = display.newImage( characters, "images/wolf_dialogue.png", false) Wolf.x = 700 Wolf.y = 800
---local Eagle = display.newImage( characters, "images/eagle_dialogue.png") Eagle.x = 400 Eagle.y = 800 
---local Falcon = display.newImage( characters, "images/falcon_dialogue.png") Falcon.x = 400 Falcon.y = 800
---local Raven = display.newImage( characters, "images/raven_dialogue.png") Raven.x = 400 Raven.y = 800  
+local Eagle = display.newImage( characters, "images/eagle_dialogue.png") Eagle.x = 400 Eagle.y = 800 
+local Falcon = display.newImage( characters, "images/falcon_dialogue.png") Falcon.x = 400 Falcon.y = 800
+local Raven = display.newImage( characters, "images/raven_dialogue.png") Raven.x = 400 Raven.y = 800  
 
 -- Set main screen
 local background = display.newImage( "images/startScreen.png") background.x = display.contentWidth / 2 background.y = display.contentHeight / 2
@@ -1289,21 +1289,31 @@ local function setStageObjects(stage)
             landscape3 = display.newImage(midlayer1, "images/act6_landscape3.png", true) setAnchor(landscape3)
             landscape3.x = -1000 landscape3.y = 130
 
+            local BrotherS local BrotherD
+
             if choices.brother=='Falcon' then
                 landscape2 = display.newImage(midlayer1, "images/act6_landscape2y.png", true)
                 throne = display.newImage(midlayer2, "images/act6_chairRed.png", true)
                 birdSymbol = display.newImage(midlayer2, "images/act6_Falcon_stand.png", true)
                 setAnchor(birdSymbol) birdSymbol.x = 210 birdSymbol.y = -200
+                BrotherS = FalconS
+                BrotherD = Falcon
+
             elseif choices.brother=='Raven' then
                 landscape2 = display.newImage(midlayer1, "images/act6_landscape2b.png", true)
                 throne = display.newImage(midlayer2, "images/act6_chairBlue.png", true)
                 birdSymbol = display.newImage(midlayer2, "images/act6_Raven_stand.png", true)
                 setAnchor(birdSymbol) birdSymbol.x = 215 birdSymbol.y = -200
+                BrotherS = RavenS
+                BrotherD = Raven
             else
                 landscape2 = display.newImage(midlayer1, "images/act6_landscape2r.png", true)
                 throne = display.newImage(midlayer2, "images/act6_chairGold.png", true)
                 birdSymbol = display.newImage(midlayer2, "images/act6_Eagle_stand.png", true)
                 setAnchor(birdSymbol) birdSymbol.x = 200 birdSymbol.y = -200
+                BrotherS = EagleS
+                BrotherD = Eagle
+
             end
 
             setAnchor(landscape2) landscape2.x = 0 landscape2.y = -1000
