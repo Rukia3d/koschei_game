@@ -28,15 +28,17 @@ local textLayers = display.newGroup()
 local AlenaS = display.newImage( characters, "images/alena_f_small.png") AlenaS.x = 200 AlenaS.y = -400 
 local IvanS = display.newImage( characters, "images/ivan_s_small.png") IvanS.x = 130 IvanS.y = -400
 local MotherS = display.newImage( characters, "images/mother_s_small.png") MotherS.x = 540 MotherS.y = -400 
-local WolfS = display.newImage( characters, "images/wolf_s_small.png") WolfS.x = -200 WolfS.y = -400 
-local EagleS = display.newImage( characters, "images/eagle_f_small.png") EagleS.x = -200 EagleS.y = -400 
-local FalconS = display.newImage( characters, "images/falcon_f_small.png") FalconS.x = -200 FalconS.y = -400 
-local RavenS = display.newImage( characters, "images/raven_f_small.png") RavenS.x = -200 RavenS.y = -400 
+local WolfS = display.newImage( characters, "images/wolf_s_small.png") WolfS.x = -200 WolfS.y = -400
+local WolfSit = display.newImage( characters, "images/wolf_f_small.png") WolfSit.x = -200 WolfS.y = -400  
+local EagleS = display.newImage( characters, "images/eagle_f_small.png") EagleS.x = 500 EagleS.y = -400 
+local FalconS = display.newImage( characters, "images/falcon_f_small.png") FalconS.x = 500 FalconS.y = -400 
+local RavenS = display.newImage( characters, "images/raven_f_small.png") RavenS.x = 500 RavenS.y = -400 
 
 -- Small characters  changed images
 local AlenaCryS = display.newImage( characters, "images/alena_cry_small.png") AlenaCryS.x = 400 AlenaCryS.y =-400 
 local MotherWarS = display.newImage( characters, "images/mother_f_small.png") MotherWarS.x = 600 MotherWarS.y = -400  
-local AlenaOnWolf = display.newImage( characters, "images/alena_on_wolf.png") AlenaOnWolf.x = 1200 AlenaOnWolf.y = 270 
+local AlenaOnWolf = display.newImage( characters, "images/alena_on_wolf.png") AlenaOnWolf.x = 1200 AlenaOnWolf.y = 270
+local AlenaOnWolfNoRibbon = display.newImage( characters, "images/alena_on_wolf_noR.png") AlenaOnWolfNoRibbon.x = 1200 AlenaOnWolfNoRibbon.y = 270
 
 -- Background for dialogue stage
 local dialBack = display.newImage(characters, "images/dialBack.png", true )
@@ -53,7 +55,11 @@ local KoscheiPlea = display.newImage( characters, "images/kosh_plea_dialogue.png
 local Wolf  = display.newImage( characters, "images/wolf_dialogue.png", false) Wolf.x = 700 Wolf.y = 800
 local Eagle = display.newImage( characters, "images/eagle_dialogue.png") Eagle.x = 400 Eagle.y = 800 
 local Falcon = display.newImage( characters, "images/falcon_dialogue.png") Falcon.x = 400 Falcon.y = 800
-local Raven = display.newImage( characters, "images/raven_dialogue.png") Raven.x = 400 Raven.y = 800  
+local Raven = display.newImage( characters, "images/raven_dialogue.png") Raven.x = 400 Raven.y = 800 
+
+-- Changing variables
+local BrotherS = EagleS 
+local BrotherD = Eagle
 
 -- Set main screen
 local background = display.newImage( "images/startScreen.png") background.x = display.contentWidth / 2 background.y = display.contentHeight / 2
@@ -132,11 +138,18 @@ function openingAnimation(backg, foregr)
     transition.to(foreground, {y=0, time=1000})
 end
 
-function ridingWolfNightBlue()
+function ridingWolftoRight(AlenaRibbon)
     transition.to(landscape2, {x=-500, time=3000 })
     transition.to(landscape1, {x=0, time=3000 })
     transition.to(starsAndMoon, {y=0, time=1000})
-    transition.to(AlenaOnWolf, {x=800, time=3000})
+    transition.to(AlenaRibbon, {x=800, time=3000})
+end
+
+function ridingWolftoLeft(AlenaRibbon)
+    AlenaRibbon.xScale=-1 AlenaRibbon.x=0
+    transition.to(AlenaRibbon, {x=400, time=3000})
+    transition.to(landscape2, {x=-1300, time=3000 })
+    transition.to(landscape1, {x=-1500, time=3000 })
 end
 
 -----------------------------------------------------------------------------------------
@@ -169,6 +182,7 @@ choices = {
     bucket = 0,
     brother = 'Eagle',
     brother1 = 'an eagle',
+    advice = true,
 }
 
 local scenes = {}; 
@@ -815,7 +829,7 @@ local scenes = {};
         end
     }
 
--------- Act 2 Scenes 39 - 
+-------- Act 2 Scenes 39 - 61
 
 scenes[39] = {
     sName = 39,
@@ -889,7 +903,7 @@ scenes[42] = {
         choices.brother1 = 'an eagle'
     end,
     animations = function()
-        ridingWolfNightBlue()
+        ridingWolftoRight(AlenaOnWolf)
         transition.to(fortress, {x=-300, time=1000, delay=2500})
         transition.to(fortress2, {x=185, time=1000, delay=2500})
     end, 
@@ -907,7 +921,7 @@ scenes[43] = {
         choices.brother1 = 'a raven'
     end,
     animations = function()
-        ridingWolfNightBlue()
+        ridingWolftoRight(AlenaOnWolf)
         transition.to(fortress2, {x=185, time=1000, delay=2500})
         transition.to(fortress, {x=-300, time=1000, delay=2500})
     end, 
@@ -925,7 +939,7 @@ scenes[44] = {
         choices.brother1 = 'a falcon'
     end,
     animations = function()
-        ridingWolfNightBlue()
+        ridingWolftoRight(AlenaOnWolf)
         transition.to(fortress, {x=-300, time=1000, delay=2500})
         transition.to(fortress2, {x=185, time=1000, delay=2500})
     end, 
@@ -966,12 +980,11 @@ scenes[46] = {
 
 scenes[47] = {
     sName = 47,
-    text = 'Grey Wolf: "I can do many things and before the sun rises, you will see that, daughter of Marya. Before you have to deal with consequences of your choices."',
-    selection = {
-        [1] = {'My mother has a brother?', 48}
-    },
+    text = 'Alena: "You can talk?"',
+    follows = 48,
+    clearSelection = true,
     animations = function()
-        showDialogue(Wolf)
+        showDialogue(Alena)
     end,
     animationComplete =  function()
         hideDialogue()
@@ -980,9 +993,10 @@ scenes[47] = {
 
 scenes[48] = {
     sName = 48,
-    clearSelection = true,
-    text = 'Grey Wolf: "Yes, she has three brothers, all wizards who can turn into birds of prey - Eagle, Raven or Falcon. They were inseparable a long time ago, but after traveling to Koschei\'s stronghold, they had a falling out."',
-    follows = 49,
+    text = 'Grey Wolf: "I can do many things and before the sun rises, you will see that, daughter of Marya. Before you have to deal with consequences of your choices."',
+    selection = {
+        [1] = {'My mother has a brother?', 49}
+    },
     animations = function()
         showDialogue(Wolf)
     end,
@@ -993,8 +1007,35 @@ scenes[48] = {
 
 scenes[49] = {
     sName = 49,
-    text = 'It\'s getting colder and night is almost upon them, so Alena and Wolf decide to ask her uncle for shelter. His servants open the gate and escort her into the main hall.',
     follows = 50,
+    text = 'Alena: "My mother has a brother?"',
+    clearSelection = true,
+    animations = function()
+        showDialogue(Alena)
+    end,
+    animationComplete =  function()
+        hideDialogue()
+    end
+}
+
+
+scenes[50] = {
+    sName = 50,
+    clearSelection = true,
+    text = 'Grey Wolf: "Yes, she has three brothers, all wizards who can turn into birds of prey - Eagle, Raven or Falcon. They were inseparable a long time ago, but after traveling to Koschei\'s stronghold, they had a falling out."',
+    follows = 51,
+    animations = function()
+        showDialogue(Wolf)
+    end,
+    animationComplete =  function()
+        hideDialogue()
+    end
+}
+
+scenes[51] = {
+    sName = 51,
+    text = 'It\'s getting colder and night is almost upon them, so Alena and Wolf decide to ask her uncle for shelter. His servants open the gate and escort her into the main hall.',
+    follows = 52,
     clearSelection = true,
     animations = function()
         hideDialogue()
@@ -1008,76 +1049,203 @@ scenes[49] = {
     end
 }
 
-scenes[50] = {
-    sName = 50,
-    setStage = 'set50',
+scenes[52] = {
+    sName = 52,
+    setStage = 'set52',
     openingAnimation = {
         [1] = 'background7.png', 
         [2] = 'foreground3.png'
     },
-    text = 'Her uncle is standing in a great hall wearing a gloomy look. Alena tells him her sad story, but he doesn\'t seem to be affected by it, because he is lost in his own thoughts. “Looks like I won\'t get any help from him,” sighs Alena.',
-    follows = 51,
+    text = 'Her uncle is standing in a great hall wearing a gloomy look. Alena tells him her sad story, but he doesn\'t seem to be affected by it, because he is lost in his own thoughts. "Looks like I won\'t get any help from him," sighs Alena.',
+    follows = 53,
     animations = function() 
+        WolfSit.x=900
+        AlenaS.x=740
         transition.to(landscape3, {x=0, time=1000, delay=1000})
         transition.to(landscape2, {y=0, time=1000, delay=2000})
         transition.to(shadowLayer6, {alpha=1, time=1000, delay=3000})
+        transition.to(WolfSit,{y=270, time=1000, delay=3000})
+        transition.to(AlenaS,{y=280, time=1000, delay=3000})
         transition.to(throne, {y=-30, time=500, delay=4000})
         transition.to(birdSymbol, {y=320, time=500, delay=4000})
+        transition.to(BrotherS, {y=300, delay=4000, time=1000})
     end,
     animationComplete =  function()
+        foreground.y=0
+        landscape3.x=0
         landscape2.y=0
+        WolfSit.x=900 WolfSit.y=270
+        AlenaS.x=740 AlenaS.y=280
+        birdSymbol.y=320
+        BrotherS.y=300
         shadowLayer6.alpha=1
         throne.y=-30
-        foreground.y=0
     end
 
-}
-
-scenes[51] = {
-    sName = 51,
-    text = 'Uncle: "That’s a very sad story indeed. I remember my own journey to Koschei’s stronghold... It is not a place for a young girl. And if what you told me is true, I need to concentrate on protecting my kingdom, not on helping you."',
-    selection = {
-        [1] = {'"That\'s the reception I get from my own uncle?"', 52},
-        [2] = {' Ask for Gray Wolf\'s advice', 53},
-    },
-    animations = function() 
-    end,
-    animationComplete =  function()
-    end
-}
-
-scenes[52] = {
-    sName = 52,
-    text = 'text52',
-    follows = 54,
-    clearSelection = true,
-    animations = function() 
-    end,
-    animationComplete =  function()
-    end
 }
 
 scenes[53] = {
     sName = 53,
-    text = 'text53',
-    follows = 54,
-    clearSelection = true,
+    text = 'Uncle: "That’s a very sad story indeed. I remember my own journey to Koschei’s stronghold... It is not a place for a young girl. And if what you told me is true, I need to concentrate on protecting my kingdom, not on helping you."',
+    selection = {
+        [1] = {'"That\'s the reception I get from my own uncle?"', 54},
+        [2] = {' Ask for Gray Wolf\'s advice', 56},
+    },
     animations = function() 
+        showDialogue(BrotherD)
     end,
     animationComplete =  function()
+        hideDialogue()
     end
 }
 
 scenes[54] = {
     sName = 54,
-    text = 'text54',
+    text = 'Alena: "That\'s the reception I get from my own uncle?"',
     follows = 55,
+    clearSelection = true,
+    animations = function() 
+        showDialogue(Alena)
+    end,
+    animationComplete = function()
+        hideDialogue()
+        choices.advice = false
+    end
+}
+
+scenes[55] = {
+    sName = 55,
+    text = 'Uncle: "If blood was really thicker than water, I wouldn\'t be in such a predicament. You can stay for one night, and continue your journey in the morning, but that is it."',
+    follows = 57,
+    animations = function()
+        showDialogue(BrotherD) 
+    end,
+    animationComplete =  function()
+        hideDialogue()
+    end
+}
+
+scenes[56] = {
+    sName = 56,
+    text = 'Alena turns to Gray Wolf for advice, and he tells her to offer help instead of demanding help. Though not sure how it might work, Alena offers to help her uncle deal with his predicament.',
+    follows = 57,
+    clearSelection = true,
+    animations = function() 
+        hideDialogue()
+    end,
+    animationComplete =  function()
+        choices.advice = true
+    end
+}
+
+scenes[57] = {
+    sName = 57,
+    text = 'Uncle: "There\'s bad blood between me and my brothers. Years ago, we stole a seed from a tree with golden apples and a horse with a golden mane from Koshei. But my brothers took them and left me with nothing."',
+    follows = 58,
+    animations = function() 
+        showDialogue(BrotherD)
+    end,
+    animationComplete =  function()
+    end
+}
+
+scenes[58] = {
+    sName = 58,
+    text = 'Uncle: "So if you want to help me - steal at least one golden apple and the horse for me. Then I’ll think about telling you how to get into Koschei’s castle."',
+    follows = 59,
+    changeFlow = function()
+        if BrotherD == Falcon then scenes[58].follows = 59
+        elseif BrotherD == Raven then scenes[58].follows = 60
+        else scenes[58].follows = 61
+        end
+    end,
+    animations = function() 
+    end,
+    animationComplete =  function()
+        hideDialogue()
+    end
+}
+
+scenes[59] = {
+    sName = 59,
+    text = 'Alena reluctantly agrees, though she has no idea how she is going to steal the horse or apples from her uncles Raven and Eagle. But Gray Wolf tells her not to grieve and before the moon comes up, they are racing to the Raven domain.',
+    follows = 62,
+    animations = function()
+        hideDialogue() 
+    end,
+    animationComplete =  function()
+    end
+}
+
+scenes[60] = {
+    sName = 60,
+    text = 'Alena reluctantly agrees, though she has no idea how she is going to steal the horse or apples from her uncles Falcon and Eagle. But Gray Wolf tells her not to grieve and before the moon comes up, they are racing to the Falcon domain.',
+    follows = 62,
+    animations = function() 
+        hideDialogue()
+    end,
+    animationComplete =  function()
+    end
+}
+
+scenes[61] = {
+    sName = 61,
+    text = 'Alena reluctantly agrees, though she has no idea how she is going to steal the horse or apples from her uncles Raven and Falcon. But Gray Wolf tells her not to grieve and before the moon comes up, they are racing to the Raven domain.',
+    follows = 62,
+    animations = function() 
+        hideDialogue()
+    end,
+    animationComplete =  function()
+    end
+}
+
+-------- Act 3 Scenes 62 - 
+
+scenes[62] = {
+    setStage = 'set62',
+    sName = 62,
+    text = 'They rush at full speed, so the lights of the stars in the sky flow together into a river of spilled milk. On the way, the north wind tears away a ribbon from Alena’s braid.',
+    selection = {
+        [1] = {'Tell the Gray Wolf about the ribbon', 63},
+        [2] = {'Forget about the ribbon', 64},
+    },
+    animations = function()
+        transition.to(ribbon, {x=550, time=3000})
+        transition.to(ribbon, {x=50, time=1000, delay=2000})
+        transition.to(ribbon, {y=400, time=1000, delay=2000})
+        transition.to(ribbon, {alpha=0, time=1, delay=3000})
+        ridingWolftoLeft(AlenaOnWolfNoRibbon)
+    end,
+    animationComplete = function()
+        ribbon.alpha=0
+        AlenaOnWolfNoRibbon.xScale=-1
+        AlenaOnWolfNoRibbon.x=400
+        landscape2.x=-1300
+        landscape1.x=-1500
+    end
+}
+
+scenes[63] = {
+    sName = 63,
+    text = 'Gray Wolf grins while Alena tells him how the wind stole her ribbon. "Your ribbon is now five miles behind us, because even wind can’t keep pace with me."',
+    follows = 64,
+    clearSelection = true,
     animations = function() 
     end,
     animationComplete =  function()
     end
 }
 
+scenes[64] = {
+    sName = 64,
+    text = 'Soon they get to the castle. With one jump, Gray Wolf leaps over the castle walls into a garden.',
+    follows = 65,
+    clearSelection = true,
+    animations = function()
+    end,
+    animationComplete =  function()
+    end
+}
 -----------------------------------------------------------------------------------
 --
 -- FUNCTIONS
@@ -1108,11 +1276,12 @@ function showDialogue(name)
     if name==KoscheiPlea then KoscheiPlea.x=200 transition.to(name, {y=400, time=500}) end
     if name==Koschei then transition.to(name, {y=400, time=500}) end
     if name==Wolf then Wolf.x=700 transition.to(name, {y=430, time=500}) end
+    if name==BrotherD then BrotherD.x=300 transition.to(name, {y=400, time=500}) end
 
 end
 
 function hideDialogue()
-    local characters = {Mother, Alena, Ivan, KoscheiPlea, Koschei, MotherWar, Wolf}
+    local characters = {Mother, Alena, Ivan, KoscheiPlea, Koschei, MotherWar, Wolf, BrotherD}
     for i=1, table.getn(characters) do characters[i].y = -700 end
     transition.to(dialBack, {y = -800, time=500})
     --dialBack.y = -800
@@ -1155,7 +1324,12 @@ function removeCharacters()
     AlenaCryS.x = 400 AlenaCryS.y = -400
     MotherWarS.x = 600 MotherWarS.y = -400
     WolfS.x=-300 WolfS.y=-400
+    WolfSit.x=600 WolfSit.y=-400
     AlenaOnWolf.x=1200 AlenaOnWolf.y=270
+    AlenaOnWolfNoRibbon.x=1200 AlenaOnWolfNoRibbon.y=270
+    FalconS.x= 500 FalconS.y=-400
+    EagleS.x = 500 EagleS.y=-400
+    RavenS.x = 500 RavenS.y=-400
 end
 
 -- Move layers in the right order
@@ -1252,6 +1426,7 @@ local function setStageObjects(stage)
         end,
         set39 = function()
             clearStage()
+
             starsAndMoon = display.newImage(midlayer1, "images/act5_stars.png", true) setAnchor(starsAndMoon )
             starsAndMoon.x = 100 starsAndMoon.y = -500
 
@@ -1283,13 +1458,11 @@ local function setStageObjects(stage)
 
             organizeStage()
         end,
-        set50 = function()
+        set52 = function()
             clearStage()
 
             landscape3 = display.newImage(midlayer1, "images/act6_landscape3.png", true) setAnchor(landscape3)
             landscape3.x = -1000 landscape3.y = 130
-
-            local BrotherS local BrotherD
 
             if choices.brother=='Falcon' then
                 landscape2 = display.newImage(midlayer1, "images/act6_landscape2y.png", true)
@@ -1304,7 +1477,7 @@ local function setStageObjects(stage)
                 throne = display.newImage(midlayer2, "images/act6_chairBlue.png", true)
                 birdSymbol = display.newImage(midlayer2, "images/act6_Raven_stand.png", true)
                 setAnchor(birdSymbol) birdSymbol.x = 215 birdSymbol.y = -200
-                BrotherS = RavenS
+                BrotherS = RavenS 
                 BrotherD = Raven
             else
                 landscape2 = display.newImage(midlayer1, "images/act6_landscape2r.png", true)
@@ -1322,7 +1495,32 @@ local function setStageObjects(stage)
             shadowLayer6 = display.newImage(midlayer1, "images/act6_shadowLayer.png", true) setAnchor(shadowLayer6) shadowLayer6.alpha=0
 
             organizeStage() 
+        end,
+        set62 = function()
+            removeCharacters()
+            clearStage() 
+
+            landscape3 = display.newImage(midlayer1, "images/background7.png", true) setAnchor(landscape3)
+            landscape3.x = 0 landscape3.y = 0
+
+            landscape2 = display.newImage(midlayer1, "images/act5_landscape2.png", true) setAnchor(landscape2)
+            landscape2.x = -400 landscape2.y = 0
+
+
+            landscape1 = display.newImage(midlayer1, "images/act5_landscape1.png", true) setAnchor(landscape1)
+            landscape1.x = 0 landscape1.y = 400
+
+            shadowLayer5 = display.newImage(midlayer2, "images/act5_shadowLayer.png", true) setAnchor(shadowLayer5) shadowLayer5.alpha=1
+
+            ribbon = display.newImage(midlayer3, "images/ribbon_single.png") setAnchor(ribbon)
+            ribbon.xScale = -1 
+            ribbon.x = 150 ribbon.y=30 
+
+            foreground = display.newImage(midlayer3, "images/foreground6.png", true ) setAnchor(foreground)
+
+            organizeStage() 
         end
+
     }
     stages[stage]()
 end
