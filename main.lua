@@ -11,6 +11,8 @@
 -----------------------------------------------------------------------------------------
 -- Start with display groups
 local characters = display.newGroup()
+local charactersAdd = display.newGroup()
+
 local midlayer1 = display.newGroup()
 midlayer1.anchorX = 0 midlayer1.anchorY = 0 
 local midlayer2 = display.newGroup()
@@ -30,9 +32,10 @@ local IvanS = display.newImage( characters, "images/ivan_s_small.png") IvanS.x =
 local MotherS = display.newImage( characters, "images/mother_s_small.png") MotherS.x = 540 MotherS.y = -400 
 local WolfS = display.newImage( characters, "images/wolf_s_small.png") WolfS.x = -200 WolfS.y = -400
 local WolfSit = display.newImage( characters, "images/wolf_f_small.png") WolfSit.x = -200 WolfS.y = -400  
-local EagleS = display.newImage( characters, "images/eagle_f_small.png") EagleS.x = 500 EagleS.y = -400 
+local EagleS = display.newImage( characters, "images/eagle_f_small.png") EagleS.x = 500 EagleS.y = -400
 local FalconS = display.newImage( characters, "images/falcon_f_small.png") FalconS.x = 500 FalconS.y = -400 
-local RavenS = display.newImage( characters, "images/raven_f_small.png") RavenS.x = 500 RavenS.y = -400 
+local RavenS = display.newImage( characters, "images/raven_f_small.png") RavenS.x = 500 RavenS.y = -400  
+
 
 -- Small characters  changed images
 local AlenaCryS = display.newImage( characters, "images/alena_cry_small.png") AlenaCryS.x = 400 AlenaCryS.y =-400 
@@ -53,13 +56,17 @@ local MotherWar = display.newImage( characters, "images/mother_f_dialogue.png", 
 local Koschei = display.newImage( characters, "images/koschei_f_big.png", false) Koschei.x = 300 Koschei.y = 800
 local KoscheiPlea = display.newImage( characters, "images/kosh_plea_dialogue.png", false) KoscheiPlea.x = 900 KoscheiPlea.y = 800
 local Wolf  = display.newImage( characters, "images/wolf_dialogue.png", false) Wolf.x = 700 Wolf.y = 800
-local Eagle = display.newImage( characters, "images/eagle_dialogue.png") Eagle.x = 400 Eagle.y = 800 
+local Eagle = display.newImage( characters, "images/eagle_dialogue.png") Eagle.x = 400 Eagle.y = 800
 local Falcon = display.newImage( characters, "images/falcon_dialogue.png") Falcon.x = 400 Falcon.y = 800
-local Raven = display.newImage( characters, "images/raven_dialogue.png") Raven.x = 400 Raven.y = 800 
+local Raven = display.newImage( characters, "images/raven_dialogue.png") Raven.x = 400 Raven.y = 800  
+
 
 -- Changing variables
 local BrotherS = EagleS 
 local BrotherD = Eagle
+local StrongholdBR = display.newImage(midlayer2, "images/act7_Raven_stronghold.png", true) StrongholdBR.x=1200 StrongholdBR.y=0
+local StrongholdBF = display.newImage(midlayer2, "images/act7_Falcon_stronghold.png", true) StrongholdBF.x=1200 StrongholdBF.y=0
+local StrongholdBE = display.newImage(midlayer2, "images/act7_Eagle_stronghold.png", true) StrongholdBE.x=1200 StrongholdBE.y=0
 
 -- Set main screen
 local background = display.newImage( "images/startScreen.png") background.x = display.contentWidth / 2 background.y = display.contentHeight / 2
@@ -81,14 +88,16 @@ local select3Container = display.newImage(textLayers, "images/selection_back.png
 select3Container.x = 850 select3Container.y = 270
 select3Container.isVisible = false;
 
-local select1Text
-local select2Text
-local select3Text
+local select1Text = display.newText(textLayers, '', 755, 110, 250, display.contentHeight * 0.5, 'PTSans-Regular', 18) 
+local select2Text = display.newText(textLayers, '', 755, 180, 250, display.contentHeight * 0.5, 'PTSans-Regular', 18)
+local select3Text = display.newText(textLayers, '', 755, 250, 250, display.contentHeight * 0.5, 'PTSans-Regular', 18)
 
 -- Variables for text
-local textContainer
+local textContainer = display.newImage(textLayers, "images/text_back.png")
+textContainer.x = 10 textContainer.y = 560 
+textContainer.isVisible = false;
 
-local sceneText
+local sceneText = display.newText(textLayers, '', 50, 610, 900, display.contentHeight * 0.5, 'PTSans-Regular', 18)
 
 -----------------------------------------------------------------------------------------
 --
@@ -163,6 +172,7 @@ local function organizeStage()
     background:toFront()
     midlayer1:toFront()
     midlayer2:toFront()
+    charactersAdd:toFront()
     characters:toFront()
     midlayer3:toFront()
     foreground:toFront()
@@ -1242,6 +1252,14 @@ scenes[64] = {
     follows = 65,
     clearSelection = true,
     animations = function()
+        --WALL APPEAR AND JUMP
+        transition.to(StrongholdB1, {x=0, time=1000})
+        transition.to(landscape2, {x=-1500, delay=1000, time=500})
+        transition.to(landscape1, {x=-1700, delay=1000, time=500})
+        transition.to(AlenaOnWolfNoRibbon, {x=500, delay=1000, time=200})
+        transition.to(AlenaOnWolfNoRibbon, {y=0, delay=1000, time=200})
+        transition.to(AlenaOnWolfNoRibbon, {x=550, delay=1200, time=200})
+        transition.to(AlenaOnWolfNoRibbon, {y=270, delay=1300, time=200})
     end,
     animationComplete =  function()
     end
@@ -1327,9 +1345,8 @@ function removeCharacters()
     WolfSit.x=600 WolfSit.y=-400
     AlenaOnWolf.x=1200 AlenaOnWolf.y=270
     AlenaOnWolfNoRibbon.x=1200 AlenaOnWolfNoRibbon.y=270
-    FalconS.x= 500 FalconS.y=-400
     EagleS.x = 500 EagleS.y=-400
-    RavenS.x = 500 RavenS.y=-400
+    BrotherS.x = 500 BrotherS.y=-400
 end
 
 -- Move layers in the right order
@@ -1477,7 +1494,7 @@ local function setStageObjects(stage)
                 throne = display.newImage(midlayer2, "images/act6_chairBlue.png", true)
                 birdSymbol = display.newImage(midlayer2, "images/act6_Raven_stand.png", true)
                 setAnchor(birdSymbol) birdSymbol.x = 215 birdSymbol.y = -200
-                BrotherS = RavenS 
+                BrotherS = RavenS
                 BrotherD = Raven
             else
                 landscape2 = display.newImage(midlayer1, "images/act6_landscape2r.png", true)
@@ -1486,7 +1503,6 @@ local function setStageObjects(stage)
                 setAnchor(birdSymbol) birdSymbol.x = 200 birdSymbol.y = -200
                 BrotherS = EagleS
                 BrotherD = Eagle
-
             end
 
             setAnchor(landscape2) landscape2.x = 0 landscape2.y = -1000
@@ -1510,12 +1526,17 @@ local function setStageObjects(stage)
             landscape1 = display.newImage(midlayer1, "images/act5_landscape1.png", true) setAnchor(landscape1)
             landscape1.x = 0 landscape1.y = 400
 
-            shadowLayer5 = display.newImage(midlayer2, "images/act5_shadowLayer.png", true) setAnchor(shadowLayer5) shadowLayer5.alpha=1
-
             ribbon = display.newImage(midlayer3, "images/ribbon_single.png") setAnchor(ribbon)
             ribbon.xScale = -1 
             ribbon.x = 150 ribbon.y=30 
 
+            if choices.brother=="Raven" then
+                StrongholdB1 = StrongholdBR
+            else
+                StrongholdB1 = StrongholdBF
+            end
+
+            shadowLayer5 = display.newImage(midlayer2, "images/act5_shadowLayer.png", true) setAnchor(shadowLayer5) shadowLayer5.alpha=1
             foreground = display.newImage(midlayer3, "images/foreground6.png", true ) setAnchor(foreground)
 
             organizeStage() 
@@ -1528,6 +1549,7 @@ end
 
 -- Main text listener
 function sceneTextTouch(event)
+    print('scene text touch' .. event.target.text)
     if event.phase == "began" and event.target.follows then
         -- Stats display
         print('Let us add listener!')
@@ -1662,24 +1684,21 @@ function loadScene(s)
     if(s.animations) then
         s.animations()
     end
+    print('Going to organize stage of '..s.sName)
     organizeStage()
 end 
 
 
 
 -- Loading game for a first time
-local myListener = function( event )
+local myListener
+myListener = function( event )
     print("myListener called")
-
-    textContainer = display.newImage(textLayers, "images/text_back.png") setAnchor(textContainer)
-    textContainer.x = 10 textContainer.y = 560 
-    textContainer.isVisible = false;
-
-    select1Text = display.newText(textLayers, '', 755, 110, 250, display.contentHeight * 0.5, 'PTSans-Regular', 18) 
-    select2Text = display.newText(textLayers, '', 755, 180, 250, display.contentHeight * 0.5, 'PTSans-Regular', 18)
-    select3Text = display.newText(textLayers, '', 755, 250, 250, display.contentHeight * 0.5, 'PTSans-Regular', 18)
-
-    sceneText = display.newText(textLayers, '', 50, 610, 900, display.contentHeight * 0.5, 'PTSans-Regular', 18)
+    background:removeEventListener("touch", myListener)
+    setAnchor(textContainer)
+    setAnchor(select1Text)
+    setAnchor(select2Text)
+    setAnchor(select3Text)
 
     print('Now adding Listeners in main')
     -- listeners for the right blocks
@@ -1690,7 +1709,8 @@ local myListener = function( event )
     -- listener for the main text
     sceneText:addEventListener( "touch", sceneTextTouch)
 
-    loadScene(scenes[39])
+    loadScene(scenes[62])
+    return true
 end
 
 background:addEventListener( "touch", myListener )
