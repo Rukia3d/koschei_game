@@ -39,6 +39,7 @@ local RavenS = display.newImage( characters, "images/raven_f_small.png") RavenS.
 
 -- Small characters  changed images
 local AlenaCryS = display.newImage( characters, "images/alena_cry_small.png") AlenaCryS.x = 400 AlenaCryS.y =-400 
+local AlenaNoRibbon = display.newImage( characters, "images/alena_noRib_small.png") AlenaNoRibbon.x = 400 AlenaNoRibbon.y =-400 
 local MotherWarS = display.newImage( characters, "images/mother_f_small.png") MotherWarS.x = 600 MotherWarS.y = -400  
 local AlenaOnWolf = display.newImage( characters, "images/alena_on_wolf.png") AlenaOnWolf.x = 1200 AlenaOnWolf.y = 270
 local AlenaOnWolfNoRibbon = display.newImage( characters, "images/alena_on_wolf_noR.png") AlenaOnWolfNoRibbon.x = 1200 AlenaOnWolfNoRibbon.y = 270
@@ -64,9 +65,9 @@ local Raven = display.newImage( characters, "images/raven_dialogue.png") Raven.x
 -- Changing variables
 local BrotherS = EagleS 
 local BrotherD = Eagle
-local StrongholdBR = display.newImage(midlayer2, "images/act7_Raven_stronghold.png", true) StrongholdBR.x=1200 StrongholdBR.y=0
-local StrongholdBF = display.newImage(midlayer2, "images/act7_Falcon_stronghold.png", true) StrongholdBF.x=1200 StrongholdBF.y=0
-local StrongholdBE = display.newImage(midlayer2, "images/act7_Eagle_stronghold.png", true) StrongholdBE.x=1200 StrongholdBE.y=0
+local StrongholdBR = display.newImage("images/act7_Raven_stronghold.png", false) StrongholdBR.x=0 StrongholdBR.y=0
+local StrongholdBF = display.newImage("images/act7_Falcon_stronghold.png", false) StrongholdBF.x=0 StrongholdBF.y=0
+local StrongholdBE = display.newImage("images/act7_Eagle_stronghold.png", false) StrongholdBE.x=0 StrongholdBE.y=0
 
 -- Set main screen
 local background = display.newImage( "images/startScreen.png") background.x = display.contentWidth / 2 background.y = display.contentHeight / 2
@@ -1253,16 +1254,108 @@ scenes[64] = {
     clearSelection = true,
     animations = function()
         --WALL APPEAR AND JUMP
-        transition.to(StrongholdB1, {x=0, time=1000})
-        transition.to(landscape2, {x=-1500, delay=1000, time=500})
-        transition.to(landscape1, {x=-1700, delay=1000, time=500})
-        transition.to(AlenaOnWolfNoRibbon, {x=500, delay=1000, time=200})
-        transition.to(AlenaOnWolfNoRibbon, {y=0, delay=1000, time=200})
-        transition.to(AlenaOnWolfNoRibbon, {x=550, delay=1200, time=200})
-        transition.to(AlenaOnWolfNoRibbon, {y=270, delay=1300, time=200})
+        StrongholdB1.x=700
+        transition.to(landscape2, {x=-1700, time=1700})
+        transition.to(landscape1, {x=-2100, time=1700})
+        transition.to(StrongholdB1, {x=-120, time=1700})
+        transition.to(AppleGarden, {x=400, time=1700})
+        transition.to(AlenaOnWolfNoRibbon, {x=500, delay=1000, time=500})
+        transition.to(AlenaOnWolfNoRibbon, {y=0, delay=1000, time=500})
+        transition.to(AlenaOnWolfNoRibbon, {x=600, delay=1500, time=500})
+        transition.to(AlenaOnWolfNoRibbon, {y=300, delay=1500, time=500})
     end,
     animationComplete =  function()
+        landscape2.x=-1300
+        landscape1.x=-1200
+        StrongholdB1.x=-120
+        AlenaOnWolfNoRibbon.x=600
+        AlenaOnWolfNoRibbon.y=270
     end
+}
+
+scenes[65] = {
+    sName = 65,
+    text = '"There\'s a golden tree in the middle of the garden. Go to it and pick one apple, just don\'t touch anything else," orders Gray Wolf.',
+    follows = 66,
+    animations = function() 
+        transition.to(landscape2, {x=-1700, time=1000})
+        transition.to(landscape1, {x=-2000, time=1000})
+        transition.to(StrongholdB1, {x=-400, time=1000})
+        transition.to(AppleGarden, {x=120, time=1000})
+        transition.to(AlenaOnWolfNoRibbon, {y=-400, time=500})
+        AlenaNoRibbon.x=350
+        WolfSit.xScale = -1
+        WolfSit.x=200
+        transition.to(AlenaNoRibbon, {y=270, time=1000})
+        transition.to(WolfSit, {y=270, time=1000})
+        transition.to(GoldenApples, {y=-50, time=1000, delay=1000})
+        transition.to(GoldenApple, {y=-30, time=1000, delay=1000})
+        transition.to(TreeRibbon, {y=300, time=1000, delay=1000})
+    end,
+    animationComplete = function() 
+        landscape2.x = -1700
+        landscape1.x = -2300
+        StrongholdB1.x = -400
+        AppleGarden.x=120
+        AlenaOnWolfNoRibbon.y=-400
+        AlenaNoRibbon.y=270 AlenaNoRibbon.x=460
+        WolfSit.xScale = -1 WolfSit.x=300 WolfSit.y=270
+    end
+}
+
+scenes[66] = {
+    sName = 66,
+    text = 'Doing as she is told, Alena goes to the tree and plucks a golden apple but then, she sees a beautiful ribbon tying up the branches. "That would look so pretty in my hair!" thinks Alena.',
+    selection = {
+        [1] = {'Leave without the ribbon', 67},
+        [2] = {'Untie the ribbon', 68}
+    },
+    animations = function() end,
+    animationComplete = function() end,
+}
+
+scenes[67] = {
+    sName = 67,
+    clearSelection = true,
+    text = 'She leaves the ribbon on the branch and gets back to Gray Wolf. "You are a  good girl, daughter of Marya, your mother raised you well," says Grey Wolf and they rush back.',
+    follows = 73,
+    animations = function() end,
+    animationComplete = function() end,
+}
+
+scenes[68] = {
+    sName = 68,
+    changeFlow = function() 
+        if choices.brother=='Raven' then
+            -- If we got the quest from Raven we go to Falcon. Othervise we go ro Raven
+            scenes[68].follow = 69
+        else
+            scenes[68].follow = 70
+        end
+    end,
+    clearSelection = true,
+    text = 'The moment Alena touches the ribbon an alarm sounds.',
+    follows = 69,
+    animations = function() end,
+    animationComplete = function() end,
+}
+
+scenes[69] = {
+    sName = 69,
+    clearSelection = true,
+    text = 'Gray Wolf grabs Alena and leaps over the wall. "You should have listened to me," he says. "Now Falcon\'s hounds will follow us to his brother’s stronghold!"',
+    follows = 71,
+    animations = function() end,
+    animationComplete = function() end,
+}
+
+scenes[70] = {
+    sName = 70,
+    clearSelection = true,
+    text = 'Gray Wolf grabs Alena and leaps over the wall. "You should have listened to me," he says. "Now Raven\'s hounds will follow us to his brother’s stronghold!"',
+    follows = 71,
+    animations = function() end,
+    animationComplete = function() end,
 }
 -----------------------------------------------------------------------------------
 --
@@ -1531,12 +1624,27 @@ local function setStageObjects(stage)
             ribbon.x = 150 ribbon.y=30 
 
             if choices.brother=="Raven" then
-                StrongholdB1 = StrongholdBR
+                StrongholdB1 = StrongholdBF 
             else
-                StrongholdB1 = StrongholdBF
+                StrongholdB1 = StrongholdBR
             end
 
+            setAnchor(StrongholdB1) StrongholdB1.x=1200 StrongholdB1.y=10
+            midlayer2:insert(StrongholdB1)
+            StrongholdB1:toFront()
+
             shadowLayer5 = display.newImage(midlayer2, "images/act5_shadowLayer.png", true) setAnchor(shadowLayer5) shadowLayer5.alpha=1
+
+            AppleGarden = display.newImage(midlayer2, "images/act7_Garden.png", true) setAnchor(AppleGarden)
+            AppleGarden.x=1200 AppleGarden.y=-65
+
+            GoldenApples = display.newImage(midlayer3, "images/act7_goldenApples.png", true) setAnchor(GoldenApples)
+            GoldenApples.x=470 GoldenApples.y=-500
+            GoldenApple = display.newImage(midlayer3, "images/act7_goldenApple.png", true) setAnchor(GoldenApple)
+            GoldenApple.x=500  GoldenApple.y=-500
+            TreeRibbon = display.newImage(midlayer3, "images/act7_treeRibbon.png", true) setAnchor(TreeRibbon)
+            TreeRibbon.x=560  TreeRibbon.y=-500
+
             foreground = display.newImage(midlayer3, "images/foreground6.png", true ) setAnchor(foreground)
 
             organizeStage() 
