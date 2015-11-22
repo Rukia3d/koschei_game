@@ -162,6 +162,20 @@ function ridingWolftoLeft(AlenaRibbon)
     transition.to(landscape1, {x=-1500, time=3000 })
 end
 
+function loadUncleCastle(AlenaChar)
+        WolfSit.x=900
+        AlenaChar.x=740
+        transition.to(landscape3, {x=0, time=1000, delay=1000})
+        transition.to(landscape2, {y=0, time=1000, delay=2000})
+        transition.to(shadowLayer6, {alpha=1, time=1000, delay=3000})
+        transition.to(WolfSit,{y=270, time=1000, delay=3000})
+        transition.to(AlenaChar,{y=280, time=1000, delay=3000})
+        transition.to(throne, {y=-30, time=500, delay=4000})
+        transition.to(birdSymbol, {y=320, time=500, delay=4000})
+        transition.to(BrotherS, {y=300, delay=4000, time=1000})
+end
+
+
 -----------------------------------------------------------------------------------------
 --
 -- ORGANISING
@@ -1070,16 +1084,7 @@ scenes[52] = {
     text = 'Her uncle is standing in a great hall wearing a gloomy look. Alena tells him her sad story, but he doesn\'t seem to be affected by it, because he is lost in his own thoughts. "Looks like I won\'t get any help from him," sighs Alena.',
     follows = 53,
     animations = function() 
-        WolfSit.x=900
-        AlenaS.x=740
-        transition.to(landscape3, {x=0, time=1000, delay=1000})
-        transition.to(landscape2, {y=0, time=1000, delay=2000})
-        transition.to(shadowLayer6, {alpha=1, time=1000, delay=3000})
-        transition.to(WolfSit,{y=270, time=1000, delay=3000})
-        transition.to(AlenaS,{y=280, time=1000, delay=3000})
-        transition.to(throne, {y=-30, time=500, delay=4000})
-        transition.to(birdSymbol, {y=320, time=500, delay=4000})
-        transition.to(BrotherS, {y=300, delay=4000, time=1000})
+        loadUncleCastle(AlenaS)
     end,
     animationComplete =  function()
         foreground.y=0
@@ -1298,8 +1303,11 @@ scenes[65] = {
         StrongholdB1.x = -400
         AppleGarden.x=120
         AlenaOnWolfNoRibbon.y=-400
-        AlenaNoRibbon.y=270 AlenaNoRibbon.x=460
-        WolfSit.xScale = -1 WolfSit.x=300 WolfSit.y=270
+        AlenaNoRibbon.y=270 AlenaNoRibbon.x=350
+        WolfSit.xScale = -1 WolfSit.x=200 WolfSit.y=270
+        GoldenApples.y=-50
+        GoldenApple.y=-30
+        TreeRibbon.y=300
     end
 }
 
@@ -1310,8 +1318,13 @@ scenes[66] = {
         [1] = {'Leave without the ribbon', 67},
         [2] = {'Untie the ribbon', 68}
     },
-    animations = function() end,
-    animationComplete = function() end,
+    animations = function() 
+        transition.to(AlenaNoRibbon, {x=450, time=1000})
+        transition.to(GoldenApple, {y=10, x=420, time=1000, delay=1000})
+    end,
+    animationComplete = function()
+        AlenaNoRibbon.x=450
+    end,
 }
 
 scenes[67] = {
@@ -1319,7 +1332,10 @@ scenes[67] = {
     clearSelection = true,
     text = 'She leaves the ribbon on the branch and gets back to Gray Wolf. "You are a  good girl, daughter of Marya, your mother raised you well," says Grey Wolf and they rush back.',
     follows = 73,
-    animations = function() end,
+    animations = function()
+        transition.to(AlenaNoRibbon, {x=350,time=1000})
+        transition.to(GoldenApple, {x=320, time=1000})
+    end,
     animationComplete = function() end,
 }
 
