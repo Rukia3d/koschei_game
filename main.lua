@@ -162,19 +162,32 @@ function ridingWolftoLeft(AlenaRibbon)
     transition.to(landscape1, {x=-1500, time=3000 })
 end
 
-function loadUncleCastle(AlenaChar)
+function loadUncleCastle()
         WolfSit.x=900
-        AlenaChar.x=740
+        AlenaS.x=740
         transition.to(landscape3, {x=0, time=1000, delay=1000})
         transition.to(landscape2, {y=0, time=1000, delay=2000})
         transition.to(shadowLayer6, {alpha=1, time=1000, delay=3000})
         transition.to(WolfSit,{y=270, time=1000, delay=3000})
-        transition.to(AlenaChar,{y=280, time=1000, delay=3000})
+        transition.to(AlenaS,{y=280, time=1000, delay=3000})
         transition.to(throne, {y=-30, time=500, delay=4000})
         transition.to(birdSymbol, {y=320, time=500, delay=4000})
         transition.to(BrotherS, {y=300, delay=4000, time=1000})
 end
 
+function loadBushToHide()
+end
+
+function alarmBellsRing()
+    local bellAlarm = display.newImage(midlayer2, "images/bellAlarm.png") bellAlarm.anchorX=0.5 bellAlarm.anchorY=0 
+    bellAlarm.x=500 bellAlarm.y=-400
+    transition.to(bellAlarm, {y=-100, time=500, delay=1000})
+    transition.to(bellAlarm, {y=-100, rotation=60, time=300, delay=1500})
+    transition.to(bellAlarm, {y=-100, rotation=-60, time=300, delay=1800})
+    transition.to(bellAlarm, {y=-100, rotation=50, time=300, delay=2100})
+    transition.to(bellAlarm, {y=-100, rotation=-50, time=300, delay=2400})
+    transition.to(bellAlarm, {y=-100, rotation=0, time=200, delay=2700})
+end
 
 -----------------------------------------------------------------------------------------
 --
@@ -1084,7 +1097,7 @@ scenes[52] = {
     text = 'Her uncle is standing in a great hall wearing a gloomy look. Alena tells him her sad story, but he doesn\'t seem to be affected by it, because he is lost in his own thoughts. "Looks like I won\'t get any help from him," sighs Alena.',
     follows = 53,
     animations = function() 
-        loadUncleCastle(AlenaS)
+        loadUncleCastle()
     end,
     animationComplete =  function()
         foreground.y=0
@@ -1331,7 +1344,7 @@ scenes[67] = {
     sName = 67,
     clearSelection = true,
     text = 'She leaves the ribbon on the branch and gets back to Gray Wolf. "You are a  good girl, daughter of Marya, your mother raised you well," says Grey Wolf and they rush back.',
-    follows = 73,
+    follows = 74,
     animations = function()
         transition.to(AlenaNoRibbon, {x=350,time=1000})
         transition.to(GoldenApple, {x=320, time=1000})
@@ -1352,25 +1365,40 @@ scenes[68] = {
     clearSelection = true,
     text = 'The moment Alena touches the ribbon an alarm sounds.',
     follows = 69,
-    animations = function() end,
-    animationComplete = function() end,
+    animations = function()
+        transition.to(TreeRibbon, {rotation=50, x=540, y=350, time=500})
+        transition.to(TreeRibbon, {rotation=-30, x=570, y=450, time=500, delay=500})
+        transition.to(TreeRibbon, {rotation=10, x=550, y=500, time=500, delay=900})
+        alarmBellsRing()
+    end,
+    animationComplete = function()
+        AlenaNoRibbon.y=-400
+        WolfSit.y=-400
+        TreeRibbon.y=500
+    end,
 }
 
 scenes[69] = {
     sName = 69,
+    setStage = 'set62',
     clearSelection = true,
     text = 'Gray Wolf grabs Alena and leaps over the wall. "You should have listened to me," he says. "Now Falcon\'s hounds will follow us to his brother’s stronghold!"',
     follows = 71,
-    animations = function() end,
+    animations = function()
+        loadBushToHide() 
+    end,
     animationComplete = function() end,
 }
 
 scenes[70] = {
     sName = 70,
+    setStage = 'set62',
     clearSelection = true,
     text = 'Gray Wolf grabs Alena and leaps over the wall. "You should have listened to me," he says. "Now Raven\'s hounds will follow us to his brother’s stronghold!"',
     follows = 71,
-    animations = function() end,
+    animations = function()
+        loadBushToHide()
+    end,
     animationComplete = function() end,
 }
 -----------------------------------------------------------------------------------
