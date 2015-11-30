@@ -130,7 +130,19 @@ local function setBasementStage()
     transition.to(bucketTread, {y=-50, time=1000, delay=2000})
     transition.to(waterFount, {y=0, time=1000, delay=3000})
     transition.to(koshPrisoner, {y=0, time=1000, delay=3500})
-end    
+end  
+
+local function setStronghold1()
+    StrongholdB1.x=700
+    transition.to(landscape2, {x=-1700, time=1700})
+    transition.to(landscape1, {x=-2100, time=1700})
+    transition.to(StrongholdB1, {x=-120, time=1700})
+    transition.to(AppleGarden, {x=400, time=1700})
+    transition.to(AlenaOnWolfNoRibbon, {x=500, delay=1000, time=500})
+    transition.to(AlenaOnWolfNoRibbon, {y=0, delay=1000, time=500})
+    transition.to(AlenaOnWolfNoRibbon, {x=600, delay=1500, time=500})
+    transition.to(AlenaOnWolfNoRibbon, {y=300, delay=1500, time=500})
+end  
 
 function openingAnimation(backg, foregr)
     clearStage()
@@ -149,10 +161,13 @@ function openingAnimation(backg, foregr)
 end
 
 function ridingWolftoRight(AlenaRibbon)
-    transition.to(landscape2, {x=-500, time=3000 })
-    transition.to(landscape1, {x=0, time=3000 })
+    AlenaRibbon.xScale=1 AlenaRibbon.x=1000
+    landscape2.x=0
+    landscape1.x=0
+    transition.to(landscape2, {x=-800, time=3000 })
+    transition.to(landscape1, {x=-1500, time=3000 })
     transition.to(starsAndMoon, {y=0, time=1000})
-    transition.to(AlenaRibbon, {x=800, time=3000})
+    transition.to(AlenaRibbon, {x=500, time=3000})
 end
 
 function ridingWolftoLeft(AlenaRibbon)
@@ -176,6 +191,9 @@ function loadUncleCastle()
 end
 
 function loadBushToHide()
+    bushToHide = display.newImage(midlayer3, "images/hideBush.png") bushToHide.anchorX=1 bushToHide.anchorY=1 
+    bushToHide.x=300 bushToHide.y=500 bushToHide.rotation=-90
+    transition.to(bushToHide, {rotation=0, time=1000, delay=500})
 end
 
 function alarmBellsRing()
@@ -1271,16 +1289,7 @@ scenes[64] = {
     follows = 65,
     clearSelection = true,
     animations = function()
-        --WALL APPEAR AND JUMP
-        StrongholdB1.x=700
-        transition.to(landscape2, {x=-1700, time=1700})
-        transition.to(landscape1, {x=-2100, time=1700})
-        transition.to(StrongholdB1, {x=-120, time=1700})
-        transition.to(AppleGarden, {x=400, time=1700})
-        transition.to(AlenaOnWolfNoRibbon, {x=500, delay=1000, time=500})
-        transition.to(AlenaOnWolfNoRibbon, {y=0, delay=1000, time=500})
-        transition.to(AlenaOnWolfNoRibbon, {x=600, delay=1500, time=500})
-        transition.to(AlenaOnWolfNoRibbon, {y=300, delay=1500, time=500})
+        setStronghold1()
     end,
     animationComplete =  function()
         landscape2.x=-1300
@@ -1337,6 +1346,7 @@ scenes[66] = {
     end,
     animationComplete = function()
         AlenaNoRibbon.x=450
+        GoldenApple.x=420 GoldenApple.y=10
     end,
 }
 
@@ -1344,12 +1354,16 @@ scenes[67] = {
     sName = 67,
     clearSelection = true,
     text = 'She leaves the ribbon on the branch and gets back to Gray Wolf. "You are a  good girl, daughter of Marya, your mother raised you well," says Grey Wolf and they rush back.',
-    follows = 74,
+    follows = 73,
     animations = function()
-        transition.to(AlenaNoRibbon, {x=350,time=1000})
-        transition.to(GoldenApple, {x=320, time=1000})
+        transition.to(AlenaNoRibbon, {x=450,time=1000})
+        transition.to(GoldenApple, {x=420, y=10, time=1000})
     end,
-    animationComplete = function() end,
+    animationComplete = function()
+        AlenaNoRibbon.x=450
+        GoldenApple.x=420
+        GoldenApple.y=10
+    end,
 }
 
 scenes[68] = {
@@ -1357,9 +1371,9 @@ scenes[68] = {
     changeFlow = function() 
         if choices.brother=='Raven' then
             -- If we got the quest from Raven we go to Falcon. Othervise we go ro Raven
-            scenes[68].follow = 69
+            scenes[68].follows = 69
         else
-            scenes[68].follow = 70
+            scenes[68].follows = 70
         end
     end,
     clearSelection = true,
@@ -1385,9 +1399,10 @@ scenes[69] = {
     text = 'Gray Wolf grabs Alena and leaps over the wall. "You should have listened to me," he says. "Now Falcon\'s hounds will follow us to his brother’s stronghold!"',
     follows = 71,
     animations = function()
-        loadBushToHide() 
+        ridingWolftoRight(AlenaOnWolfNoRibbon)
     end,
-    animationComplete = function() end,
+    animationComplete = function()
+    end,
 }
 
 scenes[70] = {
@@ -1396,11 +1411,175 @@ scenes[70] = {
     clearSelection = true,
     text = 'Gray Wolf grabs Alena and leaps over the wall. "You should have listened to me," he says. "Now Raven\'s hounds will follow us to his brother’s stronghold!"',
     follows = 71,
+    animations = function() 
+        ridingWolftoRight(AlenaOnWolfNoRibbon)
+    end,
+    animationComplete = function() 
+    end,
+}
+
+scenes[71] = {
+    sName = 71,
+    follows = 72,
+    text = "But seeing that Alena is scared, Gray Wolf softens. \"Climb off my back and hide under this tree,\" he orders. \"Don\'t make any sound. Just wait for my return.\" This time Alena listens.",
     animations = function()
         loadBushToHide()
+        WolfSit.xScale = -1
+        WolfSit.x=400
+        AlenaNoRibbon.x=600
+        transition.to(AlenaOnWolfNoRibbon, {y=-400, time=500})
+        transition.to(AlenaNoRibbon, {y=210, time=500, delay=400}) 
+        transition.to(WolfSit, {y=220, time=500, delay=400})
+        transition.to(AlenaNoRibbon, {y=210, x=250, time=1000, delay=1500}) 
     end,
-    animationComplete = function() end,
+    animationComplete = function()
+        WolfSit.xScale = -1 WolfSit.x=400 WolfSit.y=220
+        AlenaOnWolfNoRibbon.y=-400
+        AlenaNoRibbon.y=210 AlenaNoRibbon.x=250
+        bushToHide.x=300 bushToHide.y=500 bushToHide.rotation=0
+    end
 }
+
+scenes[72] = {
+    sName = 72,
+    follows = 73,
+    text = "In the twinkling of an eye, Gray Wolf turns himself into a golden apple. Hounds approach, and the servants decide that the thief must have run away, leaving what he had tried to steal behind. They pick up the apple and turn back.  Soon after Gray Wolf returns, and Alena and her companion run to "..choices.brother.."\'s domain in silence. ",
+    animations = function()
+            GoldenApple.x=400
+            transition.to(WolfSit, {y=-220, time=500, delay=500})
+            transition.to(GoldenApple, {y=40, time=500, delay=1000})
+            transition.to(UncleServants, {x=300, time=1000, delay=1500})
+            transition.to(UncleServants, {x=-1000, time=1000, delay=3500})
+            transition.to(GoldenApple, {x=-500, time=1000, delay=3500})
+    end,
+    animationComplete = function()
+        WolfSit.y=-220
+        UncleServants.x=300
+        UncleServants.x=-1000
+        GoldenApple.x=-500
+    end
+}
+
+scenes[73] = {
+    sName = 73,
+    follows = 74,
+    setStage = 'set73',
+    text='Seeing the golden apple, her uncle\'s face flourishes a smile. \"You are a very handy girl,\" says he.',
+    animations = function()
+        AlenaNoRibbon.x=700 AlenaNoRibbon.y=280
+        WolfSit.xScale=1 WolfSit.x=900 WolfSit.y=290
+        GoldenApple.x=560 GoldenApple.y=-30 
+    end,
+    animationComplete = function()
+        AlenaNoRibbon.x=700 AlenaNoRibbon.y=280
+        WolfSit.xScale=1 WolfSit.x=900 WolfSit.y=290
+        GoldenApple.x=560 GoldenApple.y=-30 
+    end
+}
+
+scenes[74] = {
+    sName = 74,
+    follows = 76,
+    changeFlow = function() 
+        if choices.brother=='Falcon' then
+            -- If we got the quest from Raven we go to Falcon. Othervise we go ro Raven
+            scenes[68].follows = 75
+        else
+            scenes[68].follows = 76
+        end
+    end,
+    text='Uncle: \"Maybe you really can save Ivan. But for now, go and fetch me the horse with the golden mane from my other brother.\"',
+    animations = function()
+        GoldenApple.x=560 GoldenApple.y=-400 
+        showDialogue(BrotherD)
+    end,
+    animationComplete = function() 
+        GoldenApple.x=560 GoldenApple.y=-400 
+        hideDialogue()
+    end
+}
+
+scenes[75] = {
+    sName = 75,
+    setStage = 'set75',
+    follows = 77,
+    text='As the moon climbs high in the sky, Alena and her loyal companion dash to the Eagle\'s castle.',
+    animations = function()
+        hideDialogue()
+    end,
+    animationComplete =  function()
+    end
+}
+
+scenes[76] = {
+    sName = 76,
+    follows = 77,
+    text='As the moon climbs high in the sky, Alena and her loyal companion dash to the Falcon\'s castle.',
+    animations = function() end,
+    animationComplete = function() end
+}
+
+scenes[77] = {
+    sName = 77,
+    follows = 78,
+    text='There with one jump, Gray Wolf leaps over the castle walls near the stables. ',
+    animations = function() end,
+    animationComplete = function() end
+}
+
+scenes[78] = {
+    sName = 78,
+    follows = 79,
+    text='"There\'s the horse in that stall. Sneak in and get him, but don\'t touch the bridle," orders Gray Wolf.',
+    animations = function() end,
+    animationComplete = function() end
+}
+
+scenes[79] = {
+    sName = 79,
+    selection = {
+        [1] = {'Leave without the ribbon', 80},
+        [2] = {'Untie the ribbon', 81}
+    },
+    text='Doing as she was told, Alena sneaks into the stall and sees the most beautiful horse inside. Its bridle is decorated with red ribbons. "One of those would look so pretty in my hair!" thinks Alena.',
+    animations = function() end,
+    animationComplete = function() end
+}
+
+scenes[80] = {
+    sName = 80,
+    follows = 84,
+    clearSelection = true,
+    text='She leaves the ribbon behind and leads the horse out to Gray Wolf. "You are a good girl, daughter of Marya, your mother raised you well." says Gray Wolf, and they rush back.',
+    animations = function() end,
+    animationComplete = function() end
+}
+
+scenes[81] = {
+    sName = 81,
+    follows = 82,
+    text='The moment Alena touches the ribbon, an alarm rings out. Alena jumps onto the horse and gallops to Gray Wolf. "You should have listened to me," says he. "This horse is not as fast as I am. It may run fast through the courtyard, but outside the wall, they can catch us!"',
+    animations = function() end,
+    animationComplete = function() end
+}
+
+scenes[82] = {
+    sName = 82,
+    follows = 83,
+    text='But seeing that Alena is scared, Gray Wolf softens. "There is still enough witchcraft left  in me, so the moment we are outside the castle, rush the horse into the woods, hide there, and wait for my return."',
+    animations = function() end,
+    animationComplete = function() end
+}
+
+scenes[83] = {
+    sName = 83,
+    follows = 84,
+    text='In a twinkling of an eye, Gray Wolf turns himself into a horse with a golden mane. The servants, who see him decide that the thief must have run away leaving what he had been trying to steal. They take the horse and turn back.  Soon after, Gray Wolf returns to himself, and he and Alena rush  to '..choices.brother1..' in silence. ',
+    animations = function() end,
+    animationComplete = function() end
+}
+
+
 -----------------------------------------------------------------------------------
 --
 -- FUNCTIONS
@@ -1673,7 +1852,7 @@ local function setStageObjects(stage)
                 StrongholdB1 = StrongholdBR
             end
 
-            setAnchor(StrongholdB1) StrongholdB1.x=1200 StrongholdB1.y=10
+            setAnchor(StrongholdB1) StrongholdB1.x=1200 StrongholdB1.y=150
             midlayer2:insert(StrongholdB1)
             StrongholdB1:toFront()
 
@@ -1689,10 +1868,72 @@ local function setStageObjects(stage)
             TreeRibbon = display.newImage(midlayer3, "images/act7_treeRibbon.png", true) setAnchor(TreeRibbon)
             TreeRibbon.x=560  TreeRibbon.y=-500
 
+            UncleServants = display.newImage(midlayer3, "images/uncles_servants.png", true) setAnchor(UncleServants)
+            UncleServants.x=1200 UncleServants.y=100
+
             foreground = display.newImage(midlayer3, "images/foreground6.png", true ) setAnchor(foreground)
 
             organizeStage() 
-        end
+        end,
+        set73 = function()
+            clearStage()
+
+            landscape3 = display.newImage(midlayer1, "images/act6_landscape3.png", true) setAnchor(landscape3)
+            landscape3.x = 0 landscape3.y = 130
+
+            if choices.brother=='Falcon' then
+                landscape2 = display.newImage(midlayer1, "images/act6_landscape2y.png", true)
+                throne = display.newImage(midlayer2, "images/act6_chairRed.png", true)
+                birdSymbol = display.newImage(midlayer2, "images/act6_Falcon_stand.png", true)
+                setAnchor(birdSymbol) birdSymbol.x = 210 birdSymbol.y = 320
+
+
+            elseif choices.brother=='Raven' then
+                landscape2 = display.newImage(midlayer1, "images/act6_landscape2b.png", true)
+                throne = display.newImage(midlayer2, "images/act6_chairBlue.png", true)
+                birdSymbol = display.newImage(midlayer2, "images/act6_Raven_stand.png", true)
+                setAnchor(birdSymbol) birdSymbol.x = 215 birdSymbol.y = 320
+
+            else
+                landscape2 = display.newImage(midlayer1, "images/act6_landscape2r.png", true)
+                throne = display.newImage(midlayer2, "images/act6_chairGold.png", true)
+                birdSymbol = display.newImage(midlayer2, "images/act6_Eagle_stand.png", true)
+                setAnchor(birdSymbol) birdSymbol.x = 200 birdSymbol.y = 320
+
+            end
+
+            setAnchor(landscape2) landscape2.x = 0 landscape2.y = 0
+            setAnchor(throne) throne.x = 250 throne.y = -30
+
+            shadowLayer6 = display.newImage(midlayer1, "images/act6_shadowLayer.png", true) setAnchor(shadowLayer6) shadowLayer6.alpha=0
+
+            GoldenApple = display.newImage(midlayer3, "images/act7_goldenApple.png", true) setAnchor(GoldenApple)
+            GoldenApple.x=500  GoldenApple.y=-500
+            
+            foreground = display.newImage( "images/foreground3.png", true ) setAnchor(foreground)
+            foreground.y=0
+
+            BrotherS.y=300
+            shadowLayer6.alpha=1
+
+            organizeStage()  
+        end,
+        set75 = function()
+            removeCharacters()
+            clearStage() 
+
+            landscape3 = display.newImage(midlayer1, "images/background7.png", true) setAnchor(landscape3)
+            landscape3.x = 0 landscape3.y = 0
+
+            landscape2 = display.newImage(midlayer1, "images/act5_landscape2.png", true) setAnchor(landscape2)
+            landscape2.x = -400 landscape2.y = 0
+
+
+            landscape1 = display.newImage(midlayer1, "images/act5_landscape1.png", true) setAnchor(landscape1)
+            landscape1.x = 0 landscape1.y = 400
+
+            organizeStage() 
+        end,
 
     }
     stages[stage]()
@@ -1861,7 +2102,7 @@ myListener = function( event )
     -- listener for the main text
     sceneText:addEventListener( "touch", sceneTextTouch)
 
-    loadScene(scenes[62])
+    loadScene(scenes[73])
     return true
 end
 
