@@ -11,7 +11,7 @@
 -----------------------------------------------------------------------------------------
 -- Start with display groups
 local characters = display.newGroup()
-local charactersAdd = display.newGroup()
+local charactersDial = display.newGroup()
 
 local midlayer1 = display.newGroup()
 midlayer1.anchorX = 0 midlayer1.anchorY = 0 
@@ -19,6 +19,8 @@ local midlayer2 = display.newGroup()
 midlayer2.anchorX = 0 midlayer2.anchorY = 0 
 local midlayer3 = display.newGroup()
 midlayer3.anchorX = 0 midlayer3.anchorY = 0 
+local foregoundGr = display.newGroup()
+foregoundGr.anchorX = 0 foregoundGr.anchorY = 0 
 local textLayers = display.newGroup()
 
 -----------------------------------------------------------------------------------------
@@ -50,16 +52,16 @@ dialBack.anchorX = 0 dialBack.anchorY = 0
 dialBack.y=-800
 
 -- Big characters for dialogue stage
-local Alena = display.newImage( characters, "images/alena_f_dialogue.png") Alena.x = 400 Alena.y = 800 
-local Ivan = display.newImage( characters, "images/ivan_s_dialogue.png") Ivan.x = 300 Ivan.y = 800
-local Mother = display.newImage( characters, "images/mother_s_dialogue.png", false) Mother.x = 400 Mother.y = 800 
-local MotherWar = display.newImage( characters, "images/mother_f_dialogue.png", false) MotherWar.x = 400 MotherWar.y = 900
-local Koschei = display.newImage( characters, "images/koschei_f_big.png", false) Koschei.x = 300 Koschei.y = 800
-local KoscheiPlea = display.newImage( characters, "images/kosh_plea_dialogue.png", false) KoscheiPlea.x = 900 KoscheiPlea.y = 800
-local Wolf  = display.newImage( characters, "images/wolf_dialogue.png", false) Wolf.x = 700 Wolf.y = 800
-local Eagle = display.newImage( characters, "images/eagle_dialogue.png") Eagle.x = 400 Eagle.y = 800
-local Falcon = display.newImage( characters, "images/falcon_dialogue.png") Falcon.x = 400 Falcon.y = 800
-local Raven = display.newImage( characters, "images/raven_dialogue.png") Raven.x = 400 Raven.y = 800  
+local Alena = display.newImage( charactersDial, "images/alena_f_dialogue.png") Alena.x = 400 Alena.y = 800 
+local Ivan = display.newImage( charactersDial, "images/ivan_s_dialogue.png") Ivan.x = 300 Ivan.y = 800
+local Mother = display.newImage( charactersDial, "images/mother_s_dialogue.png", false) Mother.x = 400 Mother.y = 800 
+local MotherWar = display.newImage( charactersDial, "images/mother_f_dialogue.png", false) MotherWar.x = 400 MotherWar.y = 900
+local Koschei = display.newImage( charactersDial, "images/koschei_f_big.png", false) Koschei.x = 300 Koschei.y = 800
+local KoscheiPlea = display.newImage( charactersDial, "images/kosh_plea_dialogue.png", false) KoscheiPlea.x = 900 KoscheiPlea.y = 800
+local Wolf  = display.newImage( charactersDial, "images/wolf_dialogue.png", false) Wolf.x = 700 Wolf.y = 800
+local Eagle = display.newImage( charactersDial, "images/eagle_dialogue.png") Eagle.x = 400 Eagle.y = 800
+local Falcon = display.newImage( charactersDial, "images/falcon_dialogue.png") Falcon.x = 400 Falcon.y = 800
+local Raven = display.newImage( charactersDial, "images/raven_dialogue.png") Raven.x = 400 Raven.y = 800  
 
 
 -- Changing variables
@@ -73,7 +75,7 @@ local StrongholdBE = display.newImage("images/act7_Eagle_stronghold.png", false)
 local background = display.newImage( "images/startScreen.png") background.x = display.contentWidth / 2 background.y = display.contentHeight / 2
 
 -- Variables for stage content
-local foreground  = display.newImage( "images/transparent.png")
+local foreground  = display.newImage(foregoundGr, "images/transparent.png")
 local settings
 
 -- Variables for selections
@@ -168,7 +170,7 @@ function openingAnimation(backg, foregr)
     background = display.newImage( "images/"..backg, true ) setAnchor(background) 
     background.isVisible = true
 
-    foreground = display.newImage( "images/"..foregr, true ) setAnchor(foreground)
+    foreground = display.newImage(foregoundGr, "images/"..foregr, true ) setAnchor(foreground)
     foreground.y = -700
     transition.to(foreground, {y=0, time=1000})
 end
@@ -242,10 +244,10 @@ local function organizeStage()
     background:toFront()
     midlayer1:toFront()
     midlayer2:toFront()
-    charactersAdd:toFront()
     characters:toFront()
     midlayer3:toFront()
-    foreground:toFront()
+    charactersDial:toFront()
+    foregoundGr:toFront()
     textLayers:toFront()
 end
 
@@ -1373,7 +1375,6 @@ scenes[67] = {
     text = 'She leaves the ribbon on the branch and gets back to Gray Wolf. "You are a  good girl, daughter of Marya, your mother raised you well," says Grey Wolf and they rush back.',
     follows = 73,
     animations = function()
-        GoldenApple.y=-500
         showDialogue(Wolf)
     end,
     animationComplete = function()
@@ -1504,11 +1505,9 @@ scenes[74] = {
     end,
     text='Uncle: \"Maybe you really can save Ivan. But for now, go and fetch me the horse with the golden mane from my other brother.\"',
     animations = function()
-        GoldenApple.x=560 GoldenApple.y=-400 
         showDialogue(BrotherD)
     end,
     animationComplete = function() 
-        GoldenApple.isVisible = false
         AlenaNoRibbon.x=-400 
         hideDialogue()
     end
@@ -1596,7 +1595,9 @@ scenes[80] = {
     follows = 85,
     clearSelection = true,
     text='She leaves the ribbon behind and leads the horse out to Gray Wolf. "You are a good girl, daughter of Marya, your mother raised you well." says Gray Wolf, and they rush back.',
-    animations = function() end,
+    animations = function()
+        showDialogue(Wolf)
+    end,
     animationComplete = function() end
 }
 
@@ -1625,8 +1626,6 @@ scenes[82] = {
     follows = 83,
     text='"You should have listened to me," says he. "This horse is not as fast as I am. It may run fast through the courtyard, but outside the wall, they can catch us!"',
     animations = function()
-        stableRibbon.isVisible = false
-        GoldenHorse.isVisible = false
         showDialogue(Wolf)
     end,
     animationComplete = function() end
@@ -1686,7 +1685,7 @@ function showDialogue(name)
 end
 
 function hideDialogue()
-    local characters = {Mother, Alena, Ivan, KoscheiPlea, Koschei, MotherWar, Wolf, BrotherD}
+    local characters = {Mother, Alena, Ivan, KoscheiPlea, Koschei, MotherWar, Wolf, BrotherD, Falcon, Raven, Eagle}
     for i=1, table.getn(characters) do characters[i].y = -700 end
     transition.to(dialBack, {y = -800, time=500})
     --dialBack.y = -800
@@ -1743,7 +1742,8 @@ local function organizeStage()
     midlayer2:toFront()
     characters:toFront()
     midlayer3:toFront()
-    foreground:toFront()
+    charactersDial:toFront()
+    foregoundGr:toFront()
     textLayers:toFront()
 end
 
@@ -1942,7 +1942,9 @@ local function setStageObjects(stage)
             UncleServants = display.newImage(midlayer3, "images/uncles_servants.png", true) setAnchor(UncleServants)
             UncleServants.x=1200 UncleServants.y=100
 
-            foreground = display.newImage(midlayer3, "images/foreground6.png", true ) setAnchor(foreground)
+            foreground:removeSelf()
+            foreground=nil
+            foreground = display.newImage(foregoundGr, "images/foreground6.png", true ) setAnchor(foreground)
 
             organizeStage() 
         end,
@@ -1984,7 +1986,9 @@ local function setStageObjects(stage)
             GoldenApple = display.newImage(midlayer3, "images/act7_goldenApple.png", true) setAnchor(GoldenApple)
             GoldenApple.x=500  GoldenApple.y=-500
             
-            foreground = display.newImage( "images/foreground3.png", true ) setAnchor(foreground)
+            foreground:removeSelf()
+            foreground = nil
+            foreground = display.newImage(foregoundGr, "images/foreground3.png", true ) setAnchor(foreground)
             foreground.y=0
 
             BrotherS.y=300
@@ -2028,7 +2032,9 @@ local function setStageObjects(stage)
             UncleServants = display.newImage(midlayer3, "images/uncles_servants.png", true) setAnchor(UncleServants)
             UncleServants.x=1200 UncleServants.y=100
 
-            foreground = display.newImage(midlayer3, "images/foreground6.png", true ) setAnchor(foreground)
+            foreground:removeSelf()
+            foreground = nil
+            foreground = display.newImage(foregoundGr, "images/foreground6.png", true ) setAnchor(foreground)
 
             organizeStage() 
         end,
@@ -2171,7 +2177,7 @@ function loadScene(s)
     if(s.foregr) then
         foreground:removeSelf()
         foreground = nil
-        foreground = display.newImage( "images/"..s.foregr, true ) setCenter(foreground) setAnchor(foreground)
+        foreground = display.newImage(foregoundGr, "images/"..s.foregr, true ) setCenter(foreground) setAnchor(foreground)
     end
     if(s.animations) then
         s.animations()
@@ -2201,7 +2207,7 @@ myListener = function( event )
     -- listener for the main text
     sceneText:addEventListener( "touch", sceneTextTouch)
 
-    loadScene(scenes[62])
+    loadScene(scenes[52])
     return true
 end
 
