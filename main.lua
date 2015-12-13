@@ -16,7 +16,9 @@ local charactersDial = display.newGroup()
 local midlayer1 = display.newGroup()
 midlayer1.anchorX = 0 midlayer1.anchorY = 0 
 local midlayer2 = display.newGroup()
-midlayer2.anchorX = 0 midlayer2.anchorY = 0 
+midlayer2.anchorX = 0 midlayer2.anchorY = 0
+print("Printing the midlayer 2 first time") 
+print(midlayer2)
 local midlayer3 = display.newGroup()
 midlayer3.anchorX = 0 midlayer3.anchorY = 0 
 local foregoundGr = display.newGroup()
@@ -37,22 +39,26 @@ local WolfSit = display.newImage( characters, "images/wolf_f_small.png") WolfSit
 local EagleS = display.newImage( characters, "images/eagle_f_small.png") EagleS.x = 500 EagleS.y = -400
 local FalconS = display.newImage( characters, "images/falcon_f_small.png") FalconS.x = 500 FalconS.y = -400 
 local RavenS = display.newImage( characters, "images/raven_f_small.png") RavenS.x = 500 RavenS.y = -400  
+local VasilisaS = display.newImage( characters, "images/vasilisa_f_small.png") VasilisaS.x = 1200 VasilisaS.y = -400  
 
 
 -- Small characters  changed images
 local AlenaCryS = display.newImage( characters, "images/alena_cry_small.png") AlenaCryS.x = 400 AlenaCryS.y =-400 
+local AlenaCrySNR = display.newImage( characters, "images/alena_cry_smallNR.png") AlenaCrySNR.x = 400 AlenaCrySNR.y =-400 
 local AlenaNoRibbon = display.newImage( characters, "images/alena_noRib_small.png") AlenaNoRibbon.x = 400 AlenaNoRibbon.y =-400 
 local MotherWarS = display.newImage( characters, "images/mother_f_small.png") MotherWarS.x = 600 MotherWarS.y = -400  
 local AlenaOnWolf = display.newImage( characters, "images/alena_on_wolf.png") AlenaOnWolf.x = 1200 AlenaOnWolf.y = 270
 local AlenaOnWolfNoRibbon = display.newImage( characters, "images/alena_on_wolf_noR.png") AlenaOnWolfNoRibbon.x = 1200 AlenaOnWolfNoRibbon.y = 270
+local VasilisaPlea = display.newImage( characters, "images/vasilisa_s_small.png") VasilisaPlea.x = 400 VasilisaPlea.y = -400 
 
 -- Background for dialogue stage
-local dialBack = display.newImage(characters, "images/dialBack.png", true )
+local dialBack = display.newImage(charactersDial, "images/dialBack.png", true )
 dialBack.anchorX = 0 dialBack.anchorY = 0 
 dialBack.y=-800
 
 -- Big characters for dialogue stage
-local Alena = display.newImage( charactersDial, "images/alena_f_dialogue.png") Alena.x = 400 Alena.y = 800 
+local Alena = display.newImage( charactersDial, "images/alena_f_dialogue.png") Alena.x = 400 Alena.y = 800
+local AlenaCryD_NR = display.newImage( charactersDial, "images/alena_cry_dialogueNR.png") AlenaCryD_NR.x = 400 AlenaCryD_NR.y = 800  
 local Ivan = display.newImage( charactersDial, "images/ivan_s_dialogue.png") Ivan.x = 300 Ivan.y = 800
 local Mother = display.newImage( charactersDial, "images/mother_s_dialogue.png", false) Mother.x = 400 Mother.y = 800 
 local MotherWar = display.newImage( charactersDial, "images/mother_f_dialogue.png", false) MotherWar.x = 400 MotherWar.y = 900
@@ -62,6 +68,8 @@ local Wolf  = display.newImage( charactersDial, "images/wolf_dialogue.png", fals
 local Eagle = display.newImage( charactersDial, "images/eagle_dialogue.png") Eagle.x = 400 Eagle.y = 800
 local Falcon = display.newImage( charactersDial, "images/falcon_dialogue.png") Falcon.x = 400 Falcon.y = 800
 local Raven = display.newImage( charactersDial, "images/raven_dialogue.png") Raven.x = 400 Raven.y = 800  
+local VasilisaD = display.newImage( charactersDial, "images/vasilisa_f_dialogue.png") VasilisaD.x = 400 VasilisaD.y = 800
+local VasilisaCry = display.newImage( charactersDial, "images/vasilisa_s_dialogue.png") VasilisaCry .x = 400 VasilisaCry .y = 800  
 
 
 -- Changing variables
@@ -185,6 +193,16 @@ function ridingWolftoRight(AlenaRibbon)
     transition.to(AlenaRibbon, {x=500, time=3000})
 end
 
+function ridingWolftWithVasilisa(coord)
+    AlenaVasilisaRiding.xScale=1 AlenaVasilisaRiding.isVisible = true
+    AlenaVasilisaRiding.y=30 AlenaVasilisaRiding.x=coord
+    landscape2.x=0
+    landscape1.x=0
+    transition.to(landscape2, {x=-800, time=3000 })
+    transition.to(landscape1, {x=-1500, time=3000 })
+    transition.to(AlenaVasilisaRiding, {x=coord-500, time=3000})
+end
+
 function ridingWolftoLeft(AlenaRibbon)
     AlenaRibbon.xScale=-1 AlenaRibbon.x=0
     transition.to(AlenaRibbon, {x=400, time=3000})
@@ -223,7 +241,7 @@ function loadBushToHide()
 end
 
 function alarmBellsRing()
-    local bellAlarm = display.newImage(midlayer2, "images/bellAlarm.png") bellAlarm.anchorX=0.5 bellAlarm.anchorY=0 
+    bellAlarm = display.newImage(midlayer2, "images/bellAlarm.png") bellAlarm.anchorX=0.5 bellAlarm.anchorY=0 
     bellAlarm.x=500 bellAlarm.y=-400
     transition.to(bellAlarm, {y=-100, time=500, delay=1000})
     transition.to(bellAlarm, {y=-100, rotation=60, time=300, delay=1500})
@@ -232,6 +250,7 @@ function alarmBellsRing()
     transition.to(bellAlarm, {y=-100, rotation=-50, time=300, delay=2400})
     transition.to(bellAlarm, {y=-100, rotation=0, time=200, delay=2700})
 end
+
 
 -----------------------------------------------------------------------------------------
 --
@@ -265,6 +284,9 @@ choices = {
     brother = 'Eagle',
     brother1 = 'an eagle',
     advice = true,
+    notListen = 0,
+    vasilisa = 'NoInfo',
+    vasilisaGo = false,
 }
 
 local scenes = {}; 
@@ -448,13 +470,9 @@ local scenes = {};
         },
         animations = function()
             showDialogue(Ivan)
-            broom.isVisible = false
-            dishes.isVisible = false
         end,
         animationComplete = function()
             hideDialogue()
-            broom.isVisible = false
-            dishes.isVisible = false
         end
     }
     scenes[13] = {
@@ -911,7 +929,7 @@ local scenes = {};
         end
     }
 
--------- Act 2 Scenes 39 - 61
+-------- Act 2 Scenes 39 - 105
 
 scenes[39] = {
     sName = 39,
@@ -1399,6 +1417,7 @@ scenes[68] = {
         transition.to(TreeRibbon, {rotation=-30, x=570, y=450, time=500, delay=500})
         transition.to(TreeRibbon, {rotation=10, x=550, y=500, time=500, delay=900})
         alarmBellsRing()
+        choices.notListen = choices.notListen+1
     end,
     animationComplete = function()
         AlenaNoRibbon.y=-400
@@ -1458,8 +1477,10 @@ scenes[71] = {
 scenes[72] = {
     sName = 72,
     follows = 73,
-    text = "In the twinkling of an eye, Gray Wolf turns himself into a golden apple. Hounds approach, and the servants decide that the thief must have run away, leaving what he had tried to steal behind. They pick up the apple and turn back.  Soon after Gray Wolf returns, and Alena and her companion run to "..choices.brother.."\'s domain in silence. ",
-    animations = function()
+    text = function()
+        return "In the twinkling of an eye, Gray Wolf turns himself into a golden apple. Hounds approach, and the servants decide that the thief must have run away, leaving what he had tried to steal behind. They pick up the apple and turn back.  Soon after Gray Wolf returns, and Alena and her companion run to "..choices.brother.."\'s domain in silence. "
+    end,
+        animations = function()
             GoldenApple.x=400
             transition.to(WolfSit, {y=-220, time=500, delay=500})
             transition.to(GoldenApple, {y=40, time=500, delay=1000})
@@ -1483,12 +1504,10 @@ scenes[73] = {
     animations = function()
         hideDialogue()
         AlenaNoRibbon.x=700 AlenaNoRibbon.y=280
-        WolfSit.xScale=1 WolfSit.x=900 WolfSit.y=290
         GoldenApple.x=560 GoldenApple.y=-30 
     end,
     animationComplete = function()
         AlenaNoRibbon.x=700 AlenaNoRibbon.y=280
-        WolfSit.xScale=1 WolfSit.x=900 WolfSit.y=290
         GoldenApple.x=560 GoldenApple.y=-30 
     end
 }
@@ -1563,13 +1582,14 @@ scenes[78] = {
         transition.to(StrongholdB2, {x=-400, time=1000})
         transition.to(stableImg, {x=0, time=1000})
         transition.to(stableRibbon, {y=300, time=1000, delay=1000})
-        transition.to(GoldenHorse, {y=50, time=1000, delay=1000})
+        transition.to(GoldenHorse, {y=10, time=1000, delay=1000})
     end,
     animationComplete = function()
         landscape2.x = -1700
         landscape1.x = -2300
         StrongholdB2.x = -400
         stableImg.x=0
+        GoldenHorse.y=10
         AlenaOnWolfNoRibbon.y=-400
         AlenaNoRibbon.y=270 AlenaNoRibbon.x=350
         WolfSit.xScale = -1 WolfSit.x=200 WolfSit.y=270
@@ -1596,7 +1616,7 @@ scenes[80] = {
     clearSelection = true,
     text='She leaves the ribbon behind and leads the horse out to Gray Wolf. "You are a good girl, daughter of Marya, your mother raised you well." says Gray Wolf, and they rush back.',
     animations = function()
-        showDialogue(Wolf)
+        showDialogue(Wolf) 
     end,
     animationComplete = function() end
 }
@@ -1612,45 +1632,417 @@ scenes[81] = {
         alarmBellsRing()
         transition.to(AlenaNoRibbon, {x=400, time=1000, delay=1500})
         transition.to(GoldenHorse, {x=400, time=1000, delay=1500})
+        choices.notListen = choices.notListen+1
     end,
     animationComplete = function()
         AlenaNoRibbon.x=400
-        WolfSit.y=400
         stableRibbon.y=500
-        GoldenHorse.y=50 GoldenHorse.x=400
+        GoldenHorse.y=10 GoldenHorse.x=400
     end
 }
 
 scenes[82] = {
     sName = 82,
     follows = 83,
+    clearSelection = true,
     text='"You should have listened to me," says he. "This horse is not as fast as I am. It may run fast through the courtyard, but outside the wall, they can catch us!"',
     animations = function()
         showDialogue(Wolf)
     end,
-    animationComplete = function() end
+    animationComplete = function()
+        bellAlarm.isVisible = false
+        stableRibbon.isVisible = false
+        stableImg.x=-1200
+        StrongholdB2.x=-1200
+        GoldenHorse.y=0
+    end
 }
 
 scenes[83] = {
     sName = 83,
-    setStage = 'set83',
     follows = 84,
     text='But seeing that Alena is scared, Gray Wolf softens. "There is still enough witchcraft left  in me, so the moment we are outside the castle, rush the horse into the woods, hide there, and wait for my return."',
     animations = function()
-
+        WolfSit.x=400 WolfSit.y=270
+        hideDialogue()
+        loadBushToHide()
+        transition.to(GoldenHorse, {x=-300, time=1500, delay=500}) 
+        transition.to(AlenaNoRibbon, {y=210, x=250, time=1000, delay=1500}) 
     end,
-    animationComplete = function() end
+    animationComplete = function()
+        bushToHide.x=300 bushToHide.y=500 bushToHide.rotation=0
+        GoldenHorse.x=-300
+        AlenaNoRibbon.y=210 AlenaNoRibbon.x=250
+    end
 }
 
 scenes[84] = {
     sName = 84,
     follows = 85,
-    text='In a twinkling of an eye, Gray Wolf turns himself into a horse with a golden mane. The servants, who see him decide that the thief must have run away leaving what he had been trying to steal. They take the horse and turn back. Soon after, Gray Wolf returns to himself, and he and Alena rush  to '..choices.brother1..' in silence. ',
-    animations = function() end,
+    text= function()
+        return 'In a twinkling of an eye, Gray Wolf turns himself into a horse with a golden mane. The servants, who see him decide that the thief must have run away leaving what he had been trying to steal. They take the horse and turn back. Soon after, Gray Wolf returns to himself, and he and Alena rush  to '..choices.brother1..' in silence. '
+    end,
+    animations = function()
+        WolfSit.x=400
+        GoldenHorse.x=300 GoldenHorse.y=-500
+        transition.to(WolfSit, {y=-220, time=500, delay=500})
+        transition.to(GoldenHorse, {y=-50, time=500, delay=1000})
+        transition.to(UncleServants, {x=300, time=1000, delay=1500})
+        transition.to(UncleServants, {x=-1000, time=1000, delay=3500})
+        transition.to(GoldenHorse, {x=-500, time=1000, delay=3500})
+    end,
     animationComplete = function() end
 }
+scenes[85] = {
+    sName = 85,
+    follows = 86,
+    setStage = 'set73',
+    text='Seeing the horse with the golden mane, her uncle gets lost in his thoughts for a second. ',
+    animations = function()
+        AlenaNoRibbon.x=700 AlenaNoRibbon.y=280
+        GoldenHorse.x=700 GoldenHorse.y=0  
+    end,
+    animationComplete = function()
+        AlenaNoRibbon.x=700 AlenaNoRibbon.y=280
+        GoldenHorse.x=700 GoldenHorse.y=0  
+    end
+}
+scenes[86] = {
+    sName = 86,
+    follows = 87,
+    text='Uncle: "You are a very handy girl indeed. So help me with one last task, and I won\'t just tell you where you need to go, but help you anyway I can." ',
+    animations = function()
+        showDialogue(BrotherD)
+    end,
+    animationComplete = function()
+        hideDialogue()
+    end
+}
 
+scenes[87] = {
+    sName = 87,
+    follows = 88,
+    text='It is obvious to Alena that there\'s no point in arguing.  Her uncle won’t help her unless she completes this last task, so she accepts it without objections. She only hopes that it won’t be more difficult than the two previous ones. ',
+    animations = function() hideDialogue() end,
+    animationComplete = function()end
+}
 
+scenes[88] = {
+    sName = 88,
+    follows = 89,
+    text='Uncle: “A nearby King, Berendei, has a daughter that is as beautiful as the dawn. If I marry her, my brothers will die from envy. So bring her to me, and I give you my word, I\'ll help you any way I can.” ',
+    animations = function() showDialogue(BrotherD) end,
+    animationComplete = function() hideDialogue() end
+}
+
+scenes[89] = {
+    sName = 89,
+    follows = 90,
+    text='Having no choice, Alena and Gray Wolf  return to the forest.',
+    animations = function() hideDialogue() end,
+    animationComplete = function()
+        AlenaNoRibbon.x = 400 AlenaNoRibbon.y =-400 
+    end
+}
+
+scenes[90] = {
+    sName = 90,
+    setStage = 'set90',
+    follows = 91,
+    text='The western edge of the sky grows lighter as Alena, seated on Gray Wolf\'s back rushes to Berendei\'s kingdom. Near the castle wall, they stop. ',
+    animations = function() 
+        ridingWolftoLeft(AlenaOnWolfNoRibbon)
+        transition.to(StrongholdBer, {x=600, time=1000, delay=2000})
+
+    end,
+    animationComplete = function()end
+}
+
+scenes[91] = {
+    sName = 91,
+    follows = 92,
+    text='"I\'ll jump into the garden as fast as I can. Then, you have to grab Vasilisa the Beautiful, and don\'t let go of her until we get back in the forest".',
+    animations = function() 
+        showDialogue(Wolf)
+    end,
+    animationComplete = function()
+        AlenaOnWolfNoRibbon.x=0 AlenaOnWolfNoRibbon.y=300
+        VasilisaS.x=1200 VasilisaS.y=250
+        StrongholdBer.x=200
+        GardenBer.x=800
+        hideDialogue()
+    end
+}
+
+scenes[92] = {
+    sName = 92,
+    follows = 93,
+    text='Alena does as she\'s told.The moment she sees the golden hair of Vasilisa  the beautiful, she snatches her and holds on fast until the castle walls are far behind. ',
+    animations = function() 
+        hideDialogue()
+        AlenaOnWolfNoRibbon:toFront()
+        AlenaVasilisaRiding.xScale=-1
+        transition.to(AlenaOnWolfNoRibbon, {y=0, x=100, time=500, delay=500})
+        transition.to(AlenaOnWolfNoRibbon, {y=250, x=200, time=500, delay=1000})
+        transition.to(VasilisaS, {x=500, time=500, delay=1000})
+        transition.to(StrongholdBer, {x=-500, time=500, delay=1000})
+        transition.to(GardenBer, {x=100, time=500, delay=1000})
+        transition.to(AlenaOnWolfNoRibbon, {y=250, x=500, time=500, delay=2000})
+        transition.to(AlenaOnWolfNoRibbon, {x=500, y=-400, time=500, delay=2700})
+        transition.to(VasilisaS, {x=500, y=-400, time=500, delay=2700})
+        transition.to(AlenaVasilisaRiding, {y=30, time=500, delay=3200})
+        transition.to(AlenaVasilisaRiding, {y=30, x=1240, time=500, delay=3800})
+    end,
+    animationComplete = function()
+        VasilisaS.x=300 VasilisaS.y=-500
+        StrongholdBer.x=-1400
+        GardenBer.x=-1400
+        AlenaOnWolfNoRibbon.y=-400 AlenaOnWolfNoRibbon.x=500
+        AlenaVasilisaRiding.x=1240 AlenaVasilisaRiding.y=30
+        AlenaVasilisaRiding.xScale=1
+    end
+}
+
+scenes[93] = {
+    sName = 93,
+    follows = 94,
+    text='In the forest, the moment Alena lets go of the king\'s daughter, Vasilisa starts crying.',
+    animations = function()
+        WolfSit.xScale= -1
+        WolfSit.x=240 
+        VasilisaPlea.x=480 
+        transition.to(WolfSit, {y=270, time=1000})
+        transition.to(AlenaNoRibbon, {y=260, time=1000})
+        transition.to(VasilisaPlea, {y=280, time=1000})
+    end,
+    animationComplete = function()
+        WolfSit.xScale= -1
+        WolfSit.x=240 WolfSit.y=270
+        AlenaNoRibbon.y=260
+        VasilisaPlea.x=480 VasilisaPlea.y=280
+    end
+}
+
+scenes[94] = {
+    sName = 94,
+    follows = 95,
+    text = function()
+        return '"I know you are an envoy of '..choices.brother..'. My father refused to give me to him, but he swore that he would get me anyway. Please, let me go, don\'t give me to him!"'
+    end,
+    animations = function()
+        showDialogue(VasilisaD)
+    end,
+    animationComplete = function()
+        hideDialogue()
+    end
+}
+
+scenes[95] = {
+    sName = 95,
+    selection = {
+        [1] = {'Refuse Vasilisa\'s plea', 96},
+        [2] = {'Let Vasilisa go', 98}
+    },
+    text='Alena is confused. Her uncle\'s help is the only way to get her brother back!',
+    animations = function()
+        hideDialogue()
+    end,
+    animationComplete = function()end
+}
+
+scenes[96] = {
+    sName = 96,
+    follows = 97,
+    clearSelection=true,
+    changeFlow = function() choices.vasilisa = 'Vasilisa the Beautiful' end,
+    text='"I have to save my brother. Maybe my uncle is not that bad and with time, Vasilisa  can learn to love him," says Alena to herself, staying deaf to Vasilisa\'s pleading. She instructs Gray Wolf to get to her uncle as fast as possible.',
+    animations = function() 
+        hideDialogue()
+        AlenaVasilisaRiding.x=500 AlenaVasilisaRiding.y=-500
+        AlenaVasilisaRiding.xScale=-1
+        transition.to(WolfSit, {y=-400, time=1000})
+        transition.to(AlenaNoRibbon, {y=-400, time=1000})
+        transition.to(VasilisaPlea, {y=-400, time=1000})
+        transition.to(AlenaVasilisaRiding, {y=30, time=1000, delay=1000})
+        transition.to(AlenaVasilisaRiding, {y=30, x=1250, time=1000, delay=2000})
+    end,
+    animationComplete = function()
+        choices.vasilisaGo = false
+        AlenaVasilisaRiding.xScale=-1
+        WolfSit.y=-400
+        AlenaNoRibbon.y=-400
+        VasilisaPlea.y=-400
+        AlenaVasilisaRiding.y=30 AlenaVasilisaRiding.x=1250
+    end
+}
+
+scenes[97] = {
+    sName = 97,
+    setStage = 'set100',
+    follows = 102,
+    text='The sun is slowly coming up, dispersing the morning gloom. The first cockcrows are waking up. Alena is worried. "Can my brother see this dawn from Koschei\'s castle?" she wonders and hopes that with her uncle\'s help she can save him.',
+    animations = function()
+        hideDialogue()
+        ridingWolftWithVasilisa(1000)
+    end,
+    animationComplete = function()end
+}
+
+scenes[98] = {
+    sName = 98,
+    clearSelection = true,
+    follows = 99,
+    changeFlow = function() choices.vasilisa = 'Grey Wolf in a form of Vasilisa the Beautiful' end,
+    text='Touched by the young woman\'s plea, Alena asks Gray Wolf to stop, so she can set Vasilisa free. Then she sit on the ground downcast.',
+    animations = function()
+        hideDialogue()
+        transition.to(VasilisaPlea, {y=-400, time=700})
+        transition.to(AlenaNoRibbon, {y=-400, time=700, delay=500})
+        transition.to(AlenaCrySNR, {y=250, time=1000, delay=1500})
+    end,
+    animationComplete = function()
+        hideDialogue()
+        choices.vasilisaGo = true
+        VasilisaPlea.y=-400
+    end
+}
+scenes[99] = {
+    sName = 99,
+    follows = 100,
+    text= function()
+        return '"Don\'t grieve, daughter of Marya, I\'ll help you," says Gray Wolf. "When we get to '..choices.brother..', if he asks about me, say I decided to wait for you outside."'
+    end,
+    animations = function()
+        showDialogue(Wolf)
+    end,
+    animationComplete = function()
+        hideDialogue()
+        WolfSit.y=-400
+        AlenaCrySNR.y=-400
+    end
+}
+scenes[100] = {
+    sName = 100,
+    setStage = 'set100',
+    follows = 101,
+    text='The sun is slowly coming up, dispersing the morning gloom. The first cockcrows are waking up. As soon as the gates of uncle\'s castle are visible, Gray Wolf stops and turns himself into Vasilisa the Beautiful.',
+    animations = function()
+        hideDialogue()
+        VasilisaS.x=600
+        AlenaNoRibbon.x=1000 AlenaNoRibbon.y=230
+        WolfS.x=1100 WolfS.y=250
+        transition.to(AlenaNoRibbon, {x=450, time=1000})
+        transition.to(WolfS, {x=600, time=1000})
+        transition.to(WolfS, {x=600, y=-400, time=700, delay=1300})
+        transition.to(VasilisaS, {y=260, time=700, delay=1700})
+    end,
+    animationComplete = function()
+        AlenaNoRibbon.x=550  AlenaNoRibbon.y=230
+        WolfS.y=-400
+        VasilisaS.y=260 VasilisaS.x=650
+    end
+}
+scenes[101] = {
+    sName = 101,
+    follows = 102,
+    text='"Don’t linger after he tells you where to go, I’ll catch up with you later," says Gray Wolf in Vasilisa The Beautiful form.',
+    animations = function()
+        showDialogue(VasilisaD)
+    end,
+    animationComplete = function()
+        hideDialogue()
+    end
+}
+scenes[102] = {
+    sName = 102,
+    changeFlow = function() 
+        if choices.vasilisa=='Vasilisa the Beautiful' 
+            then scenes[102].follows = 103
+            else scenes[102].follows = 104
+        end
+    end,
+    text = function()
+        return 'The servants lead Alena and '..choices.vasilisa..'  to the '..choices.brother..'. The uncle is so happy to see his invaluable prize, that he doesn\'t ask any questions, just shows Alena the road to the Koschei\'s castle. '
+        end,
+    
+    animations = function()
+        hideDialogue()
+        AlenaVasilisaRiding.isVisible = false
+        transition.to(fortress, {x=-100, time=1000})
+        transition.to(fortress2, {x=385, time=1000})
+        transition.to(bridge, {alpha=1, delay=1200})
+        transition.to(bridge, {rotation=90, time=1000, delay=1200})
+    end,
+    animationComplete = function()
+        AlenaVasilisaRiding.isVisible = false
+        VasilisaS.isVisible = false
+        fortress.isVisible = false
+        fortress2.isVisible = false
+        bridge.isVisible = false
+    end
+}
+scenes[103] = {
+    sName = 103,
+    follows = 105,
+    text='Alena and Gray Wolf continue their journey. Alena tries not to think about Vasilisa\'s fate, as her only goal is to find her lost brother and return him home. "At least this way, I secured my uncle\'s help in case I need it."',
+    animations = function()
+        AlenaOnWolfNoRibbon.isVisible = true
+        AlenaOnWolfNoRibbon.y=270
+        ridingWolftoRight(AlenaOnWolfNoRibbon)
+    end,
+    animationComplete = function()end
+}
+scenes[104] = {
+    sName = 104,
+    follows = 105,
+    text='Alena follows the road on foot. Before midday, her loyal companion catches up with her and tells her the story of how her uncle tried to kiss his newly-wed bride, who suddenly turned into a wolf. "There\'s little reason to hope for his help in the future."',
+    animations = function()
+        AlenaNoRibbon.x=1100 AlenaNoRibbon.y=260
+        WolfS.x=1100 WolfS.y=270
+        transition.to(AlenaNoRibbon, {x=300, time=1500, delay=500})
+        transition.to(WolfS, {x=450, time=1000, delay=1300})
+    end,
+    animationComplete = function()end
+}
+
+-------- Act 3 Scenes 105 - 160
+
+scenes[105] = {
+    sName = 105,
+    follows = 00,
+    text='',
+    animations = function() end,
+    animationComplete = function()end
+}
+scenes[106] = {
+    sName = 106,
+    follows = 00,
+    text='',
+    animations = function() end,
+    animationComplete = function()end
+}
+scenes[107] = {
+    sName = 107,
+    follows = 00,
+    text='',
+    animations = function() end,
+    animationComplete = function()end
+}
+scenes[108] = {
+    sName = 108,
+    follows = 00,
+    text='',
+    animations = function() end,
+    animationComplete = function()end
+}
+
+scenes[1000] = {
+    sName = 1000,
+    follows = 00,
+    text='',
+    animations = function() end,
+    animationComplete = function()end
+}
 -----------------------------------------------------------------------------------
 --
 -- FUNCTIONS
@@ -1670,6 +2062,7 @@ end
 
 -- Display charDialogur
 function showDialogue(name)
+    dialBack:toBack()
     transition.to(dialBack, {y=0, time=500})
     --Re-center the object
     name.x = 400 name.y = 800
@@ -1681,11 +2074,12 @@ function showDialogue(name)
     if name==Koschei then transition.to(name, {y=400, time=500}) end
     if name==Wolf then Wolf.x=700 transition.to(name, {y=430, time=500}) end
     if name==BrotherD then BrotherD.x=300 transition.to(name, {y=400, time=500}) end
+    if name==VasilisaD then VasilisaD.x=300 transition.to(name, {y=400, time=500}) end
 
 end
 
 function hideDialogue()
-    local characters = {Mother, Alena, Ivan, KoscheiPlea, Koschei, MotherWar, Wolf, BrotherD, Falcon, Raven, Eagle}
+    local characters = {Mother, Alena, AlenaCryD_NR, Ivan, KoscheiPlea, Koschei, MotherWar, Wolf, BrotherD, Falcon, Raven, Eagle, VasilisaD, VasilisaCry}
     for i=1, table.getn(characters) do characters[i].y = -700 end
     transition.to(dialBack, {y = -800, time=500})
     --dialBack.y = -800
@@ -1844,15 +2238,15 @@ local function setStageObjects(stage)
             landscape1 = display.newImage(midlayer1, "images/act5_landscape1.png", true) setAnchor(landscape1)
             landscape1.x = 1000 landscape1.y = 400
 
-            fortress2 = display.newImage(midlayer1, "images/act5_fortress2.png", true) setAnchor(fortress2)
+            fortress2 = display.newImage(midlayer2, "images/act5_fortress2.png", true) setAnchor(fortress2)
             fortress2.x = -115 fortress2.y = 190
 
-            bridge = display.newImage(midlayer1, "images/act5_bridge.png", true) setAnchor(bridge)
+            bridge = display.newImage(midlayer2, "images/act5_bridge.png", true) setAnchor(bridge)
             bridge.alpha = 0
             bridge.x = 480 bridge.y = 480
             bridge.anchorX = 1 bridge.anchorY = 1
 
-            fortress = display.newImage(midlayer1, "images/act5_fortress.png", true) setAnchor(fortress)
+            fortress = display.newImage(midlayer2, "images/act5_fortress.png", true) setAnchor(fortress)
             fortress.x = -600 fortress.y = 100
 
             shadowLayer5 = display.newImage(midlayer2, "images/act5_shadowLayer.png", true) setAnchor(shadowLayer5) shadowLayer5.alpha=0
@@ -1985,6 +2379,9 @@ local function setStageObjects(stage)
 
             GoldenApple = display.newImage(midlayer3, "images/act7_goldenApple.png", true) setAnchor(GoldenApple)
             GoldenApple.x=500  GoldenApple.y=-500
+
+            GoldenHorse = display.newImage(midlayer2, "images/act7_goldenHorse.png", true) setAnchor(GoldenHorse)
+            GoldenHorse.x=750  GoldenHorse.y=-500
             
             foreground:removeSelf()
             foreground = nil
@@ -2000,7 +2397,7 @@ local function setStageObjects(stage)
             removeCharacters()
             clearStage() 
 
-            landscape3 = display.newImage(midlayer1, "images/background7.png", true) setAnchor(landscape3)
+            landscape3 = display.newImage(midlayer1, "images/background8.png", true) setAnchor(landscape3)
             landscape3.x = 0 landscape3.y = 0
 
             landscape2 = display.newImage(midlayer1, "images/act5_landscape2.png", true) setAnchor(landscape2)
@@ -2017,6 +2414,11 @@ local function setStageObjects(stage)
             end
 
             setAnchor(StrongholdB2) StrongholdB2.x=1200 StrongholdB2.y=150
+            print("Printing the midlayer 2 second time") 
+            print(midlayer2)
+            print("set 75 debug")
+            print(StrongholdBF)
+            print(StrongholdB2)
             midlayer2:insert(StrongholdB2)
             StrongholdB2:toFront()
 
@@ -2030,7 +2432,7 @@ local function setStageObjects(stage)
             GoldenHorse.x=750  GoldenHorse.y=-500
 
             UncleServants = display.newImage(midlayer3, "images/uncles_servants.png", true) setAnchor(UncleServants)
-            UncleServants.x=1200 UncleServants.y=100
+            UncleServants.x=1200 UncleServants.y=130
 
             foreground:removeSelf()
             foreground = nil
@@ -2038,7 +2440,69 @@ local function setStageObjects(stage)
 
             organizeStage() 
         end,
-        set81 = function() end
+        set90 = function() 
+            removeCharacters()
+            clearStage() 
+
+            landscape3 = display.newImage(midlayer1, "images/background9.png", true) setAnchor(landscape3)
+            landscape3.x = 0 landscape3.y = 0
+
+            landscape2 = display.newImage(midlayer1, "images/act5_landscape2.png", true) setAnchor(landscape2)
+            landscape2.x = -400 landscape2.y = 0
+
+
+            landscape1 = display.newImage(midlayer1, "images/act5_landscape1.png", true) setAnchor(landscape1)
+            landscape1.x = 0 landscape1.y = 400
+
+            StrongholdBer = display.newImage(midlayer2, "images/act8_wall.png", true) setAnchor(StrongholdBer) 
+            StrongholdBer.x=1200 StrongholdBer.y=-10
+            StrongholdBer:toFront()
+
+            GardenBer = display.newImage(midlayer2, "images/act8_courtyard.png", true) setAnchor(GardenBer) 
+            GardenBer.x=1200 GardenBer.y=-200
+            GardenBer:toFront()
+
+            AlenaVasilisaRiding = display.newImage(midlayer3, "images/AlenaVasilisaRiding.png", true) setAnchor(AlenaVasilisaRiding) 
+            AlenaVasilisaRiding.x=600 AlenaVasilisaRiding.y=-500
+
+
+            foreground:removeSelf()
+            foreground = nil
+            foreground = display.newImage(foregoundGr, "images/foreground6.png", true ) setAnchor(foreground)
+
+            organizeStage() 
+        end,
+        set100 = function() 
+            clearStage()
+
+            landscape3 = display.newImage(midlayer1, "images/background10.png", true) setAnchor(landscape3)
+            landscape3.x = 0 landscape3.y = 0
+
+            landscape2 = display.newImage(midlayer1, "images/act5_landscape2.png", true) setAnchor(landscape2)
+            landscape2.x = -200 landscape2.y = 0
+
+            landscape1 = display.newImage(midlayer1, "images/act5_landscape1.png", true) setAnchor(landscape1)
+
+            fortress2 = display.newImage(midlayer1, "images/act5_fortress2.png", true) setAnchor(fortress2)
+            fortress2.x = -115 fortress2.y = 190
+
+            bridge = display.newImage(midlayer1, "images/act5_bridge.png", true) setAnchor(bridge)
+            bridge.alpha = 0
+            bridge.x = 380 bridge.y = 480
+            bridge.anchorX = 1 bridge.anchorY = 1
+
+            fortress = display.newImage(midlayer1, "images/act5_fortress.png", true) setAnchor(fortress)
+            fortress.x = -600 fortress.y = 100
+
+            landscape1.x = 0 landscape1.y = 400
+
+            shadowLayer5 = display.newImage(midlayer2, "images/act5_shadowLayer.png", true) setAnchor(shadowLayer5) shadowLayer5.alpha=0
+
+            AlenaVasilisaRiding = display.newImage(midlayer3, "images/AlenaVasilisaRiding.png", true) setAnchor(AlenaVasilisaRiding) 
+            AlenaVasilisaRiding.x=600 AlenaVasilisaRiding.y=-500
+
+            organizeStage()  
+        end,
 
     }
     stages[stage]()
@@ -2207,7 +2671,7 @@ myListener = function( event )
     -- listener for the main text
     sceneText:addEventListener( "touch", sceneTextTouch)
 
-    loadScene(scenes[52])
+    loadScene(scenes[39])
     return true
 end
 
