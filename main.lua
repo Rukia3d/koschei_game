@@ -36,9 +36,6 @@ local IvanS = display.newImage( characters, "images/ivan_s_small.png") IvanS.x =
 local MotherS = display.newImage( characters, "images/mother_s_small.png") MotherS.x = 540 MotherS.y = -400 
 local WolfS = display.newImage( characters, "images/wolf_s_small.png") WolfS.x = -200 WolfS.y = -400
 local WolfSit = display.newImage( characters, "images/wolf_f_small.png") WolfSit.x = -200 WolfS.y = -400  
-local EagleS = display.newImage( characters, "images/eagle_f_small.png") EagleS.x = 500 EagleS.y = -400
-local FalconS = display.newImage( characters, "images/falcon_f_small.png") FalconS.x = 500 FalconS.y = -400 
-local RavenS = display.newImage( characters, "images/raven_f_small.png") RavenS.x = 500 RavenS.y = -400  
 local VasilisaS = display.newImage( characters, "images/vasilisa_f_small.png") VasilisaS.x = 1200 VasilisaS.y = -400  
 
 
@@ -64,20 +61,14 @@ local Mother = display.newImage( charactersDial, "images/mother_s_dialogue.png",
 local MotherWar = display.newImage( charactersDial, "images/mother_f_dialogue.png", false) MotherWar.x = 400 MotherWar.y = 900
 local Koschei = display.newImage( charactersDial, "images/koschei_f_big.png", false) Koschei.x = 300 Koschei.y = 800
 local KoscheiPlea = display.newImage( charactersDial, "images/kosh_plea_dialogue.png", false) KoscheiPlea.x = 900 KoscheiPlea.y = 800
-local Wolf  = display.newImage( charactersDial, "images/wolf_dialogue.png", false) Wolf.x = 700 Wolf.y = 800
-local Eagle = display.newImage( charactersDial, "images/eagle_dialogue.png") Eagle.x = 400 Eagle.y = 800
-local Falcon = display.newImage( charactersDial, "images/falcon_dialogue.png") Falcon.x = 400 Falcon.y = 800
-local Raven = display.newImage( charactersDial, "images/raven_dialogue.png") Raven.x = 400 Raven.y = 800  
+local Wolf  = display.newImage( charactersDial, "images/wolf_dialogue.png", false) Wolf.x = 700 Wolf.y = 800 
 local VasilisaD = display.newImage( charactersDial, "images/vasilisa_f_dialogue.png") VasilisaD.x = 400 VasilisaD.y = 800
 local VasilisaCry = display.newImage( charactersDial, "images/vasilisa_s_dialogue.png") VasilisaCry .x = 400 VasilisaCry .y = 800  
 
+-- Charcters for brother's scenes
+local BrotherD = display.newImage(foregoundGr, "images/transparent.png")
+local BrotherS = display.newImage(foregoundGr, "images/transparent.png")
 
--- Changing variables
-local BrotherS = EagleS 
-local BrotherD = Eagle
-local StrongholdBR = display.newImage("images/act7_Raven_stronghold.png", false) StrongholdBR.x=0 StrongholdBR.y=0
-local StrongholdBF = display.newImage("images/act7_Falcon_stronghold.png", false) StrongholdBF.x=0 StrongholdBF.y=0
-local StrongholdBE = display.newImage("images/act7_Eagle_stronghold.png", false) StrongholdBE.x=0 StrongholdBE.y=0
 
 -- Set main screen
 local background = display.newImage( "images/startScreen.png") background.x = display.contentWidth / 2 background.y = display.contentHeight / 2
@@ -141,6 +132,16 @@ local function setBasementStage()
     transition.to(waterFount, {y=0, time=1000, delay=3000})
     transition.to(koshPrisoner, {y=0, time=1000, delay=3500})
 end  
+
+
+local function loadBrothers(name) 
+    BrotherD:removeSelf() BrotherD = nil
+    BrotherS:removeSelf() BrotherS = nil
+    BrotherD = display.newImage( charactersDial, "images/"..name.."_dialogue.png")
+    BrotherS = display.newImage( characters, "images/"..name.."_f_small.png")
+    BrotherD.x = 400 BrotherD.y = 800
+    BrotherS.x = 500 BrotherS.y = -400
+end
 
 local function setStronghold1()
     StrongholdB1.x=700
@@ -281,8 +282,8 @@ choices = {
     bless = false,
     basement = false,
     bucket = 0,
-    brother = 'Eagle',
-    brother1 = 'an eagle',
+    brother = 'NoInfo',
+    brother1 = 'NoInfo',
     advice = true,
     notListen = 0,
     vasilisa = 'NoInfo',
@@ -1001,6 +1002,7 @@ scenes[42] = {
     changeFlow = function()
         choices.brother = 'Eagle'
         choices.brother1 = 'an eagle'
+        loadBrothers('Eagle')
     end,
     animations = function()
         ridingWolftoRight(AlenaOnWolf)
@@ -1019,6 +1021,7 @@ scenes[43] = {
     changeFlow = function()
         choices.brother = 'Raven'
         choices.brother1 = 'a raven'
+        loadBrothers('Raven')
     end,
     animations = function()
         ridingWolftoRight(AlenaOnWolf)
@@ -1037,6 +1040,7 @@ scenes[44] = {
     changeFlow = function()
         choices.brother = 'Falcon'
         choices.brother1 = 'a falcon'
+        loadBrothers('Falcon')
     end,
     animations = function()
         ridingWolftoRight(AlenaOnWolf)
@@ -2079,7 +2083,7 @@ function showDialogue(name)
 end
 
 function hideDialogue()
-    local characters = {Mother, Alena, AlenaCryD_NR, Ivan, KoscheiPlea, Koschei, MotherWar, Wolf, BrotherD, Falcon, Raven, Eagle, VasilisaD, VasilisaCry}
+    local characters = {Mother, Alena, AlenaCryD_NR, Ivan, KoscheiPlea, Koschei, MotherWar, Wolf, BrotherD, VasilisaD, VasilisaCry}
     for i=1, table.getn(characters) do characters[i].y = -700 end
     transition.to(dialBack, {y = -800, time=500})
     --dialBack.y = -800
@@ -2125,7 +2129,6 @@ function removeCharacters()
     WolfSit.x=600 WolfSit.y=-400
     AlenaOnWolf.x=1200 AlenaOnWolf.y=270
     AlenaOnWolfNoRibbon.x=1200 AlenaOnWolfNoRibbon.y=270
-    EagleS.x = 500 EagleS.y=-400
     BrotherS.x = 500 BrotherS.y=-400
 end
 
@@ -2267,23 +2270,17 @@ local function setStageObjects(stage)
                 throne = display.newImage(midlayer2, "images/act6_chairRed.png", true)
                 birdSymbol = display.newImage(midlayer2, "images/act6_Falcon_stand.png", true)
                 setAnchor(birdSymbol) birdSymbol.x = 210 birdSymbol.y = -200
-                BrotherS = FalconS
-                BrotherD = Falcon
 
             elseif choices.brother=='Raven' then
                 landscape2 = display.newImage(midlayer1, "images/act6_landscape2b.png", true)
                 throne = display.newImage(midlayer2, "images/act6_chairBlue.png", true)
                 birdSymbol = display.newImage(midlayer2, "images/act6_Raven_stand.png", true)
                 setAnchor(birdSymbol) birdSymbol.x = 215 birdSymbol.y = -200
-                BrotherS = RavenS
-                BrotherD = Raven
             else
                 landscape2 = display.newImage(midlayer1, "images/act6_landscape2r.png", true)
                 throne = display.newImage(midlayer2, "images/act6_chairGold.png", true)
                 birdSymbol = display.newImage(midlayer2, "images/act6_Eagle_stand.png", true)
                 setAnchor(birdSymbol) birdSymbol.x = 200 birdSymbol.y = -200
-                BrotherS = EagleS
-                BrotherD = Eagle
             end
 
             setAnchor(landscape2) landscape2.x = 0 landscape2.y = -1000
@@ -2312,9 +2309,9 @@ local function setStageObjects(stage)
             ribbon.x = 150 ribbon.y=30 
 
             if choices.brother=="Raven" then
-                StrongholdB1 = StrongholdBF 
+                StrongholdB1 = display.newImage("images/act7_Falcon_stronghold.png", false)
             else
-                StrongholdB1 = StrongholdBR
+                StrongholdB1 = display.newImage("images/act7_Raven_stronghold.png", false)
             end
 
             setAnchor(StrongholdB1) StrongholdB1.x=1200 StrongholdB1.y=150
@@ -2408,9 +2405,9 @@ local function setStageObjects(stage)
             landscape1.x = 0 landscape1.y = 400
 
             if choices.brother=="Falcon" then
-                StrongholdB2 = StrongholdBE 
+                StrongholdB2 =  display.newImage("images/act7_Eagle_stronghold.png", false)
             else
-                StrongholdB2 = StrongholdBF
+                StrongholdB2 = display.newImage("images/act7_Falcon_stronghold.png", false) 
             end
 
             setAnchor(StrongholdB2) StrongholdB2.x=1200 StrongholdB2.y=150
