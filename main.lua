@@ -1249,8 +1249,8 @@ scenes[58] = {
     text = 'Uncle: "So if you want to help me - steal at least one golden apple and the horse for me. Then I’ll think about telling you how to get into Koschei’s castle."',
     follows = 59,
     changeFlow = function()
-        if BrotherD == Falcon then scenes[58].follows = 59
-        elseif BrotherD == Raven then scenes[58].follows = 60
+        if choices.brother == 'Falcon' then scenes[58].follows = 59
+        elseif choices.brother == 'Raven' then scenes[58].follows = 60
         else scenes[58].follows = 61
         end
     end,
@@ -1486,11 +1486,13 @@ scenes[72] = {
     end,
         animations = function()
             GoldenApple.x=400
-            transition.to(WolfSit, {y=-220, time=500, delay=500})
-            transition.to(GoldenApple, {y=40, time=500, delay=1000})
-            transition.to(UncleServants, {x=300, time=1000, delay=1500})
-            transition.to(UncleServants, {x=-1000, time=1000, delay=3500})
-            transition.to(GoldenApple, {x=-500, time=1000, delay=3500})
+            transition.to(WolfSit, {y=-220, time=500, delay=1000})
+            transition.to(MagicWolf, {y=-100, time=500, delay=300})
+            transition.to(GoldenApple, {y=40, time=500, delay=1300})
+            transition.to(MagicWolf, {y=-600, time=500, delay=2000})
+            transition.to(UncleServants, {x=300, time=1000, delay=2300})
+            transition.to(UncleServants, {x=-1000, time=1000, delay=4000})
+            transition.to(GoldenApple, {x=-500, time=1000, delay=4000})
     end,
     animationComplete = function()
         WolfSit.y=-220
@@ -1519,11 +1521,10 @@ scenes[73] = {
 scenes[74] = {
     sName = 74,
     changeFlow = function() 
-        if choices.brother=='Falcon' then
-            -- If we got the quest from Raven we go to Falcon. Othervise we go ro Raven
-            scenes[74].follows = 75
-        else
+        if choices.brother=='Eagle' then
             scenes[74].follows = 76
+        else
+            scenes[74].follows = 75
         end
     end,
     text='Uncle: \"Maybe you really can save Ivan. But for now, go and fetch me the horse with the golden mane from my other brother.\"',
@@ -1689,11 +1690,13 @@ scenes[84] = {
     animations = function()
         WolfSit.x=400
         GoldenHorse.x=300 GoldenHorse.y=-500
-        transition.to(WolfSit, {y=-220, time=500, delay=500})
-        transition.to(GoldenHorse, {y=-50, time=500, delay=1000})
-        transition.to(UncleServants, {x=300, time=1000, delay=1500})
-        transition.to(UncleServants, {x=-1000, time=1000, delay=3500})
-        transition.to(GoldenHorse, {x=-500, time=1000, delay=3500})
+        transition.to(WolfSit, {y=-220, time=500, delay=1000})
+        transition.to(MagicWolf, {y=-100, time=500, delay=300})
+        transition.to(MagicWolf, {y=-600, time=500, delay=2000})
+        transition.to(GoldenHorse, {y=-50, time=500, delay=1300})
+        transition.to(UncleServants, {x=300, time=1000, delay=2300})
+        transition.to(UncleServants, {x=-1000, time=1000, delay=4000})
+        transition.to(GoldenHorse, {x=-500, time=1000, delay=4000})
     end,
     animationComplete = function() end
 }
@@ -1937,8 +1940,10 @@ scenes[100] = {
         WolfS.x=1100 WolfS.y=250
         transition.to(AlenaNoRibbon, {x=450, time=1000})
         transition.to(WolfS, {x=600, time=1000})
-        transition.to(WolfS, {x=600, y=-400, time=700, delay=1300})
-        transition.to(VasilisaS, {y=260, time=700, delay=1700})
+        transition.to(MagicWolf, {y=-100, time=500, delay=1000})
+        transition.to(MagicWolf, {y=-600, time=500, delay=2500})
+        transition.to(WolfS, {x=600, y=-400, time=700, delay=1500})
+        transition.to(VasilisaS, {y=260, time=700, delay=2300})
     end,
     animationComplete = function()
         AlenaNoRibbon.x=550  AlenaNoRibbon.y=230
@@ -2270,17 +2275,20 @@ local function setStageObjects(stage)
                 throne = display.newImage(midlayer2, "images/act6_chairRed.png", true)
                 birdSymbol = display.newImage(midlayer2, "images/act6_Falcon_stand.png", true)
                 setAnchor(birdSymbol) birdSymbol.x = 210 birdSymbol.y = -200
+                loadBrothers('Falcon')
 
             elseif choices.brother=='Raven' then
                 landscape2 = display.newImage(midlayer1, "images/act6_landscape2b.png", true)
                 throne = display.newImage(midlayer2, "images/act6_chairBlue.png", true)
                 birdSymbol = display.newImage(midlayer2, "images/act6_Raven_stand.png", true)
                 setAnchor(birdSymbol) birdSymbol.x = 215 birdSymbol.y = -200
+                loadBrothers('Falcon')
             else
                 landscape2 = display.newImage(midlayer1, "images/act6_landscape2r.png", true)
                 throne = display.newImage(midlayer2, "images/act6_chairGold.png", true)
                 birdSymbol = display.newImage(midlayer2, "images/act6_Eagle_stand.png", true)
                 setAnchor(birdSymbol) birdSymbol.x = 200 birdSymbol.y = -200
+                loadBrothers('Eagle')
             end
 
             setAnchor(landscape2) landscape2.x = 0 landscape2.y = -1000
@@ -2306,7 +2314,7 @@ local function setStageObjects(stage)
 
             ribbon = display.newImage(midlayer3, "images/ribbon_single.png") setAnchor(ribbon)
             ribbon.xScale = -1 
-            ribbon.x = 150 ribbon.y=30 
+            ribbon.x = 150 ribbon.y=45 
 
             if choices.brother=="Raven" then
                 StrongholdB1 = display.newImage("images/act7_Falcon_stronghold.png", false)
@@ -2329,6 +2337,10 @@ local function setStageObjects(stage)
             GoldenApple.x=500  GoldenApple.y=-500
             TreeRibbon = display.newImage(midlayer2, "images/act7_treeRibbon.png", true) setAnchor(TreeRibbon)
             TreeRibbon.x=560  TreeRibbon.y=-500
+
+            MagicWolf = display.newImage( midlayer3, "images/magicWolf.png", true) setAnchor(MagicWolf)
+            MagicWolf.x=290 MagicWolf.y=-600
+            MagicWolf:toFront()
 
             UncleServants = display.newImage(midlayer3, "images/uncles_servants.png", true) setAnchor(UncleServants)
             UncleServants.x=1200 UncleServants.y=100
@@ -2353,6 +2365,7 @@ local function setStageObjects(stage)
                 throne = display.newImage(midlayer2, "images/act6_chairRed.png", true)
                 birdSymbol = display.newImage(midlayer2, "images/act6_Falcon_stand.png", true)
                 setAnchor(birdSymbol) birdSymbol.x = 210 birdSymbol.y = 320
+                loadBrothers('Falcon')
 
 
             elseif choices.brother=='Raven' then
@@ -2360,12 +2373,14 @@ local function setStageObjects(stage)
                 throne = display.newImage(midlayer2, "images/act6_chairBlue.png", true)
                 birdSymbol = display.newImage(midlayer2, "images/act6_Raven_stand.png", true)
                 setAnchor(birdSymbol) birdSymbol.x = 215 birdSymbol.y = 320
+                loadBrothers('Raven')
 
             else
                 landscape2 = display.newImage(midlayer1, "images/act6_landscape2r.png", true)
                 throne = display.newImage(midlayer2, "images/act6_chairGold.png", true)
                 birdSymbol = display.newImage(midlayer2, "images/act6_Eagle_stand.png", true)
                 setAnchor(birdSymbol) birdSymbol.x = 200 birdSymbol.y = 320
+                loadBrothers('Eagle')
 
             end
 
@@ -2404,18 +2419,13 @@ local function setStageObjects(stage)
             landscape1 = display.newImage(midlayer1, "images/act5_landscape1.png", true) setAnchor(landscape1)
             landscape1.x = 0 landscape1.y = 400
 
-            if choices.brother=="Falcon" then
-                StrongholdB2 =  display.newImage("images/act7_Eagle_stronghold.png", false)
-            else
+            if choices.brother=="Eagle" then
                 StrongholdB2 = display.newImage("images/act7_Falcon_stronghold.png", false) 
+            else
+                StrongholdB2 =  display.newImage("images/act7_Eagle_stronghold.png", false) 
             end
 
             setAnchor(StrongholdB2) StrongholdB2.x=1200 StrongholdB2.y=150
-            print("Printing the midlayer 2 second time") 
-            print(midlayer2)
-            print("set 75 debug")
-            print(StrongholdBF)
-            print(StrongholdB2)
             midlayer2:insert(StrongholdB2)
             StrongholdB2:toFront()
 
@@ -2427,6 +2437,10 @@ local function setStageObjects(stage)
 
             GoldenHorse = display.newImage(midlayer3, "images/act7_goldenHorse.png", true) setAnchor(GoldenHorse)
             GoldenHorse.x=750  GoldenHorse.y=-500
+
+            MagicWolf = display.newImage( midlayer3, "images/magicWolf.png", true) setAnchor(MagicWolf)
+            MagicWolf.x=290 MagicWolf.y=-600
+            MagicWolf:toFront()
 
             UncleServants = display.newImage(midlayer3, "images/uncles_servants.png", true) setAnchor(UncleServants)
             UncleServants.x=1200 UncleServants.y=130
@@ -2488,6 +2502,10 @@ local function setStageObjects(stage)
             bridge.x = 380 bridge.y = 480
             bridge.anchorX = 1 bridge.anchorY = 1
 
+            MagicWolf = display.newImage( midlayer3, "images/magicWolf.png", true) setAnchor(MagicWolf)
+            MagicWolf.x=450 MagicWolf.y=-600
+            MagicWolf:toFront()
+
             fortress = display.newImage(midlayer1, "images/act5_fortress.png", true) setAnchor(fortress)
             fortress.x = -600 fortress.y = 100
 
@@ -2497,6 +2515,10 @@ local function setStageObjects(stage)
 
             AlenaVasilisaRiding = display.newImage(midlayer3, "images/AlenaVasilisaRiding.png", true) setAnchor(AlenaVasilisaRiding) 
             AlenaVasilisaRiding.x=600 AlenaVasilisaRiding.y=-500
+
+            foreground:removeSelf()
+            foreground = nil
+            foreground = display.newImage(foregoundGr, "images/foreground6.png", true ) setAnchor(foreground)
 
             organizeStage()  
         end,
@@ -2535,6 +2557,16 @@ function loadScene(s)
     if s.openingAnimation then openingAnimation(s.openingAnimation[1], s.openingAnimation[2]) 
     end
     if s.changeFlow then s.changeFlow() end
+
+    -- Set the text or call it depending on the type
+    print('printing scene type')
+    print(type(s.text))
+    if type(s.text)=='function' then sceneText.text = s.text() else sceneText.text = s.text end
+    setAnchor(sceneText)
+    sceneText.alpha = 0
+    transition.to(sceneText, {alpha=1, time=2000}) 
+    sceneText:setFillColor( 0, 0, 0 )
+    textContainer.isVisible = true;
 
     if not s.follows then
         print('This sceene has Selection')
@@ -2589,15 +2621,6 @@ function loadScene(s)
             select3Text.index = s.sName
         end
 
-        textContainer.isVisible = true;
-
-        -- Set the text or call it depending on the type
-        if type(s.text)=='function' then sceneText.text = s.text() else sceneText.text = s.text end
-        setAnchor(sceneText)
-        sceneText.alpha = 0
-        transition.to(sceneText, {alpha=1, time=2000}) 
-        sceneText:setFillColor( 0, 0, 0 )
-
         -- Nullify the link from the main text in the scene
         sceneText.follows = nil
         sceneText.index = nil
@@ -2617,12 +2640,7 @@ function loadScene(s)
 
         -- Set Main Text
         print('Scene has no selection')
-        textContainer.isVisible = true;
-        sceneText.text = s.text
-        setAnchor(sceneText)
-        sceneText.alpha = 0
-        transition.to(sceneText, {alpha=1, time=1000}) 
-        sceneText:setFillColor( 0, 0, 0 )
+
         -- Attaching following scene number and name of the scene we are working in
         sceneText.follows = s.follows
         sceneText.index = s.sName
@@ -2668,7 +2686,7 @@ myListener = function( event )
     -- listener for the main text
     sceneText:addEventListener( "touch", sceneTextTouch)
 
-    loadScene(scenes[39])
+    loadScene(scenes[100])
     return true
 end
 
