@@ -930,1128 +930,1226 @@ local scenes = {};
         end
     }
 
--------- Act 2 Scenes 39 - 105
+-------- Act 2 Scenes 39 - 61
 
-scenes[39] = {
-    sName = 39,
-    openingAnimation = {
-        [1] = 'background6.png', 
-        [2] = 'foreground6.png'
-        },
-    setStage = 'set39',
-    text='Alena sits on Grey Wolf\'s back, hugs his massive neck, and he starts to run - so fast that before the sun touches down on the treetops to the west, they have already reached the crossroads on the other side of the forest.',
-    follows = 40,
-    animations = function()
-        transition.to(landscape3, {x=0, time=1000, delay=500})
-        transition.to(landscape2, {x=0, time=1000, delay=1000})
-        transition.to(landscape1, {x=0, time=1000, delay=1500})
-        transition.to(shadowLayer5, {alpha=1, time=1000, delay=2500})
-    end,
-    animationComplete = function()
-        landscape3.x=0
-        landscape2.x=0
-        landscape1.x=0
-        shadowLayer5.alpha=1
-        foreground.y=0
-    end
-}
-
-scenes[40] = {
-    sName = 40,
-    text='The road splits into three directions with big engraved stone pointing the way. Alena dismounts from Gray Wolf to read the tattered letters.',
-    follows = 41,
-    animations = function()
-        transition.to(stone,{y=0, time=1000})
-        WolfS.x=700 AlenaS.x=500
-        transition.to(WolfS,{y=255, time=1000, delay=1000})
-        transition.to(AlenaS,{y=230, time=1000, delay=1000})
-    end,
-    animationComplete = function()
-        stone.y=0
-        WolfS.x=700 WolfS.y=255 
-        AlenaS.x=500 AlenaS.y=230
-    end
-}
-
-scenes[41] = {
-    sName = 41,
-    text = '"If you ride to the left, you will lose your horse. If you ride to the right, you will lose your head. If you ride straight ahead, you will lose both."',
-    selection = {
-        [1] = {'Choose to go left', 42},
-        [2] = {'Choose to go straight', 43},
-        [3] = {'Choose to go right', 44}
-    },
-    changeFlow = function()
-    end,
-    animations = function()
-    end,
-    animationComplete = function()
-        stone.isVisible = false
-        landscape2.x=-1700
-        landscape1.x=-2500
-        WolfS.y=-400 
-        AlenaS.y=-400
-    end
-}
-
-scenes[42] = {
-    sName = 42,
-    follows = 45,
-    clearSelection = true,
-    text = 'After the crossroads, they ride for a while, as the sky blackens and the starry space above stares down on Alena and Gray Wolf. They are approaching a wooden fortress.', 
-    changeFlow = function()
-        choices.brother = 'Eagle'
-        choices.brother1 = 'an eagle'
-        loadBrothers('Eagle')
-    end,
-    animations = function()
-        ridingWolftoRight(AlenaOnWolf)
-        transition.to(fortress, {x=-300, time=1000, delay=2500})
-        transition.to(fortress2, {x=185, time=1000, delay=2500})
-    end, 
-    animationComplete = function()
-    end 
-}
-
-scenes[43] = {
-    sName = 43,
-    clearSelection = true,
-    follows = 45,
-    text = 'After the crossroads, they ride for a while, as the sky blackens and the starry space above stares down on Alena and Gray Wolf. They are approaching a wooden fortress.', 
-    changeFlow = function()
-        choices.brother = 'Raven'
-        choices.brother1 = 'a raven'
-        loadBrothers('Raven')
-    end,
-    animations = function()
-        ridingWolftoRight(AlenaOnWolf)
-        transition.to(fortress2, {x=185, time=1000, delay=2500})
-        transition.to(fortress, {x=-300, time=1000, delay=2500})
-    end, 
-    animationComplete = function()
-    end   
-}
-
-scenes[44] = {
-    sName = 44,
-    follows = 45,
-    clearSelection = true,
-    text = 'After the crossroads, they ride for a while, as the sky blackens and the starry space above stares down on Alena and Gray Wolf. They are approaching a wooden fortress.', 
-    changeFlow = function()
-        choices.brother = 'Falcon'
-        choices.brother1 = 'a falcon'
-        loadBrothers('Falcon')
-    end,
-    animations = function()
-        ridingWolftoRight(AlenaOnWolf)
-        transition.to(fortress, {x=-300, time=1000, delay=2500})
-        transition.to(fortress2, {x=185, time=1000, delay=2500})
-    end, 
-    animationComplete = function()
-    end   
-}
-
-scenes[45] = {
-    sName = 45,
-    follows = 46,
-    text = '"Is that a Koschei stronghold?"" wonders Alena. The night is cold, so Alena shivers, but the walls in front of her don\'t look like they are made from ice.',
-    animations = function() 
-        transition.to(fortress, {x=0, time=1000})
-        transition.to(fortress2, {x=485, time=1000})
-    end,
-    animationComplete = function()
-        fortress.x=0
-        fortress2.x=485
-    end
-
-}
-
-scenes[46] = {
-    sName = 46,
-    text = function() 
-        return '"Don’t get scared, daughter of Marya, it is not Koschei\'s lair. It is the domain of your mother\'s brother, the shape-shifting wizard who can turn into '..choices.brother1..'," says the Gray Wolf suddenly.'
-    end,
-    selection = {
-        [1] = {'You can talk?', 47},
-    },
-    animations = function()
-        showDialogue(Wolf)
-    end,
-    animationComplete =  function()
-        hideDialogue() 
-    end
-}
-
-scenes[47] = {
-    sName = 47,
-    text = 'Alena: "You can talk?"',
-    follows = 48,
-    clearSelection = true,
-    animations = function()
-        showDialogue(Alena)
-    end,
-    animationComplete =  function()
-        hideDialogue()
-    end
-}
-
-scenes[48] = {
-    sName = 48,
-    text = 'Grey Wolf: "I can do many things and before the sun rises, you will see that, daughter of Marya. Before you have to deal with consequences of your choices."',
-    selection = {
-        [1] = {'My mother has a brother?', 49}
-    },
-    animations = function()
-        showDialogue(Wolf)
-    end,
-    animationComplete =  function()
-        hideDialogue()
-    end
-}
-
-scenes[49] = {
-    sName = 49,
-    follows = 50,
-    text = 'Alena: "My mother has a brother?"',
-    clearSelection = true,
-    animations = function()
-        showDialogue(Alena)
-    end,
-    animationComplete =  function()
-        hideDialogue()
-    end
-}
-
-
-scenes[50] = {
-    sName = 50,
-    clearSelection = true,
-    text = 'Grey Wolf: "Yes, she has three brothers, all wizards who can turn into birds of prey - Eagle, Raven or Falcon. They were inseparable a long time ago, but after traveling to Koschei\'s stronghold, they had a falling out."',
-    follows = 51,
-    animations = function()
-        showDialogue(Wolf)
-    end,
-    animationComplete =  function()
-        hideDialogue()
-    end
-}
-
-scenes[51] = {
-    sName = 51,
-    text = 'It\'s getting colder and night is almost upon them, so Alena and Wolf decide to ask her uncle for shelter. His servants open the gate and escort her into the main hall.',
-    follows = 52,
-    clearSelection = true,
-    animations = function()
-        hideDialogue()
-        bridge.alpha=1
-        transition.to(bridge, {rotation=90, time=1000})
-    end,
-    animationComplete = function() 
-        hideDialogue()
-        bridge.alpha=1
-        bridge.rotation=90
-    end
-}
-
-scenes[52] = {
-    sName = 52,
-    setStage = 'set52',
-    openingAnimation = {
-        [1] = 'background7.png', 
-        [2] = 'foreground3.png'
-    },
-    text = 'Her uncle is standing in a great hall wearing a gloomy look. Alena tells him her sad story, but he doesn\'t seem to be affected by it, because he is lost in his own thoughts. "Looks like I won\'t get any help from him," sighs Alena.',
-    follows = 53,
-    animations = function() 
-        loadUncleCastle()
-    end,
-    animationComplete =  function()
-        foreground.y=0
-        landscape3.x=0
-        landscape2.y=0
-        WolfSit.x=900 WolfSit.y=270
-        AlenaS.x=740 AlenaS.y=280
-        birdSymbol.y=320
-        BrotherS.y=300
-        shadowLayer6.alpha=1
-        throne.y=-30
-    end
-
-}
-
-scenes[53] = {
-    sName = 53,
-    text = 'Uncle: "That’s a very sad story indeed. I remember my own journey to Koschei’s stronghold... It is not a place for a young girl. And if what you told me is true, I need to concentrate on protecting my kingdom, not on helping you."',
-    selection = {
-        [1] = {'"That\'s the reception I get from my own uncle?"', 54},
-        [2] = {' Ask for Gray Wolf\'s advice', 56},
-    },
-    animations = function() 
-        showDialogue(BrotherD)
-    end,
-    animationComplete =  function()
-        hideDialogue()
-    end
-}
-
-scenes[54] = {
-    sName = 54,
-    text = 'Alena: "That\'s the reception I get from my own uncle?"',
-    follows = 55,
-    clearSelection = true,
-    animations = function() 
-        showDialogue(Alena)
-    end,
-    animationComplete = function()
-        hideDialogue()
-        choices.advice = false
-    end
-}
-
-scenes[55] = {
-    sName = 55,
-    text = 'Uncle: "If blood was really thicker than water, I wouldn\'t be in such a predicament. You can stay for one night, and continue your journey in the morning, but that is it."',
-    follows = 57,
-    animations = function()
-        showDialogue(BrotherD) 
-    end,
-    animationComplete =  function()
-        hideDialogue()
-    end
-}
-
-scenes[56] = {
-    sName = 56,
-    text = 'Alena turns to Gray Wolf for advice, and he tells her to offer help instead of demanding help. Though not sure how it might work, Alena offers to help her uncle deal with his predicament.',
-    follows = 57,
-    clearSelection = true,
-    animations = function() 
-        hideDialogue()
-    end,
-    animationComplete =  function()
-        choices.advice = true
-    end
-}
-
-scenes[57] = {
-    sName = 57,
-    text = 'Uncle: "There\'s bad blood between me and my brothers. Years ago, we stole a seed from a tree with golden apples and a horse with a golden mane from Koshei. But my brothers took them and left me with nothing."',
-    follows = 58,
-    animations = function() 
-        showDialogue(BrotherD)
-    end,
-    animationComplete =  function()
-    end
-}
-
-scenes[58] = {
-    sName = 58,
-    text = 'Uncle: "So if you want to help me - steal at least one golden apple and the horse for me. Then I’ll think about telling you how to get into Koschei’s castle."',
-    follows = 59,
-    changeFlow = function()
-        if choices.brother == 'Falcon' then scenes[58].follows = 59
-        elseif choices.brother == 'Raven' then scenes[58].follows = 60
-        else scenes[58].follows = 61
-        end
-    end,
-    animations = function() 
-    end,
-    animationComplete =  function()
-        hideDialogue()
-    end
-}
-
-scenes[59] = {
-    sName = 59,
-    text = 'Alena reluctantly agrees, though she has no idea how she is going to steal the horse or apples from her uncles Raven and Eagle. But Gray Wolf tells her not to grieve and before the moon comes up, they are racing to the Raven domain.',
-    follows = 62,
-    animations = function()
-        hideDialogue() 
-    end,
-    animationComplete =  function()
-    end
-}
-
-scenes[60] = {
-    sName = 60,
-    text = 'Alena reluctantly agrees, though she has no idea how she is going to steal the horse or apples from her uncles Falcon and Eagle. But Gray Wolf tells her not to grieve and before the moon comes up, they are racing to the Falcon domain.',
-    follows = 62,
-    animations = function() 
-        hideDialogue()
-    end,
-    animationComplete =  function()
-    end
-}
-
-scenes[61] = {
-    sName = 61,
-    text = 'Alena reluctantly agrees, though she has no idea how she is going to steal the horse or apples from her uncles Raven and Falcon. But Gray Wolf tells her not to grieve and before the moon comes up, they are racing to the Raven domain.',
-    follows = 62,
-    animations = function() 
-        hideDialogue()
-    end,
-    animationComplete =  function()
-    end
-}
-
--------- Act 3 Scenes 62 - 
-
-scenes[62] = {
-    setStage = 'set62',
-    sName = 62,
-    text = 'They rush at full speed, so the lights of the stars in the sky flow together into a river of spilled milk. On the way, the north wind tears away a ribbon from Alena’s braid.',
-    selection = {
-        [1] = {'Tell the Gray Wolf about the ribbon', 63},
-        [2] = {'Forget about the ribbon', 64},
-    },
-    animations = function()
-        transition.to(ribbon, {x=550, time=3000})
-        transition.to(ribbon, {x=50, time=1000, delay=2000})
-        transition.to(ribbon, {y=400, time=1000, delay=2000})
-        transition.to(ribbon, {alpha=0, time=1, delay=3000})
-        ridingWolftoLeft(AlenaOnWolfNoRibbon)
-    end,
-    animationComplete = function()
-        ribbon.alpha=0
-        AlenaOnWolfNoRibbon.xScale=-1
-        AlenaOnWolfNoRibbon.x=400
-        landscape2.x=-1300
-        landscape1.x=-1500
-    end
-}
-
-scenes[63] = {
-    sName = 63,
-    text = 'Gray Wolf grins while Alena tells him how the wind stole her ribbon. "Your ribbon is now five miles behind us, because even wind can’t keep pace with me."',
-    follows = 64,
-    clearSelection = true,
-    animations = function() 
-    end,
-    animationComplete =  function()
-    end
-}
-
-scenes[64] = {
-    sName = 64,
-    text = 'Soon they get to the castle. With one jump, Gray Wolf leaps over the castle walls into a garden.',
-    follows = 65,
-    clearSelection = true,
-    animations = function()
-        setStronghold1()
-    end,
-    animationComplete =  function()
-        landscape2.x=-1300
-        landscape1.x=-1200
-        StrongholdB1.x=-120
-        AlenaOnWolfNoRibbon.x=600
-        AlenaOnWolfNoRibbon.y=270
-    end
-}
-
-scenes[65] = {
-    sName = 65,
-    text = '"There\'s a golden tree in the middle of the garden. Go to it and pick one apple, just don\'t touch anything else," orders Gray Wolf.',
-    follows = 66,
-    animations = function() 
-        wolfAlenaInGarden()
-        transition.to(StrongholdB1, {x=-400, time=1000})
-        transition.to(AppleGarden, {x=120, time=1000})
-        transition.to(GoldenApples, {y=-50, time=1000, delay=1000})
-        transition.to(GoldenApple, {y=-30, time=1000, delay=1000})
-        transition.to(TreeRibbon, {y=300, time=1000, delay=1000})
-    end,
-    animationComplete = function() 
-        landscape2.x = -1700
-        landscape1.x = -2300
-        StrongholdB1.x = -400
-        AppleGarden.x=120
-        AlenaOnWolfNoRibbon.y=-400
-        AlenaNoRibbon.y=270 AlenaNoRibbon.x=350
-        WolfSit.xScale = -1 WolfSit.x=200 WolfSit.y=270
-        GoldenApples.y=-50
-        GoldenApple.y=-30
-        TreeRibbon.y=300
-    end
-}
-
-scenes[66] = {
-    sName = 66,
-    text = 'Doing as she is told, Alena goes to the tree and plucks a golden apple but then, she sees a beautiful ribbon tying up the branches. "That would look so pretty in my hair!" thinks Alena.',
-    selection = {
-        [1] = {'Leave without the ribbon', 67},
-        [2] = {'Untie the ribbon', 68}
-    },
-    animations = function() 
-        transition.to(AlenaNoRibbon, {x=450, time=1000})
-        transition.to(GoldenApple, {y=10, x=420, time=1000, delay=1000})
-    end,
-    animationComplete = function()
-        AlenaNoRibbon.x=450
-        GoldenApple.x=420 GoldenApple.y=10
-    end,
-}
-
-scenes[67] = {
-    sName = 67,
-    clearSelection = true,
-    text = 'She leaves the ribbon on the branch and gets back to Gray Wolf. "You are a  good girl, daughter of Marya, your mother raised you well," says Grey Wolf and they rush back.',
-    follows = 73,
-    animations = function()
-        showDialogue(Wolf)
-    end,
-    animationComplete = function()
-    end,
-}
-
-scenes[68] = {
-    sName = 68,
-    changeFlow = function() 
-        if choices.brother=='Raven' then
-            -- If we got the quest from Raven we go to Falcon. Othervise we go ro Raven
-            scenes[68].follows = 69
-        else
-            scenes[68].follows = 70
-        end
-    end,
-    clearSelection = true,
-    text = 'The moment Alena touches the ribbon an alarm sounds.',
-    follows = 69,
-    animations = function()
-        transition.to(TreeRibbon, {rotation=50, x=540, y=350, time=500})
-        transition.to(TreeRibbon, {rotation=-30, x=570, y=450, time=500, delay=500})
-        transition.to(TreeRibbon, {rotation=10, x=550, y=500, time=500, delay=900})
-        alarmBellsRing()
-        choices.notListen = choices.notListen+1
-    end,
-    animationComplete = function()
-        AlenaNoRibbon.y=-400
-        WolfSit.y=-400
-        TreeRibbon.y=500
-    end,
-}
-
-scenes[69] = {
-    sName = 69,
-    setStage = 'set62',
-    clearSelection = true,
-    text = 'Gray Wolf grabs Alena and leaps over the wall. "You should have listened to me," he says. "Now Falcon\'s hounds will follow us to his brother’s stronghold!"',
-    follows = 71,
-    animations = function()
-        ridingWolftoRight(AlenaOnWolfNoRibbon)
-    end,
-    animationComplete = function()
-    end,
-}
-
-scenes[70] = {
-    sName = 70,
-    setStage = 'set62',
-    clearSelection = true,
-    text = 'Gray Wolf grabs Alena and leaps over the wall. "You should have listened to me," he says. "Now Raven\'s hounds will follow us to his brother’s stronghold!"',
-    follows = 71,
-    animations = function() 
-        ridingWolftoRight(AlenaOnWolfNoRibbon)
-    end,
-    animationComplete = function() 
-    end,
-}
-
-scenes[71] = {
-    sName = 71,
-    follows = 72,
-    text = "But seeing that Alena is scared, Gray Wolf softens. \"Climb off my back and hide under this tree,\" he orders. \"Don\'t make any sound. Just wait for my return.\" This time Alena listens.",
-    animations = function()
-        loadBushToHide()
-        WolfSit.xScale = -1
-        WolfSit.x=400
-        AlenaNoRibbon.x=600
-        transition.to(AlenaOnWolfNoRibbon, {y=-400, time=500})
-        transition.to(AlenaNoRibbon, {y=210, time=500, delay=400}) 
-        transition.to(WolfSit, {y=220, time=500, delay=400})
-        transition.to(AlenaNoRibbon, {y=210, x=250, time=1000, delay=1500}) 
-    end,
-    animationComplete = function()
-        WolfSit.xScale = -1 WolfSit.x=400 WolfSit.y=220
-        AlenaOnWolfNoRibbon.y=-400
-        AlenaNoRibbon.y=210 AlenaNoRibbon.x=250
-        bushToHide.x=300 bushToHide.y=500 bushToHide.rotation=0
-    end
-}
-
-scenes[72] = {
-    sName = 72,
-    follows = 73,
-    text = function()
-        return "In the twinkling of an eye, Gray Wolf turns himself into a golden apple. Hounds approach, and the servants decide that the thief must have run away, leaving what he had tried to steal behind. They pick up the apple and turn back.  Soon after Gray Wolf returns, and Alena and her companion run to "..choices.brother.."\'s domain in silence. "
-    end,
+    scenes[39] = {
+        sName = 39,
+        openingAnimation = {
+            [1] = 'background6.png', 
+            [2] = 'foreground6.png'
+            },
+        setStage = 'set39',
+        text='Alena sits on Grey Wolf\'s back, hugs his massive neck, and he starts to run - so fast that before the sun touches down on the treetops to the west, they have already reached the crossroads on the other side of the forest.',
+        follows = 40,
         animations = function()
-            GoldenApple.x=400
+            transition.to(landscape3, {x=0, time=1000, delay=500})
+            transition.to(landscape2, {x=0, time=1000, delay=1000})
+            transition.to(landscape1, {x=0, time=1000, delay=1500})
+            transition.to(shadowLayer5, {alpha=1, time=1000, delay=2500})
+        end,
+        animationComplete = function()
+            landscape3.x=0
+            landscape2.x=0
+            landscape1.x=0
+            shadowLayer5.alpha=1
+            foreground.y=0
+        end
+    }
+
+    scenes[40] = {
+        sName = 40,
+        text='The road splits into three directions with big engraved stone pointing the way. Alena dismounts from Gray Wolf to read the tattered letters.',
+        follows = 41,
+        animations = function()
+            transition.to(stone,{y=0, time=1000})
+            WolfS.x=700 AlenaS.x=500
+            transition.to(WolfS,{y=255, time=1000, delay=1000})
+            transition.to(AlenaS,{y=230, time=1000, delay=1000})
+        end,
+        animationComplete = function()
+            stone.y=0
+            WolfS.x=700 WolfS.y=255 
+            AlenaS.x=500 AlenaS.y=230
+        end
+    }
+
+    scenes[41] = {
+        sName = 41,
+        text = '"If you ride to the left, you will lose your horse. If you ride to the right, you will lose your head. If you ride straight ahead, you will lose both."',
+        selection = {
+            [1] = {'Choose to go left', 42},
+            [2] = {'Choose to go straight', 43},
+            [3] = {'Choose to go right', 44}
+        },
+        changeFlow = function()
+        end,
+        animations = function()
+        end,
+        animationComplete = function()
+            stone.isVisible = false
+            landscape2.x=-1700
+            landscape1.x=-2500
+            WolfS.y=-400 
+            AlenaS.y=-400
+        end
+    }
+
+    scenes[42] = {
+        sName = 42,
+        follows = 45,
+        clearSelection = true,
+        text = 'After the crossroads, they ride for a while, as the sky blackens and the starry space above stares down on Alena and Gray Wolf. They are approaching a wooden fortress.', 
+        changeFlow = function()
+            choices.brother = 'Eagle'
+            choices.brother1 = 'an eagle'
+            loadBrothers('Eagle')
+        end,
+        animations = function()
+            ridingWolftoRight(AlenaOnWolf)
+            transition.to(fortress, {x=-300, time=1000, delay=2500})
+            transition.to(fortress2, {x=185, time=1000, delay=2500})
+        end, 
+        animationComplete = function()
+        end 
+    }
+
+    scenes[43] = {
+        sName = 43,
+        clearSelection = true,
+        follows = 45,
+        text = 'After the crossroads, they ride for a while, as the sky blackens and the starry space above stares down on Alena and Gray Wolf. They are approaching a wooden fortress.', 
+        changeFlow = function()
+            choices.brother = 'Raven'
+            choices.brother1 = 'a raven'
+            loadBrothers('Raven')
+        end,
+        animations = function()
+            ridingWolftoRight(AlenaOnWolf)
+            transition.to(fortress2, {x=185, time=1000, delay=2500})
+            transition.to(fortress, {x=-300, time=1000, delay=2500})
+        end, 
+        animationComplete = function()
+        end   
+    }
+
+    scenes[44] = {
+        sName = 44,
+        follows = 45,
+        clearSelection = true,
+        text = 'After the crossroads, they ride for a while, as the sky blackens and the starry space above stares down on Alena and Gray Wolf. They are approaching a wooden fortress.', 
+        changeFlow = function()
+            choices.brother = 'Falcon'
+            choices.brother1 = 'a falcon'
+            loadBrothers('Falcon')
+        end,
+        animations = function()
+            ridingWolftoRight(AlenaOnWolf)
+            transition.to(fortress, {x=-300, time=1000, delay=2500})
+            transition.to(fortress2, {x=185, time=1000, delay=2500})
+        end, 
+        animationComplete = function()
+        end   
+    }
+
+    scenes[45] = {
+        sName = 45,
+        follows = 46,
+        text = '"Is that a Koschei stronghold?"" wonders Alena. The night is cold, so Alena shivers, but the walls in front of her don\'t look like they are made from ice.',
+        animations = function() 
+            transition.to(fortress, {x=0, time=1000})
+            transition.to(fortress2, {x=485, time=1000})
+        end,
+        animationComplete = function()
+            fortress.x=0
+            fortress2.x=485
+        end
+
+    }
+
+    scenes[46] = {
+        sName = 46,
+        text = function() 
+            return '"Don’t get scared, daughter of Marya, it is not Koschei\'s lair. It is the domain of your mother\'s brother, the shape-shifting wizard who can turn into '..choices.brother1..'," says the Gray Wolf suddenly.'
+        end,
+        selection = {
+            [1] = {'You can talk?', 47},
+        },
+        animations = function()
+            showDialogue(Wolf)
+        end,
+        animationComplete =  function()
+            hideDialogue() 
+        end
+    }
+
+    scenes[47] = {
+        sName = 47,
+        text = 'Alena: "You can talk?"',
+        follows = 48,
+        clearSelection = true,
+        animations = function()
+            showDialogue(Alena)
+        end,
+        animationComplete =  function()
+            hideDialogue()
+        end
+    }
+
+    scenes[48] = {
+        sName = 48,
+        text = 'Grey Wolf: "I can do many things and before the sun rises, you will see that, daughter of Marya. Before you have to deal with consequences of your choices."',
+        selection = {
+            [1] = {'My mother has a brother?', 49}
+        },
+        animations = function()
+            showDialogue(Wolf)
+        end,
+        animationComplete =  function()
+            hideDialogue()
+        end
+    }
+
+    scenes[49] = {
+        sName = 49,
+        follows = 50,
+        text = 'Alena: "My mother has a brother?"',
+        clearSelection = true,
+        animations = function()
+            showDialogue(Alena)
+        end,
+        animationComplete =  function()
+            hideDialogue()
+        end
+    }
+
+
+    scenes[50] = {
+        sName = 50,
+        clearSelection = true,
+        text = 'Grey Wolf: "Yes, she has three brothers, all wizards who can turn into birds of prey - Eagle, Raven or Falcon. They were inseparable a long time ago, but after traveling to Koschei\'s stronghold, they had a falling out."',
+        follows = 51,
+        animations = function()
+            showDialogue(Wolf)
+        end,
+        animationComplete =  function()
+            hideDialogue()
+        end
+    }
+
+    scenes[51] = {
+        sName = 51,
+        text = 'It\'s getting colder and night is almost upon them, so Alena and Wolf decide to ask her uncle for shelter. His servants open the gate and escort her into the main hall.',
+        follows = 52,
+        clearSelection = true,
+        animations = function()
+            hideDialogue()
+            bridge.alpha=1
+            transition.to(bridge, {rotation=90, time=1000})
+        end,
+        animationComplete = function() 
+            hideDialogue()
+            bridge.alpha=1
+            bridge.rotation=90
+        end
+    }
+
+    scenes[52] = {
+        sName = 52,
+        setStage = 'set52',
+        openingAnimation = {
+            [1] = 'background7.png', 
+            [2] = 'foreground3.png'
+        },
+        text = 'Her uncle is standing in a great hall wearing a gloomy look. Alena tells him her sad story, but he doesn\'t seem to be affected by it, because he is lost in his own thoughts. "Looks like I won\'t get any help from him," sighs Alena.',
+        follows = 53,
+        animations = function() 
+            loadUncleCastle()
+        end,
+        animationComplete =  function()
+            foreground.y=0
+            landscape3.x=0
+            landscape2.y=0
+            WolfSit.x=900 WolfSit.y=270
+            AlenaS.x=740 AlenaS.y=280
+            birdSymbol.y=320
+            BrotherS.y=300
+            shadowLayer6.alpha=1
+            throne.y=-30
+        end
+
+    }
+
+    scenes[53] = {
+        sName = 53,
+        text = 'Uncle: "That’s a very sad story indeed. I remember my own journey to Koschei’s stronghold... It is not a place for a young girl. And if what you told me is true, I need to concentrate on protecting my kingdom, not on helping you."',
+        selection = {
+            [1] = {'"That\'s the reception I get from my own uncle?"', 54},
+            [2] = {' Ask for Gray Wolf\'s advice', 56},
+        },
+        animations = function() 
+            showDialogue(BrotherD)
+        end,
+        animationComplete =  function()
+            hideDialogue()
+        end
+    }
+
+    scenes[54] = {
+        sName = 54,
+        text = 'Alena: "That\'s the reception I get from my own uncle?"',
+        follows = 55,
+        clearSelection = true,
+        animations = function() 
+            showDialogue(Alena)
+        end,
+        animationComplete = function()
+            hideDialogue()
+            choices.advice = false
+        end
+    }
+
+    scenes[55] = {
+        sName = 55,
+        text = 'Uncle: "If blood was really thicker than water, I wouldn\'t be in such a predicament. You can stay for one night, and continue your journey in the morning, but that is it."',
+        follows = 57,
+        animations = function()
+            showDialogue(BrotherD) 
+        end,
+        animationComplete =  function()
+            hideDialogue()
+        end
+    }
+
+    scenes[56] = {
+        sName = 56,
+        text = 'Alena turns to Gray Wolf for advice, and he tells her to offer help instead of demanding help. Though not sure how it might work, Alena offers to help her uncle deal with his predicament.',
+        follows = 57,
+        clearSelection = true,
+        animations = function() 
+            hideDialogue()
+        end,
+        animationComplete =  function()
+            choices.advice = true
+        end
+    }
+
+    scenes[57] = {
+        sName = 57,
+        text = 'Uncle: "There\'s bad blood between me and my brothers. Years ago, we stole a seed from a tree with golden apples and a horse with a golden mane from Koshei. But my brothers took them and left me with nothing."',
+        follows = 58,
+        animations = function() 
+            showDialogue(BrotherD)
+        end,
+        animationComplete =  function()
+        end
+    }
+
+    scenes[58] = {
+        sName = 58,
+        text = 'Uncle: "So if you want to help me - steal at least one golden apple and the horse for me. Then I’ll think about telling you how to get into Koschei’s castle."',
+        follows = 59,
+        changeFlow = function()
+            if choices.brother == 'Falcon' then scenes[58].follows = 59
+            elseif choices.brother == 'Raven' then scenes[58].follows = 60
+            else scenes[58].follows = 61
+            end
+        end,
+        animations = function() 
+        end,
+        animationComplete =  function()
+            hideDialogue()
+        end
+    }
+
+    scenes[59] = {
+        sName = 59,
+        text = 'Alena reluctantly agrees, though she has no idea how she is going to steal the horse or apples from her uncles Raven and Eagle. But Gray Wolf tells her not to grieve and before the moon comes up, they are racing to the Raven domain.',
+        follows = 62,
+        animations = function()
+            hideDialogue() 
+        end,
+        animationComplete =  function()
+        end
+    }
+
+    scenes[60] = {
+        sName = 60,
+        text = 'Alena reluctantly agrees, though she has no idea how she is going to steal the horse or apples from her uncles Falcon and Eagle. But Gray Wolf tells her not to grieve and before the moon comes up, they are racing to the Falcon domain.',
+        follows = 62,
+        animations = function() 
+            hideDialogue()
+        end,
+        animationComplete =  function()
+        end
+    }
+
+    scenes[61] = {
+        sName = 61,
+        text = 'Alena reluctantly agrees, though she has no idea how she is going to steal the horse or apples from her uncles Raven and Falcon. But Gray Wolf tells her not to grieve and before the moon comes up, they are racing to the Raven domain.',
+        follows = 62,
+        animations = function() 
+            hideDialogue()
+        end,
+        animationComplete =  function()
+        end
+    }
+
+-------- Act 3 Scenes 62 - 104
+
+    scenes[62] = {
+        setStage = 'set62',
+        sName = 62,
+        text = 'They rush at full speed, so the lights of the stars in the sky flow together into a river of spilled milk. On the way, the north wind tears away a ribbon from Alena’s braid.',
+        selection = {
+            [1] = {'Tell the Gray Wolf about the ribbon', 63},
+            [2] = {'Forget about the ribbon', 64},
+        },
+        animations = function()
+            transition.to(ribbon, {x=550, time=3000})
+            transition.to(ribbon, {x=50, time=1000, delay=2000})
+            transition.to(ribbon, {y=400, time=1000, delay=2000})
+            transition.to(ribbon, {alpha=0, time=1, delay=3000})
+            ridingWolftoLeft(AlenaOnWolfNoRibbon)
+        end,
+        animationComplete = function()
+            ribbon.alpha=0
+            AlenaOnWolfNoRibbon.xScale=-1
+            AlenaOnWolfNoRibbon.x=400
+            landscape2.x=-1300
+            landscape1.x=-1500
+        end
+    }
+
+    scenes[63] = {
+        sName = 63,
+        text = 'Gray Wolf grins while Alena tells him how the wind stole her ribbon. "Your ribbon is now five miles behind us, because even wind can’t keep pace with me."',
+        follows = 64,
+        clearSelection = true,
+        animations = function() 
+        end,
+        animationComplete =  function()
+        end
+    }
+
+    scenes[64] = {
+        sName = 64,
+        text = 'Soon they get to the castle. With one jump, Gray Wolf leaps over the castle walls into a garden.',
+        follows = 65,
+        clearSelection = true,
+        animations = function()
+            setStronghold1()
+        end,
+        animationComplete =  function()
+            landscape2.x=-1300
+            landscape1.x=-1200
+            StrongholdB1.x=-120
+            AlenaOnWolfNoRibbon.x=600
+            AlenaOnWolfNoRibbon.y=270
+        end
+    }
+
+    scenes[65] = {
+        sName = 65,
+        text = '"There\'s a golden tree in the middle of the garden. Go to it and pick one apple, just don\'t touch anything else," orders Gray Wolf.',
+        follows = 66,
+        animations = function() 
+            wolfAlenaInGarden()
+            transition.to(StrongholdB1, {x=-400, time=1000})
+            transition.to(AppleGarden, {x=120, time=1000})
+            transition.to(GoldenApples, {y=-50, time=1000, delay=1000})
+            transition.to(GoldenApple, {y=-30, time=1000, delay=1000})
+            transition.to(TreeRibbon, {y=300, time=1000, delay=1000})
+        end,
+        animationComplete = function() 
+            landscape2.x = -1700
+            landscape1.x = -2300
+            StrongholdB1.x = -400
+            AppleGarden.x=120
+            AlenaOnWolfNoRibbon.y=-400
+            AlenaNoRibbon.y=270 AlenaNoRibbon.x=350
+            WolfSit.xScale = -1 WolfSit.x=200 WolfSit.y=270
+            GoldenApples.y=-50
+            GoldenApple.y=-30
+            TreeRibbon.y=300
+        end
+    }
+
+    scenes[66] = {
+        sName = 66,
+        text = 'Doing as she is told, Alena goes to the tree and plucks a golden apple but then, she sees a beautiful ribbon tying up the branches. "That would look so pretty in my hair!" thinks Alena.',
+        selection = {
+            [1] = {'Leave without the ribbon', 67},
+            [2] = {'Untie the ribbon', 68}
+        },
+        animations = function() 
+            transition.to(AlenaNoRibbon, {x=450, time=1000})
+            transition.to(GoldenApple, {y=10, x=420, time=1000, delay=1000})
+        end,
+        animationComplete = function()
+            AlenaNoRibbon.x=450
+            GoldenApple.x=420 GoldenApple.y=10
+        end,
+    }
+
+    scenes[67] = {
+        sName = 67,
+        clearSelection = true,
+        text = 'She leaves the ribbon on the branch and gets back to Gray Wolf. "You are a  good girl, daughter of Marya, your mother raised you well," says Grey Wolf and they rush back.',
+        follows = 73,
+        animations = function()
+            showDialogue(Wolf)
+        end,
+        animationComplete = function()
+        end,
+    }
+
+    scenes[68] = {
+        sName = 68,
+        changeFlow = function() 
+            if choices.brother=='Raven' then
+                -- If we got the quest from Raven we go to Falcon. Othervise we go ro Raven
+                scenes[68].follows = 69
+            else
+                scenes[68].follows = 70
+            end
+        end,
+        clearSelection = true,
+        text = 'The moment Alena touches the ribbon an alarm sounds.',
+        follows = 69,
+        animations = function()
+            transition.to(TreeRibbon, {rotation=50, x=540, y=350, time=500})
+            transition.to(TreeRibbon, {rotation=-30, x=570, y=450, time=500, delay=500})
+            transition.to(TreeRibbon, {rotation=10, x=550, y=500, time=500, delay=900})
+            alarmBellsRing()
+            choices.notListen = choices.notListen+1
+        end,
+        animationComplete = function()
+            AlenaNoRibbon.y=-400
+            WolfSit.y=-400
+            TreeRibbon.y=500
+        end,
+    }
+
+    scenes[69] = {
+        sName = 69,
+        setStage = 'set62',
+        clearSelection = true,
+        text = 'Gray Wolf grabs Alena and leaps over the wall. "You should have listened to me," he says. "Now Falcon\'s hounds will follow us to his brother’s stronghold!"',
+        follows = 71,
+        animations = function()
+            ridingWolftoRight(AlenaOnWolfNoRibbon)
+        end,
+        animationComplete = function()
+        end,
+    }
+
+    scenes[70] = {
+        sName = 70,
+        setStage = 'set62',
+        clearSelection = true,
+        text = 'Gray Wolf grabs Alena and leaps over the wall. "You should have listened to me," he says. "Now Raven\'s hounds will follow us to his brother’s stronghold!"',
+        follows = 71,
+        animations = function() 
+            ridingWolftoRight(AlenaOnWolfNoRibbon)
+        end,
+        animationComplete = function() 
+        end,
+    }
+
+    scenes[71] = {
+        sName = 71,
+        follows = 72,
+        text = "But seeing that Alena is scared, Gray Wolf softens. \"Climb off my back and hide under this tree,\" he orders. \"Don\'t make any sound. Just wait for my return.\" This time Alena listens.",
+        animations = function()
+            loadBushToHide()
+            WolfSit.xScale = -1
+            WolfSit.x=400
+            AlenaNoRibbon.x=600
+            transition.to(AlenaOnWolfNoRibbon, {y=-400, time=500})
+            transition.to(AlenaNoRibbon, {y=210, time=500, delay=400}) 
+            transition.to(WolfSit, {y=220, time=500, delay=400})
+            transition.to(AlenaNoRibbon, {y=210, x=250, time=1000, delay=1500}) 
+        end,
+        animationComplete = function()
+            WolfSit.xScale = -1 WolfSit.x=400 WolfSit.y=220
+            AlenaOnWolfNoRibbon.y=-400
+            AlenaNoRibbon.y=210 AlenaNoRibbon.x=250
+            bushToHide.x=300 bushToHide.y=500 bushToHide.rotation=0
+        end
+    }
+
+    scenes[72] = {
+        sName = 72,
+        follows = 73,
+        text = function()
+            return "In the twinkling of an eye, Gray Wolf turns himself into a golden apple. Hounds approach, and the servants decide that the thief must have run away, leaving what he had tried to steal behind. They pick up the apple and turn back.  Soon after Gray Wolf returns, and Alena and her companion run to "..choices.brother.."\'s domain in silence. "
+        end,
+            animations = function()
+                GoldenApple.x=400
+                transition.to(WolfSit, {y=-220, time=500, delay=1000})
+                transition.to(MagicWolf, {y=-100, time=500, delay=300})
+                transition.to(GoldenApple, {y=40, time=500, delay=1300})
+                transition.to(MagicWolf, {y=-600, time=500, delay=2000})
+                transition.to(UncleServants, {x=300, time=1000, delay=2300})
+                transition.to(UncleServants, {x=-1000, time=1000, delay=4000})
+                transition.to(GoldenApple, {x=-500, time=1000, delay=4000})
+        end,
+        animationComplete = function()
+            WolfSit.y=-220
+            UncleServants.x=300
+            UncleServants.x=-1000
+            GoldenApple.x=-500
+        end
+    }
+
+    scenes[73] = {
+        sName = 73,
+        follows = 74,
+        setStage = 'set73',
+        text='Seeing the golden apple, her uncle\'s face flourishes a smile. \"You are a very handy girl,\" says he.',
+        animations = function()
+            hideDialogue()
+            AlenaNoRibbon.x=700 AlenaNoRibbon.y=280
+            GoldenApple.x=560 GoldenApple.y=-30 
+        end,
+        animationComplete = function()
+            AlenaNoRibbon.x=700 AlenaNoRibbon.y=280
+            GoldenApple.x=560 GoldenApple.y=-30 
+        end
+    }
+
+    scenes[74] = {
+        sName = 74,
+        changeFlow = function() 
+            if choices.brother=='Eagle' then
+                scenes[74].follows = 76
+            else
+                scenes[74].follows = 75
+            end
+        end,
+        text='Uncle: \"Maybe you really can save Ivan. But for now, go and fetch me the horse with the golden mane from my other brother.\"',
+        animations = function()
+            showDialogue(BrotherD)
+        end,
+        animationComplete = function() 
+            AlenaNoRibbon.x=-400 
+            hideDialogue()
+        end
+    }
+
+    scenes[75] = {
+        sName = 75,
+        setStage = 'set75',
+        follows = 77,
+        text='As the moon climbs high in the sky, Alena and her loyal companion dash to the Eagle\'s castle.',
+        animations = function()
+            hideDialogue()
+            ridingWolftoLeft(AlenaOnWolfNoRibbon)
+        end,
+        animationComplete =  function()
+        end
+    }
+
+    scenes[76] = {
+        sName = 76,
+        setStage = 'set75',
+        follows = 77,
+        text='As the moon climbs high in the sky, Alena and her loyal companion dash to the Falcon\'s castle.',
+        animations = function()
+            hideDialogue()
+            ridingWolftoLeft(AlenaOnWolfNoRibbon)
+        end,
+        animationComplete = function() end
+    }
+
+    scenes[77] = {
+        sName = 77,
+        follows = 78,
+        text='There with one jump, Gray Wolf leaps over the castle walls near the stables. ',
+        animations = function() 
+            setStronghold2()
+        end,
+        animationComplete = function()
+            landscape2.x=-1300
+            landscape1.x=-1200
+            StrongholdB2.x=-120
+            AlenaOnWolfNoRibbon.x=600
+            AlenaOnWolfNoRibbon.y=270
+        end
+    }
+
+    scenes[78] = {
+        sName = 78,
+        follows = 79,
+        text='"There\'s the horse in that stall. Sneak in and get him, but don\'t touch the bridle," orders Gray Wolf.',
+        animations = function()
+            wolfAlenaInGarden()
+            transition.to(StrongholdB2, {x=-400, time=1000})
+            transition.to(stableImg, {x=0, time=1000})
+            transition.to(stableRibbon, {y=300, time=1000, delay=1000})
+            transition.to(GoldenHorse, {y=10, time=1000, delay=1000})
+        end,
+        animationComplete = function()
+            landscape2.x = -1700
+            landscape1.x = -2300
+            StrongholdB2.x = -400
+            stableImg.x=0
+            GoldenHorse.y=10
+            AlenaOnWolfNoRibbon.y=-400
+            AlenaNoRibbon.y=270 AlenaNoRibbon.x=350
+            WolfSit.xScale = -1 WolfSit.x=200 WolfSit.y=270
+            stableRibbon.y=300
+        end
+    }
+
+    scenes[79] = {
+        sName = 79,
+        selection = {
+            [1] = {'Leave without the ribbon', 80},
+            [2] = {'Untie the ribbon', 81}
+        },
+        text='Doing as she was told, Alena sneaks into the stall and sees the most beautiful horse inside. Its bridle is decorated with red ribbons. "One of those would look so pretty in my hair!" thinks Alena.',
+        animations = function()
+            transition.to(AlenaNoRibbon, {x=650, time=1000})
+        end,
+        animationComplete = function() end
+    }
+
+    scenes[80] = {
+        sName = 80,
+        follows = 85,
+        clearSelection = true,
+        text='She leaves the ribbon behind and leads the horse out to Gray Wolf. "You are a good girl, daughter of Marya, your mother raised you well." says Gray Wolf, and they rush back.',
+        animations = function()
+            showDialogue(Wolf) 
+        end,
+        animationComplete = function() end
+    }
+
+    scenes[81] = {
+        sName = 81,
+        follows = 82,
+        text='The moment Alena touches the ribbon, an alarm rings out. Alena catches the horse and runs to Gray Wolf.',
+        animations = function()
+            transition.to(stableRibbon, {rotation=50, x=690, y=350, time=500})
+            transition.to(stableRibbon, {rotation=-30, x=660, y=450, time=500, delay=500})
+            transition.to(stableRibbon, {rotation=10, x=700, y=500, time=500, delay=900})
+            alarmBellsRing()
+            transition.to(AlenaNoRibbon, {x=400, time=1000, delay=1500})
+            transition.to(GoldenHorse, {x=400, time=1000, delay=1500})
+            choices.notListen = choices.notListen+1
+        end,
+        animationComplete = function()
+            AlenaNoRibbon.x=400
+            stableRibbon.y=500
+            GoldenHorse.y=10 GoldenHorse.x=400
+        end
+    }
+
+    scenes[82] = {
+        sName = 82,
+        follows = 83,
+        clearSelection = true,
+        text='"You should have listened to me," says he. "This horse is not as fast as I am. It may run fast through the courtyard, but outside the wall, they can catch us!"',
+        animations = function()
+            showDialogue(Wolf)
+        end,
+        animationComplete = function()
+            bellAlarm.isVisible = false
+            stableRibbon.isVisible = false
+            stableImg.x=-1200
+            StrongholdB2.x=-1200
+            GoldenHorse.y=0
+        end
+    }
+
+    scenes[83] = {
+        sName = 83,
+        follows = 84,
+        text='But seeing that Alena is scared, Gray Wolf softens. "There is still enough witchcraft left  in me, so the moment we are outside the castle, rush the horse into the woods, hide there, and wait for my return."',
+        animations = function()
+            WolfSit.x=400 WolfSit.y=270
+            hideDialogue()
+            loadBushToHide()
+            transition.to(GoldenHorse, {x=-300, time=1500, delay=500}) 
+            transition.to(AlenaNoRibbon, {y=210, x=250, time=1000, delay=1500}) 
+        end,
+        animationComplete = function()
+            bushToHide.x=300 bushToHide.y=500 bushToHide.rotation=0
+            GoldenHorse.x=-300
+            AlenaNoRibbon.y=210 AlenaNoRibbon.x=250
+        end
+    }
+
+    scenes[84] = {
+        sName = 84,
+        follows = 85,
+        text= function()
+            return 'In a twinkling of an eye, Gray Wolf turns himself into a horse with a golden mane. The servants, who see him decide that the thief must have run away leaving what he had been trying to steal. They take the horse and turn back. Soon after, Gray Wolf returns to himself, and he and Alena rush  to '..choices.brother1..' in silence. '
+        end,
+        animations = function()
+            WolfSit.x=400
+            GoldenHorse.x=300 GoldenHorse.y=-500
             transition.to(WolfSit, {y=-220, time=500, delay=1000})
             transition.to(MagicWolf, {y=-100, time=500, delay=300})
-            transition.to(GoldenApple, {y=40, time=500, delay=1300})
             transition.to(MagicWolf, {y=-600, time=500, delay=2000})
+            transition.to(GoldenHorse, {y=-50, time=500, delay=1300})
             transition.to(UncleServants, {x=300, time=1000, delay=2300})
             transition.to(UncleServants, {x=-1000, time=1000, delay=4000})
-            transition.to(GoldenApple, {x=-500, time=1000, delay=4000})
-    end,
-    animationComplete = function()
-        WolfSit.y=-220
-        UncleServants.x=300
-        UncleServants.x=-1000
-        GoldenApple.x=-500
-    end
-}
-
-scenes[73] = {
-    sName = 73,
-    follows = 74,
-    setStage = 'set73',
-    text='Seeing the golden apple, her uncle\'s face flourishes a smile. \"You are a very handy girl,\" says he.',
-    animations = function()
-        hideDialogue()
-        AlenaNoRibbon.x=700 AlenaNoRibbon.y=280
-        GoldenApple.x=560 GoldenApple.y=-30 
-    end,
-    animationComplete = function()
-        AlenaNoRibbon.x=700 AlenaNoRibbon.y=280
-        GoldenApple.x=560 GoldenApple.y=-30 
-    end
-}
-
-scenes[74] = {
-    sName = 74,
-    changeFlow = function() 
-        if choices.brother=='Eagle' then
-            scenes[74].follows = 76
-        else
-            scenes[74].follows = 75
-        end
-    end,
-    text='Uncle: \"Maybe you really can save Ivan. But for now, go and fetch me the horse with the golden mane from my other brother.\"',
-    animations = function()
-        showDialogue(BrotherD)
-    end,
-    animationComplete = function() 
-        AlenaNoRibbon.x=-400 
-        hideDialogue()
-    end
-}
-
-scenes[75] = {
-    sName = 75,
-    setStage = 'set75',
-    follows = 77,
-    text='As the moon climbs high in the sky, Alena and her loyal companion dash to the Eagle\'s castle.',
-    animations = function()
-        hideDialogue()
-        ridingWolftoLeft(AlenaOnWolfNoRibbon)
-    end,
-    animationComplete =  function()
-    end
-}
-
-scenes[76] = {
-    sName = 76,
-    setStage = 'set75',
-    follows = 77,
-    text='As the moon climbs high in the sky, Alena and her loyal companion dash to the Falcon\'s castle.',
-    animations = function()
-        hideDialogue()
-        ridingWolftoLeft(AlenaOnWolfNoRibbon)
-    end,
-    animationComplete = function() end
-}
-
-scenes[77] = {
-    sName = 77,
-    follows = 78,
-    text='There with one jump, Gray Wolf leaps over the castle walls near the stables. ',
-    animations = function() 
-        setStronghold2()
-    end,
-    animationComplete = function()
-        landscape2.x=-1300
-        landscape1.x=-1200
-        StrongholdB2.x=-120
-        AlenaOnWolfNoRibbon.x=600
-        AlenaOnWolfNoRibbon.y=270
-    end
-}
-
-scenes[78] = {
-    sName = 78,
-    follows = 79,
-    text='"There\'s the horse in that stall. Sneak in and get him, but don\'t touch the bridle," orders Gray Wolf.',
-    animations = function()
-        wolfAlenaInGarden()
-        transition.to(StrongholdB2, {x=-400, time=1000})
-        transition.to(stableImg, {x=0, time=1000})
-        transition.to(stableRibbon, {y=300, time=1000, delay=1000})
-        transition.to(GoldenHorse, {y=10, time=1000, delay=1000})
-    end,
-    animationComplete = function()
-        landscape2.x = -1700
-        landscape1.x = -2300
-        StrongholdB2.x = -400
-        stableImg.x=0
-        GoldenHorse.y=10
-        AlenaOnWolfNoRibbon.y=-400
-        AlenaNoRibbon.y=270 AlenaNoRibbon.x=350
-        WolfSit.xScale = -1 WolfSit.x=200 WolfSit.y=270
-        stableRibbon.y=300
-    end
-}
-
-scenes[79] = {
-    sName = 79,
-    selection = {
-        [1] = {'Leave without the ribbon', 80},
-        [2] = {'Untie the ribbon', 81}
-    },
-    text='Doing as she was told, Alena sneaks into the stall and sees the most beautiful horse inside. Its bridle is decorated with red ribbons. "One of those would look so pretty in my hair!" thinks Alena.',
-    animations = function()
-        transition.to(AlenaNoRibbon, {x=650, time=1000})
-    end,
-    animationComplete = function() end
-}
-
-scenes[80] = {
-    sName = 80,
-    follows = 85,
-    clearSelection = true,
-    text='She leaves the ribbon behind and leads the horse out to Gray Wolf. "You are a good girl, daughter of Marya, your mother raised you well." says Gray Wolf, and they rush back.',
-    animations = function()
-        showDialogue(Wolf) 
-    end,
-    animationComplete = function() end
-}
-
-scenes[81] = {
-    sName = 81,
-    follows = 82,
-    text='The moment Alena touches the ribbon, an alarm rings out. Alena catches the horse and runs to Gray Wolf.',
-    animations = function()
-        transition.to(stableRibbon, {rotation=50, x=690, y=350, time=500})
-        transition.to(stableRibbon, {rotation=-30, x=660, y=450, time=500, delay=500})
-        transition.to(stableRibbon, {rotation=10, x=700, y=500, time=500, delay=900})
-        alarmBellsRing()
-        transition.to(AlenaNoRibbon, {x=400, time=1000, delay=1500})
-        transition.to(GoldenHorse, {x=400, time=1000, delay=1500})
-        choices.notListen = choices.notListen+1
-    end,
-    animationComplete = function()
-        AlenaNoRibbon.x=400
-        stableRibbon.y=500
-        GoldenHorse.y=10 GoldenHorse.x=400
-    end
-}
-
-scenes[82] = {
-    sName = 82,
-    follows = 83,
-    clearSelection = true,
-    text='"You should have listened to me," says he. "This horse is not as fast as I am. It may run fast through the courtyard, but outside the wall, they can catch us!"',
-    animations = function()
-        showDialogue(Wolf)
-    end,
-    animationComplete = function()
-        bellAlarm.isVisible = false
-        stableRibbon.isVisible = false
-        stableImg.x=-1200
-        StrongholdB2.x=-1200
-        GoldenHorse.y=0
-    end
-}
-
-scenes[83] = {
-    sName = 83,
-    follows = 84,
-    text='But seeing that Alena is scared, Gray Wolf softens. "There is still enough witchcraft left  in me, so the moment we are outside the castle, rush the horse into the woods, hide there, and wait for my return."',
-    animations = function()
-        WolfSit.x=400 WolfSit.y=270
-        hideDialogue()
-        loadBushToHide()
-        transition.to(GoldenHorse, {x=-300, time=1500, delay=500}) 
-        transition.to(AlenaNoRibbon, {y=210, x=250, time=1000, delay=1500}) 
-    end,
-    animationComplete = function()
-        bushToHide.x=300 bushToHide.y=500 bushToHide.rotation=0
-        GoldenHorse.x=-300
-        AlenaNoRibbon.y=210 AlenaNoRibbon.x=250
-    end
-}
-
-scenes[84] = {
-    sName = 84,
-    follows = 85,
-    text= function()
-        return 'In a twinkling of an eye, Gray Wolf turns himself into a horse with a golden mane. The servants, who see him decide that the thief must have run away leaving what he had been trying to steal. They take the horse and turn back. Soon after, Gray Wolf returns to himself, and he and Alena rush  to '..choices.brother1..' in silence. '
-    end,
-    animations = function()
-        WolfSit.x=400
-        GoldenHorse.x=300 GoldenHorse.y=-500
-        transition.to(WolfSit, {y=-220, time=500, delay=1000})
-        transition.to(MagicWolf, {y=-100, time=500, delay=300})
-        transition.to(MagicWolf, {y=-600, time=500, delay=2000})
-        transition.to(GoldenHorse, {y=-50, time=500, delay=1300})
-        transition.to(UncleServants, {x=300, time=1000, delay=2300})
-        transition.to(UncleServants, {x=-1000, time=1000, delay=4000})
-        transition.to(GoldenHorse, {x=-500, time=1000, delay=4000})
-    end,
-    animationComplete = function() end
-}
-scenes[85] = {
-    sName = 85,
-    follows = 86,
-    setStage = 'set73',
-    text='Seeing the horse with the golden mane, her uncle gets lost in his thoughts for a second. ',
-    animations = function()
-        AlenaNoRibbon.x=700 AlenaNoRibbon.y=280
-        GoldenHorse.x=700 GoldenHorse.y=0  
-    end,
-    animationComplete = function()
-        AlenaNoRibbon.x=700 AlenaNoRibbon.y=280
-        GoldenHorse.x=700 GoldenHorse.y=0  
-    end
-}
-scenes[86] = {
-    sName = 86,
-    follows = 87,
-    text='Uncle: "You are a very handy girl indeed. So help me with one last task, and I won\'t just tell you where you need to go, but help you anyway I can." ',
-    animations = function()
-        showDialogue(BrotherD)
-    end,
-    animationComplete = function()
-        hideDialogue()
-    end
-}
-
-scenes[87] = {
-    sName = 87,
-    follows = 88,
-    text='It is obvious to Alena that there\'s no point in arguing.  Her uncle won’t help her unless she completes this last task, so she accepts it without objections. She only hopes that it won’t be more difficult than the two previous ones. ',
-    animations = function() hideDialogue() end,
-    animationComplete = function()end
-}
-
-scenes[88] = {
-    sName = 88,
-    follows = 89,
-    text='Uncle: “A nearby King, Berendei, has a daughter that is as beautiful as the dawn. If I marry her, my brothers will die from envy. So bring her to me, and I give you my word, I\'ll help you any way I can.” ',
-    animations = function() showDialogue(BrotherD) end,
-    animationComplete = function() hideDialogue() end
-}
-
-scenes[89] = {
-    sName = 89,
-    follows = 90,
-    text='Having no choice, Alena and Gray Wolf  return to the forest.',
-    animations = function() hideDialogue() end,
-    animationComplete = function()
-        AlenaNoRibbon.x = 400 AlenaNoRibbon.y =-400 
-    end
-}
-
-scenes[90] = {
-    sName = 90,
-    setStage = 'set90',
-    follows = 91,
-    text='The western edge of the sky grows lighter as Alena, seated on Gray Wolf\'s back rushes to Berendei\'s kingdom. Near the castle wall, they stop. ',
-    animations = function() 
-        ridingWolftoLeft(AlenaOnWolfNoRibbon)
-        transition.to(StrongholdBer, {x=600, time=1000, delay=2000})
-
-    end,
-    animationComplete = function()end
-}
-
-scenes[91] = {
-    sName = 91,
-    follows = 92,
-    text='"I\'ll jump into the garden as fast as I can. Then, you have to grab Vasilisa the Beautiful, and don\'t let go of her until we get back in the forest".',
-    animations = function() 
-        showDialogue(Wolf)
-    end,
-    animationComplete = function()
-        AlenaOnWolfNoRibbon.x=0 AlenaOnWolfNoRibbon.y=300
-        VasilisaS.x=1200 VasilisaS.y=250
-        StrongholdBer.x=200
-        GardenBer.x=800
-        hideDialogue()
-    end
-}
-
-scenes[92] = {
-    sName = 92,
-    follows = 93,
-    text='Alena does as she\'s told.The moment she sees the golden hair of Vasilisa  the beautiful, she snatches her and holds on fast until the castle walls are far behind. ',
-    animations = function() 
-        hideDialogue()
-        AlenaOnWolfNoRibbon:toFront()
-        AlenaVasilisaRiding.xScale=-1
-        transition.to(AlenaOnWolfNoRibbon, {y=0, x=100, time=500, delay=500})
-        transition.to(AlenaOnWolfNoRibbon, {y=250, x=200, time=500, delay=1000})
-        transition.to(VasilisaS, {x=500, time=500, delay=1000})
-        transition.to(StrongholdBer, {x=-500, time=500, delay=1000})
-        transition.to(GardenBer, {x=100, time=500, delay=1000})
-        transition.to(AlenaOnWolfNoRibbon, {y=250, x=500, time=500, delay=2000})
-        transition.to(AlenaOnWolfNoRibbon, {x=500, y=-400, time=500, delay=2700})
-        transition.to(VasilisaS, {x=500, y=-400, time=500, delay=2700})
-        transition.to(AlenaVasilisaRiding, {y=30, time=500, delay=3200})
-        transition.to(AlenaVasilisaRiding, {y=30, x=1240, time=500, delay=3800})
-    end,
-    animationComplete = function()
-        VasilisaS.x=300 VasilisaS.y=-500
-        StrongholdBer.x=-1400
-        GardenBer.x=-1400
-        AlenaOnWolfNoRibbon.y=-400 AlenaOnWolfNoRibbon.x=500
-        AlenaVasilisaRiding.x=1240 AlenaVasilisaRiding.y=30
-        AlenaVasilisaRiding.xScale=1
-    end
-}
-
-scenes[93] = {
-    sName = 93,
-    follows = 94,
-    text='In the forest, the moment Alena lets go of the king\'s daughter, Vasilisa starts crying.',
-    animations = function()
-        WolfSit.xScale= -1
-        WolfSit.x=240 
-        VasilisaPlea.x=480 
-        transition.to(WolfSit, {y=270, time=1000})
-        transition.to(AlenaNoRibbon, {y=260, time=1000})
-        transition.to(VasilisaPlea, {y=280, time=1000})
-    end,
-    animationComplete = function()
-        WolfSit.xScale= -1
-        WolfSit.x=240 WolfSit.y=270
-        AlenaNoRibbon.y=260
-        VasilisaPlea.x=480 VasilisaPlea.y=280
-    end
-}
-
-scenes[94] = {
-    sName = 94,
-    follows = 95,
-    text = function()
-        return '"I know you are an envoy of '..choices.brother..'. My father refused to give me to him, but he swore that he would get me anyway. Please, let me go, don\'t give me to him!"'
-    end,
-    animations = function()
-        showDialogue(VasilisaD)
-    end,
-    animationComplete = function()
-        hideDialogue()
-    end
-}
-
-scenes[95] = {
-    sName = 95,
-    selection = {
-        [1] = {'Refuse Vasilisa\'s plea', 96},
-        [2] = {'Let Vasilisa go', 98}
-    },
-    text='Alena is confused. Her uncle\'s help is the only way to get her brother back!',
-    animations = function()
-        hideDialogue()
-    end,
-    animationComplete = function()end
-}
-
-scenes[96] = {
-    sName = 96,
-    follows = 97,
-    clearSelection=true,
-    changeFlow = function() choices.vasilisa = 'Vasilisa the Beautiful' end,
-    text='"I have to save my brother. Maybe my uncle is not that bad and with time, Vasilisa  can learn to love him," says Alena to herself, staying deaf to Vasilisa\'s pleading. She instructs Gray Wolf to get to her uncle as fast as possible.',
-    animations = function() 
-        hideDialogue()
-        AlenaVasilisaRiding.x=500 AlenaVasilisaRiding.y=-500
-        AlenaVasilisaRiding.xScale=-1
-        transition.to(WolfSit, {y=-400, time=1000})
-        transition.to(AlenaNoRibbon, {y=-400, time=1000})
-        transition.to(VasilisaPlea, {y=-400, time=1000})
-        transition.to(AlenaVasilisaRiding, {y=30, time=1000, delay=1000})
-        transition.to(AlenaVasilisaRiding, {y=30, x=1250, time=1000, delay=2000})
-    end,
-    animationComplete = function()
-        choices.vasilisaGo = false
-        AlenaVasilisaRiding.xScale=-1
-        WolfSit.y=-400
-        AlenaNoRibbon.y=-400
-        VasilisaPlea.y=-400
-        AlenaVasilisaRiding.y=30 AlenaVasilisaRiding.x=1250
-    end
-}
-
-scenes[97] = {
-    sName = 97,
-    setStage = 'set100',
-    follows = 102,
-    text='The sun is slowly coming up, dispersing the morning gloom. The first cockcrows are waking up. Alena is worried. "Can my brother see this dawn from Koschei\'s castle?" she wonders and hopes that with her uncle\'s help she can save him.',
-    animations = function()
-        hideDialogue()
-        ridingWolftWithVasilisa(1000)
-    end,
-    animationComplete = function()end
-}
-
-scenes[98] = {
-    sName = 98,
-    clearSelection = true,
-    follows = 99,
-    changeFlow = function() choices.vasilisa = 'Grey Wolf in a form of Vasilisa the Beautiful' end,
-    text='Touched by the young woman\'s plea, Alena asks Gray Wolf to stop, so she can set Vasilisa free. Then she sit on the ground downcast.',
-    animations = function()
-        hideDialogue()
-        transition.to(VasilisaPlea, {y=-400, time=700})
-        transition.to(AlenaNoRibbon, {y=-400, time=700, delay=500})
-        transition.to(AlenaCrySNR, {y=250, time=1000, delay=1500})
-    end,
-    animationComplete = function()
-        hideDialogue()
-        choices.vasilisaGo = true
-        VasilisaPlea.y=-400
-    end
-}
-scenes[99] = {
-    sName = 99,
-    follows = 100,
-    text= function()
-        return '"Don\'t grieve, daughter of Marya, I\'ll help you," says Gray Wolf. "When we get to '..choices.brother..', if he asks about me, say I decided to wait for you outside."'
-    end,
-    animations = function()
-        showDialogue(Wolf)
-    end,
-    animationComplete = function()
-        hideDialogue()
-        WolfSit.y=-400
-        AlenaCrySNR.y=-400
-    end
-}
-scenes[100] = {
-    sName = 100,
-    setStage = 'set100',
-    follows = 101,
-    text='The sun is slowly coming up, dispersing the morning gloom. The first cockcrows are waking up. As soon as the gates of uncle\'s castle are visible, Gray Wolf stops and turns himself into Vasilisa the Beautiful.',
-    animations = function()
-        hideDialogue()
-        VasilisaS.x=600
-        AlenaNoRibbon.x=1000 AlenaNoRibbon.y=230
-        WolfS.x=1100 WolfS.y=250
-        transition.to(AlenaNoRibbon, {x=450, time=1000})
-        transition.to(WolfS, {x=600, time=1000})
-        transition.to(MagicWolf, {y=-100, time=500, delay=1000})
-        transition.to(MagicWolf, {y=-600, time=500, delay=2500})
-        transition.to(WolfS, {x=600, y=-400, time=700, delay=1500})
-        transition.to(VasilisaS, {y=260, time=700, delay=2300})
-    end,
-    animationComplete = function()
-        AlenaNoRibbon.x=550  AlenaNoRibbon.y=230
-        WolfS.y=-400
-        VasilisaS.y=260 VasilisaS.x=650
-    end
-}
-scenes[101] = {
-    sName = 101,
-    follows = 102,
-    text='"Don’t linger after he tells you where to go, I’ll catch up with you later," says Gray Wolf in Vasilisa The Beautiful form.',
-    animations = function()
-        showDialogue(VasilisaD)
-    end,
-    animationComplete = function()
-        hideDialogue()
-    end
-}
-scenes[102] = {
-    sName = 102,
-    changeFlow = function() 
-        if choices.vasilisa=='Vasilisa the Beautiful' 
-            then scenes[102].follows = 103
-            else scenes[102].follows = 104
-        end
-    end,
-    text = function()
-        return 'The servants lead Alena and '..choices.vasilisa..'  to the '..choices.brother..'. The uncle is so happy to see his invaluable prize, that he doesn\'t ask any questions, just shows Alena the road to the Koschei\'s castle. '
+            transition.to(GoldenHorse, {x=-500, time=1000, delay=4000})
         end,
-    
-    animations = function()
-        hideDialogue()
-        AlenaVasilisaRiding.isVisible = false
-        transition.to(fortress, {x=-100, time=1000})
-        transition.to(fortress2, {x=385, time=1000})
-        transition.to(bridge, {alpha=1, delay=1200})
-        transition.to(bridge, {rotation=90, time=1000, delay=1200})
-    end,
-    animationComplete = function()
-        AlenaVasilisaRiding.isVisible = false
-        VasilisaS.isVisible = false
-        fortress.isVisible = false
-        fortress2.isVisible = false
-        bridge.isVisible = false
-    end
-}
-scenes[103] = {
-    sName = 103,
-    follows = 105,
-    text='Alena and Gray Wolf continue their journey. Alena tries not to think about Vasilisa\'s fate, as her only goal is to find her lost brother and return him home. "At least this way, I secured my uncle\'s help in case I need it."',
-    animations = function()
-        AlenaOnWolfNoRibbon.isVisible = true
-        AlenaOnWolfNoRibbon.y=270
-        ridingWolftoRight(AlenaOnWolfNoRibbon)
-    end,
-    animationComplete = function()end
-}
-scenes[104] = {
-    sName = 104,
-    follows = 105,
-    text='Alena follows the road on foot. Before midday, her loyal companion catches up with her and tells her the story of how her uncle tried to kiss his newly-wed bride, who suddenly turned into a wolf. "There\'s little reason to hope for his help in the future."',
-    animations = function()
-        AlenaNoRibbon.x=1100 AlenaNoRibbon.y=260
-        WolfS.x=1100 WolfS.y=270
-        transition.to(AlenaNoRibbon, {x=300, time=1500, delay=500})
-        transition.to(WolfS, {x=450, time=1000, delay=1300})
-    end,
-    animationComplete = function()end
-}
+        animationComplete = function() end
+    }
+    scenes[85] = {
+        sName = 85,
+        follows = 86,
+        setStage = 'set73',
+        text='Seeing the horse with the golden mane, her uncle gets lost in his thoughts for a second. ',
+        animations = function()
+            AlenaNoRibbon.x=700 AlenaNoRibbon.y=280
+            GoldenHorse.x=700 GoldenHorse.y=0  
+        end,
+        animationComplete = function()
+            AlenaNoRibbon.x=700 AlenaNoRibbon.y=280
+            GoldenHorse.x=700 GoldenHorse.y=0  
+        end
+    }
+    scenes[86] = {
+        sName = 86,
+        follows = 87,
+        text='Uncle: "You are a very handy girl indeed. So help me with one last task, and I won\'t just tell you where you need to go, but help you anyway I can." ',
+        animations = function()
+            showDialogue(BrotherD)
+        end,
+        animationComplete = function()
+            hideDialogue()
+        end
+    }
 
--------- Act 3 Scenes 105 - 160
+    scenes[87] = {
+        sName = 87,
+        follows = 88,
+        text='It is obvious to Alena that there\'s no point in arguing.  Her uncle won’t help her unless she completes this last task, so she accepts it without objections. She only hopes that it won’t be more difficult than the two previous ones. ',
+        animations = function() hideDialogue() end,
+        animationComplete = function()end
+    }
 
-scenes[105] = {
-    sName = 105,
-    follows = 00,
-    text='',
-    animations = function() end,
-    animationComplete = function()end
-}
-scenes[106] = {
-    sName = 106,
-    follows = 00,
-    text='',
-    animations = function() end,
-    animationComplete = function()end
-}
-scenes[107] = {
-    sName = 107,
-    follows = 00,
-    text='',
-    animations = function() end,
-    animationComplete = function()end
-}
-scenes[108] = {
-    sName = 108,
-    follows = 00,
-    text='',
-    animations = function() end,
-    animationComplete = function()end
-}
+    scenes[88] = {
+        sName = 88,
+        follows = 89,
+        text='Uncle: “A nearby King, Berendei, has a daughter that is as beautiful as the dawn. If I marry her, my brothers will die from envy. So bring her to me, and I give you my word, I\'ll help you any way I can.” ',
+        animations = function() showDialogue(BrotherD) end,
+        animationComplete = function() hideDialogue() end
+    }
 
-scenes[1000] = {
-    sName = 1000,
-    follows = 00,
-    text='',
-    animations = function() end,
-    animationComplete = function()end
-}
+    scenes[89] = {
+        sName = 89,
+        follows = 90,
+        text='Having no choice, Alena and Gray Wolf  return to the forest.',
+        animations = function() hideDialogue() end,
+        animationComplete = function()
+            AlenaNoRibbon.x = 400 AlenaNoRibbon.y =-400 
+        end
+    }
+
+    scenes[90] = {
+        sName = 90,
+        setStage = 'set90',
+        follows = 91,
+        text='The western edge of the sky grows lighter as Alena, seated on Gray Wolf\'s back rushes to Berendei\'s kingdom. Near the castle wall, they stop. ',
+        animations = function() 
+            ridingWolftoLeft(AlenaOnWolfNoRibbon)
+            transition.to(StrongholdBer, {x=600, time=1000, delay=2000})
+
+        end,
+        animationComplete = function()end
+    }
+
+    scenes[91] = {
+        sName = 91,
+        follows = 92,
+        text='"I\'ll jump into the garden as fast as I can. Then, you have to grab Vasilisa the Beautiful, and don\'t let go of her until we get back in the forest".',
+        animations = function() 
+            showDialogue(Wolf)
+        end,
+        animationComplete = function()
+            AlenaOnWolfNoRibbon.x=0 AlenaOnWolfNoRibbon.y=300
+            VasilisaS.x=1200 VasilisaS.y=250
+            StrongholdBer.x=200
+            GardenBer.x=800
+            hideDialogue()
+        end
+    }
+
+    scenes[92] = {
+        sName = 92,
+        follows = 93,
+        text='Alena does as she\'s told.The moment she sees the golden hair of Vasilisa  the beautiful, she snatches her and holds on fast until the castle walls are far behind. ',
+        animations = function() 
+            hideDialogue()
+            AlenaOnWolfNoRibbon:toFront()
+            AlenaVasilisaRiding.xScale=-1
+            transition.to(AlenaOnWolfNoRibbon, {y=0, x=100, time=500, delay=500})
+            transition.to(AlenaOnWolfNoRibbon, {y=250, x=200, time=500, delay=1000})
+            transition.to(VasilisaS, {x=500, time=500, delay=1000})
+            transition.to(StrongholdBer, {x=-500, time=500, delay=1000})
+            transition.to(GardenBer, {x=100, time=500, delay=1000})
+            transition.to(AlenaOnWolfNoRibbon, {y=250, x=500, time=500, delay=2000})
+            transition.to(AlenaOnWolfNoRibbon, {x=500, y=-400, time=500, delay=2700})
+            transition.to(VasilisaS, {x=500, y=-400, time=500, delay=2700})
+            transition.to(AlenaVasilisaRiding, {y=30, time=500, delay=3200})
+            transition.to(AlenaVasilisaRiding, {y=30, x=1240, time=500, delay=3800})
+        end,
+        animationComplete = function()
+            VasilisaS.x=300 VasilisaS.y=-500
+            StrongholdBer.x=-1400
+            GardenBer.x=-1400
+            AlenaOnWolfNoRibbon.y=-400 AlenaOnWolfNoRibbon.x=500
+            AlenaVasilisaRiding.x=1240 AlenaVasilisaRiding.y=30
+            AlenaVasilisaRiding.xScale=1
+        end
+    }
+
+    scenes[93] = {
+        sName = 93,
+        follows = 94,
+        text='In the forest, the moment Alena lets go of the king\'s daughter, Vasilisa starts crying.',
+        animations = function()
+            WolfSit.xScale= -1
+            WolfSit.x=240 
+            VasilisaPlea.x=480 
+            transition.to(WolfSit, {y=270, time=1000})
+            transition.to(AlenaNoRibbon, {y=260, time=1000})
+            transition.to(VasilisaPlea, {y=280, time=1000})
+        end,
+        animationComplete = function()
+            WolfSit.xScale= -1
+            WolfSit.x=240 WolfSit.y=270
+            AlenaNoRibbon.y=260
+            VasilisaPlea.x=480 VasilisaPlea.y=280
+        end
+    }
+
+    scenes[94] = {
+        sName = 94,
+        follows = 95,
+        text = function()
+            return '"I know you are an envoy of '..choices.brother..'. My father refused to give me to him, but he swore that he would get me anyway. Please, let me go, don\'t give me to him!"'
+        end,
+        animations = function()
+            showDialogue(VasilisaD)
+        end,
+        animationComplete = function()
+            hideDialogue()
+        end
+    }
+
+    scenes[95] = {
+        sName = 95,
+        selection = {
+            [1] = {'Refuse Vasilisa\'s plea', 96},
+            [2] = {'Let Vasilisa go', 98}
+        },
+        text='Alena is confused. Her uncle\'s help is the only way to get her brother back!',
+        animations = function()
+            hideDialogue()
+        end,
+        animationComplete = function()end
+    }
+
+    scenes[96] = {
+        sName = 96,
+        follows = 97,
+        clearSelection=true,
+        changeFlow = function() choices.vasilisa = 'Vasilisa the Beautiful' end,
+        text='"I have to save my brother. Maybe my uncle is not that bad and with time, Vasilisa  can learn to love him," says Alena to herself, staying deaf to Vasilisa\'s pleading. She instructs Gray Wolf to get to her uncle as fast as possible.',
+        animations = function() 
+            hideDialogue()
+            AlenaVasilisaRiding.x=500 AlenaVasilisaRiding.y=-500
+            AlenaVasilisaRiding.xScale=-1
+            transition.to(WolfSit, {y=-400, time=1000})
+            transition.to(AlenaNoRibbon, {y=-400, time=1000})
+            transition.to(VasilisaPlea, {y=-400, time=1000})
+            transition.to(AlenaVasilisaRiding, {y=30, time=1000, delay=1000})
+            transition.to(AlenaVasilisaRiding, {y=30, x=1250, time=1000, delay=2000})
+        end,
+        animationComplete = function()
+            choices.vasilisaGo = false
+            AlenaVasilisaRiding.xScale=-1
+            WolfSit.y=-400
+            AlenaNoRibbon.y=-400
+            VasilisaPlea.y=-400
+            AlenaVasilisaRiding.y=30 AlenaVasilisaRiding.x=1250
+        end
+    }
+
+    scenes[97] = {
+        sName = 97,
+        setStage = 'set100',
+        follows = 102,
+        text='The sun is slowly coming up, dispersing the morning gloom. The first cockcrows are waking up. Alena is worried. "Can my brother see this dawn from Koschei\'s castle?" she wonders and hopes that with her uncle\'s help she can save him.',
+        animations = function()
+            hideDialogue()
+            ridingWolftWithVasilisa(1000)
+        end,
+        animationComplete = function()end
+    }
+
+    scenes[98] = {
+        sName = 98,
+        clearSelection = true,
+        follows = 99,
+        changeFlow = function() choices.vasilisa = 'Grey Wolf in a form of Vasilisa the Beautiful' end,
+        text='Touched by the young woman\'s plea, Alena asks Gray Wolf to stop, so she can set Vasilisa free. Then she sit on the ground downcast.',
+        animations = function()
+            hideDialogue()
+            transition.to(VasilisaPlea, {y=-400, time=700})
+            transition.to(AlenaNoRibbon, {y=-400, time=700, delay=500})
+            transition.to(AlenaCrySNR, {y=250, time=1000, delay=1500})
+        end,
+        animationComplete = function()
+            hideDialogue()
+            choices.vasilisaGo = true
+            VasilisaPlea.y=-400
+        end
+    }
+    scenes[99] = {
+        sName = 99,
+        follows = 100,
+        text= function()
+            return '"Don\'t grieve, daughter of Marya, I\'ll help you," says Gray Wolf. "When we get to '..choices.brother..', if he asks about me, say I decided to wait for you outside."'
+        end,
+        animations = function()
+            showDialogue(Wolf)
+        end,
+        animationComplete = function()
+            hideDialogue()
+            WolfSit.y=-400
+            AlenaCrySNR.y=-400
+        end
+    }
+    scenes[100] = {
+        sName = 100,
+        setStage = 'set100',
+        follows = 101,
+        text='The sun is slowly coming up, dispersing the morning gloom. The first cockcrows are waking up. As soon as the gates of uncle\'s castle are visible, Gray Wolf stops and turns himself into Vasilisa the Beautiful.',
+        animations = function()
+            hideDialogue()
+            VasilisaS.x=600
+            AlenaNoRibbon.x=1000 AlenaNoRibbon.y=230
+            WolfS.x=1100 WolfS.y=250
+            transition.to(AlenaNoRibbon, {x=450, time=1000})
+            transition.to(WolfS, {x=600, time=1000})
+            transition.to(MagicWolf, {y=-100, time=500, delay=1000})
+            transition.to(MagicWolf, {y=-600, time=500, delay=2500})
+            transition.to(WolfS, {x=600, y=-400, time=700, delay=1500})
+            transition.to(VasilisaS, {y=260, time=700, delay=2300})
+        end,
+        animationComplete = function()
+            AlenaNoRibbon.x=550  AlenaNoRibbon.y=230
+            WolfS.y=-400
+            VasilisaS.y=260 VasilisaS.x=650
+        end
+    }
+    scenes[101] = {
+        sName = 101,
+        follows = 102,
+        text='"Don’t linger after he tells you where to go, I’ll catch up with you later," says Gray Wolf in Vasilisa The Beautiful form.',
+        animations = function()
+            showDialogue(VasilisaD)
+        end,
+        animationComplete = function()
+            hideDialogue()
+        end
+    }
+    scenes[102] = {
+        sName = 102,
+        changeFlow = function() 
+            if choices.vasilisa=='Vasilisa the Beautiful' 
+                then scenes[102].follows = 103
+                else scenes[102].follows = 104
+            end
+        end,
+        text = function()
+            return 'The servants lead Alena and '..choices.vasilisa..'  to the '..choices.brother..'. The uncle is so happy to see his invaluable prize, that he doesn\'t ask any questions, just shows Alena the road to the Koschei\'s castle. '
+            end,
+        
+        animations = function()
+            hideDialogue()
+            AlenaVasilisaRiding.isVisible = false
+            transition.to(fortress, {x=-100, time=1000})
+            transition.to(fortress2, {x=385, time=1000})
+            transition.to(bridge, {alpha=1, delay=1200})
+            transition.to(bridge, {rotation=90, time=1000, delay=1200})
+        end,
+        animationComplete = function()
+            AlenaVasilisaRiding.isVisible = false
+            VasilisaS.isVisible = false
+            fortress.isVisible = false
+            fortress2.isVisible = false
+            bridge.isVisible = false
+        end
+    }
+    scenes[103] = {
+        sName = 103,
+        follows = 105,
+        text='Alena and Gray Wolf continue their journey. Alena tries not to think about Vasilisa\'s fate, as her only goal is to find her lost brother and return him home. "At least this way, I secured my uncle\'s help in case I need it."',
+        animations = function()
+            AlenaOnWolfNoRibbon.isVisible = true
+            AlenaOnWolfNoRibbon.y=270
+            ridingWolftoRight(AlenaOnWolfNoRibbon)
+        end,
+        animationComplete = function()end
+    }
+    scenes[104] = {
+        sName = 104,
+        follows = 105,
+        text='Alena follows the road on foot. Before midday, her loyal companion catches up with her and tells her the story of how her uncle tried to kiss his newly-wed bride, who suddenly turned into a wolf. "There\'s little reason to hope for his help in the future."',
+        animations = function()
+            AlenaNoRibbon.x=1100 AlenaNoRibbon.y=260
+            WolfS.x=1100 WolfS.y=270
+            transition.to(AlenaNoRibbon, {x=300, time=1500, delay=500})
+            transition.to(WolfS, {x=450, time=1000, delay=1300})
+        end,
+        animationComplete = function()end
+    }
+
+-------- Act 4 Scenes 105 - 160
+    scenes[105] = {
+        sName = 105,
+        follows = 106,
+        text='It is getting colder. The sun is powerless to blow away the snowy gloom. The chilly wind swipes the grey earth and sways the bony trees barren of all leaves. Slowly even Gray Wolf grows tired of ceaselessly galloping against the snowstorm.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+    scenes[106] = {
+        sName = 106,
+        follows = 107,
+        text='They decided to halt their journey for a short time. They find shelter between the huge roots of a massive ancient tree and build themselves a fairly solid windbreak out of fresh pine branches laid from root to root. ',
+        animations = function() end,
+        animationComplete = function()end
+    }
+    scenes[107] = {
+        sName = 107,
+        follows = 108,
+        text='Gray Wolf gathers some berries and firewood bringing into their now cosy little shelter. Alena lights the fire. But the moment their hideout warms up, the branches begin to jostle.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+    scenes[108] = {
+        sName = 108,
+        text='Alena can spot a huge brown bear trying to get in their shelter. But before the Grey Wolf gets on his feet, the bear says: “I mean you no harm. I just want to warm myself near your fire and wait until the storm clears.”',
+        selection = {
+            [1] = {'"Another talking animal!?!"', 109},
+        },
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[109] = {
+        sName = 109,
+        follows = 110,
+        clearSelection = true,
+        text='Alena: "Another talking animal!?!"',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[110] = {
+        sName = 110,
+        text='“You are far from home, little one. I am not the biggest wonder here in Koschei’s domain.” says Bear.  “So can I wait near you fire?”',
+        selection = {
+            [1] = {'"Of course, you can stay."', 111},
+            [2] = {'Go away, you are huge and scary!', 113},
+        },
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[111] = {
+        sName = 111,
+        clearSelection = true,
+        follows = 112,
+        text='Alena: "Of course, you can stay."',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[112] = {
+        sName = 112,
+        selection = {
+            [1] = {'"What are these other wonders?"', 117}
+        },
+        text='“Thank you, little one. Kindness is the rarest thing in this kingdom, though it is full of other wonders,” says Bear.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[113] = {
+        sName = 113,
+        follows = 114,
+        clearSelection = true,
+        text='Alena: "Go away, you are huge and scary!"',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[114] = {
+        sName = 114,
+        follows = 115,
+        text='With a sad sigh, Bear struggles out of the shelter. Alena breathes with relief. “He was so scary!” she says to Gray Wolf.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[115] = {
+        sName = 115,
+        follows = 116,
+        text='“Maybe so, but he is not the scariest thing we will see.” he promises.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[116] = {
+        sName = 116,
+        follows = 119,
+        text='Alena, soothed by the heat of fire and the warmth of Grey Wolf’s fur barely notices when the blizzard has finally passed. But she has to continue her journey in search for Ivan, so they leave their cosy shelter behind.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[117] = {
+        sName = 117,
+        follows = 118,
+        clearSelection = true,
+        text='“The biggest wonders here are the spring with the water of death and the spring with the water of life. They say the water of death cleanses the body and treats any wounds, while the water of life can revive the dead. But only crows know where those springs are,” explains Bear.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[118] = {
+        sName = 118,
+        follows = 119,
+        text='Soon the blizzard passes and it is time to carry on. Alena says her goodbyes to Bear, and he tells her that if she ever needs his help, she should call for him, and he will come. Alena is happy to  have enlisted the help of another ally.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[119] = {
+        sName = 119,
+        follows = 120,
+        text='After a while they get to Koschei’s stronghold, an impregnable ice castle stands. There is no way of knowing if its ruthless overlord is inside. ',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[1000] = {
+        sName = 1000,
+        follows = 00,
+        text='',
+        animations = function() end,
+        animationComplete = function()end
+    }
 -----------------------------------------------------------------------------------
 --
 -- FUNCTIONS
