@@ -17,8 +17,6 @@ local midlayer1 = display.newGroup()
 midlayer1.anchorX = 0 midlayer1.anchorY = 0 
 local midlayer2 = display.newGroup()
 midlayer2.anchorX = 0 midlayer2.anchorY = 0
-print("Printing the midlayer 2 first time") 
-print(midlayer2)
 local midlayer3 = display.newGroup()
 midlayer3.anchorX = 0 midlayer3.anchorY = 0 
 local foregoundGr = display.newGroup()
@@ -250,6 +248,21 @@ function alarmBellsRing()
     transition.to(bellAlarm, {y=-100, rotation=50, time=300, delay=2100})
     transition.to(bellAlarm, {y=-100, rotation=-50, time=300, delay=2400})
     transition.to(bellAlarm, {y=-100, rotation=0, time=200, delay=2700})
+end
+
+function moveTreeBack()
+    local mins = 2500
+    for i=1,3 +1
+        do
+            transition.to(treeBack, {rotation=8, y=150, time=200, delay=mins})
+            mins = mins+150
+            transition.to(treeBack, {rotation=0, y=140, time=200, delay=mins})
+            mins = mins+150
+            transition.to(treeBack, {rotation=-3, y=150, time=200, delay=mins})
+            mins = mins+150
+            transition.to(treeBack, {rotation=0, y=140, time=200, delay=mins})
+            mins = mins+150
+        end
 end
 
 
@@ -2017,24 +2030,63 @@ local scenes = {};
 -------- Act 4 Scenes 105 - 160
     scenes[105] = {
         sName = 105,
+        openingAnimation = {
+            [1] = 'background11.png', 
+            [2] = 'foreground7.png'
+        },
+        setStage = 'set105',
         follows = 106,
         text='It is getting colder. The sun is powerless to blow away the snowy gloom. The chilly wind swipes the grey earth and sways the bony trees barren of all leaves. Slowly even Gray Wolf grows tired of ceaselessly galloping against the snowstorm.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            AlenaOnWolfNoRibbon.xScale =-1 AlenaOnWolfNoRibbon.x=-250 AlenaOnWolfNoRibbon.y=270
+            transition.to(shadowLayer9, {alpha=1, time=1000, delay=2000})
+            transition.to(landscape3, {x=0, time=1000, delay=1000})
+            transition.to(AlenaOnWolfNoRibbon, {x=300, time=1000, delay=3000})
+        end,
+        animationComplete = function()
+            foreground.y=0
+            AlenaOnWolfNoRibbon.xScale =-1 AlenaOnWolfNoRibbon.x=300 AlenaOnWolfNoRibbon.y=270
+            landscape3.x=0
+        end
     }
     scenes[106] = {
         sName = 106,
         follows = 107,
         text='They decided to halt their journey for a short time. They find shelter between the huge roots of a massive ancient tree and build themselves a fairly solid windbreak out of fresh pine branches laid from root to root. ',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            transition.to(landscape3, {x=-400, time=1000})
+            transition.to(treeBack, {x=550, time=1000})
+            transition.to(treeFront, {x=500, time=1000})
+        end,
+        animationComplete = function()
+            landscape3.x=-400
+            treeBack.x=550
+            treeFront.x=500
+        end
     }
     scenes[107] = {
         sName = 107,
         follows = 108,
         text='Gray Wolf gathers some berries and firewood bringing into their now cosy little shelter. Alena lights the fire. But the moment their hideout warms up, the branches begin to jostle.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            AlenaNoRibbon.x=800
+            WolfSit.xScale = -1 WolfSit.x=650
+            transition.to(AlenaOnWolfNoRibbon, {y=-400, time=1000})
+            transition.to(landscape3, {x=-700, time=1000, delay=500})
+            transition.to(treeBack, { x=230, time=1000, delay=500})
+            transition.to(treeFront, {x=180, time=1000, delay=500})
+            transition.to(AlenaNoRibbon, {y=300, time=1000, delay=1500})
+            transition.to(WolfSit, {y=310, time=1000, delay=1500})
+            moveTreeBack()
+        end,
+        animationComplete = function()
+            landscape3.x=-700
+            AlenaOnWolfNoRibbon.y=-400
+            WolfSit.xScale=-1 WolfSit.x=650 WolfSit.y=310
+            AlenaNoRibbon.x=800 AlenaNoRibbon.y=300
+            treeBack.rotation=0 treeBack.y=140 treeBack.x=230
+            treeFront.x=180
+        end
     }
     scenes[108] = {
         sName = 108,
@@ -2224,6 +2276,7 @@ end
 
 function removeCharacters()
     AlenaS.x = 200 AlenaS.y = -400
+    AlenaNoRibbon.x = 200 AlenaNoRibbon.y = -400
     IvanS.x = 130 IvanS.y = -400
     MotherS.x = 540 MotherS.y = -400 
     AlenaCryS.x = 400 AlenaCryS.y = -400
@@ -2620,6 +2673,22 @@ local function setStageObjects(stage)
 
             organizeStage()  
         end,
+        set105 = function()
+            clearStage()
+            landscape3 = display.newImage(midlayer1, "images/act9_snow.png", true) setAnchor(landscape3)
+            landscape3.x = 1024 landscape3.y = 0 
+
+
+            treeBack = display.newImage(midlayer2, "images/act9_treeBack.png", true) setAnchor(treeBack)
+            treeBack.x=1300 treeBack.y=140
+            treeFront = display.newImage(midlayer3, "images/act9_treeFront.png", true) setAnchor(treeFront)
+            treeFront.x=1300 treeFront.y=30
+
+            shadowLayer9 = display.newImage(midlayer3, "images/act9_shadowLayer.png", true) setAnchor(shadowLayer9) 
+            shadowLayer9.alpha=0
+
+            organizeStage() 
+        end,
 
     }
     stages[stage]()
@@ -2784,7 +2853,7 @@ myListener = function( event )
     -- listener for the main text
     sceneText:addEventListener( "touch", sceneTextTouch)
 
-    loadScene(scenes[100])
+    loadScene(scenes[105])
     return true
 end
 
