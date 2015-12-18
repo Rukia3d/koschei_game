@@ -35,6 +35,7 @@ local MotherS = display.newImage( characters, "images/mother_s_small.png") Mothe
 local WolfS = display.newImage( characters, "images/wolf_s_small.png") WolfS.x = -200 WolfS.y = -400
 local WolfSit = display.newImage( characters, "images/wolf_f_small.png") WolfSit.x = -200 WolfS.y = -400  
 local VasilisaS = display.newImage( characters, "images/vasilisa_f_small.png") VasilisaS.x = 1200 VasilisaS.y = -400  
+local BearS = display.newImage( characters, "images/bear_s_small.png") BearS.x = 200 BearS.y = -400  
 
 
 -- Small characters  changed images
@@ -53,6 +54,7 @@ dialBack.y=-800
 
 -- Big characters for dialogue stage
 local Alena = display.newImage( charactersDial, "images/alena_f_dialogue.png") Alena.x = 400 Alena.y = 800
+local AlenaNR = display.newImage( charactersDial, "images/alena_f_dialogueNR.png") AlenaNR.x = 400 AlenaNR.y = 800
 local AlenaCryD_NR = display.newImage( charactersDial, "images/alena_cry_dialogueNR.png") AlenaCryD_NR.x = 400 AlenaCryD_NR.y = 800  
 local Ivan = display.newImage( charactersDial, "images/ivan_s_dialogue.png") Ivan.x = 300 Ivan.y = 800
 local Mother = display.newImage( charactersDial, "images/mother_s_dialogue.png", false) Mother.x = 400 Mother.y = 800 
@@ -60,6 +62,7 @@ local MotherWar = display.newImage( charactersDial, "images/mother_f_dialogue.pn
 local Koschei = display.newImage( charactersDial, "images/koschei_f_big.png", false) Koschei.x = 300 Koschei.y = 800
 local KoscheiPlea = display.newImage( charactersDial, "images/kosh_plea_dialogue.png", false) KoscheiPlea.x = 900 KoscheiPlea.y = 800
 local Wolf  = display.newImage( charactersDial, "images/wolf_dialogue.png", false) Wolf.x = 700 Wolf.y = 800 
+local Bear  = display.newImage( charactersDial, "images/bear_dialogue.png", false) Bear.x = 100 Bear.y = 800 
 local VasilisaD = display.newImage( charactersDial, "images/vasilisa_f_dialogue.png") VasilisaD.x = 400 VasilisaD.y = 800
 local VasilisaCry = display.newImage( charactersDial, "images/vasilisa_s_dialogue.png") VasilisaCry .x = 400 VasilisaCry .y = 800  
 
@@ -72,7 +75,7 @@ local BrotherS = display.newImage(foregoundGr, "images/transparent.png")
 local background = display.newImage( "images/startScreen.png") background.x = display.contentWidth / 2 background.y = display.contentHeight / 2
 
 -- Variables for stage content
-local foreground  = display.newImage(foregoundGr, "images/transparent.png")
+local foreground = display.newImage(foregoundGr, "images/transparent.png")
 local settings
 
 -- Variables for selections
@@ -583,7 +586,7 @@ local scenes = {};
         text = 'Ivan is within, standing in front of an old man, all skin and bones, and bound to the wall with twelve iron chains. "Water, please, give me some water.." pleads the old man.',
         selection = {
             [1] = {'"Who are you? What are you doing here?"', 20},
-            [2] = {'"Ivan, step back, don’t get closer!"', 21}
+            [2] = {'"Ivan, step back, don\'t get closer!"', 21}
         },
         clearSelection = true,
         animations = function() 
@@ -813,7 +816,7 @@ local scenes = {};
     }
     scenes[30] = {
         sName = 30,
-        text = '"Thank you, Ivan, for your kindness. For that I’ll take you with me!" says the bony prisoner and tears off all twelve of his chains, grabs Ivan, swirls on the spot, and in the next second, both are gone.',
+        text = '"Thank you, Ivan, for your kindness. For that I\'ll take you with me!" says the bony prisoner and tears off all twelve of his chains, grabs Ivan, swirls on the spot, and in the next second, both are gone.',
         follows = 31,
         clearSelection = true,
         animations = function() 
@@ -881,7 +884,7 @@ local scenes = {};
     }
     scenes[34] = {
         sName = 34,
-        text = 'Alena\'s mother, no other than Marya Morevna, the famous warrior princess, whistles and a second later, the depths of the forest open, and a huge grey wolf appears before Alena\'s eyes.',
+        text = 'Alena\'s mother, no other than Marya Morevna, the famous warrior princess, whistles and a second later, the depths of the forest open, and a huge Gray wolf appears before Alena\'s eyes.',
         follows = 35,
         animations = function()
             hideDialogue()
@@ -897,7 +900,7 @@ local scenes = {};
     }
     scenes[35] = {
         sName = 35,
-        text='Mom: "That\'s my old friend and loyal companion, Grey Wolf. He helped me to imprison the Koschei last time. He will serve you as good as he served me."" says Alena\'s mother. ',
+        text='Mom: "That\'s my old friend and loyal companion, Gray Wolf. He helped me to imprison the Koschei last time. He will serve you as good as he served me."" says Alena\'s mother. ',
         follows = 36,
         animations = function()
             showDialogue(MotherWar)
@@ -952,7 +955,7 @@ local scenes = {};
             [2] = 'foreground6.png'
             },
         setStage = 'set39',
-        text='Alena sits on Grey Wolf\'s back, hugs his massive neck, and he starts to run - so fast that before the sun touches down on the treetops to the west, they have already reached the crossroads on the other side of the forest.',
+        text='Alena sits on Gray Wolf\'s back, hugs his massive neck, and he starts to run - so fast that before the sun touches down on the treetops to the west, they have already reached the crossroads on the other side of the forest.',
         follows = 40,
         animations = function()
             transition.to(landscape3, {x=0, time=1000, delay=500})
@@ -990,9 +993,9 @@ local scenes = {};
         sName = 41,
         text = '"If you ride to the left, you will lose your horse. If you ride to the right, you will lose your head. If you ride straight ahead, you will lose both."',
         selection = {
-            [1] = {'Choose to go left', 42},
-            [2] = {'Choose to go straight', 43},
-            [3] = {'Choose to go right', 44}
+            [1] = {'Choose to go left', 42}, --WolfDies
+            [2] = {'Choose to go straight', 43}, --Both die
+            [3] = {'Choose to go right', 44} --Alena dies
         },
         changeFlow = function()
         end,
@@ -1082,7 +1085,7 @@ local scenes = {};
     scenes[46] = {
         sName = 46,
         text = function() 
-            return '"Don’t get scared, daughter of Marya, it is not Koschei\'s lair. It is the domain of your mother\'s brother, the shape-shifting wizard who can turn into '..choices.brother1..'," says the Gray Wolf suddenly.'
+            return '"Don\'t get scared, daughter of Marya, it is not Koschei\'s lair. It is the domain of your mother\'s brother, the shape-shifting wizard who can turn into '..choices.brother1..'," says the Gray Wolf suddenly.'
         end,
         selection = {
             [1] = {'You can talk?', 47},
@@ -1110,7 +1113,7 @@ local scenes = {};
 
     scenes[48] = {
         sName = 48,
-        text = 'Grey Wolf: "I can do many things and before the sun rises, you will see that, daughter of Marya. Before you have to deal with consequences of your choices."',
+        text = 'Gray Wolf: "I can do many things and before the sun rises, you will see that, daughter of Marya. Before you have to deal with consequences of your choices."',
         selection = {
             [1] = {'My mother has a brother?', 49}
         },
@@ -1139,7 +1142,7 @@ local scenes = {};
     scenes[50] = {
         sName = 50,
         clearSelection = true,
-        text = 'Grey Wolf: "Yes, she has three brothers, all wizards who can turn into birds of prey - Eagle, Raven or Falcon. They were inseparable a long time ago, but after traveling to Koschei\'s stronghold, they had a falling out."',
+        text = 'Gray Wolf: "Yes, she has three brothers, all wizards who can turn into birds of prey - Eagle, Raven or Falcon. They were inseparable a long time ago, but after traveling to Koschei\'s stronghold, they had a falling out."',
         follows = 51,
         animations = function()
             showDialogue(Wolf)
@@ -1194,7 +1197,7 @@ local scenes = {};
 
     scenes[53] = {
         sName = 53,
-        text = 'Uncle: "That’s a very sad story indeed. I remember my own journey to Koschei’s stronghold... It is not a place for a young girl. And if what you told me is true, I need to concentrate on protecting my kingdom, not on helping you."',
+        text = 'Uncle: "That\'s a very sad story indeed. I remember my own journey to Koschei\'s stronghold... It is not a place for a young girl. And if what you told me is true, I need to concentrate on protecting my kingdom, not on helping you."',
         selection = {
             [1] = {'"That\'s the reception I get from my own uncle?"', 54},
             [2] = {' Ask for Gray Wolf\'s advice', 56},
@@ -1259,7 +1262,7 @@ local scenes = {};
 
     scenes[58] = {
         sName = 58,
-        text = 'Uncle: "So if you want to help me - steal at least one golden apple and the horse for me. Then I’ll think about telling you how to get into Koschei’s castle."',
+        text = 'Uncle: "So if you want to help me - steal at least one golden apple and the horse for me. Then I\'ll think about telling you how to get into Koschei\'s castle."',
         follows = 59,
         changeFlow = function()
             if choices.brother == 'Falcon' then scenes[58].follows = 59
@@ -1312,7 +1315,7 @@ local scenes = {};
     scenes[62] = {
         setStage = 'set62',
         sName = 62,
-        text = 'They rush at full speed, so the lights of the stars in the sky flow together into a river of spilled milk. On the way, the north wind tears away a ribbon from Alena’s braid.',
+        text = 'They rush at full speed, so the lights of the stars in the sky flow together into a river of spilled milk. On the way, the north wind tears away a ribbon from Alena\'s braid.',
         selection = {
             [1] = {'Tell the Gray Wolf about the ribbon', 63},
             [2] = {'Forget about the ribbon', 64},
@@ -1335,7 +1338,7 @@ local scenes = {};
 
     scenes[63] = {
         sName = 63,
-        text = 'Gray Wolf grins while Alena tells him how the wind stole her ribbon. "Your ribbon is now five miles behind us, because even wind can’t keep pace with me."',
+        text = 'Gray Wolf grins while Alena tells him how the wind stole her ribbon. "Your ribbon is now five miles behind us, because even wind can\'t keep pace with me."',
         follows = 64,
         clearSelection = true,
         animations = function() 
@@ -1407,7 +1410,7 @@ local scenes = {};
     scenes[67] = {
         sName = 67,
         clearSelection = true,
-        text = 'She leaves the ribbon on the branch and gets back to Gray Wolf. "You are a  good girl, daughter of Marya, your mother raised you well," says Grey Wolf and they rush back.',
+        text = 'She leaves the ribbon on the branch and gets back to Gray Wolf. "You are a  good girl, daughter of Marya, your mother raised you well," says Gray Wolf and they rush back.',
         follows = 73,
         animations = function()
             showDialogue(Wolf)
@@ -1447,7 +1450,7 @@ local scenes = {};
         sName = 69,
         setStage = 'set62',
         clearSelection = true,
-        text = 'Gray Wolf grabs Alena and leaps over the wall. "You should have listened to me," he says. "Now Falcon\'s hounds will follow us to his brother’s stronghold!"',
+        text = 'Gray Wolf grabs Alena and leaps over the wall. "You should have listened to me," he says. "Now Falcon\'s hounds will follow us to his brother\'s stronghold!"',
         follows = 71,
         animations = function()
             ridingWolftoRight(AlenaOnWolfNoRibbon)
@@ -1460,7 +1463,7 @@ local scenes = {};
         sName = 70,
         setStage = 'set62',
         clearSelection = true,
-        text = 'Gray Wolf grabs Alena and leaps over the wall. "You should have listened to me," he says. "Now Raven\'s hounds will follow us to his brother’s stronghold!"',
+        text = 'Gray Wolf grabs Alena and leaps over the wall. "You should have listened to me," he says. "Now Raven\'s hounds will follow us to his brother\'s stronghold!"',
         follows = 71,
         animations = function() 
             ridingWolftoRight(AlenaOnWolfNoRibbon)
@@ -1742,7 +1745,7 @@ local scenes = {};
     scenes[87] = {
         sName = 87,
         follows = 88,
-        text='It is obvious to Alena that there\'s no point in arguing.  Her uncle won’t help her unless she completes this last task, so she accepts it without objections. She only hopes that it won’t be more difficult than the two previous ones. ',
+        text='It is obvious to Alena that there\'s no point in arguing.  Her uncle won\'t help her unless she completes this last task, so she accepts it without objections. She only hopes that it won\'t be more difficult than the two previous ones. ',
         animations = function() hideDialogue() end,
         animationComplete = function()end
     }
@@ -1912,7 +1915,7 @@ local scenes = {};
         sName = 98,
         clearSelection = true,
         follows = 99,
-        changeFlow = function() choices.vasilisa = 'Grey Wolf in a form of Vasilisa the Beautiful' end,
+        changeFlow = function() choices.vasilisa = 'Gray Wolf in a form of Vasilisa the Beautiful' end,
         text='Touched by the young woman\'s plea, Alena asks Gray Wolf to stop, so she can set Vasilisa free. Then she sit on the ground downcast.',
         animations = function()
             hideDialogue()
@@ -1967,7 +1970,7 @@ local scenes = {};
     scenes[101] = {
         sName = 101,
         follows = 102,
-        text='"Don’t linger after he tells you where to go, I’ll catch up with you later," says Gray Wolf in Vasilisa The Beautiful form.',
+        text='"Don\'t linger after he tells you where to go, I\'ll catch up with you later," says Gray Wolf in Vasilisa The Beautiful form.',
         animations = function()
             showDialogue(VasilisaD)
         end,
@@ -2036,7 +2039,7 @@ local scenes = {};
         },
         setStage = 'set105',
         follows = 106,
-        text='It is getting colder. The sun is powerless to blow away the snowy gloom. The chilly wind swipes the grey earth and sways the bony trees barren of all leaves. Slowly even Gray Wolf grows tired of ceaselessly galloping against the snowstorm.',
+        text='It is getting colder. The sun is powerless to blow away the snowy gloom. The chilly wind swipes the Gray earth and sways the bony trees barren of all leaves. Slowly even Gray Wolf grows tired of ceaselessly galloping against the snowstorm.',
         animations = function()
             AlenaOnWolfNoRibbon.xScale =-1 AlenaOnWolfNoRibbon.x=-250 AlenaOnWolfNoRibbon.y=270
             transition.to(shadowLayer9, {alpha=1, time=1000, delay=2000})
@@ -2090,12 +2093,17 @@ local scenes = {};
     }
     scenes[108] = {
         sName = 108,
-        text='Alena can spot a huge brown bear trying to get in their shelter. But before the Grey Wolf gets on his feet, the bear says: “I mean you no harm. I just want to warm myself near your fire and wait until the storm clears.”',
+        text='Alena can spot a huge brown bear trying to get in their shelter. But before the Gray Wolf gets on his feet, the bear says: “I mean you no harm. I just want to warm myself near your fire and wait until the storm clears.”',
         selection = {
             [1] = {'"Another talking animal!?!"', 109},
         },
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            BearS.xScale=-1 BearS.x=-200 BearS.y=300
+            transition.to(BearS, {x=300, time=1000})
+        end,
+        animationComplete = function()
+            BearS.xScale=-1 BearS.x=300 BearS.y=300
+        end
     }
 
     scenes[109] = {
@@ -2103,98 +2111,374 @@ local scenes = {};
         follows = 110,
         clearSelection = true,
         text='Alena: "Another talking animal!?!"',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            showDialogue(AlenaNR)
+        end,
+        animationComplete = function()
+            hideDialogue()
+        end
     }
 
     scenes[110] = {
         sName = 110,
-        text='“You are far from home, little one. I am not the biggest wonder here in Koschei’s domain.” says Bear.  “So can I wait near you fire?”',
+        text='"You are far from home, little one. I am not the biggest wonder here in Koschei\'s domain." says Bear. ',
         selection = {
-            [1] = {'"Of course, you can stay."', 111},
-            [2] = {'Go away, you are huge and scary!', 113},
+            [1] = {'"What are these other wonders?"', 111}
         },
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            hideDialogue()
+            showDialogue(Bear)
+        end,
+        animationComplete = function()
+            hideDialogue()
+        end
     }
 
     scenes[111] = {
         sName = 111,
-        clearSelection = true,
         follows = 112,
-        text='Alena: "Of course, you can stay."',
-        animations = function() end,
-        animationComplete = function()end
+        clearSelection = true,
+        text='“The biggest wonders here are the spring with the water of death and the spring with the water of life. They say the water of death cleanses the body and treats any wounds, while the water of life can revive the dead. But only crows know where those springs are,” explains Bear.',
+        animations = function()
+            hideDialogue()
+            showDialogue(Bear)
+        end,
+        animationComplete = function()
+            hideDialogue()
+        end
     }
 
     scenes[112] = {
         sName = 112,
+        text='"So. little one, can I stay?"',
         selection = {
-            [1] = {'"What are these other wonders?"', 117}
+            [1] = {'"Go away, you are huge and scary!"', 115},
+            [2] = {'"Of course, you can stay."', 113}
         },
-        text='“Thank you, little one. Kindness is the rarest thing in this kingdom, though it is full of other wonders,” says Bear.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            showDialogue(Bear)
+        end,
+        animationComplete = function()
+            hideDialogue()
+        end
     }
 
     scenes[113] = {
         sName = 113,
-        follows = 114,
         clearSelection = true,
-        text='Alena: "Go away, you are huge and scary!"',
-        animations = function() end,
-        animationComplete = function()end
+        follows = 114,
+        text='Alena: "Of course, you can stay."',
+        animations = function()
+            hideDialogue()
+            showDialogue(AlenaNR)
+        end,
+        animationComplete = function()
+            hideDialogue()
+        end
     }
 
     scenes[114] = {
         sName = 114,
-        follows = 115,
-        text='With a sad sigh, Bear struggles out of the shelter. Alena breathes with relief. “He was so scary!” she says to Gray Wolf.',
-        animations = function() end,
-        animationComplete = function()end
+        follows = 119,
+        text='“Thank you, little one. Kindness is the rarest thing in this kingdom,” says Bear.',
+        animations = function()
+            hideDialogue()
+            showDialogue(Bear)
+        end,
+        animationComplete = function()
+            hideDialogue()
+        end
     }
 
     scenes[115] = {
         sName = 115,
-        follows = 116,
-        text='“Maybe so, but he is not the scariest thing we will see.” he promises.',
-        animations = function() end,
-        animationComplete = function()end
+        follows = 116,        
+        text='Alena: "Go away, you are huge and scary!"',
+        clearSelection = true,
+        animations = function()
+            hideDialogue()
+            showDialogue(AlenaNR)
+        end,
+        animationComplete = function()
+            hideDialogue()
+        end
     }
 
     scenes[116] = {
         sName = 116,
-        follows = 119,
-        text='Alena, soothed by the heat of fire and the warmth of Grey Wolf’s fur barely notices when the blizzard has finally passed. But she has to continue her journey in search for Ivan, so they leave their cosy shelter behind.',
-        animations = function() end,
-        animationComplete = function()end
+        follows = 117,
+        text='With a sad sigh, Bear struggles out of the shelter. Alena breathes with relief. “He was so scary!” she says to Gray Wolf.',
+        animations = function()
+            hideDialogue()
+            BearS.xScale = 1
+            transition.to(BearS, {x=-300, time=1000, delay=1000})
+        end,
+        animationComplete = function()
+            BearS.xScale=1 BearS.x=-300
+        end
     }
 
     scenes[117] = {
         sName = 117,
         follows = 118,
-        clearSelection = true,
-        text='“The biggest wonders here are the spring with the water of death and the spring with the water of life. They say the water of death cleanses the body and treats any wounds, while the water of life can revive the dead. But only crows know where those springs are,” explains Bear.',
-        animations = function() end,
-        animationComplete = function()end
+        text='“Maybe so, but he is not the scariest thing we will see.” he promises.',
+        animations = function()
+            showDialogue(Wolf)
+        end,
+        animationComplete = function()
+            hideDialogue()
+        end
     }
 
     scenes[118] = {
         sName = 118,
-        follows = 119,
-        text='Soon the blizzard passes and it is time to carry on. Alena says her goodbyes to Bear, and he tells her that if she ever needs his help, she should call for him, and he will come. Alena is happy to  have enlisted the help of another ally.',
-        animations = function() end,
+        follows = 125,
+        text='Alena, soothed by the heat of fire and the warmth of Gray Wolf\'s fur barely notices when the blizzard has finally passed. But she has to continue her journey in search for Ivan, so they leave their cosy shelter behind.',
+        animations = function()
+            hideDialogue()
+        end,
         animationComplete = function()end
     }
+
 
     scenes[119] = {
         sName = 119,
         follows = 120,
-        text='After a while they get to Koschei’s stronghold, an impregnable ice castle stands. There is no way of knowing if its ruthless overlord is inside. ',
+        text='Soon the blizzard passes and it is time to carry on. Alena says her goodbyes to Bear, and he tells her that if she ever needs his help, she should call for him, and he will come. Alena is happy to  have enlisted the help of another ally.',
+        animations = function()
+            hideDialogue()
+            BearS.xScale = 1
+            transition.to(BearS, {x=-300, time=1000, delay=1000})
+        end,
+        animationComplete = function()end
+    }
+
+    scenes[120] = {
+        sName = 120,
+        follows = 121,
+        setStage='set120',
+        text='After a while they get to Koschei\'s stronghold, an impregnable ice castle stands opposite them. There is no way of knowing if its ruthless overlord is inside. Gray Wolf sniffs the air. ',
         animations = function() end,
         animationComplete = function()end
     }
 
+    scenes[121] = {
+        sName = 121,
+        follows = 122,
+        text='"I can sense your brother in the highest tower. You get on my back, and I will jump as high as I can. You reach out and grab your brother. Then we will all run as fast as we can to escape Koschei before he notices that Ivan is gone," recommends Gray Wolf.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[122] = {
+        sName = 122,
+        follows = 123,
+        text='And so they do. Alena is happy when she spots her brother standing near the tower window. She grabs him, and Gray Wolf leaps away from the tower.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[123] = {
+        sName = 123,
+        follows = 124,
+        text='But before Woolf\'s paws touch the ground, a peal of thunder shatters the air and before them stands Koschei the Deathless in person, blocking their next step.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[124] = {
+        sName = 124,
+        changeFlow = function() 
+            if choices.brother=='Eagle' then scenes[124].follows = 125
+            elseif  choices.brother=='Falcon' then scenes[124].follows = 126
+            else
+                if vasilisaGo==true then scenes[124].follows = 127
+                else scenes[124].follows = 128 end  
+            end
+        end,
+        text='Gray Wolf attacks Koschei, as Alena tries to run away holding Ivan, but all their efforts are in vain. Gray Wolf\'s bites have no effect on Koschei.  The warlock summons his underlings, and a cloud of ice shrouds everything in sight.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[125] = {
+        sName = 125,
+        selection = {
+            [1] = {'"What can I do to save my friend?"', 129}
+        },
+        text='When the snow settles, there\'s nothing left except Gray Wolf\'s cold remains and Ivan\'s cries, as he is carried by Koschei back into the tower. Alena is devastated. She has lost her brother and her loyal ally who had become her friend.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[126] = {
+        sName = 126,
+        selection = {
+            [1] = {'"What can I do to save my friend?"', 130}
+        },
+        text='When the snow settles there\'s nothing left except the mortally wounded Alena, who couldn\'t defend herself from Koschei, and the echo of Ivan\'s cries, as he is carried back into the tower. Gray Wolf is devastated. He couldn\'t help his companion, so he howls and wails.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[127] = {
+        sName = 127,
+        selection = {
+            [1] = {'"What can I do to save them?"', 131}
+        },
+        text='Fast runs the horse of Vasilisa the Beautiful. She didn’t forget Alena’s kindness and now hurries her aid. But she is too late. When the snow settles, there’s nothing left except the mortally wounded Alena and Gray Wolf’s cold remains. ',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[128] = {
+        sName = 128,
+        selection = {
+            [1] = {'"What can I do to save them?"', 132}
+        },
+        text='Fast flies the bird of prey. And Alena\'s uncle, the shape-shifting wizard, flies even faster, but he is too late. When the snow settles, there\'s nothing left except the mortally wounded Alena and Gray Wolf\'s cold remains.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[129] = {
+        sName = 129,
+        follows = 135,
+        clearSelection = true,
+        text='"The springs!" remembers Alena. "The springs that Bear talked about! But only Crows know where they are." \nAlena looks around and soon notices two crows sitting on a tree branch. "I need to catch them and make them bring me some of those waters!"',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[130] = {
+        sName = 130,
+        follows = 133,
+        clearSelection = true,
+        text='"The springs!" remembers Gray Wolf. "The springs that Bear talked about! But only Crows know where they are." \nGray Wolf looks around and soon notices two crows sitting on a tree branch. "I need to catch them and make them bring me some of those waters!"',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[131] = {
+        sName = 131,
+        follows = 136,
+        clearSelection = true,
+        text='Vasilisa looks around and soon notices two crows sitting on a tree branch. \n"Сaw! Caw!" - says the older crow. "Poor creatures, dying so young and yet so full of life. If Vasilisa only had some water of death and some water of life, Vasilisa could revive them both."',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[132] = {
+        sName = 132,
+        follows = 134,
+        clearSelection = true,
+        text='Shape-shifting wisard looks around and soon notices two crows sitting on a tree branch. \n"Сaw! Caw!" - says the older crow. "Poor creatures, dying so young and yet so full of life. If Alena\'s uncle only had some water of death and some water of life, he could revive them both."',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[133] = {
+        sName = 133,
+        follows = 137,
+        text='In the twinkling of an eye Gray Wolf turns himself into a crow and flies up to the tree branch. He catches the young crow and doesn’t let go until the old one promises to bring him some water of death. ',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[134] = {
+        sName = 134,
+        follows = 143,
+        text='In the twinkling of an eye a shape-shifting wisard turns himself into a raven and flies up to the tree branch. He catches the young crow and doesn’t let go until the old one promises to bring him some water of death. ',
+        animations = function() end,
+        animationComplete = function()end
+    }
+    scenes[135] = {
+        sName = 135,
+        follows = 139,
+        text='“Uncle, you promised me your help!” cries Alena and soon the big'..choices.brother..' appears in front of her. She tells him her misfortunes. Then her uncle catches the young crow and doesn’t let go until the old one promises to bring him some water of death. ',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[136] = {
+        sName = 136,
+        follows = 141,
+        text='“I need to catch this little crow!” thinks Vasilisa and starts singing. The young crow listens spellbound to her song and flies closer. She catches him and doesn’t let go until the older one promises to bring her some water of death. ',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[137] = {
+        sName = 138,
+        follows = 138,
+        text='After a while the crow returns and with one splash of the water of death, Alena’s wounds start to disappear. “Now go and bring me some water of life. Then I’ll release your little crow,” says Gray Wolf and the old crow flies away.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[138] = {
+        sName = 138,
+        follows = 145,
+        text='Time passes and finally, the old crow returns. With one splash of the water of life,  Alena opens her eyes. Gray Wolf frees the little crow, as promised. But Ivan is still in Koschei’s clutches, and there’s no winning in any fight with him.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[139] = {
+        sName = 139,
+        follows = 140,
+        text='After a while the crow returns and with one splash of the water of death, Wolf’s wounds start to disappear. “Now go and bring me some water of life. Then I’ll release your little crow,” says Alena and the old crow flies away.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[140] = {
+        sName = 1000,
+        follows = 145,
+        text='Time passes and finally, the old crow returns. With one splash of the water of life, Gray Wolf opens his eyes. Alena frees the little crow, as promised. But Ivan is still in Koschei’s clutches, and there’s no winning in any fight with him.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[141] = {
+        sName = 141,
+        follows = 142,
+        text='After a while the crow returns and with one splash of the water of death, Alena\'s and Wolf\'s wounds start to disappear. “Now go and bring me some water of life. Then I’ll release your little crow,” says Vasilisa and the old crow flies away.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[142] = {
+        sName = 142,
+        follows = 145,
+        text='Time passes and finally, the old crow returns. With one splash of the water of life, Alena and Wolf open their eyes. Vasilisa frees the little crow, as promised. But Ivan is still in Koschei’s clutches, and there’s no winning in any fight with him.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[143] = {
+        sName = 143,
+        follows = 144,
+        text='After a while the crow returns and with one splash of the water of death, Alena\'s and Wolf\'s wounds start to disappear. “Now go and bring me some water of life. Then I’ll release your little crow,” says Alena\'s uncle and the old crow flies away.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[144] = {
+        sName = 144,
+        follows = 145,
+        text='Time passes and finally, the old crow returns. With one splash of the water of life, Alena and Wolf open their eyes. Uncle frees the little crow, as promised. But Ivan is still in Koschei’s clutches, and there’s no winning in any fight with him.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[145] = {
+        sName = 145,
+        follows = 146,
+        text='“Сaw! You kept your word, so I’ll help you once more,” says the old crow. “I don’t know how to kill Koschei, but they say Baba Yaga knows how. That’s why Koschei hates her so much. Сaw! But remember, she is as dangerous as he is.”',
+        animations = function() end,
+        animationComplete = function()end
+    }
     scenes[1000] = {
         sName = 1000,
         follows = 00,
@@ -2228,17 +2512,19 @@ function showDialogue(name)
     --Change position based on the onject
     if name==Mother or name==MotherWar then transition.to(name, {y=400, time=500}) end
     if name==Alena then transition.to(name, {y=400, time=500}) end
+    if name==AlenaNR then transition.to(name, {y=400, time=500}) end
     if name==Ivan then transition.to(name, {y=400, time=500}) end
     if name==KoscheiPlea then KoscheiPlea.x=200 transition.to(name, {y=400, time=500}) end
     if name==Koschei then transition.to(name, {y=400, time=500}) end
     if name==Wolf then Wolf.x=700 transition.to(name, {y=430, time=500}) end
+    if name==Bear then Bear.x=300 transition.to(name, {y=400, time=500}) end
     if name==BrotherD then BrotherD.x=300 transition.to(name, {y=400, time=500}) end
     if name==VasilisaD then VasilisaD.x=300 transition.to(name, {y=400, time=500}) end
 
 end
 
 function hideDialogue()
-    local characters = {Mother, Alena, AlenaCryD_NR, Ivan, KoscheiPlea, Koschei, MotherWar, Wolf, BrotherD, VasilisaD, VasilisaCry}
+    local characters = {Mother, Alena, AlenaNR, AlenaCryD_NR, Ivan, KoscheiPlea, Koschei, MotherWar, Wolf, BrotherD, VasilisaD, VasilisaCry, Bear}
     for i=1, table.getn(characters) do characters[i].y = -700 end
     transition.to(dialBack, {y = -800, time=500})
     --dialBack.y = -800
@@ -2689,6 +2975,8 @@ local function setStageObjects(stage)
 
             organizeStage() 
         end,
+        set119 = function() 
+        end
 
     }
     stages[stage]()
