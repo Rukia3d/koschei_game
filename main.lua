@@ -268,6 +268,11 @@ function moveTreeBack()
         end
 end
 
+function loadCrows()
+    transition.to(crowSmall, {y = -170, time=1000, delay=500})
+    transition.to(crowBig, {y = 0, time=1000, delay=500})
+end
+
 
 -----------------------------------------------------------------------------------------
 --
@@ -2150,7 +2155,7 @@ local scenes = {};
 
     scenes[112] = {
         sName = 112,
-        text='"So. little one, can I stay?"',
+        text='Bear: "So, little one, can I stay?"',
         selection = {
             [1] = {'"Go away, you are huge and scary!"', 115},
             [2] = {'"Of course, you can stay."', 113}
@@ -2226,18 +2231,21 @@ local scenes = {};
             showDialogue(Wolf)
         end,
         animationComplete = function()
-            hideDialogue()
+            curtanBack()
         end
     }
 
     scenes[118] = {
         sName = 118,
-        follows = 125,
+        follows = 120,
         text='Alena, soothed by the heat of fire and the warmth of Gray Wolf\'s fur barely notices when the blizzard has finally passed. But she has to continue her journey in search for Ivan, so they leave their cosy shelter behind.',
         animations = function()
             hideDialogue()
         end,
-        animationComplete = function()end
+        animationComplete = function()
+            hideDialogue()
+            curtanBack()
+        end
     }
 
 
@@ -2247,10 +2255,15 @@ local scenes = {};
         text='Soon the blizzard passes and it is time to carry on. Alena says her goodbyes to Bear, and he tells her that if she ever needs his help, she should call for him, and he will come. Alena is happy to  have enlisted the help of another ally.',
         animations = function()
             hideDialogue()
+            curtanBack()
             BearS.xScale = 1
             transition.to(BearS, {x=-300, time=1000, delay=1000})
         end,
-        animationComplete = function()end
+        animationComplete = function()
+            hideDialogue()
+            curtanBack()
+            BearS.xScale=1 BearS.x=-300
+        end
     }
 
     scenes[120] = {
@@ -2258,47 +2271,88 @@ local scenes = {};
         follows = 121,
         setStage='set120',
         text='After a while they get to Koschei\'s stronghold, an impregnable ice castle stands opposite them. There is no way of knowing if its ruthless overlord is inside. Gray Wolf sniffs the air. ',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            AlenaNoRibbon.y=-400
+            WolfSit.y=-400
+            AlenaOnWolf.xScale = -1
+            AlenaOnWolf.x=-100 AlenaOnWolf.y=270 
+            transition.to(AlenaOnWolf, {x=200, time=1000, delay=500})
+        end,
+        animationComplete = function()
+            AlenaNoRibbon.y=-400
+            WolfSit.y=-400
+        end
     }
 
     scenes[121] = {
         sName = 121,
         follows = 122,
         text='"I can sense your brother in the highest tower. You get on my back, and I will jump as high as I can. You reach out and grab your brother. Then we will all run as fast as we can to escape Koschei before he notices that Ivan is gone," recommends Gray Wolf.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            showDialogue(Wolf)
+        end,
+        animationComplete = function()
+            hideDialogue()
+        end
     }
 
     scenes[122] = {
         sName = 122,
         follows = 123,
         text='And so they do. Alena is happy when she spots her brother standing near the tower window. She grabs him, and Gray Wolf leaps away from the tower.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            hideDialogue()
+            transition.to(AlenaOnWolf, {x=650, time=1000})
+            transition.to(AlenaOnWolf, {x=650,y=-400, time=1000, delay=1000})
+            transition.to(WindowWithIvan, {alpha=0, time=100, delay=1000})
+            transition.to(AlenaIvanRiding, {y=10, time=1000, delay=2000})
+        end,
+        animationComplete = function()
+            hideDialogue()
+            AlenaOnWolf.x=650 AlenaOnWolf.y=-400
+            WindowWithIvan.alpha=0
+            AlenaIvanRiding.y=30
+        end
     }
 
     scenes[123] = {
         sName = 123,
         follows = 124,
         text='But before Woolf\'s paws touch the ground, a peal of thunder shatters the air and before them stands Koschei the Deathless in person, blocking their next step.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            transition.to(AlenaIvanRiding, {y=30, time=200})
+            transition.to(koshAttack, {y=0, time=1000, delay=200})
+        end,
+        animationComplete = function()
+            AlenaIvanRiding.y=30
+            koshAttack.y=0
+        end
     }
 
     scenes[124] = {
         sName = 124,
-        changeFlow = function() 
+        follows=128,
+        --[[changeFlow = function() 
             if choices.brother=='Eagle' then scenes[124].follows = 125
             elseif  choices.brother=='Falcon' then scenes[124].follows = 126
             else
                 if vasilisaGo==true then scenes[124].follows = 127
                 else scenes[124].follows = 128 end  
             end
-        end,
+        end,--]]
+
         text='Gray Wolf attacks Koschei, as Alena tries to run away holding Ivan, but all their efforts are in vain. Gray Wolf\'s bites have no effect on Koschei.  The warlock summons his underlings, and a cloud of ice shrouds everything in sight.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            icyCurtain.alpha=1
+            transition.to(koshAttack, {x=300, time=500, delay=500})
+            transition.to(AlenaIvanRiding, {x=250, time=500, delay=500})
+            transition.to(icyCurtain, {alpha=1, y=-500, time=1000, delay=800})
+        end,
+        animationComplete = function()
+            icyCurtain.alpha=1 icyCurtain.y=-500
+            koshAttack.y=-500
+            AlenaIvanRiding.y=-500
+        end
     }
 
     scenes[125] = {
@@ -2307,8 +2361,17 @@ local scenes = {};
             [1] = {'"What can I do to save my friend?"', 129}
         },
         text='When the snow settles, there\'s nothing left except Gray Wolf\'s cold remains and Ivan\'s cries, as he is carried by Koschei back into the tower. Alena is devastated. She has lost her brother and her loyal ally who had become her friend.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            transition.to(wolfDown, {y=0, time=1000})
+            AlenaCrySNR.x=400
+            transition.to(AlenaCrySNR, {y=230, time=1000})
+            transition.to(icyCurtain, {y=-1000, time=1000, delay=1000})
+        end,
+        animationComplete = function()
+            wolfDown.y=0
+            AlenaCrySNR.x=400 AlenaCrySNR.y=230
+            icyCurtain.y=-1000
+        end
     }
 
     scenes[126] = {
@@ -2317,8 +2380,17 @@ local scenes = {};
             [1] = {'"What can I do to save my friend?"', 130}
         },
         text='When the snow settles there\'s nothing left except the mortally wounded Alena, who couldn\'t defend herself from Koschei, and the echo of Ivan\'s cries, as he is carried back into the tower. Gray Wolf is devastated. He couldn\'t help his companion, so he howls and wails.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            transition.to(alenaDown, {y=-20, time=1000})
+            WolfSit.xScale=-1 WolfSit.x=300
+            transition.to(WolfSit, {y=230, time=1000})
+            transition.to(icyCurtain, {y=-1000, time=1000, delay=1000})
+        end,
+        animationComplete = function()
+            alenaDown.y=-20
+            WolfSit.xScale=-1 WolfSit.x=300 WolfSit.y=230
+            icyCurtain.y=-1000
+        end
     }
 
     scenes[127] = {
@@ -2327,8 +2399,20 @@ local scenes = {};
             [1] = {'"What can I do to save them?"', 131}
         },
         text='Fast runs the horse of Vasilisa the Beautiful. She didn’t forget Alena’s kindness and now hurries her aid. But she is too late. When the snow settles, there’s nothing left except the mortally wounded Alena and Gray Wolf’s cold remains. ',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            alenaDown.x=500
+            wolfDown.x=300
+            VasilisaS.x=400
+            transition.to(alenaDown, {y=0, time=1000})
+            transition.to(wolfDown, {y=0, time=1000})
+            transition.to(icyCurtain, {y=-1000, time=1000, delay=1000})
+            transition.to(VasilisaS, {y=200, time=1000, delay=1500})
+        end,
+        animationComplete = function()
+            alenaDown.y=0 alenaDown.x=500
+            wolfDown.y=0 wolfDown.x=300
+            icyCurtain.y=-1000
+        end
     }
 
     scenes[128] = {
@@ -2337,8 +2421,21 @@ local scenes = {};
             [1] = {'"What can I do to save them?"', 132}
         },
         text='Fast flies the bird of prey. And Alena\'s uncle, the shape-shifting wizard, flies even faster, but he is too late. When the snow settles, there\'s nothing left except the mortally wounded Alena and Gray Wolf\'s cold remains.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            alenaDown.x=500
+            wolfDown.x=300
+            loadBrothers('Raven')
+            BrotherS.x=400
+            transition.to(alenaDown, {y=0, time=1000})
+            transition.to(wolfDown, {y=0, time=1000})
+            transition.to(icyCurtain, {y=-1000, time=1000, delay=1000})
+            transition.to(BrotherS, {y=200, time=1000, delay=1500})
+        end,
+        animationComplete = function()
+            alenaDown.y=0 alenaDown.x=500
+            wolfDown.y=0 wolfDown.x=300
+            icyCurtain.y=-1000
+        end
     }
 
     scenes[129] = {
@@ -2346,8 +2443,11 @@ local scenes = {};
         follows = 135,
         clearSelection = true,
         text='"The springs!" remembers Alena. "The springs that Bear talked about! But only Crows know where they are." \nAlena looks around and soon notices two crows sitting on a tree branch. "I need to catch them and make them bring me some of those waters!"',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function() loadCrows() end,
+        animationComplete = function()
+            crowSmall.y = -170
+            crowBig.y = 0
+        end
     }
 
     scenes[130] = {
@@ -2355,8 +2455,11 @@ local scenes = {};
         follows = 133,
         clearSelection = true,
         text='"The springs!" remembers Gray Wolf. "The springs that Bear talked about! But only Crows know where they are." \nGray Wolf looks around and soon notices two crows sitting on a tree branch. "I need to catch them and make them bring me some of those waters!"',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function() loadCrows() end,
+        animationComplete = function()
+            crowSmall.y = -170
+            crowBig.y = 0 
+        end
     }
 
     scenes[131] = {
@@ -2364,8 +2467,11 @@ local scenes = {};
         follows = 136,
         clearSelection = true,
         text='Vasilisa looks around and soon notices two crows sitting on a tree branch. \n"Сaw! Caw!" - says the older crow. "Poor creatures, dying so young and yet so full of life. If Vasilisa only had some water of death and some water of life, Vasilisa could revive them both."',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function() loadCrows() end,
+        animationComplete = function()
+            crowSmall.y = -170
+            crowBig.y = 0
+        end
     }
 
     scenes[132] = {
@@ -2373,8 +2479,11 @@ local scenes = {};
         follows = 134,
         clearSelection = true,
         text='Shape-shifting wisard looks around and soon notices two crows sitting on a tree branch. \n"Сaw! Caw!" - says the older crow. "Poor creatures, dying so young and yet so full of life. If Alena\'s uncle only had some water of death and some water of life, he could revive them both."',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function() loadCrows() end,
+        animationComplete = function()
+            crowSmall.y = -170
+            crowBig.y = 0
+        end
     }
 
     scenes[133] = {
@@ -2528,6 +2637,10 @@ function hideDialogue()
     for i=1, table.getn(characters) do characters[i].y = -700 end
     transition.to(dialBack, {y = -800, time=500})
     --dialBack.y = -800
+end
+
+function curtanBack()
+    dialBack.y=-800 
 end
 
 
@@ -2975,7 +3088,56 @@ local function setStageObjects(stage)
 
             organizeStage() 
         end,
-        set119 = function() 
+        set120 = function() 
+            clearStage()
+            removeCharacters()
+
+            landscapeBack = display.newImage(midlayer1, "images/background11.png", true) setAnchor(landscapeBack)
+            landscapeBack.x = 0 landscapeBack.y = 0
+
+            landscape3 = display.newImage(midlayer1, "images/act9_snow.png", true) setAnchor(landscape3)
+            landscape3.x = 0 landscape3.y = 0
+
+            landscape2 = display.newImage(midlayer2, "images/act10_castle.png", true) setAnchor(landscape2)
+            landscape2.x = 630 landscape2.y = 0
+
+            WindowNoIvan =  display.newImage(midlayer1, "images/act10_EmptyWindow.png", true) setAnchor(WindowNoIvan)
+            WindowNoIvan.x = 700 WindowNoIvan.y = 200
+
+            WindowWithIvan = display.newImage(midlayer1, "images/act10_IvanInWindow.png", true) setAnchor(WindowWithIvan)
+            WindowWithIvan.x = 700 WindowWithIvan.y = 200
+
+            AlenaIvanRiding = display.newImage(midlayer3, "images/AlenaIvanRiding.png", true) setAnchor(AlenaIvanRiding)
+            AlenaIvanRiding.x = 500 AlenaIvanRiding.y = -450
+
+            koshAttack = display.newImage(midlayer3, "images/kosh_attack.png", true) setAnchor(koshAttack)
+            koshAttack.x=200 koshAttack.y = -500 
+
+            wolfDown = display.newImage(midlayer3, "images/wolf_down.png", true) setAnchor(wolfDown)
+            wolfDown.x=430 wolfDown.y = -500 
+
+            alenaDown = display.newImage(midlayer3, "images/alena_down.png", true) setAnchor(alenaDown)
+            alenaDown.x=400 alenaDown.y = -500 
+
+            icyCurtain = display.newImage(midlayer3, "images/icyCurtain2.png", true) setAnchor(icyCurtain)
+            icyCurtain.x=0 icyCurtain.y = 30 icyCurtain.alpha=0 
+
+
+            shadowLayer9 = display.newImage(midlayer3, "images/act9_shadowLayer.png", true) setAnchor(shadowLayer9) 
+            shadowLayer9.alpha=0 
+
+            foreground:removeSelf()
+            foreground = nil
+            foreground = display.newImage(foregoundGr, "images/foreground7.png", true ) setAnchor(foreground)
+
+            crowBig = display.newImage(foregoundGr, "images/crow_big.png", true) setAnchor(crowBig)
+            crowBig.x=200 crowBig.y = -400
+
+            crowSmall = display.newImage(foregoundGr, "images/crow_small.png", true) setAnchor(crowSmall)
+            crowSmall.x=200 crowSmall.y = -400
+
+            organizeStage() 
+
         end
 
     }
@@ -3141,7 +3303,7 @@ myListener = function( event )
     -- listener for the main text
     sceneText:addEventListener( "touch", sceneTextTouch)
 
-    loadScene(scenes[105])
+    loadScene(scenes[120])
     return true
 end
 
