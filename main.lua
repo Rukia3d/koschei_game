@@ -1520,6 +1520,7 @@ local scenes = {};
             UncleServants.x=300
             UncleServants.x=-1000
             GoldenApple.x=-500
+            MagicWolf.y=-600
         end
     }
 
@@ -1719,7 +1720,13 @@ local scenes = {};
             transition.to(UncleServants, {x=-1000, time=1000, delay=4000})
             transition.to(GoldenHorse, {x=-500, time=1000, delay=4000})
         end,
-        animationComplete = function() end
+        animationComplete = function()
+            WolfSit.y=-220
+            UncleServants.x=300
+            UncleServants.x=-1000
+            GoldenHorse.x=-500
+            MagicWolf.y=-600
+        end
     }
     scenes[85] = {
         sName = 85,
@@ -1970,6 +1977,7 @@ local scenes = {};
             AlenaNoRibbon.x=550  AlenaNoRibbon.y=230
             WolfS.y=-400
             VasilisaS.y=260 VasilisaS.x=650
+            MagicWolf.y=-600
         end
     }
     scenes[101] = {
@@ -2274,13 +2282,14 @@ local scenes = {};
         animations = function()
             AlenaNoRibbon.y=-400
             WolfSit.y=-400
-            AlenaOnWolf.xScale = -1
-            AlenaOnWolf.x=-100 AlenaOnWolf.y=270 
-            transition.to(AlenaOnWolf, {x=200, time=1000, delay=500})
+            AlenaOnWolfNoRibbon.xScale = -1
+            AlenaOnWolfNoRibbon.x=-100 AlenaOnWolfNoRibbon.y=270
+            transition.to(AlenaOnWolfNoRibbon, {x=300, time=1000, delay=500})
         end,
         animationComplete = function()
             AlenaNoRibbon.y=-400
             WolfSit.y=-400
+            AlenaOnWolfNoRibbon.x=300 AlenaOnWolfNoRibbon.y=270
         end
     }
 
@@ -2302,14 +2311,14 @@ local scenes = {};
         text='And so they do. Alena is happy when she spots her brother standing near the tower window. She grabs him, and Gray Wolf leaps away from the tower.',
         animations = function()
             hideDialogue()
-            transition.to(AlenaOnWolf, {x=650, time=1000})
-            transition.to(AlenaOnWolf, {x=650,y=-400, time=1000, delay=1000})
+            transition.to(AlenaOnWolfNoRibbon, {x=650, time=1000})
+            transition.to(AlenaOnWolfNoRibbon, {x=650,y=-400, time=1000, delay=1000})
             transition.to(WindowWithIvan, {alpha=0, time=100, delay=1000})
             transition.to(AlenaIvanRiding, {y=10, time=1000, delay=2000})
         end,
         animationComplete = function()
             hideDialogue()
-            AlenaOnWolf.x=650 AlenaOnWolf.y=-400
+            AlenaOnWolfNoRibbon.x=650 AlenaOnWolfNoRibbon.y=-400
             WindowWithIvan.alpha=0
             AlenaIvanRiding.y=30
         end
@@ -2331,7 +2340,7 @@ local scenes = {};
 
     scenes[124] = {
         sName = 124,
-        follows=128,
+        follows=127,
         --[[changeFlow = function() 
             if choices.brother=='Eagle' then scenes[124].follows = 125
             elseif  choices.brother=='Falcon' then scenes[124].follows = 126
@@ -2411,6 +2420,7 @@ local scenes = {};
         animationComplete = function()
             alenaDown.y=0 alenaDown.x=500
             wolfDown.y=0 wolfDown.x=300
+            VasilisaS.x=400 VasilisaS.y=200
             icyCurtain.y=-1000
         end
     }
@@ -2435,6 +2445,7 @@ local scenes = {};
             alenaDown.y=0 alenaDown.x=500
             wolfDown.y=0 wolfDown.x=300
             icyCurtain.y=-1000
+            BrotherS.x=400 BrotherS.y=200
         end
     }
 
@@ -2490,31 +2501,81 @@ local scenes = {};
         sName = 133,
         follows = 137,
         text='In the twinkling of an eye Gray Wolf turns himself into a crow and flies up to the tree branch. He catches the young crow and doesn’t let go until the old one promises to bring him some water of death. ',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            transition.to(MagicWolf, {y=-50, time=700, delay=500})
+            transition.to(WolfSit, {y=-400, time=500, delay=1000})
+            transition.to(ShiftRaven, {y=0, time=500, delay=1500})
+            transition.to(MagicWolf, {y=-600, time=700, delay=2000})
+            transition.to(ShiftRaven, {y=-130, x=150, time=500, delay=2700})
+            transition.to(crowSmall, {y=-190, x=250, time=500, delay=3000})
+            transition.to(crowBig, {y=-200, x=1200, time=1500, delay=2000})
+        end,
+        animationComplete = function()
+            WolfSit.y=-400
+            MagicWolf.y=-600
+            ShiftRaven.y=-130 ShiftRaven.x=150
+            crowSmall.y=-190 crowSmall.x=250
+            crowBig.y=-200 crowBig.x=1200
+        end
     }
 
     scenes[134] = {
         sName = 134,
         follows = 143,
         text='In the twinkling of an eye a shape-shifting wisard turns himself into a raven and flies up to the tree branch. He catches the young crow and doesn’t let go until the old one promises to bring him some water of death. ',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            transition.to(MagicBrother,{y=600, time=2000, delay=500})
+            transition.to(BrotherS, {y=-400, time=700, delay=1000})
+            transition.to(ShiftRaven, {y=0, time=700, delay=1000})
+            transition.to(ShiftRaven, {y=-130, x=150, time=500, delay=2700})
+            transition.to(crowSmall, {y=-190, x=250, time=500, delay=3000})
+            transition.to(crowBig, {y=-200, x=1200, time=1500, delay=2000})
+        end,
+        animationComplete = function()
+            MagicBrother.y=600
+            BrotherS.y=-400
+            ShiftRaven.y=-130 ShiftRaven.x=150
+            crowSmall.y=-190 crowSmall.x=250
+            crowBig.y=-200 crowBig.x=1200
+        end
     }
     scenes[135] = {
         sName = 135,
+        changeFlow = function() 
+            if choices.brother=='Eagle' then loadBrothers('Eagle')
+            else loadBrothers('Falcon') end
+        end,
         follows = 139,
         text='“Uncle, you promised me your help!” cries Alena and soon the big'..choices.brother..' appears in front of her. She tells him her misfortunes. Then her uncle catches the young crow and doesn’t let go until the old one promises to bring him some water of death. ',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            transition.to(BrotherS, {y=200, time=1000, delay=500})
+            transition.to(crowSmall, {x=430, time=1000, delay=1500})
+            transition.to(crowBig, {y=-200, x=1200, time=1500, delay=2000})
+        end,
+        animationComplete = function()
+            BrotherS.y=200
+            crowSmall.x=430
+            crowBig.y=-200 crowBig.x=1200
+        end
     }
 
     scenes[136] = {
         sName = 136,
         follows = 141,
         text='“I need to catch this little crow!” thinks Vasilisa and starts singing. The young crow listens spellbound to her song and flies closer. She catches him and doesn’t let go until the older one promises to bring her some water of death. ',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            VasilisaS.x=400 VasilisaPlea.x=400
+            transition.to(VasilisaS, {y=-400, time=1000, delay=500})
+            transition.to(VasilisaPlea, {y=200, time=1000, delay=1000})
+            transition.to(crowSmall, {x=350, time=1000, delay=1500})
+            transition.to(crowBig, {y=-200, x=1200, time=1500, delay=3000})
+        end,
+        animationComplete = function()
+            VasilisaS.x=400 VasilisaS.y=-400 
+            VasilisaPlea.x=400 VasilisaPlea.y=200
+            crowSmall.x=350
+            crowBig.y=-200 crowBig.x=1200
+        end
     }
 
     scenes[137] = {
@@ -3121,6 +3182,17 @@ local function setStageObjects(stage)
 
             icyCurtain = display.newImage(midlayer3, "images/icyCurtain2.png", true) setAnchor(icyCurtain)
             icyCurtain.x=0 icyCurtain.y = 30 icyCurtain.alpha=0 
+
+            ShiftRaven = display.newImage( midlayer3, "images/act10_Raven.png", true) setAnchor(ShiftRaven)
+            ShiftRaven.x=250 ShiftRaven.y=-400
+
+            MagicWolf = display.newImage( midlayer3, "images/magicWolf.png", true) setAnchor(MagicWolf)
+            MagicWolf.x=250 MagicWolf.y=-600
+            MagicWolf:toFront()
+
+            MagicBrother = display.newImage( midlayer3, "images/act10_raven_feather.png", true) setAnchor(MagicBrother)
+            MagicBrother.x=270 MagicBrother.y=-600
+            MagicBrother:toFront()
 
 
             shadowLayer9 = display.newImage(midlayer3, "images/act9_shadowLayer.png", true) setAnchor(shadowLayer9) 
