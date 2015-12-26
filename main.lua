@@ -64,7 +64,8 @@ local KoscheiPlea = display.newImage( charactersDial, "images/kosh_plea_dialogue
 local Wolf  = display.newImage( charactersDial, "images/wolf_dialogue.png", false) Wolf.x = 700 Wolf.y = 800 
 local Bear  = display.newImage( charactersDial, "images/bear_dialogue.png", false) Bear.x = 100 Bear.y = 800 
 local VasilisaD = display.newImage( charactersDial, "images/vasilisa_f_dialogue.png") VasilisaD.x = 400 VasilisaD.y = 800
-local VasilisaCry = display.newImage( charactersDial, "images/vasilisa_s_dialogue.png") VasilisaCry .x = 400 VasilisaCry .y = 800  
+local VasilisaCry = display.newImage( charactersDial, "images/vasilisa_s_dialogue.png") VasilisaCry.x = 400 VasilisaCry.y = 800 
+local CrowD = display.newImage( charactersDial, "images/crow_f_dialogue.png") CrowD.x = 200 CrowD.y = 800 
 
 -- Charcters for brother's scenes
 local BrotherD = display.newImage(foregoundGr, "images/transparent.png")
@@ -121,6 +122,15 @@ local function setStageHome()
     transition.to(bed, {y=0, time=1000, delay=500})
     transition.to(tableCloth, {y=5, time=1000, delay=1000})
     transition.to(shadowLayer2, {alpha=1, time=1000, delay=2500})
+end
+
+local function setStageHomeFast()
+    bed.y=0
+    tableCloth.y=5
+    shadowLayer2.alpha=0.5
+    broom.y=-30 broom.x=200
+    dishes.y=-180 dishes.x=150 
+    firePot.y=0 
 end
 
 local function setBasementStage()
@@ -273,6 +283,40 @@ function loadCrows()
     transition.to(crowBig, {y = 0, time=1000, delay=500})
 end
 
+function removeCrows()
+    crowSmall:removeSelf()
+    crowSmall = nil 
+
+    crowBig:removeSelf()
+    crowBig = nil 
+end
+
+function crowBlackMagic(number)
+    crowBig.x=-100 crowBig.y=0
+    BlackWater.x=400 BlackWater.y=200
+    --BlackMagic = display.newImage(midlayer3, "images/act10_magicBlack.png", true) setAnchor(BlackMagic)
+    --BlackMagic.x=number BlackMagic.y = -800
+    --BlackMagic:toFront()
+    transition.to(crowBig, {x=480, y=-80, time=1000, delay=500})
+    transition.to(BlackWater, {alpha=1, time=500, delay=1500})
+    transition.to(BlackWater, {alpha=0, time=500, delay=2500})
+    --transition.to(BlackMagic, {y=-220, time=1000, delay=2500})
+    transition.to(crowBig, {y=-200, x=1200, time=1000, delay=3000})
+    --transition.to(BlackMagic, {y=-800, time=1000, delay=4000})
+end
+
+function crowWhiteMagic(number)
+    crowBig.x=-100 crowBig.y=0
+    BlueWater.x=400 BlueWater.y=200
+    WhiteMagic:toFront()
+    WhiteMagic.x=number
+    transition.to(crowBig, {x=480, y=-80, time=1000, delay=500})
+    transition.to(BlueWater, {alpha=1, time=500, delay=1500})
+    transition.to(BlueWater, {alpha=0, time=500, delay=2500})
+    transition.to(WhiteMagic, {y=-220, time=1000, delay=2500})
+    transition.to(crowBig, {y=-200, x=1200, time=1000, delay=3000})
+    transition.to(WhiteMagic, {y=-800, time=1000, delay=4000})
+end
 
 -----------------------------------------------------------------------------------------
 --
@@ -751,40 +795,34 @@ local scenes = {};
     }
     scenes[27] = {
         sName = 27,
-        setStage = 'set9',
-        openingAnimation = {
-            [1] = 'background2.png', 
-            [2] = 'foreground2.png'
-        },
+        setStage = 'set27',
         text = 'Alena takes her brother and closes the door to the basement. When they go up, Ivan reproaches her for being so harsh on the prisoner. "Aren\'t we supposed to respect our elders?" asks Ivan.',
         follows = 28,
         clearSelection = true,
         animations = function()
             hideDialogue()
-            shadowLayer2.alpha=0
-            setStageHome()
-            shadowLayer2.alpha=0.5
+            setStageHomeFast()
+            AlenaS.x = 450 
+            IvanS.x = 350
+            transition.to(AlenaS, {y=270, time=1000, delay=500})
+            transition.to(IvanS, {y=290, time=1000, delay=1000}) 
         end,
         animationComplete = function()
-            bed.y=0
-            tableCloth.y=5
-            shadowLayer2.alpha=0.5
-            foreground.y = 0
+            AlenaS.x = 450  AlenaS.y = 270 
+            IvanS.x = 350 IvanS.y = 290
         end
     }
     scenes[28] = {
         sName = 28,
         text = 'Alena says that they should follow mother\'s orders first and foremost. Back in the greatroom, she puts Ivan to bed and nestles near him. In a second, her eyes close and she falls fast asleep.',
         follows = 29,
-        animations = function() 
-            AlenaS.x = 450 
-            IvanS.x = 350
-            transition.to(AlenaS, {y=270, time=1000, delay=1000})
-            transition.to(IvanS, {y=290, time=1000, delay=1500}) 
+        animations = function()
+            IvanS.xScale = -1
+            transition.to(IvanS, {x=-200, time=1000, delay=1500})  
         end,
         animationComplete = function()
-            AlenaS.x = 450  AlenaS.y = 270 
-            IvanS.x = 350 IvanS.y = 290
+            IvanS.xScale = -1
+            IvanS.x=-200
         end
     }
     scenes[29] = {
@@ -799,6 +837,7 @@ local scenes = {};
         clearSelection = true,
         animations = function() 
             setBasementStage()
+            IvanS.xScale = 1
             IvanS.x=560
             AlenaS.x=240
             transition.to(AlenaS, {y=60, time=1000, delay=1000})
@@ -2340,7 +2379,7 @@ local scenes = {};
 
     scenes[124] = {
         sName = 124,
-        follows=127,
+        follows=128,
         --[[changeFlow = function() 
             if choices.brother=='Eagle' then scenes[124].follows = 125
             elseif  choices.brother=='Falcon' then scenes[124].follows = 126
@@ -2508,7 +2547,7 @@ local scenes = {};
             transition.to(MagicWolf, {y=-600, time=700, delay=2000})
             transition.to(ShiftRaven, {y=-130, x=150, time=500, delay=2700})
             transition.to(crowSmall, {y=-190, x=250, time=500, delay=3000})
-            transition.to(crowBig, {y=-200, x=1200, time=1500, delay=2000})
+            transition.to(crowBig, {y=-200, x=1200, time=1500, delay=3500})
         end,
         animationComplete = function()
             WolfSit.y=-400
@@ -2528,8 +2567,8 @@ local scenes = {};
             transition.to(BrotherS, {y=-400, time=700, delay=1000})
             transition.to(ShiftRaven, {y=0, time=700, delay=1000})
             transition.to(ShiftRaven, {y=-130, x=150, time=500, delay=2700})
-            transition.to(crowSmall, {y=-190, x=250, time=500, delay=3000})
-            transition.to(crowBig, {y=-200, x=1200, time=1500, delay=2000})
+            transition.to(crowSmall, {y=-190, x=250, time=500, delay=3500})
+            transition.to(crowBig, {y=-200, x=1200, time=1500, delay=4000})
         end,
         animationComplete = function()
             MagicBrother.y=600
@@ -2579,76 +2618,175 @@ local scenes = {};
     }
 
     scenes[137] = {
-        sName = 138,
+        sName = 137,
         follows = 138,
         text='After a while the crow returns and with one splash of the water of death, Alena’s wounds start to disappear. “Now go and bring me some water of life. Then I’ll release your little crow,” says Gray Wolf and the old crow flies away.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            crowBlackMagic(400)
+        end,
+        animationComplete = function()
+            BlackWater.alpha=0
+            crowBig.y=0 crowBig.x=-100
+        end
     }
 
     scenes[138] = {
         sName = 138,
         follows = 145,
         text='Time passes and finally, the old crow returns. With one splash of the water of life,  Alena opens her eyes. Gray Wolf frees the little crow, as promised. But Ivan is still in Koschei’s clutches, and there’s no winning in any fight with him.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function() 
+            AlenaNoRibbon.x=500 AlenaNoRibbon.y=-400 
+            crowWhiteMagic(400)
+
+            transition.to(crowSmall, {x=200, y=-170, time=500, delay=4000})
+            transition.to(alenaDown, {alpha=0, time=500, delay=3500})
+            transition.to(AlenaNoRibbon, {y=230, time=500, delay=3500})
+        end,
+        animationComplete = function()
+            BlueWater.alpha=0
+            WhiteMagic.y=-800
+            crowSmall.x=200 crowSmall.y=-170
+            alenaDown.alpha=0
+            AlenaNoRibbon.x=500 AlenaNoRibbon.y=230 
+        end
     }
 
     scenes[139] = {
         sName = 139,
         follows = 140,
         text='After a while the crow returns and with one splash of the water of death, Wolf’s wounds start to disappear. “Now go and bring me some water of life. Then I’ll release your little crow,” says Alena and the old crow flies away.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function() crowBlackMagic(350) end,
+        animationComplete = function()
+            BlackWater.alpha=0
+            crowBig.y=0 crowBig.x=-100
+        end
     }
 
     scenes[140] = {
-        sName = 1000,
+        sName = 140,
         follows = 145,
         text='Time passes and finally, the old crow returns. With one splash of the water of life, Gray Wolf opens his eyes. Alena frees the little crow, as promised. But Ivan is still in Koschei’s clutches, and there’s no winning in any fight with him.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            WolfSit:toFront() WolfSit.x=570
+            AlenaNoRibbon.x=400 
+            crowWhiteMagic(350)
+            transition.to(wolfDown, {alpha=0, time=500, delay=3000})
+            transition.to(WolfSit, {y=230, time=500, delay=3000})
+            transition.to(crowSmall, {x=200, y=-170, time=500, delay=4000})
+            transition.to(AlenaCrySNR, {alpha=0, time=500, delay=3500})
+            transition.to(AlenaNoRibbon, {y=230, time=500, delay=3000})
+        end,
+        animationComplete = function()
+            BlueWater.alpha=0
+            WhiteMagic.y=-800
+            crowBig.y=0 crowBig.x=200
+            wolfDown.alpha = 0
+            WolfSit:toFront() WolfSit.x=570 WolfSit.y=230
+            AlenaCrySNR.alpha = 0
+            AlenaNoRibbon.x=400 AlenaNoRibbon.y=230
+            crowSmall.x=200 crowSmall.y=-170
+        end
     }
 
     scenes[141] = {
         sName = 141,
         follows = 142,
         text='After a while the crow returns and with one splash of the water of death, Alena\'s and Wolf\'s wounds start to disappear. “Now go and bring me some water of life. Then I’ll release your little crow,” says Vasilisa and the old crow flies away.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function() 
+            crowBlackMagic(330)
+        end,
+        animationComplete = function()
+            BlackWater.alpha=0
+            crowBig.y=0 crowBig.x=-100
+        end
     }
 
     scenes[142] = {
         sName = 142,
         follows = 145,
         text='Time passes and finally, the old crow returns. With one splash of the water of life, Alena and Wolf open their eyes. Vasilisa frees the little crow, as promised. But Ivan is still in Koschei’s clutches, and there’s no winning in any fight with him.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            crowWhiteMagic(330)
+            AlenaNoRibbon.x=600
+            crowSmall.xScale = -1
+            crowSmall.x=390
+            WolfSit:toFront() WolfSit.x=500
+            transition.to(wolfDown, {alpha=0, time=500, delay=3500})
+            transition.to(alenaDown, {alpha=0, time=500, delay=3500})
+            transition.to(AlenaNoRibbon, {y=230, time=500, delay=3000})
+            transition.to(WolfSit, {y=250, time=500, delay=3000})
+            transition.to(VasilisaPlea, {y=-400, time=500, delay=3500})
+            transition.to(crowSmall, {x=200, y=-170, time=500, delay=4000})
+            transition.to(VasilisaS, {y=230, time=500, delay=4000})
+        end,
+        animationComplete = function()
+            BlueWater.alpha=0
+            WhiteMagic.y=-800
+            crowBig.y=0 crowBig.x=200
+            AlenaNoRibbon.x=600 AlenaNoRibbon.y=230
+            crowSmall.xScale = -1 crowSmall.x=200
+            WolfSit:toFront() WolfSit.x=500 WolfSit.y=250
+            wolfDown.alpha=0
+            alenaDown.alpha=0
+            VasilisaS.y=230
+            VasilisaPlea.y=-400
+        end
     }
 
     scenes[143] = {
         sName = 143,
         follows = 144,
         text='After a while the crow returns and with one splash of the water of death, Alena\'s and Wolf\'s wounds start to disappear. “Now go and bring me some water of life. Then I’ll release your little crow,” says Alena\'s uncle and the old crow flies away.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function() crowBlackMagic(330) end,
+        animationComplete = function()
+            BlackWater.alpha=0
+            crowBig.y=0 crowBig.x=-100
+        end
     }
 
     scenes[144] = {
         sName = 144,
         follows = 145,
         text='Time passes and finally, the old crow returns. With one splash of the water of life, Alena and Wolf open their eyes. Uncle frees the little crow, as promised. But Ivan is still in Koschei’s clutches, and there’s no winning in any fight with him.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function() 
+            crowWhiteMagic(330)
+            AlenaNoRibbon.x=600
+            WolfSit:toFront() WolfSit.x=500
+            transition.to(wolfDown, {alpha=0, time=500, delay=3500})
+            transition.to(alenaDown, {alpha=0, time=500, delay=3500})
+            transition.to(AlenaNoRibbon, {y=230, time=500, delay=3000})
+            transition.to(WolfSit, {y=250, time=500, delay=3000})
+            transition.to(crowSmall, {x=200, y=-170, time=500, delay=4000})
+        end,
+        animationComplete = function()
+            BlueWater.alpha=0
+            WhiteMagic.y=-800
+        end
     }
 
     scenes[145] = {
         sName = 145,
         follows = 146,
         text='“Сaw! You kept your word, so I’ll help you once more,” says the old crow. “I don’t know how to kill Koschei, but they say Baba Yaga knows how. That’s why Koschei hates her so much. Сaw! But remember, she is as dangerous as he is.”',
+        animations = function()
+            removeCrows()
+            showDialogue(CrowD)
+        end,
+        animationComplete = function()
+            hideDialogue()
+        end
+    }
+
+    scenes[146] = {
+        sName = 146,
+        setStage = 'set146',
+        follows = 147,
+        text='Alena and Grey Wolf thank their helper and continue on their journey. The old witch, called Baba Yaga, lives in a hut set high atop a set of chicken legs standing in the thick of the forest. They say she eats uninvited guests and uses their bones for her fence.',
         animations = function() end,
         animationComplete = function()end
     }
+
+
     scenes[1000] = {
         sName = 1000,
         follows = 00,
@@ -2690,11 +2828,11 @@ function showDialogue(name)
     if name==Bear then Bear.x=300 transition.to(name, {y=400, time=500}) end
     if name==BrotherD then BrotherD.x=300 transition.to(name, {y=400, time=500}) end
     if name==VasilisaD then VasilisaD.x=300 transition.to(name, {y=400, time=500}) end
-
+    if name==CrowD then CrowD.x=200 transition.to(name, {y=400, time=500}) end
 end
 
 function hideDialogue()
-    local characters = {Mother, Alena, AlenaNR, AlenaCryD_NR, Ivan, KoscheiPlea, Koschei, MotherWar, Wolf, BrotherD, VasilisaD, VasilisaCry, Bear}
+    local characters = {Mother, Alena, AlenaNR, AlenaCryD_NR, Ivan, KoscheiPlea, Koschei, MotherWar, Wolf, BrotherD, VasilisaD, VasilisaCry, Bear, CrowD}
     for i=1, table.getn(characters) do characters[i].y = -700 end
     transition.to(dialBack, {y = -800, time=500})
     --dialBack.y = -800
@@ -2809,6 +2947,43 @@ local function setStageObjects(stage)
             firePot.x=120 firePot.y = -500
 
             organizeStage()
+        end,
+        set27 = function()
+            clearStage()
+            removeCharacters()
+
+            background:removeSelf()
+            background = nil
+            background = display.newImage(midlayer1, "images/background2.png", true ) setAnchor(background)
+            background.y=0
+            background:toBack()
+
+            bed = display.newImage(midlayer2, "images/act2_bed.png", true) setAnchor(bed)
+            bed.x=280 bed.y = -500
+
+            tableCloth = display.newImage(midlayer2, "images/act2_table.png", true) setAnchor(tableCloth)
+            tableCloth.x = 520 tableCloth.y=-500
+
+            shadowLayer2 = display.newImage(midlayer2, "images/act2_shadowLayer.png", true) setAnchor(shadowLayer2) 
+            shadowLayer2.alpha = 0
+
+            broom = display.newImage(midlayer2, "images/act2_broom.png", true) setAnchor(broom)
+            broom.x=200 broom.y = -600
+
+            dishes = display.newImage(midlayer2, "images/act2_dishes.png", true) setAnchor(dishes)
+            dishes.x=580 dishes.y = -500
+
+            firePot = display.newImage(midlayer2, "images/act2_firePot.png", true) setAnchor(firePot)
+            firePot.x=120 firePot.y = -500
+            
+
+            foreground:removeSelf()
+            foreground = nil
+            foreground = display.newImage(foregoundGr, "images/foreground2.png", true ) setAnchor(foreground)
+            foreground.y=0 
+
+            organizeStage()
+
         end,
         set18 = function()
             clearStage()
@@ -3194,6 +3369,16 @@ local function setStageObjects(stage)
             MagicBrother.x=270 MagicBrother.y=-600
             MagicBrother:toFront()
 
+            BlackWater = display.newImage( midlayer3, "images/act10_blackWater.png", true) setAnchor(BlackWater)
+            BlackWater.x=270 BlackWater.y=-600 BlackWater.alpha=0
+            BlackWater:toFront()
+
+            BlueWater = display.newImage( midlayer3, "images/act10_blueWater.png", true) setAnchor(BlueWater)
+            BlueWater.x=270 BlueWater.y=-600 BlueWater.alpha=0
+            BlueWater:toFront()
+
+            WhiteMagic = display.newImage(midlayer3, "images/act10_magicWhite.png", true) setAnchor(WhiteMagic)
+            WhiteMagic.x=0 WhiteMagic.y = -800
 
             shadowLayer9 = display.newImage(midlayer3, "images/act9_shadowLayer.png", true) setAnchor(shadowLayer9) 
             shadowLayer9.alpha=0 
