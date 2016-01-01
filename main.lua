@@ -318,6 +318,27 @@ function crowWhiteMagic(number)
     transition.to(WhiteMagic, {y=-800, time=1000, delay=4000})
 end
 
+function loadYagaForest() 
+    --set147
+    AlenaOnWolfNoRibbon.x=200 AlenaOnWolfNoRibbon.y=-400 AlenaOnWolfNoRibbon.xScale=-1
+    transition.to(landscape1, {x=0, time=2000, delay=500})
+    transition.to(landscape2, {x=0, time=1000, delay=1500})
+    transition.to(landscape3, {y=0, time=1000, delay=2500})
+    transition.to(shadowLayer12, {alpha=1, time=1000, delay=3000})
+    transition.to(AlenaOnWolfNoRibbon, {y=270, time=1000, delay=4000})
+end
+
+function roadToYaga()
+    landscape1.x=0
+    landscape2.x=0
+    landscape3.y=0
+    transition.to(landscape1, {x=-680, time=2000})
+    transition.to(landscape2, {x=-1100, time=2000})
+    transition.to(landscape3, {x=-1100, time=2000})
+    transition.to(hutFence, {x=480, time=1000, delay=1000})
+    transition.to(hutWindow, {y=0, time=1000, delay=2000})
+end
+
 -----------------------------------------------------------------------------------------
 --
 -- ORGANISING
@@ -364,7 +385,7 @@ local scenes = {};
         openingAnimation = {
             [1] = 'background1.png', 
             [2] = 'foreground1.png'
-            },
+        },
         setStage = 'set1',
         text = "In a small house on the edge of the dark forest, there lived a brother and sister, Ivan and Alena.",
         follows = 2,
@@ -2779,13 +2800,115 @@ local scenes = {};
 
     scenes[146] = {
         sName = 146,
-        setStage = 'set146',
         follows = 147,
-        text='Alena and Grey Wolf thank their helper and continue on their journey. The old witch, called Baba Yaga, lives in a hut set high atop a set of chicken legs standing in the thick of the forest. They say she eats uninvited guests and uses their bones for her fence.',
+        text='Alena and Grey Wolf thank their helper and continue on their journey.',
+        animations = function()
+            hideDialogue()
+        end,
+        animationComplete = function()
+            hideDialogue()
+        end
+    }
+
+    scenes[147] = {
+        sName = 147,
+        setStage = 'set147',
+        openingAnimation = {
+            [1] = 'background12.png', 
+            [2] = 'foreground8.png'
+        },
+        follows = 148,
+        text='The old witch, called Baba Yaga, lives in a hut set high atop a set of chicken legs standing in the thick of the forest. They say she eats uninvited guests and uses their bones for her fence.',
+        animations = function()
+            foreground.y=0 
+            loadYagaForest()
+        end,
+        animationComplete = function()
+            AlenaOnWolfNoRibbon.x=200 AlenaOnWolfNoRibbon.y=270
+            shadowLayer12.alpha=1
+            foreground.y=0 
+            landscape1.x=0
+            landscape2.x=0
+            landscape3.y=0
+        end
+    }
+
+    scenes[148] = {
+        sName = 148,
+        follows = 149,
+        text='The road to Baba Yaga’s hut is long and dangerous, but nothing prepared Alena for the picture she sees upon arrival.',
+        animations = function() roadToYaga() end,
+        animationComplete = function()
+            landscape1.x=-680
+            landscape2.x=-1100
+            landscape3.x=-1100
+            hutFence.x=480
+            hutWindow.y=0
+        end
+    }
+
+    scenes[149] = {
+        sName = 149,
+        follows = 150,
+        text='It is sunset, and all the trees are red and orange, exactly the same as the wooden fence crowned with human skulls surrounding the entire hut.',
+        animations = function()
+            WolfSit.x=400
+            AlenaNoRibbon.x=180
+            transition.to(AlenaOnWolfNoRibbon, {y=-400, time=1000})
+            transition.to(WolfSit, {y=250, time=1000, delay=1000})
+            transition.to(AlenaNoRibbon, {y=270, time=1000, delay=1000})
+        end,
+        animationComplete = function()
+            AlenaOnWolfNoRibbon.y=-400
+            WolfSit.x=400 WolfSit.y=250
+            AlenaNoRibbon.x=180 AlenaNoRibbon.y=270
+        end
+    }
+
+    scenes[150] = {
+        sName = 150,
+        follows = 151,
+        text='The posts are spaced so tightly that only a thin girl can squeeze through.',
         animations = function() end,
         animationComplete = function()end
     }
 
+    scenes[151] = {
+        sName = 151,
+        follows = 152,
+        text='"I can\'t go any further," says Grey Wolf. "You\'ll have to face Baba Yaga on your own."',
+        animations = function()
+            showDialogue(Wolf)
+        end,
+        animationComplete = function()
+            hideDialogue()
+        end
+    }
+
+    scenes[152] = {
+        sName = 152,
+        follows = 153,
+        text='Alena shudders at this thought, but there’s no other option, so she slips in and walks toward the hut. “Little hut, O little hut! Turn your back to the trees, your face to me!” pleads Alena.',
+        animations = function() 
+            hideDialogue()
+            transition.to(AlenaNoRibbon, {x=600, time=1000, delay=1000})
+        end,
+        animationComplete = function()
+            AlenaNoRibbon.x=600
+        end
+    } 
+
+    scenes[153] = {
+        sName = 153,
+        follows = 154,
+        text='Slowly the hut turns and bows down so Alena can enter.',
+        animations = function()
+            transition.to(hutWindow, {alpha=0, time=1000, delay=1000})
+            transition.to(hutDoor, {y=0, time=1000, delay=500})
+        end,
+        animationComplete = function()
+        end
+    }
 
     scenes[1000] = {
         sName = 1000,
@@ -3394,8 +3517,36 @@ local function setStageObjects(stage)
             crowSmall.x=200 crowSmall.y = -400
 
             organizeStage() 
+        end,
+        set147 = function()
+            clearStage()
+            removeCharacters()
 
-        end
+            landscape1 = display.newImage(midlayer1, "images/act12_trees.png", true) setAnchor(landscape1)
+            landscape1.x = -1710 landscape1.y = 0
+
+            landscape2 = display.newImage(midlayer1, "images/act12_ground.png", true) setAnchor(landscape2)
+            landscape2.x = 1024 landscape2.y = 0
+
+            landscape3 = display.newImage(midlayer1, "images/act12_road.png", true) setAnchor(landscape3)
+            landscape3.x = 0 landscape3.y = 500
+
+            hutWindow = display.newImage(midlayer2, "images/act12_hutFront.png", true) setAnchor(hutWindow)
+            hutWindow.x = 560 hutWindow.y = -500
+
+            hutDoor = display.newImage(midlayer2, "images/act12_hutBack.png", true) setAnchor(hutDoor)
+            hutDoor.x = 560 hutDoor.y = -500
+
+            hutFence = display.newImage(midlayer2, "images/act12_hutFence.png", true) setAnchor(hutFence)
+            hutFence.x = 1024 hutFence.y = 270
+
+            shadowLayer12 = display.newImage(midlayer3, "images/act12_shadowLayer.png", true) setAnchor(shadowLayer12) 
+            shadowLayer12.alpha=0
+
+            organizeStage() 
+        end,
+        set152 = function() 
+        end,
 
     }
     stages[stage]()
@@ -3560,7 +3711,7 @@ myListener = function( event )
     -- listener for the main text
     sceneText:addEventListener( "touch", sceneTextTouch)
 
-    loadScene(scenes[120])
+    loadScene(scenes[147])
     return true
 end
 
