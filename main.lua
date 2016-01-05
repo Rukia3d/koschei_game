@@ -223,27 +223,27 @@ function ridingWolftoLeft(AlenaRibbon)
 end
 
 function wolfAlenaInGarden()
-        transition.to(landscape2, {x=-1700, time=1000})
-        transition.to(landscape1, {x=-2000, time=1000})
-        transition.to(AlenaOnWolfNoRibbon, {y=-400, time=500})
-        AlenaNoRibbon.x=350 AlenaNoRibbon.y=-400
-        WolfSit.xScale = -1
-        WolfSit.x=200
-        transition.to(AlenaNoRibbon, {y=270, time=1000})
-        transition.to(WolfSit, {y=270, time=1000})
+    transition.to(landscape2, {x=-1700, time=1000})
+    transition.to(landscape1, {x=-2000, time=1000})
+    transition.to(AlenaOnWolfNoRibbon, {y=-400, time=500})
+    AlenaNoRibbon.x=350 AlenaNoRibbon.y=-400
+    WolfSit.xScale = -1
+    WolfSit.x=200
+    transition.to(AlenaNoRibbon, {y=270, time=1000})
+    transition.to(WolfSit, {y=270, time=1000})
 end
 
 function loadUncleCastle()
-        WolfSit.x=900
-        AlenaS.x=740
-        transition.to(landscape3, {x=0, time=1000, delay=1000})
-        transition.to(landscape2, {y=0, time=1000, delay=2000})
-        transition.to(shadowLayer6, {alpha=1, time=1000, delay=3000})
-        transition.to(WolfSit,{y=270, time=1000, delay=3000})
-        transition.to(AlenaS,{y=280, time=1000, delay=3000})
-        transition.to(throne, {y=-30, time=500, delay=4000})
-        transition.to(birdSymbol, {y=320, time=500, delay=4000})
-        transition.to(BrotherS, {y=300, delay=4000, time=1000})
+    WolfSit.x=900
+    AlenaS.x=740
+    transition.to(landscape3, {x=0, time=1000, delay=1000})
+    transition.to(landscape2, {y=0, time=1000, delay=2000})
+    transition.to(shadowLayer6, {alpha=1, time=1000, delay=3000})
+    transition.to(WolfSit,{y=270, time=1000, delay=3000})
+    transition.to(AlenaS,{y=280, time=1000, delay=3000})
+    transition.to(throne, {y=-30, time=500, delay=4000})
+    transition.to(birdSymbol, {y=320, time=500, delay=4000})
+    transition.to(BrotherS, {y=300, delay=4000, time=1000})
 end
 
 function loadBushToHide()
@@ -2103,7 +2103,7 @@ local scenes = {};
         animationComplete = function()end
     }
 
--------- Act 4 Scenes 105 - 160
+-------- Act 4 Scenes 105 - 147
     scenes[105] = {
         sName = 105,
         openingAnimation = {
@@ -2810,6 +2810,7 @@ local scenes = {};
         end
     }
 
+-------- Act 5 Scenes 147 - 153
     scenes[147] = {
         sName = 147,
         setStage = 'set147',
@@ -2907,8 +2908,83 @@ local scenes = {};
             transition.to(hutDoor, {y=0, time=1000, delay=500})
         end,
         animationComplete = function()
+            hutWindow.alpha=0
+            hutDoor.y=0
         end
     }
+
+-------- Act 7 Scenes 154 - 180
+
+    scenes[154] = {
+        sName = 154,
+        follows = 00,
+        text='The moment she steps over the threshold, Baba Yaga riding in a mortar, wielding a pestle, flies into the window.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[155] = {
+        sName = 155,
+        follows = 00,
+        text='"Fie-Fie-Fie, I can sense a human stench! Who is here? Show yourself, uninvited guest!" screams Baba Yaga.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[156] = {
+        sName = 156,
+        selection = {
+            [1] = {'"My name is Alena..."', 20},
+        },
+        text='The last sunlight is fading away. The hollow eye sockets of the skulls start to glow yellow. Alena, hungry and tired, steps closer to Baba Yaga.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[157] = {
+        sName = 157,
+        follows = 158,
+        changeFlow = function() 
+            if choices.bless then scenes[157].follows = 158
+            else scenes[157].follows = 162 end
+        end,
+        text='"My name is Alena, Nana. Koschei the Deathless took my brother. Koshei is immortal, so he keeps his death hidden far away. I need to find it. Can you help me?"',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[158] = {
+        sName = 158,
+        follows = 159,
+        text='"I can help you. Or I can eat you and make a necklace from your bones. Let me look at you a bit closer." Baba Yaga looks at Alena closely and in the next second, screams as if set on fire.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[159] = {
+        sName = 160,
+        follows = 00,
+        text='"Fie-Fie-Fie, I can sense your mother\'s blessing on you. There\'s no place for a blessed child in my hut!" Baba Yaga tries to push Alena away, but then takes pity on her. ',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[160] = {
+        sName = 161,
+        follows = 00,
+        text='"Behind the dark forest, there\'s a black mountain. On this mountain, there\'s an old oak. On the oak, there\'s a golden chain with a coffer on it."',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[161] = {
+        sName = 161,
+        follows = 190,
+        text='"Inside the coffer there\'s a hare, inside that - a duck. Inside the duck, there\'s an egg enclosing a needle. Koschei\'s death is on the point of it."',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
 
     scenes[1000] = {
         sName = 1000,
