@@ -36,7 +36,8 @@ local WolfS = display.newImage( characters, "images/wolf_s_small.png") WolfS.x =
 local WolfSit = display.newImage( characters, "images/wolf_f_small.png") WolfSit.x = -200 WolfS.y = -400  
 local VasilisaS = display.newImage( characters, "images/vasilisa_f_small.png") VasilisaS.x = 1200 VasilisaS.y = -400  
 local BearS = display.newImage( characters, "images/bear_s_small.png") BearS.x = 200 BearS.y = -400 
-local YagaS = display.newImage( characters, "images/yaga_f_small.png") YagaS.x = 350 YagaS.y = -400  
+local YagaS = display.newImage( characters, "images/yaga_f_small.png") YagaS.x = 350 YagaS.y = -400 
+local MouseS = display.newImage( characters, "images/mouse_small.png") MouseS.x = -100 MouseS.y=200 
 
 
 -- Small characters  changed images
@@ -67,7 +68,8 @@ local Bear  = display.newImage( charactersDial, "images/bear_dialogue.png", fals
 local VasilisaD = display.newImage( charactersDial, "images/vasilisa_f_dialogue.png") VasilisaD.x = 400 VasilisaD.y = 800
 local VasilisaCry = display.newImage( charactersDial, "images/vasilisa_s_dialogue.png") VasilisaCry.x = 400 VasilisaCry.y = 800 
 local CrowD = display.newImage( charactersDial, "images/crow_f_dialogue.png") CrowD.x = 200 CrowD.y = 800 
-local YagaD = display.newImage( charactersDial, "images/yaga_dialogue.png") YagaD.x = 300 YagaD.y = 800 
+local YagaD = display.newImage( charactersDial, "images/yaga_dialogue.png") YagaD.x = 300 YagaD.y = 800
+local MouseD = display.newImage( charactersDial, "images/mouseDial.png") MouseD.x = 300 MouseD.y = 800
 
 -- Charcters for brother's scenes
 local BrotherD = display.newImage(foregoundGr, "images/transparent.png")
@@ -356,6 +358,7 @@ function loadYagaHut()
     transition.to(landscape1, {y=0, time=1000})
     transition.to(ovenBack, {y=-50, time=1000, delay=500})
     transition.to(ovenFront, {y=-50, time=1000, delay=500})
+    transition.to(ovenFire, {y=-50, time=1000, delay=500})
 
     transition.to(hutShelf, {y=5, time=1000, delay=500})
     transition.to(hutTable, {y=30, time=1000, delay=500})
@@ -392,7 +395,7 @@ end
 
 
 choices = {
-    bless = true,
+    bless = false,
     basement = false,
     bucket = 0,
     brother = 'NoInfo',
@@ -401,6 +404,7 @@ choices = {
     notListen = 0,
     vasilisa = 'NoInfo',
     vasilisaGo = false,
+    berries = false,
 }
 
 local scenes = {}; 
@@ -2940,7 +2944,7 @@ local scenes = {};
         end
     }
 
--------- Act 7 Scenes 154 - 180
+-------- Act 7 Scenes 154 - 184
 
     scenes[154] = {
         sName = 154,
@@ -2960,6 +2964,7 @@ local scenes = {};
             landscape1.y=0
             ovenBack.y=-50
             ovenFront.y=-50
+            ovenFire.y=-50
             hutShelf.y=5
             hutTable.y=30
             hutSpin.y=30
@@ -3001,6 +3006,7 @@ local scenes = {};
 
     scenes[157] = {
         sName = 157,
+        clearSelection = true,
         follows = 158,
         changeFlow = function() 
             if choices.bless then scenes[157].follows = 158
@@ -3008,6 +3014,7 @@ local scenes = {};
         end,
         text='"My name is Alena, Nana. Koschei the Deathless took my brother. Koshei is immortal, so he keeps his death hidden far away. I need to find it. Can you help me?"',
         animations = function()
+            hideDialogue()
             showDialogue(AlenaNR)
         end,
         animationComplete = function()
@@ -3052,7 +3059,7 @@ local scenes = {};
 
     scenes[161] = {
         sName = 161,
-        follows = 190,
+        follows = 185,
         text='"Inside the coffer there\'s a hare, inside that - a duck. Inside the duck, there\'s an egg enclosing a needle. Koschei\'s death is on the point of it."',
         animations = function() end,
         animationComplete = function()end
@@ -3060,15 +3067,284 @@ local scenes = {};
 
     scenes[162] = {
         sName = 162,
-        follows = 00,
+        selection = {
+            [1] = {'"Are you always that inhospitable?"', 163},
+        },
+        text='"I can help you. Or I can eat you and make a necklace from your bones. Let me look at you a bit close. Nice young girl, so clean, so tasty. But I won\'t eat you yet. First you\'ll serve me!"',
+        animations = function()
+            hideDialogue() 
+            transition.to(AlenaNoRibbon, {x=500, time=1000, delay=1000}) 
+        end,
+        animationComplete = function()
+            hideDialogue() 
+            AlenaNoRibbon.x=500 
+        end
+    }
+
+    scenes[163] = {
+        sName = 163,
+        clearSelection = true,
+        follows = 164,
+        text='Alena: "Are you always that inhospitable, Nana? No one carries lodging with him, so wash me, feed me, and give me a bed. Then, you can ask all of your questions!"',
+        animations = function() 
+            hideDialogue()
+            showDialogue(AlenaNR)
+        end,
+        animationComplete = function()
+            hideDialogue()
+        end
+    }
+
+    scenes[164] = {
+        sName = 164,
+        follows = 165,
+        text='Baba Yaga: "You are a brave girl, so I won\'t eat you. Stay here, I\'ll make a bath, cook you a dinner, and tuck you into bed and then, we\'ll talk."',
+        animations = function() 
+            showDialogue(YagaD) 
+        end,
+        animationComplete = function() 
+            hideDialogue()
+            YagaS.xScale = -1 
+        end
+    }
+
+    scenes[165] = {
+        sName = 165,
+        follows = 166,
+        text='When Baba Yaga walks away, Alena hears squeaking. There\'s a mouse hole near the window. Alena gets on all fours and spots the little mouse. And just like other animals in this forest, the mouse begins to speak.',
+        animations = function()
+            hideDialogue()
+            transition.to(YagaS, {x=-100, time=1000, delay=1000})
+            transition.to(MouseS, {x=370, time=1500, delay=2300})
+        end,
+        animationComplete = function()
+            hideDialogue()
+            YagaS.x=-100
+            MouseS.x=370
+        end
+    }
+
+    scenes[166] = {
+        sName = 166,
+        selection = {
+            [1] = {'Give berries', 167},
+            [2] = {'Refuse', 168},
+        },
+        text='Mouse: "Do not grieve, Alena. I can help you, if you give me one of those berries you have in your pocket!" ',
+        animations = function()
+            showDialogue(MouseD)
+        end,
+        animationComplete = function()
+            MouseS.xScale = -1
+        end
+    }
+
+    scenes[167] = {
+        sName = 167,
+        changeFlow = function() choices.berries=true end,
+        clearSelection = true,
+        follows = 169,
+        text='Mouse: "Thank you. You are a good girl, and I\'ll help you. Do not believe Baba Yaga! She\'ll light the oven, not to cook for you, but to cook you! I know a way to outsmart her!"',
+        animations = function() end,
+        animationComplete = function() end
+    }
+
+    scenes[168] = {
+        sName = 168,
+        follows = 169,
+        clearSelection = true,
+        text='Mouse: "I thought you were a kind girl, but you are not. But I don\'t want your death on my conscious, so I\'ll help you anyway. Do not believe Baba Yaga! She\'ll light the oven, not to cook for you, but to cook you!"',
+        animations = function() end,
+        animationComplete = function() end
+    }
+
+    scenes[169] = {
+        sName = 169,
+        follows = 170,
+        text='Mouse: "When she puts you on the oven paddle and shoves you into the stove -  brace your feet against the wall and don\'t let her push you in any further. Hold as firmly as you can. And say that it is not piping hot."',
+        animations = function() end,
+        animationComplete = function() hideDialogue() end
+    }
+    
+    scenes[170] = {
+        sName = 170,
+        follows = 171,
+        text='Scared but determined, Alena awaits Baba Yaga’s return. The oven is getting warmer.',
+        animations = function() 
+            hideDialogue()
+            transition.to(MouseS, {x=-100, time=1000, delay=500})
+            transition.to(ovenFire, {alpha=0.5, time=1000, delay=1000}) 
+        end,
+        animationComplete = function()
+            hideDialogue()
+            MouseS.x=-100
+            ovenFire.alpha=0.5
+        end
+    }
+
+    scenes[171] = {
+        sName = 171,
+        selection = {
+            [1] = {'Why don\'t you do it yourself?', 172},
+            [2] = {'Get on the paddle', 174},
+        },
+        text='Soon Baba Yaga appears with a huge wooden paddle. "Dear child, please have a seat on this nice, wooden paddle while you tell me your story. I need to measure whether it is long enough for my oven."',
+        animations = function()
+            transition.to(ovenFire, {alpha=1, time=1000})
+            YagaS.xScale = 1 
+            transition.to(YagaS, {x=350, time=1000, delay=500})
+            transition.to(AlenaNoRibbon, {x=650, time=1000, delay=500})
+            transition.to(paddle, {x=-100, time=1000, delay=500})
+        end,
+        animationComplete = function()
+            ovenFire.alpha=1
+            YagaS.xScale = 1 
+        end
+    }
+
+    scenes[172] = {
+        sName = 172,
+        clearSelection = true,
+        follows = 173,
+        text='Alena: "Why don\'t you do it yourself?"',
+        animations = function()
+            showDialogue(AlenaNR)
+        end,
+        animationComplete = function()
+            hideDialogue()
+        end
+    }
+
+    scenes[173] = {
+        sName = 173,
+        follows = 177,
+        text='Baba Yaga: "My bones are too old to get on it. But you are young and flexible, it will be easy for you!"',
+        animations = function() 
+            hideDialogue() showDialogue(YagaD)
+        end,
+        animationComplete = function() hideDialogue() end
+    }
+
+    scenes[174] = {
+        sName = 174,
+        follows = 175,
+        text='The moment Alena gets on the wooden paddle, Baba Yaga pushes it into the oven. Alena places her feet wide apart and braces herself as firmly as she can.',
+        animations = function() 
+            hideDialogue()
+        end,
+        animationComplete = function()end
+    }
+
+    scenes[175] = {
+        sName = 175,
+        follows = 176,
+        text='"How are you, my dear child. Are you in the fire yet, is it piping hot?" asks Baba Yaga.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[176] = {
+        sName = 176,
+        follows = 177,
+        text='"Not really, this paddle is too short and too far from the coals, so I am simply warm and comfortable!"',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[177] = {
+        sName = 177,
+        follows = 178,
+        text='"Fie-Fie-Fie, it can’t be! You should be in the fire, piping hot!"',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[178] = {
+        sName = 178,
+        follows = 179,
+        text='"Maybe you measured it wrong, Nana? I am really far from the fire. You should try it yourself, you\'ll see."',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[179] = {
+        sName = 179,
+        follows = 180,
+        text='Baba Yaga gets tired of pushing the paddle and pulls it out along with Alena. Perplexed by what happened, Baba Yaga gets on the paddle and orders Alena to push it in. So she does.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[180] = {
+        sName = 180,
+        follows = 181,
+        text='"Fie-Fie-Fie, I am on fire! I am piping hot! Pull me back, child, pull me back out!" screams Baba Yaga.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[181] = {
+        sName = 181,
+        follows = 182,
+        text='"No, I won\'t do that, until you tell me where to find Koschei\'s death!" answers Alena.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[182] = {
+        sName = 182,
+        follows = 183,
+        text='"Behind the dark forest, there\'s a black mountain. On this mountain, there\'s an old oak. On the oak, there\'s a gold chain with a locket on it."',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[183] = {
+        sName = 183,
+        follows = 184,
+        text='"Inside a locket there\'s a hare, inside that - a duck. Inside the duck, there\'s an egg enclosing a needle. Koschei\'s death is on the point of that needle."',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[184] = {
+        sName = 184,
+        follows = 185,
+        text='Satisfied with the answer, Alena, in a whisper, thanks the mouse and pulls Baba Yaga out of the oven. Baba Yaga is not happy to be outsmarted, but she wishes Alena luck and sends her on her way.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+-------- Act 8 Scenes 185 - 185
+
+    scenes[185] = {
+        sName = 185,
+        follows = 186,
+        text='So Alena\'s journey continues. Gray Wolf awaits her on the other side of the fence, and they race along to the end of the forest. It takes them the better part of the night, and they arrive at the mountain in an early morning mist.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[186] = {
+        sName = 186,
+        follows = 187,
+        text='The ancient oak is so big, that clouds are tangled in its branches. The oak grouches as the wind rocks the locket hanging from a gold chain dangling from the massive branches. "How can I get to the locket?" wonders Alena.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[187] = {
+        sName = 187,
+        follows = 188,
         text='',
         animations = function() end,
         animationComplete = function()end
     }
 
+
     scenes[1000] = {
         sName = 1000,
-        follows = 00,
+        follows = 1000,
         text='',
         animations = function() end,
         animationComplete = function()end
@@ -3109,10 +3385,11 @@ function showDialogue(name)
     if name==VasilisaD then VasilisaD.x=300 transition.to(name, {y=400, time=500}) end
     if name==CrowD then CrowD.x=200 transition.to(name, {y=400, time=500}) end
     if name==YagaD then YagaD.x=300 transition.to(name, {y=400, time=500}) end
+    if name==MouseD then MouseD.x=300 transition.to(name, {y=400, time=500}) end
 end
 
 function hideDialogue()
-    local characters = {Mother, Alena, AlenaNR, AlenaCryD_NR, Ivan, KoscheiPlea, Koschei, MotherWar, Wolf, BrotherD, VasilisaD, VasilisaCry, Bear, CrowD, YagaD}
+    local characters = {Mother, Alena, AlenaNR, AlenaCryD_NR, Ivan, KoscheiPlea, Koschei, MotherWar, Wolf, BrotherD, VasilisaD, VasilisaCry, Bear, CrowD, YagaD, MouseD}
     for i=1, table.getn(characters) do characters[i].y = -700 end
     transition.to(dialBack, {y = -800, time=500})
     --dialBack.y = -800
@@ -3165,6 +3442,7 @@ function removeCharacters()
     AlenaOnWolfNoRibbon.x=1200 AlenaOnWolfNoRibbon.y=270
     BrotherS.x = 500 BrotherS.y=-400
     YagaS.x=350 YagaS.y=-400
+    MouseS.x = -100 MouseS.y=200
 end
 
 -- Move layers in the right order
@@ -3723,17 +4001,19 @@ local function setStageObjects(stage)
             ovenFront.x = 600 ovenFront.y = -800
 
             ovenFire = display.newImage(midlayer2, "images/act13_ovenhaze.png", true) setAnchor(ovenFire)
-            ovenFire.x = 600 ovenFire.y = -800
+            ovenFire.x = 600 ovenFire.y = -800 ovenFire.alpha=0
 
             hutShelf = display.newImage(midlayer2, "images/act13_shelf.png", true) setAnchor(hutShelf)
             hutShelf.x = 90 hutShelf.y = -800
-
 
             hutSpin = display.newImage(midlayer2, "images/act13_spin.png", true) setAnchor(hutSpin)
             hutSpin.x = 240 hutSpin.y = -800
 
             hutMortar = display.newImage(midlayer3, "images/act13_stupaStand.png", true) setAnchor(hutMortar)
             hutMortar.x = 50 hutMortar.y = -800
+
+            paddle = display.newImage(midlayer3, "images/act13_paddle.png", true) setAnchor(paddle)
+            paddle.x = -800 paddle.y = 310
 
             shadowLayer13 = display.newImage(midlayer2, "images/act13_shadowLayer.png", true) setAnchor(shadowLayer13) 
             shadowLayer13.x=0 shadowLayer13.y=0
