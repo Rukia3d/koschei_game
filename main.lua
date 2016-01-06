@@ -35,7 +35,8 @@ local MotherS = display.newImage( characters, "images/mother_s_small.png") Mothe
 local WolfS = display.newImage( characters, "images/wolf_s_small.png") WolfS.x = -200 WolfS.y = -400
 local WolfSit = display.newImage( characters, "images/wolf_f_small.png") WolfSit.x = -200 WolfS.y = -400  
 local VasilisaS = display.newImage( characters, "images/vasilisa_f_small.png") VasilisaS.x = 1200 VasilisaS.y = -400  
-local BearS = display.newImage( characters, "images/bear_s_small.png") BearS.x = 200 BearS.y = -400  
+local BearS = display.newImage( characters, "images/bear_s_small.png") BearS.x = 200 BearS.y = -400 
+local YagaS = display.newImage( characters, "images/yaga_f_small.png") YagaS.x = 350 YagaS.y = -400  
 
 
 -- Small characters  changed images
@@ -66,6 +67,7 @@ local Bear  = display.newImage( charactersDial, "images/bear_dialogue.png", fals
 local VasilisaD = display.newImage( charactersDial, "images/vasilisa_f_dialogue.png") VasilisaD.x = 400 VasilisaD.y = 800
 local VasilisaCry = display.newImage( charactersDial, "images/vasilisa_s_dialogue.png") VasilisaCry.x = 400 VasilisaCry.y = 800 
 local CrowD = display.newImage( charactersDial, "images/crow_f_dialogue.png") CrowD.x = 200 CrowD.y = 800 
+local YagaD = display.newImage( charactersDial, "images/yaga_dialogue.png") YagaD.x = 300 YagaD.y = 800 
 
 -- Charcters for brother's scenes
 local BrotherD = display.newImage(foregoundGr, "images/transparent.png")
@@ -339,6 +341,31 @@ function roadToYaga()
     transition.to(hutWindow, {y=0, time=1000, delay=2000})
 end
 
+
+function yagaFlight()
+    yagaShadow:scale(0.2, 0.2)
+    transition.to(yagaShadow, {x=800, y=150, time=2000, delay=2500})
+    transition.to(yagaShadow, {xScale = -0.5, yScale= 0.5, time=10, delay=4500})
+    transition.to(yagaShadow, {x=0, y=200, delay=4600, time=1500})
+    transition.to(yagaShadow, {xScale=0.8, yScale=0.8, time=10, delay=6000})
+    transition.to(yagaShadow, {x=800, y=400, delay=6200, time=1500})
+end
+
+function loadYagaHut()
+    ---set154
+    transition.to(landscape1, {y=0, time=1000})
+    transition.to(ovenBack, {y=-50, time=1000, delay=500})
+    transition.to(ovenFront, {y=-50, time=1000, delay=500})
+
+    transition.to(hutShelf, {y=5, time=1000, delay=500})
+    transition.to(hutTable, {y=30, time=1000, delay=500})
+    transition.to(hutSpin, {y=30, time=1000, delay=500})
+
+    transition.to(shadowLayer13, {alpha=1, time=1000, delay=1500})
+
+    yagaFlight()
+end
+
 -----------------------------------------------------------------------------------------
 --
 -- ORGANISING
@@ -365,7 +392,7 @@ end
 
 
 choices = {
-    bless = false,
+    bless = true,
     basement = false,
     bucket = 0,
     brother = 'NoInfo',
@@ -468,7 +495,7 @@ local scenes = {};
             showDialogue(Mother)
         end,
         animationComplete = function()
-            bless = true
+            choices.bless = true
         end
     }
     scenes[7] = {
@@ -2917,28 +2944,59 @@ local scenes = {};
 
     scenes[154] = {
         sName = 154,
-        follows = 00,
-        text='The moment she steps over the threshold, Baba Yaga riding in a mortar, wielding a pestle, flies into the window.',
-        animations = function() end,
-        animationComplete = function()end
+        setStage='set154',
+        openingAnimation = {
+            [1] = 'background13.png', 
+            [2] = 'foreground9.png'
+        },
+        follows = 155,
+        text='The moment she steps over the threshold, Baba Yaga riding in a mortar, wielding a pestle, flies into the doorway.',
+        animations = function()
+            loadYagaHut()
+        end,
+        animationComplete = function()
+            foreground.y=0
+            yagaShadow.x=800
+            landscape1.y=0
+            ovenBack.y=-50
+            ovenFront.y=-50
+            hutShelf.y=5
+            hutTable.y=30
+            hutSpin.y=30
+            shadowLayer13.alpha=1
+        end
     }
 
     scenes[155] = {
         sName = 155,
-        follows = 00,
+        follows = 156,
         text='"Fie-Fie-Fie, I can sense a human stench! Who is here? Show yourself, uninvited guest!" screams Baba Yaga.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            showDialogue(YagaD)
+        end,
+        animationComplete = function()
+            hideDialogue()
+            AlenaNoRibbon.y=270
+            AlenaNoRibbon.x=800
+            hutMortar.y=150
+        end
     }
 
     scenes[156] = {
         sName = 156,
         selection = {
-            [1] = {'"My name is Alena..."', 20},
+            [1] = {'"My name is Alena..."', 157},
         },
         text='The last sunlight is fading away. The hollow eye sockets of the skulls start to glow yellow. Alena, hungry and tired, steps closer to Baba Yaga.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            hideDialogue()
+            transition.to(YagaS, {y=270, time=1000})
+            transition.to(AlenaNoRibbon, {x=700, time=1000, delay=1000})
+        end,
+        animationComplete = function()
+            YagaS.y=270
+            AlenaNoRibbon.x=700
+        end
     }
 
     scenes[157] = {
@@ -2949,31 +3007,46 @@ local scenes = {};
             else scenes[157].follows = 162 end
         end,
         text='"My name is Alena, Nana. Koschei the Deathless took my brother. Koshei is immortal, so he keeps his death hidden far away. I need to find it. Can you help me?"',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            showDialogue(AlenaNR)
+        end,
+        animationComplete = function()
+            hideDialogue()
+        end
     }
 
     scenes[158] = {
         sName = 158,
         follows = 159,
         text='"I can help you. Or I can eat you and make a necklace from your bones. Let me look at you a bit closer." Baba Yaga looks at Alena closely and in the next second, screams as if set on fire.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            hideDialogue()
+            transition.to(AlenaNoRibbon, {x=500, time=1000, delay=1000})
+        end,
+        animationComplete = function()
+            AlenaNoRibbon.x=500
+        end
     }
 
     scenes[159] = {
-        sName = 160,
-        follows = 00,
+        sName = 159,
+        follows = 160,
         text='"Fie-Fie-Fie, I can sense your mother\'s blessing on you. There\'s no place for a blessed child in my hut!" Baba Yaga tries to push Alena away, but then takes pity on her. ',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function() 
+            showDialogue(YagaD)
+        end,
+        animationComplete = function()
+            hideDialogue()
+        end
     }
 
     scenes[160] = {
-        sName = 161,
-        follows = 00,
+        sName = 160,
+        follows = 161,
         text='"Behind the dark forest, there\'s a black mountain. On this mountain, there\'s an old oak. On the oak, there\'s a golden chain with a coffer on it."',
-        animations = function() end,
+        animations = function() 
+            hideDialogue()
+        end,
         animationComplete = function()end
     }
 
@@ -2985,6 +3058,13 @@ local scenes = {};
         animationComplete = function()end
     }
 
+    scenes[162] = {
+        sName = 162,
+        follows = 00,
+        text='',
+        animations = function() end,
+        animationComplete = function()end
+    }
 
     scenes[1000] = {
         sName = 1000,
@@ -3028,10 +3108,11 @@ function showDialogue(name)
     if name==BrotherD then BrotherD.x=300 transition.to(name, {y=400, time=500}) end
     if name==VasilisaD then VasilisaD.x=300 transition.to(name, {y=400, time=500}) end
     if name==CrowD then CrowD.x=200 transition.to(name, {y=400, time=500}) end
+    if name==YagaD then YagaD.x=300 transition.to(name, {y=400, time=500}) end
 end
 
 function hideDialogue()
-    local characters = {Mother, Alena, AlenaNR, AlenaCryD_NR, Ivan, KoscheiPlea, Koschei, MotherWar, Wolf, BrotherD, VasilisaD, VasilisaCry, Bear, CrowD}
+    local characters = {Mother, Alena, AlenaNR, AlenaCryD_NR, Ivan, KoscheiPlea, Koschei, MotherWar, Wolf, BrotherD, VasilisaD, VasilisaCry, Bear, CrowD, YagaD}
     for i=1, table.getn(characters) do characters[i].y = -700 end
     transition.to(dialBack, {y = -800, time=500})
     --dialBack.y = -800
@@ -3083,6 +3164,7 @@ function removeCharacters()
     AlenaOnWolf.x=1200 AlenaOnWolf.y=270
     AlenaOnWolfNoRibbon.x=1200 AlenaOnWolfNoRibbon.y=270
     BrotherS.x = 500 BrotherS.y=-400
+    YagaS.x=350 YagaS.y=-400
 end
 
 -- Move layers in the right order
@@ -3616,12 +3698,48 @@ local function setStageObjects(stage)
             hutFence = display.newImage(midlayer2, "images/act12_hutFence.png", true) setAnchor(hutFence)
             hutFence.x = 1024 hutFence.y = 270
 
-            shadowLayer12 = display.newImage(midlayer3, "images/act12_shadowLayer.png", true) setAnchor(shadowLayer12) 
+            shadowLayer12 = display.newImage(midlayer2, "images/act12_shadowLayer.png", true) setAnchor(shadowLayer12)
+            shadowLayer12.x=0 shadowLayer12.y=0 
             shadowLayer12.alpha=0
 
             organizeStage() 
         end,
-        set152 = function() 
+        set154 = function() 
+            clearStage()
+            removeCharacters()
+
+            yagaShadow = display.newImage(midlayer1, "images/act13_yagaFly.png", true) setAnchor(yagaShadow)
+            yagaShadow.x = 200 yagaShadow.y = 100
+
+            landscape1 = display.newImage(midlayer2, "images/act13_walls.png", true) setAnchor(landscape1)
+            landscape1.x = 0 landscape1.y = -800
+
+            hutTable = display.newImage(midlayer2, "images/act13_table.png", true) setAnchor(hutTable)
+            hutTable.x = 355 hutTable.y = -800
+
+            ovenBack = display.newImage(midlayer2, "images/act13_ovanback.png", true) setAnchor(ovenBack)
+            ovenBack.x = 600 ovenBack.y = -800
+            ovenFront = display.newImage(midlayer2, "images/act13_ovenfront.png", true) setAnchor(ovenFront)
+            ovenFront.x = 600 ovenFront.y = -800
+
+            ovenFire = display.newImage(midlayer2, "images/act13_ovenhaze.png", true) setAnchor(ovenFire)
+            ovenFire.x = 600 ovenFire.y = -800
+
+            hutShelf = display.newImage(midlayer2, "images/act13_shelf.png", true) setAnchor(hutShelf)
+            hutShelf.x = 90 hutShelf.y = -800
+
+
+            hutSpin = display.newImage(midlayer2, "images/act13_spin.png", true) setAnchor(hutSpin)
+            hutSpin.x = 240 hutSpin.y = -800
+
+            hutMortar = display.newImage(midlayer3, "images/act13_stupaStand.png", true) setAnchor(hutMortar)
+            hutMortar.x = 50 hutMortar.y = -800
+
+            shadowLayer13 = display.newImage(midlayer2, "images/act13_shadowLayer.png", true) setAnchor(shadowLayer13) 
+            shadowLayer13.x=0 shadowLayer13.y=0
+            shadowLayer13.alpha=0
+
+            organizeStage()
         end,
 
     }
@@ -3787,7 +3905,7 @@ myListener = function( event )
     -- listener for the main text
     sceneText:addEventListener( "touch", sceneTextTouch)
 
-    loadScene(scenes[147])
+    loadScene(scenes[154])
     return true
 end
 
