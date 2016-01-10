@@ -359,6 +359,7 @@ function loadYagaHut()
     transition.to(ovenBack, {y=-50, time=1000, delay=500})
     transition.to(ovenFront, {y=-50, time=1000, delay=500})
     transition.to(ovenFire, {y=-50, time=1000, delay=500})
+    transition.to(ovenCover, {y=140, time=1000, delay=500})
 
     transition.to(hutShelf, {y=5, time=1000, delay=500})
     transition.to(hutTable, {y=30, time=1000, delay=500})
@@ -367,6 +368,36 @@ function loadYagaHut()
     transition.to(shadowLayer13, {alpha=1, time=1000, delay=1500})
 
     yagaFlight()
+end
+
+
+function AlenaIntoTheOven()
+    
+    transition.to(AlenaNoRibbon, {alpha=0, time=100, delay=700})
+    transition.to(paddle, {x=700, y=500, time=1000})
+    transition.to(alenaSit, {y=350, time=1000})
+    transition.to(paddle, {x=790, y=250, time=1000, delay=1500})
+    transition.to(alenaSit, {x=700, y=100, time=1000, delay=1500})
+    transition.to(alenaSit, {x=750, y=150, time=1000, delay=2500})
+    transition.to(ovenCover, {x=700, time=500, delay=2700})
+    transition.to(paddle, {rotation=-10, time=1000, delay=1500})
+end
+
+function babaInOven()
+    transition.to(YagaS, {alpha=0, time=100, })
+    transition.to(yagaSit, {y=300, time=100})
+    transition.to(paddle, {x=790, y=280, time=1000, delay=1000})
+    transition.to(yagaSit, {y=110, x=700, time=1000, delay=1000})
+    transition.to(yagaSit, {alpha=0, time=500, delay=2000})
+    transition.to(ovenCover, {x=700, time=500, delay=2000})
+    transition.to(paddle, {rotation=-16, time=1000, delay=1000})
+
+end
+
+function yagaOutOfOven() 
+    paddle.x=700 paddle.y=500
+    YagaS.xScale = -1 YagaS.alpha=1 YagaS.x=600
+    ovenCover.y=140 ovenCover.x = 870
 end
 
 -----------------------------------------------------------------------------------------
@@ -428,8 +459,7 @@ local scenes = {};
             transition.to(shadowLayer1, {alpha=1, time=1000, delay=3500})
             transition.to(houseOutside, {y=0, time=1000, delay=3700})
             transition.to(AlenaS, {y=270, time=1000, delay=4500})
-            transition.to(IvanS, {y=290, time=1000, delay=4500})
-                
+            transition.to(IvanS, {y=290, time=1000, delay=4500})   
         end,
         animationComplete = function()
             landscape3.x= 0
@@ -2964,6 +2994,7 @@ local scenes = {};
             landscape1.y=0
             ovenBack.y=-50
             ovenFront.y=-50
+            ovenCover.y=140
             ovenFire.y=-50
             hutShelf.y=5
             hutTable.y=30
@@ -3185,7 +3216,7 @@ local scenes = {};
     scenes[171] = {
         sName = 171,
         selection = {
-            [1] = {'Why don\'t you do it yourself?', 172},
+            [1] = {'"Why don\'t you do it yourself?"', 172},
             [2] = {'Get on the paddle', 174},
         },
         text='Soon Baba Yaga appears with a huge wooden paddle. "Dear child, please have a seat on this nice, wooden paddle while you tell me your story. I need to measure whether it is long enough for my oven."',
@@ -3194,11 +3225,13 @@ local scenes = {};
             YagaS.xScale = 1 
             transition.to(YagaS, {x=350, time=1000, delay=500})
             transition.to(AlenaNoRibbon, {x=650, time=1000, delay=500})
-            transition.to(paddle, {x=-100, time=1000, delay=500})
+            transition.to(paddle, {x=550, time=1000, delay=500})
         end,
         animationComplete = function()
             ovenFire.alpha=1
-            YagaS.xScale = 1 
+            YagaS.xScale = 1 YagaS.x=350
+            AlenaNoRibbon.x=650
+            paddle.x=550
         end
     }
 
@@ -3217,10 +3250,11 @@ local scenes = {};
 
     scenes[173] = {
         sName = 173,
-        follows = 177,
+        follows = 174,
         text='Baba Yaga: "My bones are too old to get on it. But you are young and flexible, it will be easy for you!"',
         animations = function() 
-            hideDialogue() showDialogue(YagaD)
+            hideDialogue() 
+            showDialogue(YagaD)
         end,
         animationComplete = function() hideDialogue() end
     }
@@ -3228,75 +3262,113 @@ local scenes = {};
     scenes[174] = {
         sName = 174,
         follows = 175,
+        clearSelection = true,
         text='The moment Alena gets on the wooden paddle, Baba Yaga pushes it into the oven. Alena places her feet wide apart and braces herself as firmly as she can.',
         animations = function() 
             hideDialogue()
+            AlenaIntoTheOven()
         end,
-        animationComplete = function()end
+        animationComplete = function()
+            AlenaNoRibbon.alpha=0
+            alenaSit.x=750 alenaSit.y=150
+            ovenCover.x=700
+            paddle.x=790 paddle.y=250 paddle.rotation=-10
+        end
     }
 
     scenes[175] = {
         sName = 175,
         follows = 176,
         text='"How are you, my dear child. Are you in the fire yet, is it piping hot?" asks Baba Yaga.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            showDialogue(YagaD)
+        end,
+        animationComplete = function()
+            hideDialogue()
+        end
     }
 
     scenes[176] = {
         sName = 176,
         follows = 177,
         text='"Not really, this paddle is too short and too far from the coals, so I am simply warm and comfortable!"',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            hideDialogue()
+            showDialogue(AlenaNR)
+        end,
+        animationComplete = function()
+            hideDialogue()
+        end
     }
 
     scenes[177] = {
         sName = 177,
         follows = 178,
         text='"Fie-Fie-Fie, it can’t be! You should be in the fire, piping hot!"',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            hideDialogue()
+            showDialogue(YagaD)
+        end,
+        animationComplete = function() hideDialogue() end
     }
 
     scenes[178] = {
         sName = 178,
         follows = 179,
         text='"Maybe you measured it wrong, Nana? I am really far from the fire. You should try it yourself, you\'ll see."',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            hideDialogue()
+            showDialogue(AlenaNR)
+        end,
+        animationComplete = function() 
+            hideDialogue() 
+            AlenaNoRibbon.x=300  AlenaNoRibbon.alpha=1
+            alenaSit.alpha=0
+            YagaS.x=600
+            paddle.x=700 paddle.y=500 paddle.rotation=0
+        end
     }
 
     scenes[179] = {
         sName = 179,
         follows = 180,
         text='Baba Yaga gets tired of pushing the paddle and pulls it out along with Alena. Perplexed by what happened, Baba Yaga gets on the paddle and orders Alena to push it in. So she does.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            hideDialogue()
+            babaInOven()
+        end,
+        animationComplete = function()
+            YagaS.alpha=0
+            ovenCover.x=700
+            paddle.rotation=-16 paddle.x=790 paddle.y=280
+        end
     }
 
     scenes[180] = {
         sName = 180,
         follows = 181,
         text='"Fie-Fie-Fie, I am on fire! I am piping hot! Pull me back, child, pull me back out!" screams Baba Yaga.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function() showDialogue(YagaD) end,
+        animationComplete = function() hideDialogue() end
     }
 
     scenes[181] = {
         sName = 181,
         follows = 182,
         text='"No, I won\'t do that, until you tell me where to find Koschei\'s death!" answers Alena.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            hideDialogue()
+            showDialogue(AlenaNR)
+        end,
+        animationComplete = function() hideDialogue() end
     }
 
     scenes[182] = {
         sName = 182,
         follows = 183,
         text='"Behind the dark forest, there\'s a black mountain. On this mountain, there\'s an old oak. On the oak, there\'s a gold chain with a locket on it."',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function() hideDialogue() end,
+        animationComplete = function() hideDialogue() end
     }
 
     scenes[183] = {
@@ -3311,7 +3383,7 @@ local scenes = {};
         sName = 184,
         follows = 185,
         text='Satisfied with the answer, Alena, in a whisper, thanks the mouse and pulls Baba Yaga out of the oven. Baba Yaga is not happy to be outsmarted, but she wishes Alena luck and sends her on her way.',
-        animations = function() end,
+        animations = function() yagaOutOfOven() end,
         animationComplete = function()end
     }
 
@@ -4009,11 +4081,21 @@ local function setStageObjects(stage)
             hutSpin = display.newImage(midlayer2, "images/act13_spin.png", true) setAnchor(hutSpin)
             hutSpin.x = 240 hutSpin.y = -800
 
+
+            paddle = display.newImage(midlayer3, "images/act13_paddle.png", true)
+            paddle.anchorX=1 paddle.x = -10 paddle.y = 320
+
+            alenaSit = display.newImage(midlayer3, "images/act13_alenaSitting.png", true) setAnchor(alenaSit)
+            alenaSit.x = 600 alenaSit.y = 900
+
+            yagaSit = display.newImage(midlayer3, "images/act13_yagaSitting.png", true) setAnchor(yagaSit)
+            yagaSit.x = 600 yagaSit.y = 900
+
+            ovenCover = display.newImage(midlayer3, "images/act13_ovenCover.png", true) setAnchor(ovenCover)
+            ovenCover.x = 870 ovenCover.y = -800
+
             hutMortar = display.newImage(midlayer3, "images/act13_stupaStand.png", true) setAnchor(hutMortar)
             hutMortar.x = 50 hutMortar.y = -800
-
-            paddle = display.newImage(midlayer3, "images/act13_paddle.png", true) setAnchor(paddle)
-            paddle.x = -800 paddle.y = 310
 
             shadowLayer13 = display.newImage(midlayer2, "images/act13_shadowLayer.png", true) setAnchor(shadowLayer13) 
             shadowLayer13.x=0 shadowLayer13.y=0
