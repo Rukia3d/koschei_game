@@ -384,7 +384,8 @@ function AlenaIntoTheOven()
 end
 
 function babaInOven()
-    transition.to(YagaS, {alpha=0, time=100, })
+    ovenCover.x=870
+    transition.to(YagaS, {alpha=0, time=100})
     transition.to(yagaSit, {y=300, time=100})
     transition.to(paddle, {x=790, y=280, time=1000, delay=1000})
     transition.to(yagaSit, {y=110, x=700, time=1000, delay=1000})
@@ -399,6 +400,8 @@ function yagaOutOfOven()
     YagaS.xScale = -1 YagaS.alpha=1 YagaS.x=600
     ovenCover.y=140 ovenCover.x = 870
 end
+
+function showEnding() end
 
 -----------------------------------------------------------------------------------------
 --
@@ -435,7 +438,9 @@ choices = {
     notListen = 0,
     vasilisa = 'NoInfo',
     vasilisaGo = false,
+    bear = false,
     berries = false,
+    wolfPenalty = 0,
 }
 
 local scenes = {}; 
@@ -1547,7 +1552,8 @@ local scenes = {};
 
     scenes[68] = {
         sName = 68,
-        changeFlow = function() 
+        changeFlow = function()
+            choices.wolfPenalty =  choices.wolfPenalty+1 
             if choices.brother=='Raven' then
                 -- If we got the quest from Raven we go to Falcon. Othervise we go ro Raven
                 scenes[68].follows = 69
@@ -1772,6 +1778,7 @@ local scenes = {};
     scenes[81] = {
         sName = 81,
         follows = 82,
+        changeFlow = function() choices.wolfPenalty =  choices.wolfPenalty+1 end,
         text='The moment Alena touches the ribbon, an alarm rings out. Alena catches the horse and runs to Gray Wolf.',
         animations = function()
             transition.to(stableRibbon, {rotation=50, x=690, y=350, time=500})
@@ -2301,10 +2308,12 @@ local scenes = {};
         sName = 113,
         clearSelection = true,
         follows = 114,
+        changeFlow = function() choices.wolfPenalty = choices.wolfPenalty-1 end,
         text='Alena: "Of course, you can stay."',
         animations = function()
             hideDialogue()
             showDialogue(AlenaNR)
+            choices.bear = true;
         end,
         animationComplete = function()
             hideDialogue()
@@ -2329,6 +2338,7 @@ local scenes = {};
         follows = 116,        
         text='Alena: "Go away, you are huge and scary!"',
         clearSelection = true,
+        changeFlow = function() choices.wolfPenalty =  choices.wolfPenalty+1 end,
         animations = function()
             hideDialogue()
             showDialogue(AlenaNR)
@@ -2974,7 +2984,7 @@ local scenes = {};
         end
     }
 
--------- Act 7 Scenes 154 - 184
+-------- Act 6 Scenes 154 - 184
 
     scenes[154] = {
         sName = 154,
@@ -3387,11 +3397,16 @@ local scenes = {};
         animationComplete = function()end
     }
 
--------- Act 8 Scenes 185 - 185
+-------- Act 7 Scenes 185 - 185
 
     scenes[185] = {
         sName = 185,
         follows = 186,
+        setStage = 'set185',
+        openingAnimation = {
+            [1] = 'background13.png', 
+            [2] = 'foreground9.png'
+        },
         text='So Alena\'s journey continues. Gray Wolf awaits her on the other side of the fence, and they race along to the end of the forest. It takes them the better part of the night, and they arrive at the mountain in an early morning mist.',
         animations = function() end,
         animationComplete = function()end
@@ -3399,7 +3414,10 @@ local scenes = {};
 
     scenes[186] = {
         sName = 186,
-        follows = 187,
+        changeFlow = function()
+            if choices.bear then scenes[186].follows = 188 
+            else scenes[186].follows = 187  end
+        end,
         text='The ancient oak is so big, that clouds are tangled in its branches. The oak grouches as the wind rocks the locket hanging from a gold chain dangling from the massive branches. "How can I get to the locket?" wonders Alena.',
         animations = function() end,
         animationComplete = function()end
@@ -3407,20 +3425,291 @@ local scenes = {};
 
     scenes[187] = {
         sName = 187,
-        follows = 188,
-        text='',
+        follows = 190,
+        text='"What would you do without me." says Gray Wolf, turning himself into a huge bear.',
         animations = function() end,
         animationComplete = function()end
     }
 
+    scenes[188] = {
+        sName = 188,
+        follows = 189,
+        text='But just as if hearing her doubts, a big bear appears near the oak.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[189] = {
+        sName = 189,
+        follows = 190,
+        text='"You were kind to me, little one, so let me be of service!" says the bear.',
+        animations = function() showDialogue(Bear) end,
+        animationComplete = function() hideDialogue() end
+    }
+
+    scenes[190] = {
+        sName = 190,
+        follows = 191,
+        text='The bear clasps the ancient oak and with a loud roar knocks it down. When the locket touches the ground, it opens, and a brown hare escapes from it.',
+        animations = function() hideDialogue() end,
+        animationComplete = function()end
+    }
+
+    scenes[191] = {
+        sName = 191,
+        follows = 192,
+        text='"How can I get this hare, he is so fast!" wonders Alena and looks at Gray Wolf.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[192] = {
+        sName = 192,
+        changeFlow = function() 
+            if choices.vasilisaGo then scenes[192].follows = 193 
+            else scenes[192].follows = 194  end
+        end,
+        text='"What would you do without me." says Gray Wolf and immediately goes after his prey. He catches up with brown hare, but the moment his paws touch the rabbit, a white duck flies out of him.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[193] = {
+        sName = 193,
+        follows = 195,
+        text='"How can I catch a flying duck?" wonders Alena. But her loyal companion doesn’t let her down. Gray Wolf turns himself into a big drake and follows the duck. ',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[194] = {
+        sName = 194,
+        follows = 195,
+        text= '"How can I catch a flying duck?" wonders Alena. And the moment she thinks that, her uncle - '..choices.brother..' appears in the sky. He dives toward the duck.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[195] = {
+        sName = 195,
+        changeFlow = function() 
+            if choices.berries then scenes[195].follows = 196 
+            else scenes[195].follows = 198  end
+        end,
+        text='The duck, unable to evade him, lets out an egg. It falls down into a field of tall grass. "How can I find the egg in all this green?" thinks Alena. ',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[196] = {
+        sName = 196,
+        follows = 197,
+        text='Then she hears squeaking.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[197] = {
+        sName = 197,
+        follows = 199,
+        text='"You helped me and now, I’ll help you!" says the mouse she met at Baba Yaga’s hut jumping into the grass.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[198] = {
+        sName = 198,
+        follows = 199,
+        text='“What would you do without me.” says Gray Wolf and turns himself into a mouse and jumps into the grass. For a moment, all Alena can hear is the moaning of the wind.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[199] = {
+        sName = 199,
+        follows = 200,
+        text='"Here you go!" says the mouse offering Alena the precious egg. ',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[200] = {
+        sName = 200,
+        follows = 201,
+        text='A thunderstorm is forming on the horizon, as Alena breaks the egg and pulls out a shining needle. Koschei, the Deathless, appears in front of her and with him, the sky blackens, and the ground shakes. ',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[201] = {
+        sName = 201,
+        follows = 202,
+        text='Birds in the forest stop singing. Hoarfrost begins to spread across the green grass starting from his feet. The leaves on the trees freeze when he breathes on them.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+    
+    scenes[202] = {
+        sName = 202,
+        follows = 203,
+        text='But the moment Koschei sees the needle in Alena’s hand, the storm disappears.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[203] = {
+        sName = 203,
+        follows = 204,
+        text='Koschei: “Spare me, Alena. Don’t kill me. I’ll free your brother, and you can imprison me in your dungeon again. Just don’t break the tip of that needle!”',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[204] = {
+        sName = 204,
+        selection = {
+            [1] = {'Break the needle', 205},
+            [2] = {'Spear Koschei', 207},
+        },
+        text='Alena sees her brother standing behind Koschei and feels the stare of her companion on her back. The sky is clear, and the air is full of chirping birds and rustling leaves.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[205] = {
+        sName = 205,
+        clearSelection = true,
+        follows = 206,
+        changeFlow = function() choices.wolfPenalty =  choices.wolfPenalty+1 end,
+        text='"You’ve caused too much suffering, and you have to pay for that!" says Alena breaking the needle. A bright ray of sunlight pierces the warlock like a knife. ',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[206] = {
+        sName = 206,
+        follows = 208,
+        text='Koschei screams, but soon his screaming weakens. His bones scatter as he falls to the ground, a handful of gray dust.\n Ivan runs to his sister, and they finally embrace each other.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[207] = {
+        sName = 207,
+        clearSelection = true,
+        follows = 208,
+        changeFlow = function() choices.wolfPenalty =  choices.wolfPenalty-1 end,
+        text='“I am not as ruthless as you are!” says Alena, and she orders Koschei to return to his prison, mend the chains, and put them on.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[208] = {
+        sName = 208,
+        changeFlow = function() 
+            if choices.wolfPenalty < 2 then scenes[208].follows = 209
+            else scenes[208].follows = 210 end
+        end,
+        text='Ivan runs to his sister, and they finally embrace each other.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[209] = {
+        sName = 209,
+        follows = 211,
+        text='"You are a brave girl, Alena. I started to help you as a debt to your mother, but now I see you are someone worthy not just of my service, but of my friendship as well." says Gray Wolf. ',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[210] = {
+        sName = 210,
+        follows = 212,
+        text='“I am not disputing your decisions, Alena, but with this, my debt to your mother is paid in full,” says Grey Wolf. “You can return home and tell her that.”',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[211] = {
+        sName = 211,
+        follows = 213,
+        text='“Jump on my back with Ivan, and I’ll carry you both home!”',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[212] = {
+        sName = 212,
+        follows = 21222222,
+        text='So Alena says her goodbye and with sadness in her heart, she watches Gray Wolf disappear into the forest.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+-------- Act 4 (Ending) Scenes 212 - 147
+
+    scenes[213] = {
+        sName = 213,
+        follows = 214,
+        text='So they return home together. ',
+        animations = function() end,
+        animationComplete = function()end
+    }
+    scenes[214] = {
+        sName = 214,
+        follows = 215,
+        text='Without Koschei’s witchcraft, Alena’s mother, Marya Morevna, easily overpowers his minions, and peace and prosperity falls across the land.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[215] = {
+        sName = 215,
+        follows = 1000,
+        text='Their mother is happy to see them home again. Gray Wolf settles nearby, and they live in health and good cheer for many long years. ',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[216] = {
+        sName = 216,
+        follows = 217,
+        text='It is a long way home for for Alena and her brother.',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[217] = {
+        sName = 217,
+        follows = 218,
+        text='Without Koschei’s witchcraft, Alena’s mother, Marya Morevna, easily overpowers his minions, and peace and prosperity falls across the land. ',
+        animations = function() end,
+        animationComplete = function()end
+    }
+
+    scenes[218] = {
+        sName = 218,
+        follows = 1000,
+        text='After a long journey, they return home together live in health and in good cheer for many long years. ',
+        animations = function() end,
+        animationComplete = function()end
+    }
 
     scenes[1000] = {
         sName = 1000,
-        follows = 1000,
-        text='',
+        follows = 1001,
+        text='The end',
         animations = function() end,
         animationComplete = function()end
     }
+
+    scenes[1001] = {
+        sName = 1001,
+        animations = function() end,
+        animationComplete = function()end
+    }
+
 -----------------------------------------------------------------------------------
 --
 -- FUNCTIONS
@@ -4135,115 +4424,118 @@ end
 
 function loadScene(s)
     print('Start displaying scene '..s.sName)
-    if s.openingAnimation then openingAnimation(s.openingAnimation[1], s.openingAnimation[2]) 
-    end
-    if s.changeFlow then s.changeFlow() end
-
-    -- Set the text or call it depending on the type
-    print('printing scene type')
-    print(type(s.text))
-    if type(s.text)=='function' then sceneText.text = s.text() else sceneText.text = s.text end
-    setAnchor(sceneText)
-    sceneText.alpha = 0
-    transition.to(sceneText, {alpha=1, time=2000}) 
-    sceneText:setFillColor( 0, 0, 0 )
-    textContainer.isVisible = true;
-
-    if not s.follows then
-        print('This sceene has Selection')
-        if(s.selection[1]) then
-            print('This sceene has 1 selection')
-            select1Container.isVisible = true
-            select1Text.isVisible = true
-            -- Show text of selection from the scene
-            select1Text.text = s.selection[1][1]
-            setAnchor(select1Text)
-            select1Text.alpha = 0
-            transition.to(select1Text, {alpha=1, time=2000}) 
-            select1Text:setFillColor( 0, 0, 0 )
-            -- Attach the number of the scene to follow
-            select1Text.follows = s.selection[1][2]
-            print(s.selection[1][2])
-            -- Attach the name of the scene we are working in
-            select1Text.index = s.sName
-        end
-
-        if(s.selection[2]) then
-            print('This sceene has 2 selections')
-            select2Container.isVisible = true
-            select2Text.isVisible = true
-            -- Show text of selection from the scene
-            select2Text.text = s.selection[2][1]
-            setAnchor(select2Text)
-            select2Text.alpha = 0
-            transition.to(select2Text, {alpha=1, time=2000}) 
-            select2Text:setFillColor( 0, 0, 0 )
-            -- Attach the number of the scene to follow
-            select2Text.follows = s.selection[2][2]
-            print(s.selection[2][2])
-            -- Attach the name of the scene we are working in
-            select2Text.index = s.sName
-        end
-
-        if(s.selection[3]) then
-            print('This sceene has 3 selections')
-            select3Container.isVisible = true
-            select3Text.isVisible = true
-            -- Show text of selection from the scene
-            select3Text.text = s.selection[3][1]
-            setAnchor(select3Text)
-            select3Text.alpha = 0
-            transition.to(select3Text, {alpha=1, time=2000}) 
-            select3Text:setFillColor( 0, 0, 0 )
-            -- Attach the number of the scene to follow
-            select3Text.follows = s.selection[3][2]
-            print(s.selection[3][2])
-            -- Attach the name of the scene we are working in
-            select3Text.index = s.sName
-        end
-
-        -- Nullify the link from the main text in the scene
-        sceneText.follows = nil
-        sceneText.index = nil
-
-
+    if s.name == 1001 then showEnding()
     else
-        if s.clearSelection then
-            -- Clearing leftovers from the right blocks 
-            print('This sceene needs clearSelection')
-            select1Container.isVisible = false
-            select1Text.isVisible = false
-            select2Container.isVisible = false
-            select2Text.isVisible = false
-            select3Container.isVisible = false
-            select3Text.isVisible = false
-        end 
+        if s.openingAnimation then openingAnimation(s.openingAnimation[1], s.openingAnimation[2]) 
+        end
+        if s.changeFlow then s.changeFlow() end
 
-        -- Set Main Text
-        print('Scene has no selection')
+        -- Set the text or call it depending on the type
+        print('printing scene type')
+        print(type(s.text))
+        if type(s.text)=='function' then sceneText.text = s.text() else sceneText.text = s.text end
+        setAnchor(sceneText)
+        sceneText.alpha = 0
+        transition.to(sceneText, {alpha=1, time=2000}) 
+        sceneText:setFillColor( 0, 0, 0 )
+        textContainer.isVisible = true;
 
-        -- Attaching following scene number and name of the scene we are working in
-        sceneText.follows = s.follows
-        sceneText.index = s.sName
+        if not s.follows then
+            print('This sceene has Selection')
+            if(s.selection[1]) then
+                print('This sceene has 1 selection')
+                select1Container.isVisible = true
+                select1Text.isVisible = true
+                -- Show text of selection from the scene
+                select1Text.text = s.selection[1][1]
+                setAnchor(select1Text)
+                select1Text.alpha = 0
+                transition.to(select1Text, {alpha=1, time=2000}) 
+                select1Text:setFillColor( 0, 0, 0 )
+                -- Attach the number of the scene to follow
+                select1Text.follows = s.selection[1][2]
+                print(s.selection[1][2])
+                -- Attach the name of the scene we are working in
+                select1Text.index = s.sName
+            end
+
+            if(s.selection[2]) then
+                print('This sceene has 2 selections')
+                select2Container.isVisible = true
+                select2Text.isVisible = true
+                -- Show text of selection from the scene
+                select2Text.text = s.selection[2][1]
+                setAnchor(select2Text)
+                select2Text.alpha = 0
+                transition.to(select2Text, {alpha=1, time=2000}) 
+                select2Text:setFillColor( 0, 0, 0 )
+                -- Attach the number of the scene to follow
+                select2Text.follows = s.selection[2][2]
+                print(s.selection[2][2])
+                -- Attach the name of the scene we are working in
+                select2Text.index = s.sName
+            end
+
+            if(s.selection[3]) then
+                print('This sceene has 3 selections')
+                select3Container.isVisible = true
+                select3Text.isVisible = true
+                -- Show text of selection from the scene
+                select3Text.text = s.selection[3][1]
+                setAnchor(select3Text)
+                select3Text.alpha = 0
+                transition.to(select3Text, {alpha=1, time=2000}) 
+                select3Text:setFillColor( 0, 0, 0 )
+                -- Attach the number of the scene to follow
+                select3Text.follows = s.selection[3][2]
+                print(s.selection[3][2])
+                -- Attach the name of the scene we are working in
+                select3Text.index = s.sName
+            end
+
+            -- Nullify the link from the main text in the scene
+            sceneText.follows = nil
+            sceneText.index = nil
+
+
+        else
+            if s.clearSelection then
+                -- Clearing leftovers from the right blocks 
+                print('This sceene needs clearSelection')
+                select1Container.isVisible = false
+                select1Text.isVisible = false
+                select2Container.isVisible = false
+                select2Text.isVisible = false
+                select3Container.isVisible = false
+                select3Text.isVisible = false
+            end 
+
+            -- Set Main Text
+            print('Scene has no selection')
+
+            -- Attaching following scene number and name of the scene we are working in
+            sceneText.follows = s.follows
+            sceneText.index = s.sName
+        end
+        if(s.setStage) then
+            setStageObjects(s.setStage)
+        end
+        if(s.backgr) then
+            background:removeSelf()
+            background = nil
+            background = display.newImage( "images/"..s.backgr, true ) setCenter(background) setAnchor(background)
+        end
+        if(s.foregr) then
+            foreground:removeSelf()
+            foreground = nil
+            foreground = display.newImage(foregoundGr, "images/"..s.foregr, true ) setCenter(foreground) setAnchor(foreground)
+        end
+        if(s.animations) then
+            s.animations()
+        end
+        print('Going to organize stage of '..s.sName)
+        organizeStage()
     end
-    if(s.setStage) then
-        setStageObjects(s.setStage)
-    end
-    if(s.backgr) then
-        background:removeSelf()
-        background = nil
-        background = display.newImage( "images/"..s.backgr, true ) setCenter(background) setAnchor(background)
-    end
-    if(s.foregr) then
-        foreground:removeSelf()
-        foreground = nil
-        foreground = display.newImage(foregoundGr, "images/"..s.foregr, true ) setCenter(foreground) setAnchor(foreground)
-    end
-    if(s.animations) then
-        s.animations()
-    end
-    print('Going to organize stage of '..s.sName)
-    organizeStage()
 end 
 
 
