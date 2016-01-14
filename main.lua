@@ -371,8 +371,7 @@ function loadYagaHut()
 end
 
 
-function AlenaIntoTheOven()
-    
+function AlenaIntoTheOven()    
     transition.to(AlenaNoRibbon, {alpha=0, time=100, delay=700})
     transition.to(paddle, {x=700, y=500, time=1000})
     transition.to(alenaSit, {y=350, time=1000})
@@ -399,6 +398,93 @@ function yagaOutOfOven()
     paddle.x=700 paddle.y=500
     YagaS.xScale = -1 YagaS.alpha=1 YagaS.x=600
     ovenCover.y=140 ovenCover.x = 870
+end
+
+function setOakLevel() 
+    ---set185
+    AlenaOnWolfNoRibbon.xScale=-1 AlenaOnWolfNoRibbon.x=300 AlenaOnWolfNoRibbon.y=-500
+    transition.to(landscape1, {x=0, time=1000})
+    transition.to(landscape2, {x=0, time=1500, delay=500})
+    transition.to(landscape3, {x=0, time=1000, delay=1000})
+    transition.to(groundLevel, {x=0, time=1500, delay=1500})
+    transition.to(grass, {x=0, time=1500, delay=2000})
+    transition.to(shadowLayer14, {alpha=1, time=1000, delay=3500})
+    transition.to(AlenaOnWolfNoRibbon, {y=290, time=1000, delay=3500})
+end
+
+function moveToOak()
+    mountain:scale(0.5, 0.5) mountain.x=1050 mountain.y=520
+    oldOak:scale(0.5, 0.5)
+    chestClosed:scale(0.5, 0.5)
+    mountain.x=1500 mountain.y=520
+    oldOak.x = 1500 oldOak.y = 400
+    chestClosed.x=1235 chestClosed.y=220
+    AlenaNoRibbon.x=270
+    WolfSit.xScale=-1 WolfSit.x=350
+    transition.to(background, {x=-1074, time=1500})
+    transition.to(landscape1, {x=-1074, time=1500})
+    transition.to(landscape2, {x=-1074, time=1500})
+    transition.to(landscape3, {x=-1074, time=1500})
+    transition.to(groundLevel, {x=-1074, time=1500})
+    transition.to(grass, {x=-1074, time=1500})
+    transition.to(shadowLayer14, {x=-1074, time=1500})
+    transition.to(mountain, {x=1050, time=1000, delay=1500})
+    transition.to(oldOak, {x=1050, time=1000, delay=1500})
+    transition.to(chestClosed, {x=790, time=1000, delay=1500})
+    
+
+    transition.to(mountain, {xScale = 1, yScale=1, y = 600, x = 1200, time=1000, delay=3000})
+    transition.to(oldOak, {xScale = 1, yScale=1, y = 400, x = 1150, time=1000, delay=3000})
+    transition.to(chestClosed, {xScale = 1, yScale=1, x=670, y=85, time=1000, delay=3000})
+
+    transition.to(AlenaOnWolfNoRibbon, {y=-500, time=1000, delay=3500})
+    transition.to(AlenaNoRibbon, {y=270, time=1000, delay=3500})
+    transition.to(WolfSit, {y=270, time=1000, delay=3500})
+
+end
+
+function bearPushTree()
+    transition.to(BearS, {x=700, y=240, time=500})
+    transition.to(oldOak, {rotation=90, x=800, y=600, time=700, delay=500})
+    transition.to(chestClosed, {y=200, time=500, delay=1000})
+    transition.to(chestClosed, {alpha=0, time=10, delay=1500})
+    transition.to(chestOpen, {alpha=1, time=10, delay=1500})
+    if choices.bear then 
+        transition.to(BearS, {x=1200, time=1000, delay=2000})
+    else
+        transition.to(MagicWolf, {y=0, time=700, delay=1800})
+        transition.to(WolfSit, {alpha=1, time=700, delay=2000})
+        transition.to(BearS, {alpha=0, time=700, delay=2000})
+        transition.to(MagicWolf, {y=-800, time=700, delay=2500})
+    end
+    hareRun.xScale = -1
+    transition.to(hareRun, {alpha=1, time=500, delay=2500})
+end
+
+function bearAndTree(num)
+    BearS.x=-200 BearS.y=270 BearS.xScale = -1
+    if num==0 then
+        BearS.x=530 BearS.y=270 BearS.alpha=0
+        transition.to(MagicWolf, {y=0, time=700})
+        transition.to(WolfSit, {alpha=0, time=700, delay=700})
+        transition.to(BearS, {alpha=1, time=700, delay=800})
+        transition.to(MagicWolf, {y=-800, time=700, delay=1500})
+    else 
+        transition.to(BearS, {x=530, time=1000, delay=500})
+    end
+end
+
+function catchADuck(num)
+    if num==0 then
+        transition.to(MagicWolf, {y=0, time=700})
+        transition.to(WolfS, {alpha=0, time=700, delay=700})
+        transition.to(drake, {alpha=1, time=700, delay=700})
+        transition.to(MagicWolf, {y=-800, time=700, delay=1500})
+        transition.to(drake, {x=400, y=0, time=500, delay=2000})
+    else
+        transition.to(brotherShape, {alpha=1, time=500, delay=500})
+        transition.to(brotherShape, {x=350, time=500, delay=1000})
+    end
 end
 
 function showEnding() end
@@ -439,7 +525,7 @@ choices = {
     vasilisa = 'NoInfo',
     vasilisaGo = false,
     bear = false,
-    berries = false,
+    berries = true,
     wolfPenalty = 0,
 }
 
@@ -3351,6 +3437,7 @@ local scenes = {};
             YagaS.alpha=0
             ovenCover.x=700
             paddle.rotation=-16 paddle.x=790 paddle.y=280
+            yagaSit.alpha=0
         end
     }
 
@@ -3358,8 +3445,8 @@ local scenes = {};
         sName = 180,
         follows = 181,
         text='"Fie-Fie-Fie, I am on fire! I am piping hot! Pull me back, child, pull me back out!" screams Baba Yaga.',
-        animations = function() showDialogue(YagaD) end,
-        animationComplete = function() hideDialogue() end
+        animations = function() showDialogue(YagaD) yagaSit.alpha=0 end,
+        animationComplete = function() hideDialogue()  end
     }
 
     scenes[181] = {
@@ -3404,12 +3491,23 @@ local scenes = {};
         follows = 186,
         setStage = 'set185',
         openingAnimation = {
-            [1] = 'background13.png', 
-            [2] = 'foreground9.png'
+            [1] = 'background14.png', 
+            [2] = 'foreground14.png'
         },
         text='So Alena\'s journey continues. Gray Wolf awaits her on the other side of the fence, and they race along to the end of the forest. It takes them the better part of the night, and they arrive at the mountain in an early morning mist.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function() 
+            setOakLevel()
+        end,
+        animationComplete = function()
+            foreground.y=0
+            landscape1.x=0
+            landscape2.x=0
+            landscape3.x=0
+            groundLevel.x=0
+            grass.x=0
+            shadowLayer14.alpha=1
+            AlenaOnWolfNoRibbon.xScale=-1 AlenaOnWolfNoRibbon.x=300 AlenaOnWolfNoRibbon.y=290
+        end
     }
 
     scenes[186] = {
@@ -3418,25 +3516,44 @@ local scenes = {};
             if choices.bear then scenes[186].follows = 188 
             else scenes[186].follows = 187  end
         end,
-        text='The ancient oak is so big, that clouds are tangled in its branches. The oak grouches as the wind rocks the locket hanging from a gold chain dangling from the massive branches. "How can I get to the locket?" wonders Alena.',
-        animations = function() end,
-        animationComplete = function()end
+        text='The ancient oak is so big, that clouds are tangled in its branches. The oak grouches as the wind rocks the locket hanging from a gold chain dangling from the massive bough. "How can I get to the locket?" wonders Alena.',
+        animations = function() moveToOak() end,
+        animationComplete = function()
+            mountain.xScale = 1.0 mountain.yScale = 1.0 mountain.y = 600 mountain.x = 1200
+            oldOak.xScale = 1.0 oldOak.yScale = 1.0 oldOak.y = 400 oldOak.x = 1150
+            chestClosed.xScale = 1 chestClosed.yScale=1 chestClosed.x=670 chestClosed.y=85
+            background.x=-1074
+            landscape1.x=-1074
+            landscape2.x=-1074
+            landscape3.x=-1074
+            grass.x=-1074
+            shadowLayer14.x=-1074
+            AlenaOnWolfNoRibbon.y=-500
+            AlenaNoRibbon.x=270 AlenaNoRibbon.y=270
+            WolfSit.xScale=-1 WolfSit.x=350 WolfSit.y=270
+        end
     }
 
     scenes[187] = {
         sName = 187,
         follows = 190,
         text='"What would you do without me." says Gray Wolf, turning himself into a huge bear.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function() bearAndTree(0) end,
+        animationComplete = function()
+            BearS.x=530 BearS.y=270 BearS.alpha=1
+            WolfSit.alpha=0
+            MagicWolf.y=-800
+        end
     }
 
     scenes[188] = {
         sName = 188,
         follows = 189,
         text='But just as if hearing her doubts, a big bear appears near the oak.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function() bearAndTree(1) end,
+        animationComplete = function()
+            BearS.x=530 BearS.y=270 BearS.xScale = -1
+        end
     }
 
     scenes[189] = {
@@ -3451,16 +3568,35 @@ local scenes = {};
         sName = 190,
         follows = 191,
         text='The bear clasps the ancient oak and with a loud roar knocks it down. When the locket touches the ground, it opens, and a brown hare escapes from it.',
-        animations = function() hideDialogue() end,
-        animationComplete = function()end
+        animations = function() hideDialogue() bearPushTree() end,
+        animationComplete = function()
+            oldOak.rotation=90 oldOak.x=800 oldOak.y=600
+            chestClosed.alpha=0
+            chestOpen.alpha=1
+            WolfSit.alpha=1
+            BearS.alpha=0
+            MagicWolf.y=-800
+            hareRun.alpha=1
+            hareRun.xScale=-1
+        end
     }
 
     scenes[191] = {
         sName = 191,
         follows = 192,
         text='"How can I get this hare, he is so fast!" wonders Alena and looks at Gray Wolf.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            WolfS.xScale=-1 WolfS.x=350 WolfS.y=270 WolfS.alpha=0
+            hareRun.xScale=-1
+            transition.to(WolfSit, {alpha=0, time=500, delay=500})
+            transition.to(WolfS, {alpha=1, time=500, delay=1000})
+            transition.to(hareRun, {x=1200, y=0, time=500, delay=1000})
+        end,
+        animationComplete = function()
+            WolfS.xScale=-1 WolfS.x=350 WolfS.y=270 WolfS.alpha=1
+            WolfSit.alpha=0
+            hareRun.x=1100 hareRun.y=0
+        end
     }
 
     scenes[192] = {
@@ -3470,58 +3606,99 @@ local scenes = {};
             else scenes[192].follows = 194  end
         end,
         text='"What would you do without me." says Gray Wolf and immediately goes after his prey. He catches up with brown hare, but the moment his paws touch the rabbit, a white duck flies out of him.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            hareRun.xScale = 1 hareRun.y=-100
+            transition.to(WolfS, {x=500, time=500, delay=500})
+            transition.to(hareRun, {x=550, time=500, delay=500})
+            transition.to(hareRun, {alpha=0, time=1, delay=1000})
+            transition.to(duckFly, {alpha=1, time=1, delay=1000})
+            transition.to(duckFly, {y=-300, x=300, time=500, delay=1010})
+        end,
+        animationComplete = function()
+            hareRun.alpha=0
+            WolfS.x=500
+            duckFly.alpha=1 duckFly.y=-300 duckFly.x=300
+        end
     }
 
     scenes[193] = {
         sName = 193,
         follows = 195,
         text='"How can I catch a flying duck?" wonders Alena. But her loyal companion doesn’t let her down. Gray Wolf turns himself into a big drake and follows the duck. ',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function() catchADuck(0) end,
+        animationComplete = function()
+            WolfS.alpha=0
+            MagicWolf.y=-800
+            drake.alpha=1 drake.x=400 drake.y=0
+        end
     }
 
     scenes[194] = {
         sName = 194,
         follows = 195,
         text= '"How can I catch a flying duck?" wonders Alena. And the moment she thinks that, her uncle - '..choices.brother..' appears in the sky. He dives toward the duck.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function() catchADuck(1)  end,
+        animationComplete = function()
+            brotherShape.alpha=1 brotherShape.x=350
+        end
     }
 
     scenes[195] = {
-        sName = 195,
+        sName = 195, 
         changeFlow = function() 
             if choices.berries then scenes[195].follows = 196 
             else scenes[195].follows = 198  end
         end,
         text='The duck, unable to evade him, lets out an egg. It falls down into a field of tall grass. "How can I find the egg in all this green?" thinks Alena. ',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            transition.to(brotherShape, {x=200, y=-200, time=1000})
+            transition.to(duckFly, {x=200, y=-500, time=1000})
+            transition.to(drake, {x=200, y=-300, time=1000})
+            transition.to(eggWhole, {alpha=1, time=10, delay=500})
+            transition.to(eggWhole, {y=600, time=1000, delay=500})
+            transition.to(AlenaNoRibbon, {x=350, time=1000, delay=1500})
+        end,
+        animationComplete = function()
+            AlenaNoRibbon.x=350 
+            eggWhole.alpha=1 eggWhole.y=600
+            drake.x=200 drake.y=-300
+            duckFly.x=200 duckFly.y=-500
+            brotherShape.x=200 brotherShape.y=-200
+        end
     }
 
     scenes[196] = {
         sName = 196,
         follows = 197,
         text='Then she hears squeaking.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function()
+            MouseS.y=200 MouseS.x=-200
+            transition.to(MouseS, {x=250, time=1000}) 
+        end,
+        animationComplete = function()
+            MouseS.y=200 MouseS.x=250
+        end
     }
 
     scenes[197] = {
         sName = 197,
         follows = 199,
         text='"You helped me and now, I’ll help you!" says the mouse she met at Baba Yaga’s hut jumping into the grass.',
-        animations = function() end,
-        animationComplete = function()end
+        animations = function() showDialogue(MouseD) end,
+        animationComplete = function() hideDialogue() end
     }
 
     scenes[198] = {
         sName = 198,
         follows = 199,
         text='“What would you do without me.” says Gray Wolf and turns himself into a mouse and jumps into the grass. For a moment, all Alena can hear is the moaning of the wind.',
-        animations = function() end,
+        animations = function() 
+            MouseS.xScale = -1
+            transition.to(MagicWolf, {y=0, time=700, delay=1800})
+            transition.to(WolfS, {alpha=1, time=700, delay=2000})
+            transition.to(MouseS, {x=500, time=700, delay=2000})
+            transition.to(MagicWolf, {y=-800, time=700, delay=2500})
+        end,
         animationComplete = function()end
     }
 
@@ -4392,6 +4569,74 @@ local function setStageObjects(stage)
 
             organizeStage()
         end,
+        set185 = function()
+            clearStage()
+            removeCharacters()
+
+            landscape1 = display.newImage(midlayer1, "images/act14_forestBack.png", true) setAnchor(landscape1)
+            landscape1.x = 1024 landscape1.y = 0
+
+            landscape2 = display.newImage(midlayer1, "images/act14_forestMid.png", true) setAnchor(landscape2)
+            landscape2.x = -2100 landscape2.y = 0
+
+            landscape3 = display.newImage(midlayer1, "images/act14_forestFront.png", true) setAnchor(landscape3)
+            landscape3.x = 1024 landscape3.y = 0
+
+            groundLevel = display.newImage(midlayer1, "images/act14_ground.png", true) setAnchor(groundLevel)
+            groundLevel.x = -2100 groundLevel.y = 0
+
+            
+            grass = display.newImage(midlayer2, "images/act14_grass.png", true) setAnchor(grass)
+            grass.x = -2100 grass.y = 0
+
+            shadowLayer14 = display.newImage(midlayer2, "images/act14_shadowLayer.png", true) setAnchor(shadowLayer14) 
+            shadowLayer14.x=0 shadowLayer14.y=0
+            shadowLayer14.alpha=0
+
+            oldOak = display.newImage(midlayer2, "images/act14_oak.png", true) oldOak.anchorX=1 oldOak.anchorY=1
+            oldOak.x = 1700 oldOak.y = 400
+
+            mountain = display.newImage(midlayer2, "images/act14_mountain.png", true) mountain.anchorX=1 mountain.anchorY=1
+            mountain.x = 1700 mountain.y = 600
+
+            chestClosed = display.newImage(midlayer2, "images/act14_chest.png", true) setAnchor(chestClosed)
+            chestClosed.x = 0 chestClosed.y = 800
+
+            chestOpen = display.newImage(midlayer2, "images/act14_chestOpen.png", true) setAnchor(chestOpen)
+            chestOpen.x = 670 chestOpen.y = 300 chestOpen.alpha=0
+
+            eggWhole = display.newImage(midlayer2, "images/act14_egg.png", true) setAnchor(eggWhole)
+            eggWhole.x = 300 eggWhole.y = 50 eggWhole.alpha=0
+
+            eggBroken = display.newImage(midlayer2, "images/act14_eggBroken.png", true) setAnchor(eggBroken)
+            eggBroken.x = 670 eggBroken.y = 300 eggBroken.alpha=0
+
+            hareRun = display.newImage(midlayer2, "images/act14_hare.png", true) setAnchor(hareRun)
+            hareRun.x = 830 hareRun.y = -220 hareRun.alpha=0
+            duckFly = display.newImage(midlayer3, "images/act14_duck.png", true) setAnchor(duckFly)
+            duckFly.x = 500 duckFly.y = -100 duckFly.alpha = 0
+
+            foregroundNew = display.newImage(foregoundGr, "images/foreground14_a.png", true) setAnchor(foregroundNew) 
+            foregroundNew.x=0 foregroundNew.y=0
+            foregroundNew.alpha=0
+
+            MagicWolf = display.newImage(midlayer3, "images/magicWolf.png", true) setAnchor(MagicWolf)
+            MagicWolf.x=330 MagicWolf.y=-600
+
+            drake = display.newImage(midlayer2, "images/act14_drake.png") 
+            drake.x = 500 drake.y = 300 drake.alpha=0
+
+            if choices.brother == 'Eagle' then
+                brotherShape = display.newImage(midlayer2, "images/act10_Eagle.png") 
+            elseif choices.brother == 'Falcon' then
+                brotherShape = display.newImage(midlayer2, "images/act10_Falcon.png") 
+            else
+                brotherShape = display.newImage(midlayer2, "images/act10_Raven.png") 
+            end
+            brotherShape.x=1000 brotherShape.y=0 brotherShape.alpha=0
+
+            organizeStage()
+        end,
 
     }
     stages[stage]()
@@ -4559,7 +4804,7 @@ myListener = function( event )
     -- listener for the main text
     sceneText:addEventListener( "touch", sceneTextTouch)
 
-    loadScene(scenes[154])
+    loadScene(scenes[185])
     return true
 end
 
