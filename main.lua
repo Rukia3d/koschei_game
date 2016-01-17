@@ -111,6 +111,13 @@ textContainer.isVisible = false
 
 local sceneText = display.newText(textLayers, '', 50, 610, 900, display.contentHeight * 0.5, 'PTSans-Regular', 18)
 
+textContainer.linkedText = sceneText
+select1Container.linkedText = select1Text
+select2Container.linkedText = select2Text
+select3Container.linkedText = select3Text
+
+
+
 -----------------------------------------------------------------------------------------
 --
 -- SOUND LIBRARY
@@ -204,6 +211,18 @@ local function setBasementFast()
     foreground:removeSelf()
     foreground = nil
     foreground = display.newImage(foregoundGr, "images/foreground3.png", true ) setAnchor(foreground)
+    foreground.x=0 foreground.y=0
+end
+
+local function setHouseAnEvening()
+        background:removeSelf()
+    background = nil
+    background = display.newImage( "images/background5.png", true ) setAnchor(background)
+    background.x=0 background.y=0
+
+    foreground:removeSelf()
+    foreground = nil
+    foreground = display.newImage(foregoundGr, "images/foreground1.png", true ) setAnchor(foreground)
     foreground.x=0 foreground.y=0
 end
 
@@ -655,13 +674,13 @@ local scenes = {}
         text = "Alena, as the oldest, has to watch over her little brother, and every morning before going to the city, her mother gives her a set of three instructions to follow throughout the day.",
         follows = 4,
         animations = function()
-            --Sound: Birds singing
             transition.to(orangeLight, {alpha=0, time=1000})
             transition.to(MotherS, {y=270, time=1000})
         end,
         animationComplete = function()
             MotherS.y = 270
         end,
+        --Sound: Birds singing
         soundEffect = 'birdsSinging.mp3',
     }
     scenes[4] = {
@@ -750,7 +769,6 @@ local scenes = {}
         text = 'Alena does all her chores - cleaning the dishes, sweeping the floors, and dusting all the knick-knacks. Then she sits down near the window overlooking the forest, while her brother plays on the floor. There\'s nothing going on outside.',
         follows = 11,
         animations = function() 
-            --Sound: cleaning
             transition.to(broom, {y=-30, time=700, delay=300})
             transition.to(dishes, {y=-25, time=500, delay=1000})
             transition.to(dishes, {x=150, y=-180, time=500, delay=2000})
@@ -760,7 +778,9 @@ local scenes = {}
         animationComplete = function()
             broom.y=-30 broom.x=200
             dishes.y=-180 dishes.x=150
-        end
+        end,
+        --Sound: cleaning
+        soundEffect = 'houseCleaning.mp3'
     }
     scenes[11] = {
         sName = 11,
@@ -769,6 +789,7 @@ local scenes = {}
         animations = function()
             --Effect: light in the room
             transition.to(shadowLayer2, {alpha=0.5, time=1000, delay=100})
+            transition.to(windowLight, {alpha=1, time=1000, delay=100})
             AlenaS.x = 450 
             IvanS.x = 350
             transition.to(AlenaS, {y=270, time=1000, delay=1000})
@@ -877,7 +898,7 @@ local scenes = {}
         animationComplete = function()
             foreground.y = 0
             basementStage.alpha=1
-            icyCurtain.isVisible=false
+            icyCurtain.alpha=0
             lights3.y=0
             waterFount.alpha=1
             koshPrisoner.alpha=1
@@ -916,12 +937,10 @@ local scenes = {}
         },
         animations = function()
             --Sound: waterRunning 
-            icyCurtain.isVisible = false 
             showDialogue(KoscheiPlea)
         end,
         animationComplete = function()
             hideDialogue()
-            icyCurtain.isVisible = true
         end
     }
     scenes[21] = {
@@ -933,12 +952,10 @@ local scenes = {}
             [2] = {'Don\'t give him anything', 26}
         },
         animations = function() 
-            icyCurtain.isVisible = false 
             showDialogue(KoscheiPlea)
         end,
         animationComplete = function() 
             hideDialogue()
-            icyCurtain.isVisible = true
         end
     }
     scenes[22] = {
@@ -998,12 +1015,10 @@ local scenes = {}
         clearSelection = true,
         animations = function()
             --Sound: cold wind
-            icyCurtain.isVisible = false 
             showDialogue(Koschei)
         end,
         animationComplete = function()
             hideDialogue()
-            bucket2.isVisible=false
             bucketTread.isVisible=false
         end
     }
@@ -1013,14 +1028,13 @@ local scenes = {}
         follows = 31,
         clearSelection = true,
         animations = function() 
-            icyCurtain.alpha=1
-            icyCurtain.isVisible = true
+            transition.to(icyCurtain, {alpha=1, time=500})
             hideDialogue()
 
-            transition.to(icyCurtain, {y=-1000, time=1500})
+            transition.to(icyCurtain, {y=-1000, time=1500, delay=500})
             transition.to(chains, {alpha=1, time=1000, delay=500})
-            transition.to(koshPrisoner, {alpha = 0, time=500, delay=500})
-            transition.to(IvanS, {y = -600, time=500, delay=500})
+            transition.to(koshPrisoner, {alpha = 0, time=1000, delay=500})
+            transition.to(IvanS, {alpha=0, time=1000, delay=500})
         end,
         animationComplete = function()
             icyCurtain.y=-1000
@@ -1046,12 +1060,10 @@ local scenes = {}
             end
         end,
         animations = function()
-            icyCurtain.isVisible = false 
             showDialogue(KoscheiPlea)
         end,
         animationComplete = function()
             hideDialogue()
-            icyCurtain.isVisible = false 
         end
     }
     scenes[27] = {
@@ -1105,7 +1117,6 @@ local scenes = {}
         animationComplete = function()
             foreground.y = 0
             basementStage.alpha=1
-            icyCurtain.isVisible=true
             lights3.y=0
             waterFount.alpha=1
             koshPrisoner.alpha=1
@@ -1124,12 +1135,12 @@ local scenes = {}
         clearSelection = true,
         animations = function() 
             --Sound: icy wind
-            icyCurtain.isVisible = true
-
-            transition.to(icyCurtain, {y=-1000, time=1500})
+           
+            transition.to(icyCurtain, {alpha=1, time=500})
+            transition.to(icyCurtain, {y=-1000, time=1500, delay=500})
             transition.to(chains, {alpha=1, time=1000, delay=500})
-            transition.to(koshPrisoner, {alpha = 0, time=500, delay=500})
-            transition.to(IvanS, {y = -600, time=500, delay=500})
+            transition.to(koshPrisoner, {alpha = 0, time=1000, delay=500})
+            transition.to(IvanS, {alpha = 0, time=1000, delay=500})
         end,
         animationComplete = function()
             icyCurtain.y=-1000
@@ -1143,14 +1154,11 @@ local scenes = {}
         sName = 31,
         text = "Alena runs outside, screaming her brother\'s name, but gets only the moaning of the wind and the whispering of the forest in reply.",
         follows = 32,
-        openingAnimation = {
-            [1] = 'background5.png', 
-            [2] = 'foreground1.png'
-            },
         setStage = 'set1',
         animations = function()
             --Effect: leaves fly
             --Sound: wind in the trees
+            setHouseAnEvening()
             transition.to(AlenaCryS, {y=270, time=1000, delay=500})
             leaves.alpha = 1
             transition.to(leaves, {y=550, x=500, time=3000, delay=1000})
@@ -4385,6 +4393,9 @@ local function setStageObjects(stage)
             dishes = display.newImage(midlayer2, "images/act2_dishes.png", true) setAnchor(dishes)
             dishes.x=580 dishes.y = -500
 
+            windowLight = display.newImage(midlayer3, "images/act2_light.png", true) setAnchor(windowLight)
+            windowLight.x=365 windowLight.y =130 windowLight.alpha =0
+
             organizeStage()
         end,
         set18 = function()
@@ -4414,7 +4425,7 @@ local function setStageObjects(stage)
             bucketTread.x=180 bucketTread.y = -600
 
             icyCurtain = display.newImage(midlayer3, "images/icyCurtain.png", true) setAnchor(icyCurtain)
-            icyCurtain.x=350 icyCurtain.y = 50 icyCurtain.isVisible=false
+            icyCurtain.x=350 icyCurtain.y = 50 icyCurtain.alpha=0
 
             organizeStage()
         end,
@@ -4983,8 +4994,12 @@ end
 
 -- Main text listener
 function sceneTextTouch(event)
-    print('scene text touch' .. event.target.text)
+    print('scene text touch' .. event.target.linkedText.text)
     if event.phase == "began" and event.target.follows then
+        event.target:setFillColor( 0.7, 0.7, 0.7 )
+    end
+    if event.phase == "ended" and event.target.follows then
+        event.target:setFillColor( 1,1,1 )
         -- Stats display
         print('Let us add listener!')
         print('Adding to scene:') print(event.target.index)
@@ -5046,10 +5061,10 @@ function loadScene(s)
                 transition.to(select1Text, {alpha=1, time=2000}) 
                 select1Text:setFillColor( 0, 0, 0 )
                 -- Attach the number of the scene to follow
-                select1Text.follows = s.selection[1][2]
+                select1Container.follows = s.selection[1][2]
                 print(s.selection[1][2])
                 -- Attach the name of the scene we are working in
-                select1Text.index = s.sName
+                select1Container.index = s.sName
             end
 
             if(s.selection[2]) then
@@ -5063,10 +5078,10 @@ function loadScene(s)
                 transition.to(select2Text, {alpha=1, time=2000}) 
                 select2Text:setFillColor( 0, 0, 0 )
                 -- Attach the number of the scene to follow
-                select2Text.follows = s.selection[2][2]
+                select2Container.follows = s.selection[2][2]
                 print(s.selection[2][2])
                 -- Attach the name of the scene we are working in
-                select2Text.index = s.sName
+                select2Container.index = s.sName
             end
 
             if(s.selection[3]) then
@@ -5080,15 +5095,15 @@ function loadScene(s)
                 transition.to(select3Text, {alpha=1, time=2000}) 
                 select3Text:setFillColor( 0, 0, 0 )
                 -- Attach the number of the scene to follow
-                select3Text.follows = s.selection[3][2]
+                select3Container.follows = s.selection[3][2]
                 print(s.selection[3][2])
                 -- Attach the name of the scene we are working in
-                select3Text.index = s.sName
+                select3Container.index = s.sName
             end
 
             -- Nullify the link from the main text in the scene
-            sceneText.follows = nil
-            sceneText.index = nil
+            textContainer.follows = nil
+            textContainer.index = nil
 
 
         else
@@ -5107,8 +5122,8 @@ function loadScene(s)
             print('Scene has no selection')
 
             -- Attaching following scene number and name of the scene we are working in
-            sceneText.follows = s.follows
-            sceneText.index = s.sName
+            textContainer.follows = s.follows
+            textContainer.index = s.sName
         end
         if(s.setStage) then
             setStageObjects(s.setStage)
@@ -5147,14 +5162,14 @@ myListener = function( event )
 
     print('Now adding Listeners in main')
     -- listeners for the right blocks
-    select1Text:addEventListener( "touch", sceneTextTouch)
-    select2Text:addEventListener( "touch", sceneTextTouch)
-    select3Text:addEventListener( "touch", sceneTextTouch)
+    select1Container:addEventListener( "touch", sceneTextTouch)
+    select2Container:addEventListener( "touch", sceneTextTouch)
+    select3Container:addEventListener( "touch", sceneTextTouch)
     
     -- listener for the main text
-    sceneText:addEventListener( "touch", sceneTextTouch)
+    textContainer:addEventListener( "touch", sceneTextTouch)
 
-    loadScene(scenes[1])
+    loadScene(scenes[9])
     return true
 end
 
