@@ -25,56 +25,93 @@ local textLayers = display.newGroup()
 
 -----------------------------------------------------------------------------------------
 --
+-- CHANGE CENTER FOR IMAGE
+--
+-----------------------------------------------------------------------------------------
+function setAnchor(imgTC)
+    imgTC.anchorX = 0 
+    imgTC.anchorY = 0
+end 
+
+-----------------------------------------------------------------------------------------
+--
 -- CHARACTERS
 --
 -----------------------------------------------------------------------------------------
--- Small characters for stage, initial
-local AlenaS = display.newImage( characters, "images/alena_f_small.png") AlenaS.x = 200 AlenaS.y = -400 
-local IvanS = display.newImage( characters, "images/ivan_s_small.png") IvanS.x = 130 IvanS.y = -400
-local MotherS = display.newImage( characters, "images/mother_s_small.png") MotherS.x = 540 MotherS.y = -400 
-local WolfS = display.newImage( characters, "images/wolf_s_small.png") WolfS.x = -200 WolfS.y = -400
-local WolfSit = display.newImage( characters, "images/wolf_f_small.png") WolfSit.x = -200 WolfS.y = -400  
-local VasilisaS = display.newImage( characters, "images/vasilisa_f_small.png") VasilisaS.x = 1200 VasilisaS.y = -400  
-local BearS = display.newImage( characters, "images/bear_s_small.png") BearS.x = 200 BearS.y = -400 
-local YagaS = display.newImage( characters, "images/yaga_f_small.png") YagaS.x = 350 YagaS.y = -400 
-local MouseS = display.newImage( characters, "images/mouse_small.png") MouseS.x = -100 MouseS.y=200 
-
-
--- Small characters  changed images
-local AlenaCryS = display.newImage( characters, "images/alena_cry_small.png") AlenaCryS.x = 400 AlenaCryS.y =-400 
-local AlenaCrySNR = display.newImage( characters, "images/alena_cry_smallNR.png") AlenaCrySNR.x = 400 AlenaCrySNR.y =-400 
-local AlenaNoRibbon = display.newImage( characters, "images/alena_noRib_small.png") AlenaNoRibbon.x = 400 AlenaNoRibbon.y =-400 
-local MotherWarS = display.newImage( characters, "images/mother_f_small.png") MotherWarS.x = 600 MotherWarS.y = -400  
-local AlenaOnWolf = display.newImage( characters, "images/alena_on_wolf.png") AlenaOnWolf.x = 1200 AlenaOnWolf.y = 270
-local AlenaOnWolfNoRibbon = display.newImage( characters, "images/alena_on_wolf_noR.png") AlenaOnWolfNoRibbon.x = 1200 AlenaOnWolfNoRibbon.y = 270
-local VasilisaPlea = display.newImage( characters, "images/vasilisa_s_small.png") VasilisaPlea.x = 400 VasilisaPlea.y = -400 
 
 -- Background for dialogue stage
-local dialBack = display.newImage(charactersDial, "images/dialBack.png", true )
-dialBack.anchorX = 0 dialBack.anchorY = 0 
-dialBack.y=-800
+local dialBack = display.newImage(charactersDial, "images/effects/dialBack.png", true ) setAnchor(dialBack)
+dialBack.y=-800 dialBack.x=0
+
+-- Small characters for stage, act1
+local AlenaS = display.newImage( characters, "images/chars/alena_f_small.png", true)
+    setAnchor(AlenaS) AlenaS.isVisible = false
+local IvanS = display.newImage( characters, "images/chars/ivan_s_small.png", true) 
+    setAnchor(IvanS) IvanS.isVisible = false
+local MotherS = display.newImage( characters, "images/chars/mother_s_small.png", true) 
+    setAnchor(MotherS) MotherS.isVisible = false
+local WolfS = display.newImage( characters, "images/chars/wolf_s_small.png", true) 
+    setAnchor(WolfS) WolfS.isVisible = false
+local AlenaCryS = display.newImage( characters, "images/chars/alena_cry_small.png", true) 
+    setAnchor(AlenaCryS) AlenaCryS.isVisible = false
+local MotherWarS = display.newImage( characters, "images/chars/mother_f_small.png", true)  
+    setAnchor(MotherWarS) MotherWarS.isVisible = false
+
+-- Small characters for stage, act2
+local AlenaOnWolf = display.newImage( characters, "images/chars/alena_on_wolf.png")
+    setAnchor(AlenaOnWolf) AlenaOnWolf.isVisible = false
+local WolfSit = display.newImage( characters, "images/chars/wolf_f_small.png", true) 
+    setAnchor(WolfSit) WolfSit.isVisible = false
 
 -- Big characters for dialogue stage
-local Alena = display.newImage( charactersDial, "images/alena_f_dialogue.png") Alena.x = 400 Alena.y = 800
-local AlenaNR = display.newImage( charactersDial, "images/alena_f_dialogueNR.png") AlenaNR.x = 400 AlenaNR.y = 800
-local AlenaCryD_NR = display.newImage( charactersDial, "images/alena_cry_dialogueNR.png") AlenaCryD_NR.x = 400 AlenaCryD_NR.y = 800  
-local Ivan = display.newImage( charactersDial, "images/ivan_s_dialogue.png") Ivan.x = 300 Ivan.y = 800
-local Mother = display.newImage( charactersDial, "images/mother_s_dialogue.png", false) Mother.x = 400 Mother.y = 800 
-local MotherWar = display.newImage( charactersDial, "images/mother_f_dialogue.png", false) MotherWar.x = 400 MotherWar.y = 900
-local Koschei = display.newImage( charactersDial, "images/koschei_f_big.png", false) Koschei.x = 300 Koschei.y = 800
-local KoscheiPlea = display.newImage( charactersDial, "images/kosh_plea_dialogue.png", false) KoscheiPlea.x = 900 KoscheiPlea.y = 800
-local KoscheiPleaNCD = display.newImage( charactersDial, "images/kosh_plea_dialogue_NC.png", false) KoscheiPlea.x = 900 KoscheiPlea.y = 800
-local Wolf  = display.newImage( charactersDial, "images/wolf_dialogue.png", false) Wolf.x = 700 Wolf.y = 800 
-local Bear  = display.newImage( charactersDial, "images/bear_dialogue.png", false) Bear.x = 100 Bear.y = 800 
-local VasilisaD = display.newImage( charactersDial, "images/vasilisa_f_dialogue.png") VasilisaD.x = 400 VasilisaD.y = 800
-local VasilisaCry = display.newImage( charactersDial, "images/vasilisa_s_dialogue.png") VasilisaCry.x = 400 VasilisaCry.y = 800 
-local CrowD = display.newImage( charactersDial, "images/crow_f_dialogue.png") CrowD.x = 200 CrowD.y = 800 
-local YagaD = display.newImage( charactersDial, "images/yaga_dialogue.png") YagaD.x = 300 YagaD.y = 800
-local MouseD = display.newImage( charactersDial, "images/mouseDial.png") MouseD.x = 300 MouseD.y = 800
+local Alena = display.newImage( charactersDial, "images/chars/alena_f_dialogue.png", true) Alena.isVisible = false
+local Ivan = display.newImage( charactersDial, "images/chars/ivan_s_dialogue.png", true)  Ivan.isVisible = false
+local Mother = display.newImage( charactersDial, "images/chars/mother_s_dialogue.png", true) Mother.isVisible = false
+local MotherWar = display.newImage( charactersDial, "images/chars/mother_f_dialogue.png", true) MotherWar.isVisible = false
+local KoscheiPlea = display.newImage( charactersDial, "images/chars/kosh_plea_dialogue.png", true) KoscheiPlea.isVisible = false
+local Koschei = display.newImage( charactersDial, "images/chars/koschei_f_big.png", true) Koschei.isVisible = false
+local Wolf = display.newImage( charactersDial, "images/chars/wolf_dialogue.png", false) Wolf.isVisible = false 
 
 -- Charcters for brother's scenes
 local BrotherD = display.newImage(foregoundGr, "images/transparent.png")
 local BrotherS = display.newImage(foregoundGr, "images/transparent.png")
+
+--[[
+local WolfSit = display.newImage( characters, "images/chars/wolf_f_small.png", true) WolfSit.x = -200 WolfS.y = -400 
+
+local AlenaIvanRiding = display.newImage(midlayer3, "images/chars/AlenaIvanRiding.png", true)
+
+
+local VasilisaS = display.newImage( characters, "images/chars/vasilisa_f_small.png") VasilisaS.x = 1200 VasilisaS.y = -400  
+local BearS = display.newImage( characters, "images/chars/bear_s_small.png") BearS.x = 200 BearS.y = -400 
+local YagaS = display.newImage( characters, "images/chars/yaga_f_small.png") YagaS.x = 350 YagaS.y = -400 
+local MouseS = display.newImage( characters, "images/chars/mouse_small.png") MouseS.x = -100 MouseS.y=200 
+
+
+
+local AlenaCrySNR = display.newImage( characters, "images/chars/alena_cry_smallNR.png") AlenaCrySNR.x = 400 AlenaCrySNR.y =-400 
+local AlenaNoRibbon = display.newImage( characters, "images/chars/alena_noRib_small.png") AlenaNoRibbon.x = 400 AlenaNoRibbon.y =-400  
+
+local AlenaOnWolfNoRibbon = display.newImage( characters, "images/chars/alena_on_wolf_noR.png") AlenaOnWolfNoRibbon.x = 1200 AlenaOnWolfNoRibbon.y = 270
+local VasilisaPlea = display.newImage( characters, "images/chars/vasilisa_s_small.png") VasilisaPlea.x = 400 VasilisaPlea.y = -400 
+
+
+
+local AlenaNR = display.newImage( charactersDial, "images/chars/alena_f_dialogueNR.png") AlenaNR.x = 400 AlenaNR.y = 800
+local AlenaCryD_NR = display.newImage( charactersDial, "images/chars/alena_cry_dialogueNR.png") AlenaCryD_NR.x = 400 AlenaCryD_NR.y = 800  
+
+
+ 
+local Koschei = display.newImage( charactersDial, "images/chars/koschei_f_big.png", false) Koschei.x = 300 Koschei.y = 800
+local KoscheiPleaNCD = display.newImage( charactersDial, "images/chars/kosh_plea_dialogue_NC.png", false) KoscheiPlea.x = 900 KoscheiPlea.y = 800
+local Bear  = display.newImage( charactersDial, "images/chars/bear_dialogue.png", false) Bear.x = 100 Bear.y = 800 
+local VasilisaD = display.newImage( charactersDial, "images/chars/vasilisa_f_dialogue.png") VasilisaD.x = 400 VasilisaD.y = 800
+local VasilisaCry = display.newImage( charactersDial, "images/chars/vasilisa_s_dialogue.png") VasilisaCry.x = 400 VasilisaCry.y = 800 
+local CrowD = display.newImage( charactersDial, "images/chars/crow_f_dialogue.png") CrowD.x = 200 CrowD.y = 800 
+local YagaD = display.newImage( charactersDial, "images/chars/yaga_dialogue.png") YagaD.x = 300 YagaD.y = 900
+local MouseD = display.newImage( charactersDial, "images/chars/mouseDial.png") MouseD.x = 300 MouseD.y = 800
+
+]]--
 
 
 -- Set main screen
@@ -83,6 +120,11 @@ local background = display.newImage( "images/startScreen.png") background.x = di
 -- Variables for stage content
 local foreground = display.newImage(foregoundGr, "images/transparent.png")
 local settings
+
+-- Arrays for character groups
+local charactersBig = {Mother, Alena, Ivan, Wolf, MotherWar, KoscheiPlea, Koschei}
+local charactersSmall = {AlenaS, IvanS, MotherS, WolfS, AlenaCryS, MotherWarS}
+
 
 -- Variables for selections
 local select1Container = display.newImage(textLayers, "images/selection_back.png")
@@ -94,7 +136,7 @@ select2Container.x = 840 select2Container.y = 200
 select2Container.isVisible = false
 
 local select3Container = display.newImage(textLayers, "images/selection_back.png")
-select3Container.x = 820 select3Container.y = 280
+select3Container.x = 840 select3Container.y = 280
 select3Container.isVisible = false
 
 local select1Text = display.newText(textLayers, '', 720, 100, 250, display.contentHeight * 0.5, 'PTSans-Regular', 18) 
@@ -126,6 +168,7 @@ select3Container.linkedText = select3Text
 
 local S_MusicCh
 local S_BgSfxCh
+local S_ClickSfxCh
 
 
 
@@ -136,6 +179,23 @@ local S_BgSfxCh
 -- SEPARATED ANIMATIONS
 --
 -----------------------------------------------------------------------------------------
+function openingAnimation(backg, foregr)
+    cleanUpLevel()
+
+    background:removeSelf()
+    background = nil
+    foreground:removeSelf()
+    foreground = nil
+
+    background = display.newImage( "images/backg/"..backg, true ) setAnchor(background) 
+    background.isVisible = true
+
+    foreground = display.newImage(foregoundGr, "images/backg/"..foregr, true ) setAnchor(foreground)
+    foreground.y = -700
+    transition.to(foreground, {y=0, time=1000})
+end
+
+--- Location 1 (Edge of the forest) animations
 local function loadHomeSet()
     foreground.y=0
     transition.to(landscape3, {x=0, time=1000, delay=1000})
@@ -146,33 +206,55 @@ local function loadHomeSet()
     transition.to(houseOutside, {y=0, time=1000, delay=3700})
 end 
 
-local function animateBucket()
-    transition.to(bucketTread, {y=-100, time=700, delay=500})
-    transition.to(bucket2, {rotation=-80, y=415, time=700, delay=500})
-    transition.to(bucketTread, {y=-300, x=580, time=700, delay=1200})
-    transition.to(bucket2, {rotation=-80, y=215, x=675, time=700, delay=1200})
-    transition.to(bucketTread, {y=-100, x=680, time=1000, delay=2200})
-    transition.to(bucket2, {rotation=-80, y=415, x=775, time=1000, delay=2200})
-
+local function sunSet() 
+    sun.alpha=1
+    transition.to(sun, {y=-200, x=400, time=1000})
+    transition.to(sun, {y=50, x=650, time=1000, delay=1000})
+    transition.to(background, {y=-500, time=2000})
+    transition.to(orangeLight, {alpha=1, time=1000, delay=1000})
 end
 
+local function setHouseAnEvening()
+    background:removeSelf()
+    background = nil
+    background = display.newImage( "images/backg/background5.png", true ) setAnchor(background)
+    background.x=0 background.y=0
+
+    foreground:removeSelf()
+    foreground = nil
+    foreground = display.newImage(foregoundGr, "images/backg/foreground1.png", true ) setAnchor(foreground)
+    foreground.x=0 foreground.y=0
+end
+
+local function leavesFalling(delTime)
+        leaves.x=700 leaves.y=-550
+        transition.to(leaves, {y=550, x=-200, time=4000, delay=delTime})
+end
+
+--- Location 2 (Alena's home inside) animations
 local function setStageHome()
     transition.to(bed, {y=0, time=1000, delay=500})
     transition.to(tableCloth, {y=5, time=1000, delay=1000})
     transition.to(shadowLayer2, {alpha=1, time=1000, delay=2500})
 end
 
+local function cleaningTheRoom() 
+    transition.to(broom, {y=-30, time=700, delay=300})
+    transition.to(dishes, {y=-25, time=500, delay=1000})
+    transition.to(dishes, {x=150, y=-180, time=500, delay=2000})
+    transition.to(broom, {x=500, time=500, delay=2500})
+    transition.to(broom, {x=200, time=500, delay=3000})
+end
+
 local function setStageHomeFast()
     foreground:removeSelf()
     foreground = nil
-    foreground = display.newImage(foregoundGr, "images/foreground2.png", true ) setAnchor(foreground)
+    foreground = display.newImage(foregoundGr, "images/backg/foreground2.png", true ) setAnchor(foreground)
     foreground.x=0 foreground.y=0
-
     background:removeSelf()
     background = nil
-    background = display.newImage( "images/background2.png", true ) setAnchor(background)
+    background = display.newImage( "images/backg/background2.png", true ) setAnchor(background)
     background.x=0 background.y=0
-
     bed.y=0
     tableCloth.y=5
     shadowLayer2.alpha=0.5
@@ -181,15 +263,33 @@ local function setStageHomeFast()
     ovenFire.alpha=1
 end
 
+--- Location 3 (Basement stage) animations
 local function setBasementStage()
     transition.to(basementStage, {alpha=1, time=3000, delay=1000})
-    transition.to(icyCurtain, {alpha=0, time=3000, delay=1000})
     transition.to(lights3, {y=0, time=1000, delay=2000})
     transition.to(bucket1, {y=-50, time=1000, delay=2000})
     transition.to(bucket2, {y=470, time=1000, delay=2000})
     transition.to(bucketTread, {y=-50, time=1000, delay=2000})
     transition.to(waterFount, {alpha=1, time=1000, delay=3000})
     transition.to(koshPrisoner, {alpha=1, time=2000, delay=1000})
+end
+
+local function icyCurtainMoving()
+    transition.to(icyCurtain, {alpha=1, time=500})
+    transition.to(icyCurtain, {y=-1000, time=1500, delay=500})
+    transition.to(chains, {alpha=1, time=1000, delay=500})
+    transition.to(koshPrisoner, {alpha = 0, time=1000, delay=500})
+    transition.to(IvanS, {alpha=0, time=1000, delay=500})
+end
+
+local function animateBucket()
+    transition.to(bucketTread, {y=-100, time=700, delay=500})
+    transition.to(bucket2, {rotation=-80, y=415, time=700, delay=500})
+    transition.to(bucketTread, {y=-300, x=580, time=700, delay=1200})
+    transition.to(bucket2, {rotation=-80, y=215, x=675, time=700, delay=1200})
+    transition.to(bucketTread, {y=-100, x=680, time=1000, delay=2200})
+    transition.to(bucket2, {rotation=-80, y=415, x=775, time=1000, delay=2200})
+
 end  
 
 local function setBasementFast()
@@ -202,37 +302,34 @@ local function setBasementFast()
     bucketTread.y=-50
     waterFount.alpha=1
     koshPrisoner.alpha=1
-
     background:removeSelf()
     background = nil
-    background = display.newImage( "images/background3.png", true ) setAnchor(background)
+    background = display.newImage( "images/backg/background3.png", true ) setAnchor(background)
     background.x=0 background.y=0
-
     foreground:removeSelf()
     foreground = nil
-    foreground = display.newImage(foregoundGr, "images/foreground3.png", true ) setAnchor(foreground)
+    foreground = display.newImage(foregoundGr, "images/backg/foreground3.png", true ) setAnchor(foreground)
     foreground.x=0 foreground.y=0
 end
 
-local function setHouseAnEvening()
-        background:removeSelf()
-    background = nil
-    background = display.newImage( "images/background5.png", true ) setAnchor(background)
-    background.x=0 background.y=0
+-- Location 4 forest 1
 
-    foreground:removeSelf()
-    foreground = nil
-    foreground = display.newImage(foregoundGr, "images/foreground1.png", true ) setAnchor(foreground)
-    foreground.x=0 foreground.y=0
+function loadForest1()
+    transition.to(landscape3, {x=0, time=1000, delay=500})
+    transition.to(landscape2, {x=0, time=1000, delay=1000})
+    transition.to(landscape1, {x=0, time=1000, delay=1500})
+    transition.to(shadowLayer5, {alpha=1, time=1000, delay=2500})
 end
 
 local function loadBrothers(name) 
     BrotherD:removeSelf() BrotherD = nil
     BrotherS:removeSelf() BrotherS = nil
-    BrotherD = display.newImage( charactersDial, "images/"..name.."_dialogue.png")
-    BrotherS = display.newImage( characters, "images/"..name.."_f_small.png")
+    BrotherD = display.newImage( charactersDial, "images/chars/"..name.."_dialogue.png")
+    BrotherS = display.newImage( characters, "images/chars/"..name.."_f_small.png")
     BrotherD.x = 400 BrotherD.y = 800
-    BrotherS.x = 500 BrotherS.y = -400
+    BrotherS.x = 450 BrotherS.y = -400
+    table.insert(charactersBig, BrotherD)
+    table.insert(charactersSmall, BrotherS)
 end
 
 local function setStronghold1()
@@ -260,24 +357,8 @@ local function setStronghold2()
 
 end 
 
-function openingAnimation(backg, foregr)
-    clearStage()
-    hideDialogue()
-    removeCharacters()
-    background:removeSelf()
-    background = nil
-    foreground:removeSelf()
-    foreground = nil
-    background = display.newImage( "images/"..backg, true ) setAnchor(background) 
-    background.isVisible = true
-
-    foreground = display.newImage(foregoundGr, "images/"..foregr, true ) setAnchor(foreground)
-    foreground.y = -700
-    transition.to(foreground, {y=0, time=1000})
-end
-
 function ridingWolftoRight(AlenaRibbon)
-    AlenaRibbon.xScale=1 AlenaRibbon.x=1000
+    AlenaRibbon.isVisible = true AlenaRibbon.xScale=1 AlenaRibbon.x=1000 AlenaRibbon.y=0
     landscape2.x=0
     landscape1.x=0
     transition.to(landscape2, {x=-800, time=3000 })
@@ -315,13 +396,9 @@ function wolfAlenaInGarden()
 end
 
 function loadUncleCastle()
-    WolfSit.x=900
-    AlenaS.x=740
     transition.to(landscape3, {x=0, time=1000, delay=1000})
     transition.to(landscape2, {y=0, time=1000, delay=2000})
     transition.to(shadowLayer6, {alpha=1, time=1000, delay=3000})
-    transition.to(WolfSit,{y=270, time=1000, delay=3000})
-    transition.to(AlenaS,{y=280, time=1000, delay=3000})
     transition.to(throne, {y=-30, time=500, delay=4000})
     transition.to(birdSymbol, {y=320, time=500, delay=4000})
     transition.to(BrotherS, {y=300, delay=4000, time=1000})
@@ -613,8 +690,6 @@ choices = {
     bucket = 0,
     brother = 'NoInfo',
     brother1 = 'NoInfo',
-    advice = true,
-    notListen = 0,
     vasilisa = 'NoInfo',
     vasilisaGo = false,
     bear = false,
@@ -622,9 +697,11 @@ choices = {
     wolfPenalty = 0,
 }
 
+local dialogBackground;
+
 local scenes = {} 
 
--------- Act 1 Scenes 1 - 38
+-------- Act 1 Scenes 1 - 43
 
     scenes[1] = {
         sName = 1,
@@ -632,40 +709,46 @@ local scenes = {}
             [1] = 'background1.png', 
             [2] = 'foreground1.png'
         },
-        setStage = 'set1',
+        setStage = 'setMotherHouse',
         text = "In a small house on the edge of the dark forest, there lived a brother and sister, Ivan and Alena.",
         follows = 2,
         animations = function()
+        -- Animation: Home on the edge of the forest set, Alena and Ivan down
+            AlenaS.isVisible = true AlenaS.x = 200 
+            IvanS.isVisible = true IvanS.x = 130
+
             loadHomeSet() 
-            transition.to(AlenaS, {y=270, time=1000, delay=4500})
-            transition.to(IvanS, {y=290, time=1000, delay=4500}) 
+
+            transition.to(AlenaS, {y=0, time=1000, delay=4500})
+            transition.to(IvanS, {y=0, time=1000, delay=4500}) 
         end,
         animationComplete = function()
             landscape3.x= 0
             landscape2.x= -15
             landscape1.rotation= 0 landscape1.y=630
-            shadowLayer1.alpha=1
+
+            AlenaS.isVisible = true AlenaS.x = 200  IvanS.y=0
+            IvanS.isVisible = true IvanS.x = 130 AlenaS.y=0
+    
             houseOutside.y = 0
-            IvanS.y=290
-            AlenaS.y=270
+            shadowLayer1.alpha=1
+
             foreground.y = 0
-        end
+        end,
+        -- Sound: Opening
+        soundEffect = 'opening.mp3',
     }
     scenes[2] = {
         sName = 2,
         text = 'Their mother goes into the city every morning, leaving before the golden eye of the sun peeps over the horizon, returning only as the dying light turns the trees of the forest orange and red, as if kindling a fire deep in their depths.',
         follows = 3,
         animations = function()
-            --Effect: orangeLight
-            sun.alpha=1
-            transition.to(sun, {y=-200, x=400, time=1000})
-            transition.to(sun, {y=50, x=650, time=1000, delay=1000})
-            transition.to(background, {y=-250, time=2000})
-            transition.to(orangeLight, {alpha=1, time=1000, delay=1000})
+        -- Animation: sunset and evening light
+            sunSet()
         end,
         animationComplete = function()
-            background.y = -250
-            sun.y = 50 sun.x = 650
+            background.y = -200
+            sun.y = -70 sun.x = 50
             orangeLight.alpha=1
         end,
     }
@@ -674,27 +757,34 @@ local scenes = {}
         text = "Alena, as the oldest, has to watch over her little brother, and every morning before going to the city, her mother gives her a set of three instructions to follow throughout the day.",
         follows = 4,
         animations = function()
+        -- Animation: showing Mother figure
+            MotherS.isVisible = true MotherS.x=500
+            transition.to(MotherS, {y=0, time=1000})
+
             transition.to(orangeLight, {alpha=0, time=1000})
-            transition.to(MotherS, {y=270, time=1000})
+
         end,
         animationComplete = function()
-            MotherS.y = 270
+            MotherS.isVisible = true MotherS.x=500 MotherS.y = 0
+
+            orangeLight.alpha = 0
         end,
-        --Sound: Birds singing
+        -- Sound: Birds singing
         soundEffect = 'birdsSinging.mp3',
     }
     scenes[4] = {
         sName = 4,
         text = '"Alena, I\'m going to Tsar-gorod, so keep an eye on your brother. I\'ll be back before the sun goes down. Do you remember the rules?"',
         selection = {
-            [1] = {'"Yes, I do."', 5},
-            [2] = {'"Remind me, please, just in case."', 7}
+            [1] = {'Yes, I do.', 5},
+            [2] = {'Remind me, please.', 7}
         },
         animations = function()
-            showDialogue(Mother)
+            showDialogueBack()
+            showDialogueChar(Mother, 400, 400)
         end,
         animationComplete = function()
-            hideDialogue()
+            hideBigCharacters()
         end 
     }
     scenes[5] = {
@@ -702,59 +792,80 @@ local scenes = {}
         text = 'Alena doesn\'t really care about the rules. They have something to do with not playing near the basement, but nothing ever happens in the house, so Alena isn\'t worried.',
         follows = 6,
         clearSelection = true,
+        changeFlow = function() choices.bless = false end,
         animations = function()
-            hideDialogue()
+            transDialogueBack()
         end,
         animationComplete = function()
-            choices.bless = false
-            hideDialogue()
+            removeCurtain()
+            hideBigCharacters()
         end 
     }
     scenes[6] = {
         sName = 6,
         text = 'Mom: Promise me you\'ll follow the rules.',
-        follows = 8,
+        follows = 9,
+        changeFlow = function() choices.bless = true end,
         animations = function()
-            showDialogue(Mother)
+            hideBigCharacters()
+            showDialogueBack()
+            showDialogueChar(Mother, 400, 400)
         end,
         animationComplete = function()
-            choices.bless = true
+            hideBigCharacters()
         end
     }
     scenes[7] = {
         sName = 7,
-        text = 'Mom: Don\'t go into the forest.\nDon\'t let your brother run around in the house.\nDon\'t go into the basement, no matter what you hear from there.\nPromise me.',
+        text = 'Alena: "Remind me, please, just in case."',
         follows = 8,
         clearSelection = true,
         animations = function()
-            showDialogue(Mother)
+            hideBigCharacters()
+            showDialogueChar(Alena, 400, 400)
         end,
         animationComplete = function()
+            hideBigCharacters()
         end
     }
     scenes[8] = {
         sName = 8,
-        text = 'Alena: I\'ll follow your rules, I promise.',
+        text = 'Mom: Don\'t go into the forest. Don\'t let your brother run around in the house.\nDon\'t go into the basement, no matter what you hear from there. Promise me.',
         follows = 9,
+        clearSelection = true,
+        curtain = true,
         animations = function()
-            hideDialogue()
-            showDialogue(Alena)
+            showDialogueChar(Mother, 400, 400)
         end,
         animationComplete = function()
-            hideDialogue()
+            hideBigCharacters()
         end
-        
     }
     scenes[9] = {
         sName = 9,
-        setStage = 'set9',
+        text = 'Alena: I\'ll follow your rules, I promise.',
+        follows = 10,
+        curtain = true,
+        animations = function()
+            showDialogueChar(Alena, 400, 400)
+        end,
+        animationComplete = function()
+            removeCurtain()
+            hideBigCharacters()
+        end     
+    }
+
+    scenes[10] = {
+        sName = 10,
+        setStage = 'setHouseInside',
         openingAnimation = {
             [1] = 'background2.png', 
             [2] = 'foreground2.png'
         },
         text = 'After hearing that reassurance, her mother leaves, and Alena is alone with her brother. She is soon bored, but being an obedient daughter, she refrains from running around the house and dutifully keeps an eye on her brother. ',
-        follows = 10,
+        follows = 11,
         animations = function()
+        -- Animation: setting insides of the house
             setStageHome()
         end,
         animationComplete = function()
@@ -762,18 +873,17 @@ local scenes = {}
             tableCloth.y=5
             shadowLayer2.alpha=1
             foreground.y = 0
-        end
+        end,
+        -- Sound: Opening
+        soundEffect = 'opening.mp3',
     }
-    scenes[10] = {
-        sName =  10,
+    scenes[11] = {
+        sName =  11,
         text = 'Alena does all her chores - cleaning the dishes, sweeping the floors, and dusting all the knick-knacks. Then she sits down near the window overlooking the forest, while her brother plays on the floor. There\'s nothing going on outside.',
-        follows = 11,
-        animations = function() 
-            transition.to(broom, {y=-30, time=700, delay=300})
-            transition.to(dishes, {y=-25, time=500, delay=1000})
-            transition.to(dishes, {x=150, y=-180, time=500, delay=2000})
-            transition.to(broom, {x=500, time=500, delay=2500})
-            transition.to(broom, {x=200, time=500, delay=3000})
+        follows = 12,
+        animations = function()
+        -- Animation: Cleaning up 
+            cleaningTheRoom()
         end,
         animationComplete = function()
             broom.y=-30 broom.x=200
@@ -782,117 +892,162 @@ local scenes = {}
         --Sound: cleaning
         soundEffect = 'houseCleaning.mp3'
     }
-    scenes[11] = {
-        sName = 11,
-        text = 'Once the sun climbs higher in the sky, the sweltering heat beats upon the house, which grows further and further from the shortening reach of the forest shade. Ivan grows tired of playing with his toys under his sister\'s watchful gaze.',
-        follows = 12,
-        animations = function()
-            --Effect: light in the room
-            transition.to(shadowLayer2, {alpha=0.5, time=1000, delay=100})
-            transition.to(windowLight, {alpha=1, time=1000, delay=100})
-            AlenaS.x = 450 
-            IvanS.x = 350
-            transition.to(AlenaS, {y=270, time=1000, delay=1000})
-            transition.to(IvanS, {y=290, time=1000, delay=1500}) 
-        end,
-        animationComplete = function()
-            AlenaS.x = 450  AlenaS.y = 270 
-            IvanS.x = 350 IvanS.y = 290
-            shadowLayer2.alpha=0.5
-        end
-    }
     scenes[12] = {
         sName = 12,
-        text = 'Ivan: "Alena, can I go and play near the basement door? It is cooler there than in the rest of the house."',
-        selection = {
-            [1] = {'"Sure, but promise me you won\'t open the basement door."', 13},
-            [2] = {'"No, stay here in the greatroom."', 15}
-        },
+        text = 'Once the sun climbs higher in the sky, the sweltering heat beats upon the house, which grows further and further from the shortening reach of the forest shade. Ivan grows tired of playing with his toys under his sister\'s watchful gaze.',
+        follows = 13,
         animations = function()
-            showDialogue(Ivan)
+            -- Animation: midday, Alena and Ivan in
+            AlenaS.isVisible = true AlenaS.x = 450 
+            IvanS.isVisible = true IvanS.x = 350
+            transition.to(AlenaS, {y=0, time=1000, delay=1000})
+            transition.to(IvanS, {y=0, time=1000, delay=1500}) 
+
+            transition.to(shadowLayer2, {alpha=0.5, time=1000, delay=100})
+            transition.to(windowLight, {alpha=1, time=1000, delay=100})
+            
         end,
         animationComplete = function()
-            hideDialogue()
-        end
+            AlenaS.isVisible = true AlenaS.x = 450  AlenaS.y = 0 
+            IvanS.isVisible = true IvanS.x = 350 IvanS.y = 0
+            shadowLayer2.alpha = 0.5
+            windowLight.alpha = 1
+        end,
+        --Sound: summer Forest
+        soundEffect = 'summerForest.mp3'
     }
     scenes[13] = {
         sName = 13,
-        text = 'Ivan runs happily to the door and plays with his toys for a while. He likes it here. Despite the sunny day outside, there is frost in the air that comes creeping out from under the basement\'s thick wooden door.',
-        follows = 14,
+        text = 'Ivan: "Alena, can I go and play near the basement door? It is cooler there than in the rest of the house."',
+        selection = {
+            [1] = {'Go for it.', 14},
+            [2] = {'No, you are not allowed.', 15}
+        },
+        animations = function()
+            hideBigCharacters()
+            showDialogueBack()
+            showDialogueChar(Ivan, 400, 400)
+        end,
+        animationComplete = function()
+            hideBigCharacters()
+        end
+    }
+
+    scenes[14] = {
+        sName = 14,
+        text = 'Alena: "Sure, but promise me you won\'t open the basement door."',
+        follows = 16,
+        changeFlow = function() choices.basement = true  end,
         clearSelection = true,
         animations = function() 
-            hideDialogue()
+            showDialogueBack()
+            showDialogueChar(Alena, 400, 400)
+        end,
+        animationComplete = function() 
+           hideBigCharacters() 
+        end
+    }
+
+    scenes[15] = {
+        sName = 15,
+        text = 'Alena: "No, stay here in the greatroom."', 
+        follows = 18,
+        clearSelection = true,
+        changeFlow = function() choices.basement = false  end,
+        animations = function() 
+            showDialogueBack()
+            showDialogueChar(Alena, 400, 400)
+        end,
+        animationComplete = function() 
+            hideBigCharacters() 
+        end
+    }
+
+    scenes[16] = {
+        sName = 16,
+        text = 'Ivan runs happily to the door and plays with his toys for a while. He likes it here. Despite the sunny day outside, there is frost in the air that comes creeping out from under the basement\'s thick wooden door.',
+        follows = 17,
+        animations = function() 
+        -- Animation: Ivan turns and walks away
+            transDialogueBack()
             IvanS.xScale = -1 
             transition.to(IvanS, {x=-50, time=1000, delay=500}) 
         end,
         animationComplete = function() 
-            choices.basement = true 
+            removeCurtain()
             IvanS.xScale = 1 IvanS.x = -50
         end
     }
-    scenes[14] = {
-        sName = 14,
+
+    scenes[17] = {
+        sName = 17,
         text = 'When it is time for lunch, Alena calls to her brother, but he doesn\'t answer. "He is probably too busy with his toys!" thinks Alena. Then, she goes looking for him.',
-        follows = 18,
+        follows = 21,
         clearSelection = true,
         animations = function()
-            --Sound: cooking 
-            transition.to(ovenFire, {alpha=1, time=1000, delay=500}) 
+        -- Animation: Fire in the oven
+            transition.to(ovenFire, {alpha=1, time=1000, delay=500})
+            transition.to(AlenaS, {x=270, time=1000, delay=1500}) 
         end,
         animationComplete = function()
             ovenFire.alpha=1 
-        end
+        end,
+        --Sound: fire in the oven
+        soundEffect = 'fireInOven.mp3'
     }
-    scenes[15] = {
-        sName = 15,
+
+    scenes[18] = {
+        sName = 18,
         text = 'Ivan is not happy but stays in chamber dutifully obeying his big sister.',
-        follows = 16,
+        follows = 19,
         clearSelection = true,
+        changeFlow = function() choices.basement = false  end,
         animations = function()
-            hideDialogue()
+            transDialogueBack()
             IvanS.xScale = -1 
         end,
         animationComplete = function()
-            choices.basement = false 
+            removeCurtain()
             IvanS.xScale = 1 IvanS.x = -50
         end
     }
-    scenes[16] = {
-        sName = 16,
+    scenes[19] = {
+        sName = 19,
         text = 'Around noon, Alena cooks lunch, and when she finishes, she calls for her brother, but gets no reply. "Foolish boy!" she thinks.',
-        follows = 17,
+        follows = 20,
         clearSelection = true,
         animations = function()
-            --Sound: cooking 
-            hideDialogue()
             transition.to(ovenFire, {alpha=1, time=1000, delay=500})  
         end,
         animationComplete = function()
             ovenFire.alpha=1 
-        end
+        end,
+         --Sound: fire in the oven
+        soundEffect = 'fireInOven.mp3'
     }
-    scenes[17] = {
-        sName = 17,
+    scenes[20] = {
+        sName = 20,
         text = '"He probably went to play near the basement door anyway. The midday heat doesn\'t reach there, so it stays nice and cool." So she heads for the basement door.',
-        follows = 18,
+        follows = 21,
         clearSelection = true,
         animations = function()
         end,
         animationComplete = function()
         end
     }
-    scenes[18] = {
-        sName = 18,
-        setStage = 'set18',
+
+    scenes[21] = {
+        sName = 21,
+        setStage = 'setBasement',
         openingAnimation = {
             [1] = 'background3.png', 
             [2] = 'foreground3.png'
         },
         text = 'Suddenly, Alena sees that the heavy wooden door to the basement is ajar, and she hears a faint whispering "Water, please, give me some water..."',
-        follows = 19,
+        follows = 22,
         clearSelection = true,
         animations = function()
-            --Sound: creepy basement
+        -- Animation: Basement shows
             setBasementStage()
         end,
         animationComplete = function()
@@ -905,191 +1060,237 @@ local scenes = {}
             bucket1.y=-50
             bucket2.y=470
             bucketTread.y=-50
-        end
+        end,
+        --Sound: creepy basement
+        soundEffect = 'basementSounds.mp3'
     }
-    scenes[19] = {
-        sName = 19, 
+    scenes[22] = {
+        sName = 22, 
         text = 'Ivan is within, standing in front of an old man, all skin and bones, and bound to the wall with twelve iron chains. "Water, please, give me some water.." pleads the old man.',
         selection = {
-            [1] = {'"Who are you? What are you doing here?"', 20},
-            [2] = {'"Ivan, step back, don\'t get closer!"', 21}
+            [1] = {'Who are you?', 23},
+            [2] = {'Ivan, step back!', 25}
         },
         clearSelection = true,
-        animations = function() 
-            IvanS.x=560
-            AlenaS.x=240
-            transition.to(IvanS, {y=270, time=1000})
-            transition.to(AlenaS, {y=60, time=1000})
+        animations = function()
+        -- Animation: Alena and Ivan appearing 
+            IvanS.isVisible = true IvanS.x=560
+            AlenaS.isVisible = true AlenaS.x=190
+            transition.to(IvanS, {y=0, time=1000})
+            transition.to(AlenaS, {y=-200, time=1000})
         end,
         animationComplete = function()
-            IvanS.x=560
-            IvanS.y=270
-            AlenaS.y=60
+            IvanS.x=560 IvanS.y=0 IvanS.isVisible = true 
+            AlenaS.x=190 AlenaS.y=-200  AlenaS.isVisible = true 
         end
     }
-    scenes[20] = {
-        sName = 20,
+    scenes[23] = {
+        sName = 23, 
+        text = 'Alena: "Who are you? What are you doing here?"',
+        clearSelection = true,
+        follows = 24,
+        curtain = true,
+        animations = function() 
+            hideBigCharacters()
+            showDialogueBack()
+            showDialogueChar(Alena, 400, 400)
+        end,
+        animationComplete = function()
+            hideBigCharacters()
+        end
+    }
+    scenes[24] = {
+        sName = 24,
         text = 'Prisoner: "I am just an old man… Your mother imprisoned me long ago for my evil deeds. I haven\'t seen the sunlight in years. Be a good girl, give me some water..."',
         clearSelection = true,
         selection = {
-            [1] = {'Give the old man some water', 22},
-            [2] = {'Don\'t give him anything', 26}
+            [1] = {'Give the old man some water', 27},
+            [2] = {'Don\'t give him anything', 31}
         },
+        curtain = true,
         animations = function()
-            --Sound: waterRunning 
-            showDialogue(KoscheiPlea)
+            showDialogueChar(KoscheiPlea, 200, 400)
         end,
         animationComplete = function()
-            hideDialogue()
+            hideBigCharacters()
+            transDialogueBack()
         end
     }
-    scenes[21] = {
-        sName = 21,
+    scenes[25] = {
+        sName = 25, 
+        text = 'Alena: "Ivan, step back, don\'t get closer!"',
+        clearSelection = true,
+        follows = 26,
+        curtain = true,
+        animations = function()
+            hideBigCharacters()
+            showDialogueBack()
+            showDialogueChar(Alena, 400, 400)
+        end,
+        animationComplete = function()
+            hideBigCharacters()
+        end
+    }
+    scenes[26] = {
+        sName = 26,
         text = 'Prisoner: "Have no fear of me, children. I am old and famished. I mean you no harm. All I ask is a bucket of water to wet my throat. Have mercy, help me please."',
         clearSelection = true,
         selection = {
-            [1] = {'Give the old man some water', 22},
-            [2] = {'Don\'t give him anything', 26}
+            [1] = {'Give the old man some water', 27},
+            [2] = {'Don\'t give him anything', 31}
         },
+        curtain = true,
         animations = function() 
-            showDialogue(KoscheiPlea)
+            showDialogueChar(KoscheiPlea, 200, 400)
         end,
         animationComplete = function() 
-            hideDialogue()
+            hideBigCharacters()
+            transDialogueBack()
         end
     }
-    scenes[22] = {
-        sName = 22,
-        changeFlow = function()
-            choices.bucket=1
-        end,
+    scenes[27] = {
+        sName = 27,
+        changeFlow = function() choices.bucket=1 end,
         text = 'Prisoner: "Thank you child. (He drinks the bucket in one gulp.) Neither food nor drink has passed my lips for ages. Please, will you fetch me another bucket?"',
         clearSelection = true,
+        curtain = true,
         selection = {
-            [1] = {'Give the old man more water', 23},
-            [2] = {'Don\'t give him anything', 26}
+            [1] = {'Give the old man more water', 28},
+            [2] = {'Don\'t give him anything', 31}
         },
         animations = function()
-        --Sound: splash
-            hideDialogue() 
+        -- Animation: Bucket
+            removeCurtain() 
             animateBucket()
         end,
         animationComplete = function()
-            hideDialogue() 
+            removeCurtain()  
             bucket2.y=470
             bucketTread.y=-50
             bucket2.x=275
             bucketTread.x=180
             bucket2.rotation=0
-        end
-    } 
-    scenes[23] = {
-        sName = 23,
-        changeFlow = function()
-            choices.bucket = 2
         end,
+        --Sound: waterSplash
+        soundEffect = 'waterSplash.mp3'
+    } 
+    scenes[28] = {
+        sName = 28,
+        changeFlow = function() choices.bucket = 2 end,
         text = 'Prisoner: "Thank you child. (He drinks the bucket in one gulp.) Neither food nor drink has passed my lips for ages. Please, will you fetch me another bucket?"',
         clearSelection = true,
+        curtain = true,
         selection = {
-            [1] = {'Give the old man more water', 24},
-            [2] = {'Don\'t give him anything', 26}
+            [1] = {'Give the old man more water', 29},
+            [2] = {'Don\'t give him anything', 31}
         },
         animations = function()
-            --Sound: splash
-            hideDialogue()
+        -- Animation: Bucket
+            removeCurtain() 
             animateBucket() 
         end,
         animationComplete = function()
-        hideDialogue()
+            removeCurtain()
             bucket2.y=470
             bucketTread.y=-50
             bucket2.x=275
             bucketTread.x=180
             bucket2.rotation=0 
-        end
+        end,
+        --Sound: waterSplash
+        soundEffect = 'waterSplash.mp3'
     }
-    scenes[24] = {
-        sName = 24,
+    scenes[29] = {
+        sName = 29,
         text = 'Prisoner: "Thank you, girl, for your kindness. For that I won\'t eat you. But you are a disobedient daughter, so I don\'t need you. I\'ll take your brother instead!"',
-        follows = 25,
+        follows = 30,
         clearSelection = true,
+        curtain = true,
         animations = function()
-            --Sound: cold wind
-            showDialogue(Koschei)
+            hideBigCharacters()
+            showDialogueBack()
+            showDialogueChar(Koschei, 400, 400)
         end,
         animationComplete = function()
-            hideDialogue()
+            hideBigCharacters()
+            transDialogueBack()
             bucketTread.isVisible=false
         end
     }
-    scenes[25] = {
-        sName = 25,
+    scenes[30] = {
+        sName = 30,
         text = 'With these words, he tears off all twelve chains, grabs Ivan, swirls on the spot, and in the next second, they are both gone.',
-        follows = 31,
+        follows = 36,
         clearSelection = true,
-        animations = function() 
-            transition.to(icyCurtain, {alpha=1, time=500})
-            hideDialogue()
-
-            transition.to(icyCurtain, {y=-1000, time=1500, delay=500})
-            transition.to(chains, {alpha=1, time=1000, delay=500})
-            transition.to(koshPrisoner, {alpha = 0, time=1000, delay=500})
-            transition.to(IvanS, {alpha=0, time=1000, delay=500})
+        curtain = true,
+        animations = function()
+        -- Animation: Ivans kidnepping
+            removeCurtain()
+            icyCurtainMoving()
         end,
         animationComplete = function()
+            removeCurtain()
             icyCurtain.y=-1000
             chains.alpha=1
             koshPrisoner.alpha=0
             IvanS.y=-600
-            hideDialogue()
-        end
+            removeCurtain()
+        end,
+        --Sound: Wind gust
+        soundEffect = 'windKoschei.mp3'
     }
-    scenes[26] = {
-        sName = 26,
+    scenes[31] = {
+        sName = 31,
         text = 'Prisoner: "Aren\'t you tired of always listening to your mother? Don\'t you want to think for yourself and make decisions like a grown up?" he tries to persuade Alena.',
         clearSelection = true,
         selection = {
-            [1] = {'Give the old man some water', 23},
-            [2] = {'Don\'t give him anything', 27}
+            [1] = {'Give the old man some water', 28},
+            [2] = {'Don\'t give him anything', 32}
         },
+        curtain = true,
         changeFlow = function()
-            print(choices.bucket..' buckets given')
-            if choices.bucket == 0 then scenes[26].selection[1][2] = 22
-            elseif choices.bucket == 1 then scenes[26].selection[1][2] = 23
-            elseif choices.bucket == 2 then scenes[26].selection[1][2] = 24
+            if choices.bucket == 0 then scenes[28].selection[1][2] = 27
+            elseif choices.bucket == 1 then scenes[28].selection[1][2] = 28
+            elseif choices.bucket == 2 then scenes[28].selection[1][2] = 29
             end
         end,
         animations = function()
-            showDialogue(KoscheiPlea)
+            hideBigCharacters()
+            showDialogueBack()
+            showDialogueChar(KoscheiPlea, 200, 400)
         end,
         animationComplete = function()
-            hideDialogue()
+            hideBigCharacters()
+            transDialogueBack()
         end
     }
-    scenes[27] = {
-        sName = 27,
-        setStage = 'set9',
+    scenes[32] = {
+        sName = 32,
+        setStage = 'setHouseInside',
         text = 'Alena takes her brother and closes the door to the basement. When they go up, Ivan reproaches her for being so harsh on the prisoner. "Aren\'t we supposed to respect our elders?" asks Ivan.',
-        follows = 28,
+        follows = 33,
+        curtain = true,
         clearSelection = true,
         animations = function()
-        --Sound: steps
-            hideDialogue()
+            removeCurtain()
             setStageHomeFast()
-            AlenaS.x = 450 
-            IvanS.x = 350
-            transition.to(AlenaS, {y=270, time=1000, delay=500})
-            transition.to(IvanS, {y=290, time=1000, delay=1000}) 
+            AlenaS.isVisible = true AlenaS.x = 450 
+            IvanS.isVisible = true IvanS.x = 350
+            transition.to(AlenaS, {y=0, time=1000, delay=500})
+            transition.to(IvanS, {y=0, time=1000, delay=1000}) 
         end,
         animationComplete = function()
-            AlenaS.x = 450  AlenaS.y = 270 
-            IvanS.x = 350 IvanS.y = 290
-        end
+            removeCurtain()
+            AlenaS.x = 450  AlenaS.y = 0 
+            IvanS.x = 350 IvanS.y = 0
+        end,
+        -- Sound: Steps two people on wood
+        soundEffect = 'stepsTwoWood.mp3'
     }
-    scenes[28] = {
-        sName = 28,
+    scenes[33] = {
+        sName = 33,
         text = 'Alena says that they should follow mother\'s orders first and foremost. Back in the greatroom, she puts Ivan to bed and nestles near him. In a second, her eyes close and she falls fast asleep.',
-        follows = 29,
+        follows = 34,
         animations = function()
             IvanS.xScale = -1
             transition.to(IvanS, {x=-200, time=1000, delay=1500})  
@@ -1097,22 +1298,24 @@ local scenes = {}
         animationComplete = function()
             IvanS.xScale = -1
             IvanS.x=-200
-        end
+        end,
+        --Sound: summer Forest
+        soundEffect = 'summerForest.mp3'
+
     }
-    scenes[29] = {
-        sName = 29,
-        setStage = 'set18',
+    scenes[34] = {
+        sName = 34,
+        setStage = 'setBasement',
         text = 'When she wakes up, her brother is nowhere to be found. Panic-stricken, she runs to the basement and sees the open door and an empty buсket on the floor near the prisoner.',
-        follows = 30,
+        follows = 35,
         clearSelection = true,
         animations = function() 
-            --Sound: lazy day
             setBasementFast()
+            AlenaS.isVisible = true AlenaS.x = 140 
+            IvanS.isVisible = true IvanS.x = 560
             IvanS.xScale = 1
-            IvanS.x=560
-            AlenaS.x=240
-            transition.to(AlenaS, {y=60, time=1000, delay=1000})
-            transition.to(IvanS, {y=290, time=1000, delay=1500})
+            transition.to(AlenaS, {y=-200, time=500, delay=1000})
+            transition.to(IvanS, {y=0, time=1000, delay=1500})
         end,
         animationComplete = function()
             foreground.y = 0
@@ -1123,19 +1326,16 @@ local scenes = {}
             bucket1.y=-50
             bucket2.y=470
             bucketTread.y=-50
-            IvanS.x=560
-            IvanS.y=270
-            AlenaS.y=60
+            IvanS.isVisible = true IvanS.x=560 IvanS.y=0  IvanS.xScale = 1
+            AlenaS.isVisible = true AlenaS.x = 140  AlenaS.y=-200
         end
     }
-    scenes[30] = {
-        sName = 30,
+    scenes[35] = {
+        sName = 35,
         text = '"Thank you, Ivan, for your kindness. For that I\'ll take you with me!" says the bony prisoner and tears off all twelve of his chains, grabs Ivan, swirls on the spot, and in the next second, both are gone.',
-        follows = 31,
+        follows = 36,
         clearSelection = true,
-        animations = function() 
-            --Sound: icy wind
-           
+        animations = function()            
             transition.to(icyCurtain, {alpha=1, time=500})
             transition.to(icyCurtain, {y=-1000, time=1500, delay=500})
             transition.to(chains, {alpha=1, time=1000, delay=500})
@@ -1147,143 +1347,157 @@ local scenes = {}
             chains.alpha=1
             koshPrisoner.alpha=0
             IvanS.y=-600
-            hideDialogue()
-        end
+            removeCurtain()
+        end,
+        --Sound: Wind gust
+        soundEffect = 'windKoschei.mp3'
     }
-    scenes[31] = {
-        sName = 31,
+    scenes[36] = {
+        sName = 36,
         text = "Alena runs outside, screaming her brother\'s name, but gets only the moaning of the wind and the whispering of the forest in reply.",
-        follows = 32,
-        setStage = 'set1',
+        follows = 37,
+        setStage = 'setMotherHouse',
         animations = function()
             --Effect: leaves fly
             --Sound: wind in the trees
             setHouseAnEvening()
-            transition.to(AlenaCryS, {y=270, time=1000, delay=500})
+            AlenaCryS.isVisible = true
+            transition.to(AlenaCryS, {y=0, time=1000, delay=500})
             leaves.alpha = 1
-            transition.to(leaves, {y=550, x=500, time=3000, delay=1000})
+            leavesFalling(1000)
         end,
         animationComplete = function()
-            AlenaCryS.y=270
+            AlenaCryS.isVisible = true AlenaCryS.y=0
             leaves.alpha=1 leaves.x=500 leaves.y=550
-        end
-    }
-    scenes[32] = {
-        sName = 32,
-        text = 'Alena\'s mother returns home early, with the strange feeling that something might have happened. Alena can\'t look her in the eyes. She stumbles and mumbles but eventually tells the whole truth.',
-        follows = 33,
-        animations = function()
-        --Effect: leaves fly
-            MotherS.x=600
-            transition.to(MotherS, {y=270, time=700})
         end,
-        animationComplete = function()
-            MotherS.y=270
-            MotherS.x=600
-        end
-    }
-    scenes[33] = {
-        sName = 33,
-        text = 'Mom: "Now Koschei will summon his armies and storm the Tsar-gorod. He\'s had dozen of years to plan his revenge for his imprisonment. The Tsar will need my help, so you have to find your brother on your own."',
-        follows = 34,
-        animations = function()
-        --Sound: armor clash
-            showDialogue(Mother)
-            transition.to(MotherS, {y=-400, time=700, delay=1000})
-            transition.to(MotherWarS, {y=270, time=700, delay=2700})
-        end,
-        animationComplete = function()
-            hideDialogue()
-            MotherS.y=-400
-            MotherWarS.y=270
-        end
-    }
-    scenes[34] = {
-        sName = 34,
-        text = 'Alena\'s mother, no other than Marya Morevna, the famous warrior princess, whistles and a second later, the depths of the forest open, and a huge Gray wolf appears before Alena\'s eyes.',
-        follows = 35,
-        animations = function()
-        --Sound: bushes
-        --Effect: leaves fly
-            hideDialogue()
-            WolfS.xScale = -1 
-            WolfS.y=290
-            transition.to(WolfS, {x=200, time=1000, delay=1000})
-        end,
-        animationComplete = function()
-            hideDialogue()
-            WolfS.xScale = -1 
-            WolfS.y=290 WolfS.x=200
-        end
-    }
-    scenes[35] = {
-        sName = 35,
-        text='Mom: "That\'s my old friend and loyal companion, Gray Wolf. He helped me to imprison the Koschei last time. He will serve you as good as he served me."" says Alena\'s mother. ',
-        follows = 36,
-        animations = function()
-            showDialogue(MotherWar)
-        end,
-        animationComplete = function()
-            hideDialogue()
-        end
-    }
-    scenes[36] = {
-        sName = 36,
-        changeFlow = function()
-            if choices.bless==true then scenes[36].follows=37 else scenes[36].follows=38 end
-        end,
-        text='Mom: "Koschei lives in an icy stronghold to the north. He is Deathless, so there\'s no killing him, but you can get into his castle to save your brother, while he is busy fighting me and the Tsar."',
-        follows = 37,
-        animations = function()
-            showDialogue(MotherWar)
-        end,
-        animationComplete = function()
-            hideDialogue()
-        end
+        --Sound: Leaves falling
+        soundEffect = 'leavesFalling.mp3'
     }
     scenes[37] = {
         sName = 37,
-        text='Alena promises that she\'ll find her brother, though the road to Koschei\'s stronghold is unknown and untrodden. Her mother kisses her on forehead and gives her a motherly blessing.',
-        follows = 39,
+        text = 'Alena\'s mother returns home early, with the strange feeling that something might have happened. Alena can\'t look her in the eyes. She stumbles and mumbles but eventually tells the whole truth.',
+        follows = 38,
         animations = function()
-        --Sound: wind
-        --Effect: leaves fly
-            hideDialogue()
+            MotherS.isVisible = true
+            MotherS.x=500
+            transition.to(MotherS, {y=0, time=700})
         end,
         animationComplete = function()
-            hideDialogue()
-        end
+            MotherS.isVisible = true MotherS.y=0 MotherS.x=500
+        end,
+        --Sound: Wind gust
+        soundEffect = 'girlCry.mp3'
     }
     scenes[38] = {
         sName = 38,
-        text='Alena promises that she\'ll find her brother, though the road to Koschei\'s stronghold is unknown and untrodden. Her mother opens a big trunk, takes out her sword and armor. Mother and daughter say their goodbyes.',
+        text = 'Mom: "Now Koschei will summon his armies and storm the Tsar-gorod. He\'s had dozen of years to plan his revenge for his imprisonment. The Tsar will need my help, so you have to find your brother on your own."',
         follows = 39,
+        curtain = true,
         animations = function()
-         --Sound: wind
-         --Effect: leaves fly
-            hideDialogue()
+            hideBigCharacters()
+            showDialogueBack()
+            showDialogueChar(Mother, 400, 400)
+            MotherWarS.isVisible = true MotherWarS.x=500 MotherWarS.y=-600 
+            transition.to(MotherS, {alpha=0, time=700, delay=1000})
+            transition.to(MotherWarS, {y=0, time=700, delay=2700})
         end,
         animationComplete = function()
-            hideDialogue()
+            hideBigCharacters()
+            MotherS.isVisible = false MotherS.alpha=1 MotherS.y=-600
+            MotherWarS.isVisible = true MotherWarS.y=0 MotherWarS.x=500
         end
     }
-
--------- Act 2 Scenes 39 - 61
-
     scenes[39] = {
         sName = 39,
+        text = 'Alena\'s mother, no other than Marya Morevna, the famous warrior princess, whistles and a second later, the depths of the forest open, and a huge Gray wolf appears before Alena\'s eyes.',
+        follows = 40,
+        animations = function()
+            transDialogueBack()
+            WolfS.xScale = -1 
+            WolfS.y=0 WolfS.x = -200 WolfS.isVisible = true
+            transition.to(WolfS, {x=250, time=1000, delay=1000})
+        end,
+        animationComplete = function()
+            removeCurtain()
+            WolfS.xScale = -1 
+            WolfS.isVisible = true WolfS.y=0 WolfS.x=250
+        end,
+        --Sound: Bush shake
+        soundEffect = 'bushShake.mp3'
+
+    }
+    scenes[40] = {
+        sName = 40,
+        text='Mom: "That\'s my old friend and loyal companion, Gray Wolf. He helped me to imprison the Koschei last time. He will serve you as good as he served me."" says Alena\'s mother. ',
+        follows = 41,
+        animations = function()
+            hideBigCharacters()
+            showDialogueBack()
+            showDialogueChar(MotherWar, 400, 400)
+        end,
+        animationComplete = function()
+        end
+    }
+    scenes[41] = {
+        sName = 41,
+        changeFlow = function()
+            if choices.bless==true then scenes[41].follows=42 else scenes[41].follows=43 end
+        end,
+        text='Mom: "Koschei lives in an icy stronghold to the north. He is Deathless, so there\'s no killing him, but you can get into his castle to save your brother, while he is busy fighting me and the Tsar."',
+        animations = function()
+
+        end,
+        animationComplete = function()
+            hideBigCharacters()
+            transDialogueBack()
+        end
+    }
+    scenes[42] = {
+        sName = 42,
+        text='Alena promises that she\'ll find her brother, though the road to Koschei\'s stronghold is unknown and untrodden. Her mother kisses her on forehead and gives her a motherly blessing.',
+        follows = 44,
+        animations = function()
+            removeCurtain()
+            leavesFalling(0)
+        end,
+        animationComplete = function()
+            removeCurtain()
+        end,
+        --Sound: Leaves falling
+        soundEffect = 'leavesFalling.mp3'
+    }
+    scenes[43] = {
+        sName = 43,
+        text='Alena promises that she\'ll find her brother, though the road to Koschei\'s stronghold is unknown and untrodden. Her mother opens a big trunk, takes out her sword and armor. Mother and daughter say their goodbyes.',
+        follows = 44,
+        animations = function()
+         --Effect: leaves fly
+            removeCurtain()
+            leavesFalling(0)
+        end,
+        animationComplete = function()
+            removeCurtain()
+        end,
+        --Sound: Leaves falling
+        soundEffect = 'leavesFalling.mp3'
+    }
+
+
+-------- Act 2 Scenes 44 - 61
+
+    scenes[44] = {
+        sName = 44,
         openingAnimation = {
             [1] = 'background6.png', 
             [2] = 'foreground6.png'
             },
-        setStage = 'set39',
+        setStage = 'setForest1',
         text='Alena sits on Gray Wolf\'s back, hugs his massive neck, and he starts to run - so fast that before the sun touches down on the treetops to the west, they have already reached the crossroads on the other side of the forest.',
-        follows = 40,
+        follows = 45,
         animations = function()
-            transition.to(landscape3, {x=0, time=1000, delay=500})
-            transition.to(landscape2, {x=0, time=1000, delay=1000})
-            transition.to(landscape1, {x=0, time=1000, delay=1500})
-            transition.to(shadowLayer5, {alpha=1, time=1000, delay=2500})
+            loadForest1()
+            AlenaOnWolf.x=600 AlenaOnWolf.y=-600 AlenaOnWolf.isVisible=true
+            transition.to(AlenaOnWolf, {y=0, time=1000, delay=3000})
         end,
         animationComplete = function()
             landscape3.x=0
@@ -1291,33 +1505,42 @@ local scenes = {}
             landscape1.x=0
             shadowLayer5.alpha=1
             foreground.y=0
-        end
+            AlenaOnWolf.x=600 AlenaOnWolf.y=0 AlenaOnWolf.isVisible=true
+        end,
+        -- Sound: Opening
+        soundEffect = 'opening.mp3',
     }
 
-    scenes[40] = {
-        sName = 40,
+    scenes[45] = {
+        sName = 45,
         text='The road splits into three directions with big engraved stone pointing the way. Alena dismounts from Gray Wolf to read the tattered letters.',
-        follows = 41,
+        follows = 46,
         animations = function()
+            WolfS.isVisible = true  WolfS.xScale = 1 WolfS.x=650 WolfS.y=0 WolfS.alpha=0
+            AlenaS.isVisible = true AlenaS.x=500  AlenaS.y=0 AlenaS.alpha=0
+
             transition.to(stone,{y=0, time=1000})
-            WolfS.x=700 AlenaS.x=500
-            transition.to(WolfS,{y=255, time=1000, delay=1000})
-            transition.to(AlenaS,{y=230, time=1000, delay=1000})
+            transition.to(AlenaOnWolf, {alpha=0, time=1000, delay=1000})
+            transition.to(WolfS, {alpha=1, time=1000, delay=1000})
+            transition.to(AlenaS, {alpha=1, time=1000, delay=1000})
         end,
         animationComplete = function()
             stone.y=0
-            WolfS.x=700 WolfS.y=255 
-            AlenaS.x=500 AlenaS.y=230
-        end
+            WolfS.isVisible = true  WolfS.xScale = 1 WolfS.x=650 WolfS.y=0 WolfS.alpha=1
+            AlenaS.isVisible = true AlenaS.x=500  AlenaS.y=0 AlenaS.alpha=1
+            AlenaOnWolf.isVisible = false AlenaOnWolf.alpha=1
+        end,
+        --Sound: Walk In Forest
+        soundEffect = 'walkInForest.mp3'
     }
 
-    scenes[41] = {
-        sName = 41,
+    scenes[46] = {
+        sName = 46,
         text = '"If you ride to the left, you will lose your horse. If you ride to the right, you will lose your head. If you ride straight ahead, you will lose both."',
         selection = {
-            [1] = {'Choose to go left', 42}, --WolfDies
-            [2] = {'Choose to go straight', 43}, --Both die
-            [3] = {'Choose to go right', 44} --Alena dies
+            [1] = {'Choose to go left', 47}, --WolfDies
+            [2] = {'Choose to go straight', 48}, --Both die
+            [3] = {'Choose to go right', 49} --Alena dies
         },
         changeFlow = function()
         end,
@@ -1327,14 +1550,14 @@ local scenes = {}
             stone.isVisible = false
             landscape2.x=-1700
             landscape1.x=-2500
-            WolfS.y=-400 
-            AlenaS.y=-400
+            WolfS.y=-600 
+            AlenaS.y=-600
         end
     }
 
-    scenes[42] = {
-        sName = 42,
-        follows = 45,
+    scenes[47] = {
+        sName = 47,
+        follows = 50,
         clearSelection = true,
         text = 'After the crossroads, they ride for a while, as the sky blackens and the starry space above stares down on Alena and Gray Wolf. They are approaching a wooden fortress.', 
         changeFlow = function()
@@ -1343,18 +1566,26 @@ local scenes = {}
             loadBrothers('Eagle')
         end,
         animations = function()
+            WolfS.isVisible = false  WolfS.xScale = 1 WolfS.x=700 WolfS.y=-600 WolfS.alpha=0
+            AlenaS.isVisible = false AlenaS.x=500  AlenaS.y=-600 AlenaS.alpha=0
+
             ridingWolftoRight(AlenaOnWolf)
-            transition.to(fortress, {x=-300, time=1000, delay=2500})
-            transition.to(fortress2, {x=185, time=1000, delay=2500})
+            transition.to(eveningDarker, {alpha=0.5, time=3000})
+            transition.to(fortress, {x=-220, time=1000, delay=2500})
+            transition.to(fortress2, {x=105, time=1000, delay=2500})
         end, 
         animationComplete = function()
+            WolfS.isVisible = false  WolfS.xScale = 1 WolfS.x=700 WolfS.y=-600 WolfS.alpha=0
+            AlenaS.isVisible = false AlenaS.x=500  AlenaS.y=-600 AlenaS.alpha=0
+
+            eveningDarker.alpha = 0.5
         end 
     }
 
-    scenes[43] = {
-        sName = 43,
+    scenes[48] = {
+        sName = 48,
         clearSelection = true,
-        follows = 45,
+        follows = 50,
         text = 'After the crossroads, they ride for a while, as the sky blackens and the starry space above stares down on Alena and Gray Wolf. They are approaching a wooden fortress.', 
         changeFlow = function()
             choices.brother = 'Raven'
@@ -1362,17 +1593,25 @@ local scenes = {}
             loadBrothers('Raven')
         end,
         animations = function()
+            WolfS.isVisible = false  WolfS.xScale = 1 WolfS.x=700 WolfS.y=-600 WolfS.alpha=0
+            AlenaS.isVisible = false AlenaS.x=500  AlenaS.y=-600 AlenaS.alpha=0
+
             ridingWolftoRight(AlenaOnWolf)
-            transition.to(fortress2, {x=185, time=1000, delay=2500})
-            transition.to(fortress, {x=-300, time=1000, delay=2500})
+            transition.to(eveningDarker, {alpha=0.5, time=3000})
+            transition.to(fortress, {x=-220, time=1000, delay=2500})
+            transition.to(fortress2, {x=105, time=1000, delay=2500})
         end, 
         animationComplete = function()
+            WolfS.isVisible = false  WolfS.xScale = 1 WolfS.x=700 WolfS.y=-600 WolfS.alpha=0
+            AlenaS.isVisible = false AlenaS.x=500  AlenaS.y=-600 AlenaS.alpha=0
+
+            eveningDarker.alpha = 0.5
         end   
     }
 
-    scenes[44] = {
-        sName = 44,
-        follows = 45,
+    scenes[49] = {
+        sName = 49,
+        follows = 50,
         clearSelection = true,
         text = 'After the crossroads, they ride for a while, as the sky blackens and the starry space above stares down on Alena and Gray Wolf. They are approaching a wooden fortress.', 
         changeFlow = function()
@@ -1381,241 +1620,197 @@ local scenes = {}
             loadBrothers('Falcon')
         end,
         animations = function()
+            WolfS.isVisible = false  WolfS.xScale = 1 WolfS.x=700 WolfS.y=-600 WolfS.alpha=0
+            AlenaS.isVisible = false AlenaS.x=500  AlenaS.y=-600 AlenaS.alpha=0
             ridingWolftoRight(AlenaOnWolf)
-            transition.to(fortress, {x=-300, time=1000, delay=2500})
-            transition.to(fortress2, {x=185, time=1000, delay=2500})
+            transition.to(eveningDarker, {alpha=0.5, time=3000})
+            transition.to(fortress, {x=-220, time=1000, delay=2500})
+            transition.to(fortress2, {x=105, time=1000, delay=2500})
         end, 
         animationComplete = function()
+            WolfS.isVisible = false  WolfS.xScale = 1 WolfS.x=700 WolfS.y=-600 WolfS.alpha=0
+            AlenaS.isVisible = false AlenaS.x=500  AlenaS.y=-600 AlenaS.alpha=0
+            
+            eveningDarker.alpha = 0.5
         end   
     }
 
-    scenes[45] = {
-        sName = 45,
-        follows = 46,
-        text = '"Is that a Koschei stronghold?"" wonders Alena. The night is cold, so Alena shivers, but the walls in front of her don\'t look like they are made from ice.',
-        animations = function() 
-            transition.to(fortress, {x=0, time=1000})
-            transition.to(fortress2, {x=485, time=1000})
-        end,
-        animationComplete = function()
-            fortress.x=0
-            fortress2.x=485
-        end
-
-    }
-
-    scenes[46] = {
-        sName = 46,
-        text = function() 
-            return '"Don\'t get scared, daughter of Marya, it is not Koschei\'s lair. It is the domain of your mother\'s brother, the shape-shifting wizard who can turn into '..choices.brother1..'," says the Gray Wolf suddenly.'
-        end,
-        selection = {
-            [1] = {'You can talk?', 47},
-        },
-        animations = function()
-            showDialogue(Wolf)
-        end,
-        animationComplete =  function()
-            hideDialogue() 
-        end
-    }
-
-    scenes[47] = {
-        sName = 47,
-        text = 'Alena: "You can talk?"',
-        follows = 48,
-        clearSelection = true,
-        animations = function()
-            showDialogue(Alena)
-        end,
-        animationComplete =  function()
-            hideDialogue()
-        end
-    }
-
-    scenes[48] = {
-        sName = 48,
-        text = 'Gray Wolf: "I can do many things and before the sun rises, you will see that, daughter of Marya. Before you have to deal with consequences of your choices."',
-        selection = {
-            [1] = {'My mother has a brother?', 49}
-        },
-        animations = function()
-            showDialogue(Wolf)
-        end,
-        animationComplete =  function()
-            hideDialogue()
-        end
-    }
-
-    scenes[49] = {
-        sName = 49,
-        follows = 50,
-        text = 'Alena: "My mother has a brother?"',
-        clearSelection = true,
-        animations = function()
-            showDialogue(Alena)
-        end,
-        animationComplete =  function()
-            hideDialogue()
-        end
-    }
-
-
     scenes[50] = {
         sName = 50,
-        clearSelection = true,
-        text = 'Gray Wolf: "Yes, she has three brothers, all wizards who can turn into birds of prey - Eagle, Raven or Falcon. They were inseparable a long time ago, but after traveling to Koschei\'s stronghold, they had a falling out."',
         follows = 51,
-        animations = function()
-            showDialogue(Wolf)
+        text = '"Is that a Koschei stronghold?"" wonders Alena. The night is cold, so Alena shivers, but the walls in front of her don\'t look like they are made from ice.',
+        animations = function() 
+            transition.to(fortress, {x=-80, time=1000})
+            transition.to(fortress2, {x=405, time=1000})
         end,
-        animationComplete =  function()
-            hideDialogue()
+        animationComplete = function()
+            fortress.x=-80
+            fortress2.x=405
         end
+
     }
 
     scenes[51] = {
         sName = 51,
-        text = 'It\'s getting colder and night is almost upon them, so Alena and Wolf decide to ask her uncle for shelter. His servants open the gate and escort her into the main hall.',
-        follows = 52,
-        clearSelection = true,
-        animations = function()
-            hideDialogue()
-            bridge.alpha=1
-            transition.to(bridge, {rotation=90, time=1000})
+        text = function() 
+            return '"Don\'t get scared, daughter of Marya, it is not Koschei\'s lair. It is the domain of your mother\'s brother, the shape-shifting wizard who can turn into '..choices.brother1..'," says the Gray Wolf suddenly.'
         end,
-        animationComplete = function() 
-            hideDialogue()
-            bridge.alpha=1
-            bridge.rotation=90
+        selection = {
+            [1] = {'You can talk?', 52},
+        },
+        animations = function()
+            hideBigCharacters()
+            showDialogueBack()
+            showDialogueChar(Wolf, 500, 400)
+        end,
+        animationComplete =  function()
+            hideBigCharacters() 
         end
     }
 
     scenes[52] = {
         sName = 52,
-        setStage = 'set52',
-        openingAnimation = {
-            [1] = 'background7.png', 
-            [2] = 'foreground3.png'
-        },
-        text = 'Her uncle is standing in a great hall wearing a gloomy look. Alena tells him her sad story, but he doesn\'t seem to be affected by it, because he is lost in his own thoughts. "Looks like I won\'t get any help from him," sighs Alena.',
+        text = 'Alena: "You can talk?"',
         follows = 53,
-        animations = function() 
-            loadUncleCastle()
+        clearSelection = true,
+        animations = function()
+            showDialogueChar(Alena, 400, 400)
         end,
         animationComplete =  function()
-            foreground.y=0
-            landscape3.x=0
-            landscape2.y=0
-            WolfSit.x=900 WolfSit.y=270
-            AlenaS.x=740 AlenaS.y=280
-            birdSymbol.y=320
-            BrotherS.y=300
-            shadowLayer6.alpha=1
-            throne.y=-30
+            hideBigCharacters()
         end
-
     }
 
     scenes[53] = {
         sName = 53,
-        text = 'Uncle: "That\'s a very sad story indeed. I remember my own journey to Koschei\'s stronghold... It is not a place for a young girl. And if what you told me is true, I need to concentrate on protecting my kingdom, not on helping you."',
+        text = 'Gray Wolf: "I can do many things and before the sun rises, you will see that, daughter of Marya. Before you have to deal with consequences of your choices."',
         selection = {
-            [1] = {'"That\'s the reception I get from my own uncle?"', 54},
-            [2] = {' Ask for Gray Wolf\'s advice', 56},
+            [1] = {'My mother has a brother?', 54}
         },
-        animations = function() 
-            showDialogue(BrotherD)
+        animations = function()
+            showDialogueChar(Wolf, 500, 400)
         end,
         animationComplete =  function()
-            hideDialogue()
+            hideBigCharacters()
         end
     }
 
     scenes[54] = {
         sName = 54,
-        text = 'Alena: "That\'s the reception I get from my own uncle?"',
         follows = 55,
+        text = 'Alena: "My mother has a brother?"',
         clearSelection = true,
-        animations = function() 
-            showDialogue(Alena)
+        animations = function()
+           showDialogueChar(Alena, 400, 400)
         end,
-        animationComplete = function()
-            hideDialogue()
-            choices.advice = false
+        animationComplete =  function()
+            hideBigCharacters()
         end
     }
 
+
     scenes[55] = {
         sName = 55,
-        text = 'Uncle: "If blood was really thicker than water, I wouldn\'t be in such a predicament. You can stay for one night, and continue your journey in the morning, but that is it."',
-        follows = 57,
+        clearSelection = true,
+        text = 'Gray Wolf: "Yes, she has three brothers, all wizards who can turn into birds of prey - Eagle, Raven or Falcon. They were inseparable a long time ago, but after traveling to Koschei\'s stronghold, they had a falling out."',
+        follows = 56,
         animations = function()
-            showDialogue(BrotherD) 
+            showDialogueChar(Wolf, 500, 400)
         end,
         animationComplete =  function()
-            hideDialogue()
+            hideBigCharacters()
         end
     }
 
     scenes[56] = {
         sName = 56,
-        text = 'Alena turns to Gray Wolf for advice, and he tells her to offer help instead of demanding help. Though not sure how it might work, Alena offers to help her uncle deal with his predicament.',
+        text = 'It\'s getting colder and night is almost upon them, so Alena and Wolf decide to ask her uncle for shelter. His servants open the gate and escort her into the main hall.',
         follows = 57,
         clearSelection = true,
-        animations = function() 
-            hideDialogue()
+        animations = function()
+            transDialogueBack()
+            bridge.alpha=1
+            transition.to(bridge, {rotation=90, time=1000})
         end,
-        animationComplete =  function()
-            choices.advice = true
-        end
+        animationComplete = function() 
+            removeCurtain()
+            bridge.alpha=1
+            bridge.rotation=90
+        end,
+        --Sound: bridge down
+        soundEffect = 'chainMail.mp3'
     }
 
     scenes[57] = {
         sName = 57,
-        text = 'Uncle: "There\'s bad blood between me and my brothers. Years ago, we stole a seed from a tree with golden apples and a horse with a golden mane from Koshei. But my brothers took them and left me with nothing."',
+        setStage = 'setUncleCastle',
+        openingAnimation = {
+            [1] = 'background7.png', 
+            [2] = 'foreground3.png'
+        },
+        text = 'Her uncle is standing in a great hall wearing a gloomy look. Alena tells him her sad story, but he doesn\'t seem to be affected by it, because he is lost in his own thoughts. "Looks like I won\'t get any help from him," sighs Alena.',
         follows = 58,
         animations = function() 
-            showDialogue(BrotherD)
+            loadUncleCastle()
+            AlenaS.isVisible = true AlenaS.y = -600 AlenaS.x=610
+            WolfSit.isVisible = true WolfSit.y = -600 WolfSit.x=700
+            transition.to(WolfSit,{y=10, time=1000, delay=3000})
+            transition.to(AlenaS,{y=20, time=1000, delay=3000})
         end,
         animationComplete =  function()
-        end
+            foreground.y=0
+            landscape3.x=0
+            landscape2.y=0
+            birdSymbol.y=320
+            BrotherS.y=300
+            shadowLayer6.alpha=1
+            throne.y=-30
+
+            AlenaS.isVisible = true AlenaS.y = 20 AlenaS.x=610
+            WolfSit.isVisible = true WolfSit.y = 10 WolfSit.x=700
+        end,
+        --Sound: door Open Close
+        soundEffect = 'opening.mp3'
+
     }
 
     scenes[58] = {
         sName = 58,
-        text = 'Uncle: "So if you want to help me - steal at least one golden apple and the horse for me. Then I\'ll think about telling you how to get into Koschei\'s castle."',
-        follows = 59,
-        changeFlow = function()
-            if choices.brother == 'Falcon' then scenes[58].follows = 59
-            elseif choices.brother == 'Raven' then scenes[58].follows = 60
-            else scenes[58].follows = 61
-            end
-        end,
-        animations = function() 
+        text = 'Uncle: "That\'s a very sad story indeed. I remember my own journey to Koschei\'s stronghold... It is not a place for a young girl. And if what you told me is true, I need to concentrate on protecting my kingdom, not on helping you."',
+        selection = {
+            [1] = {'It\'s not polite', 59},
+            [2] = {'What should I do?', 61},
+        },
+        animations = function()
+            hideBigCharacters()
+            showDialogueBack()
+            showDialogueChar(BrotherD, 400, 400)
         end,
         animationComplete =  function()
-            hideDialogue()
+            hideBigCharacters()
         end
     }
 
     scenes[59] = {
         sName = 59,
-        text = 'Alena reluctantly agrees, though she has no idea how she is going to steal the horse or apples from her uncles Raven and Eagle. But Gray Wolf tells her not to grieve and before the moon comes up, they are racing to the Raven domain.',
-        follows = 62,
-        animations = function()
-            hideDialogue() 
+        text = 'Alena: "That\'s the reception I get from my own uncle?"',
+        follows = 60,
+        clearSelection = true,
+        changeFlow = function() choices.wolfPenalty = choices.wolfPenalty+1 end,
+        animations = function() 
+            showDialogueChar(Alena, 400, 400)
         end,
-        animationComplete =  function()
+        animationComplete = function()
+            hideBigCharacters()
         end
     }
 
     scenes[60] = {
         sName = 60,
-        text = 'Alena reluctantly agrees, though she has no idea how she is going to steal the horse or apples from her uncles Falcon and Eagle. But Gray Wolf tells her not to grieve and before the moon comes up, they are racing to the Falcon domain.',
+        text = 'Uncle: "If blood was really thicker than water, I wouldn\'t be in such a predicament. You can stay for one night, and continue your journey in the morning, but that is it."',
         follows = 62,
-        animations = function() 
-            hideDialogue()
+        animations = function()
+            showDialogueChar(BrotherD, 400, 400) 
         end,
         animationComplete =  function()
         end
@@ -1623,19 +1818,96 @@ local scenes = {}
 
     scenes[61] = {
         sName = 61,
-        text = 'Alena reluctantly agrees, though she has no idea how she is going to steal the horse or apples from her uncles Raven and Falcon. But Gray Wolf tells her not to grieve and before the moon comes up, they are racing to the Raven domain.',
-        follows = 62,
+        text = 'Alena turns to Gray Wolf for advice, and he tells her to offer help instead of demanding help. Though not sure how it might work, Alena offers to help her uncle deal with his predicament.',
+        follows = 63,
+        clearSelection = true,
+        changeFlow = function() choices.wolfPenalty = choices.wolfPenalty-1 end,
         animations = function() 
-            hideDialogue()
+            transDialogueBack()
+            hideBigCharacters()
+        end,
+        animationComplete =  function()
+            removeCurtain()
+        end
+    }
+
+    scenes[62] = {
+        sName = 62,
+        text = 'Uncle: "There\'s bad blood between me and my brothers. Years ago, we stole a seed from a tree with golden apples and a horse with a golden mane from Koshei. But my brothers took them and left me with nothing."',
+        follows = 64,
+        animations = function()
         end,
         animationComplete =  function()
         end
     }
 
--------- Act 3 Scenes 62 - 104
+    scenes[63] = {
+        sName = 63,
+        text = 'Uncle: "There\'s bad blood between me and my brothers. Years ago, we stole a seed from a tree with golden apples and a horse with a golden mane from Koshei. But my brothers took them and left me with nothing."',
+        follows = 64,
+        animations = function() 
+            showDialogueBack()
+            showDialogueChar(BrotherD, 400, 400)
+        end,
+        animationComplete =  function()
+        end
+    }
 
-    scenes[62] = {
-        setStage = 'set62',
+    scenes[64] = {
+        sName = 64,
+        text = 'Uncle: "So if you want to help me - steal at least one golden apple and the horse for me. Then I\'ll think about telling you how to get into Koschei\'s castle."',
+        changeFlow = function()
+            if choices.brother == 'Falcon' then scenes[64].follows = 65
+            elseif choices.brother == 'Raven' then scenes[64].follows = 66
+            else scenes[64].follows = 67
+            end
+        end,
+        animations = function() 
+        end,
+        animationComplete =  function()
+            hideBigCharacters()
+        end
+    }
+
+    scenes[65] = {
+        sName = 65,
+        text = 'Alena reluctantly agrees, though she has no idea how she is going to steal the horse or apples from her uncles Raven and Eagle. But Gray Wolf tells her not to grieve and before the moon comes up, they are racing to the Raven domain.',
+        follows = 68,
+        animations = function()
+            transDialogueBack() 
+        end,
+        animationComplete =  function()
+            removeCurtain()
+        end
+    }
+
+    scenes[66] = {
+        sName = 66,
+        text = 'Alena reluctantly agrees, though she has no idea how she is going to steal the horse or apples from her uncles Falcon and Eagle. But Gray Wolf tells her not to grieve and before the moon comes up, they are racing to the Falcon domain.',
+        follows = 68,
+        animations = function() 
+            transDialogueBack() 
+        end,
+        animationComplete =  function()
+            removeCurtain()
+        end
+    }
+
+    scenes[67] = {
+        sName = 67,
+        text = 'Alena reluctantly agrees, though she has no idea how she is going to steal the horse or apples from her uncles Raven and Falcon. But Gray Wolf tells her not to grieve and before the moon comes up, they are racing to the Raven domain.',
+        follows = 68,
+        animations = function() 
+            transDialogueBack()
+        end,
+        animationComplete =  function()
+            removeCurtain()
+        end
+    }
+
+-------- Act 3 Scenes 68 - 104
+    scenes[68] = {
+        setStage = 'setAppleGarden',
         sName = 62,
         text = 'They rush at full speed, so the lights of the stars in the sky flow together into a river of spilled milk. On the way, the north wind tears away a ribbon from Alena\'s braid.',
         selection = {
@@ -1647,6 +1919,8 @@ local scenes = {}
             transition.to(ribbon, {x=50, time=1000, delay=2000})
             transition.to(ribbon, {y=400, time=1000, delay=2000})
             transition.to(ribbon, {alpha=0, time=1, delay=3000})
+            transition.to(starsWay, {alpha=0.5, time=2000})
+            transition.to(starsWay, {alpha=0, time=100, delay=3000})
             ridingWolftoLeft(AlenaOnWolfNoRibbon)
         end,
         animationComplete = function()
@@ -1655,6 +1929,7 @@ local scenes = {}
             AlenaOnWolfNoRibbon.x=400
             landscape2.x=-1300
             landscape1.x=-1500
+            starsWay.alpha = 0
         end
     }
 
@@ -1683,7 +1958,9 @@ local scenes = {}
             StrongholdB1.x=-120
             AlenaOnWolfNoRibbon.x=600
             AlenaOnWolfNoRibbon.y=270
-        end
+        end,
+        --Sound: night Owls 1
+        soundEffect = 'nighrOwls1.mp3'
     }
 
     scenes[65] = {
@@ -1727,6 +2004,8 @@ local scenes = {}
             AlenaNoRibbon.x=450
             GoldenApple.x=420 GoldenApple.y=10
         end,
+        --Sound: night Owls 2
+        soundEffect = 'nighrOwls2.mp3'
     }
 
     scenes[67] = {
@@ -1760,13 +2039,14 @@ local scenes = {}
             transition.to(TreeRibbon, {rotation=-30, x=570, y=450, time=500, delay=500})
             transition.to(TreeRibbon, {rotation=10, x=550, y=500, time=500, delay=900})
             alarmBellsRing()
-            choices.notListen = choices.notListen+1
         end,
         animationComplete = function()
             AlenaNoRibbon.y=-400
             WolfSit.y=-400
             TreeRibbon.y=500
         end,
+        --Sound: bell alarm
+        soundEffect = 'bellRing.mp3'
     }
 
     scenes[69] = {
@@ -1842,6 +2122,7 @@ local scenes = {}
         end
     }
 
+--[[
     scenes[73] = {
         sName = 73,
         follows = 74,
@@ -1855,7 +2136,9 @@ local scenes = {}
         animationComplete = function()
             AlenaNoRibbon.x=700 AlenaNoRibbon.y=280
             GoldenApple.x=560 GoldenApple.y=-30 
-        end
+        end,
+        --Sound: door Open Close
+        soundEffect = 'doorOpenClose.mp3'
     }
 
     scenes[74] = {
@@ -2059,7 +2342,9 @@ local scenes = {}
         animationComplete = function()
             AlenaNoRibbon.x=700 AlenaNoRibbon.y=280
             GoldenHorse.x=700 GoldenHorse.y=0  
-        end
+        end,
+        --Sound: door Open Close
+        soundEffect = 'doorOpenClose.mp3'
     }
     scenes[86] = {
         sName = 86,
@@ -2561,7 +2846,7 @@ local scenes = {}
             showDialogue(Wolf)
         end,
         animationComplete = function()
-            curtanBack()
+            curtainBack()
         end
     }
 
@@ -2574,7 +2859,7 @@ local scenes = {}
         end,
         animationComplete = function()
             hideDialogue()
-            curtanBack()
+            curtainBack()
         end
     }
 
@@ -2585,13 +2870,13 @@ local scenes = {}
         text='Soon the blizzard passes and it is time to carry on. Alena says her goodbyes to Bear, and he tells her that if she ever needs his help, she should call for him, and he will come. Alena is happy to  have enlisted the help of another ally.',
         animations = function()
             hideDialogue()
-            curtanBack()
+            curtainBack()
             BearS.xScale = 1
             transition.to(BearS, {x=-300, time=1000, delay=1000})
         end,
         animationComplete = function()
             hideDialogue()
-            curtanBack()
+            curtainBack()
             BearS.xScale=1 BearS.x=-300
         end
     }
@@ -2663,15 +2948,6 @@ local scenes = {}
     scenes[124] = {
         sName = 124,
         follows=128,
-        --[[changeFlow = function() 
-            if choices.brother=='Eagle' then scenes[124].follows = 125
-            elseif  choices.brother=='Falcon' then scenes[124].follows = 126
-            else
-                if vasilisaGo==true then scenes[124].follows = 127
-                else scenes[124].follows = 128 end  
-            end
-        end,--]]
-
         text='Gray Wolf attacks Koschei, as Alena tries to run away holding Ivan, but all their efforts are in vain. Gray Wolf\'s bites have no effect on Koschei.  The warlock summons his underlings, and a cloud of ice shrouds everything in sight.',
         animations = function()
             icyCurtain.isVisible=true
@@ -4220,6 +4496,7 @@ local scenes = {}
         animationComplete = function()end
     }
 
+]]--
 -----------------------------------------------------------------------------------
 --
 -- FUNCTIONS
@@ -4231,43 +4508,28 @@ function setCenter(img)
     img.x = display.contentWidth / 2 img.y = display.contentHeight / 2
 end
 
-function setAnchor(img)
-    img.anchorX = 0 img.anchorY = 0
-end 
 
-
-
--- Display charDialogur
-function showDialogue(name)
-    dialBack:toBack()
+-- Display Dialogues functions
+function showDialogueBack()
     transition.to(dialBack, {y=0, time=500})
-    --Re-center the object
-    name.x = 400 name.y = 800
-    --Change position based on the onject
-    if name==Mother or name==MotherWar then transition.to(name, {y=400, time=500}) end
-    if name==Alena then transition.to(name, {y=400, time=500}) end
-    if name==AlenaNR then transition.to(name, {y=400, time=500}) end
-    if name==Ivan then transition.to(name, {y=400, time=500}) end
-    if name==KoscheiPlea then KoscheiPlea.x=200 transition.to(name, {y=400, time=500}) end
-    if name==KoscheiPleaNCD then KoscheiPleaNCD.x=400 transition.to(name, {y=400, time=500}) end
-    if name==Koschei then transition.to(name, {y=400, time=500}) end
-    if name==Wolf then Wolf.x=700 transition.to(name, {y=430, time=500}) end
-    if name==Bear then Bear.x=300 transition.to(name, {y=400, time=500}) end
-    if name==BrotherD then BrotherD.x=300 transition.to(name, {y=400, time=500}) end
-    if name==VasilisaD then VasilisaD.x=300 transition.to(name, {y=400, time=500}) end
-    if name==CrowD then CrowD.x=200 transition.to(name, {y=400, time=500}) end
-    if name==YagaD then YagaD.x=300 transition.to(name, {y=400, time=500}) end
-    if name==MouseD then MouseD.x=300 transition.to(name, {y=400, time=500}) end
 end
 
-function hideDialogue()
-    local characters = {Mother, Alena, AlenaNR, AlenaCryD_NR, Ivan, KoscheiPlea, Koschei, MotherWar, Wolf, BrotherD, VasilisaD, VasilisaCry, Bear, CrowD, YagaD, MouseD, KoscheiPleaNCD}
-    for i=1, table.getn(characters) do characters[i].y = -700 end
+function showDialogueChar(name, x, y)
+    name.isVisible = true
+    name.x = x
+    transition.to(name, {y=y, time=500, delay=50}) 
+end
+
+function hideBigCharacters()
+    for i=1, table.getn(charactersBig) do charactersBig[i].y = 900 charactersBig[i].x = 400 charactersBig[i].isVisible = false end
+end
+
+function transDialogueBack()
+    hideBigCharacters()
     transition.to(dialBack, {y = -800, time=500})
-    --dialBack.y = -800
 end
 
-function curtanBack()
+function removeCurtain()
     dialBack.y=-800 
 end
 
@@ -4275,6 +4537,14 @@ end
 --
 -- Set stage functions
 --
+
+function cleanUpLevel()
+    clearStage()
+    hideSmallCharacters()
+    hideBigCharacters()
+    removeCurtain()
+end
+
 function clearStage()
     if(midlayer1) then
         print("This midlayer1 groop has children: "..midlayer1.numChildren)
@@ -4301,20 +4571,8 @@ function clearStage()
     end
 end
 
-function removeCharacters()
-    AlenaS.x = 200 AlenaS.y = -400
-    AlenaNoRibbon.x = 200 AlenaNoRibbon.y = -400
-    IvanS.x = 130 IvanS.y = -400
-    MotherS.x = 540 MotherS.y = -400 
-    AlenaCryS.x = 400 AlenaCryS.y = -400
-    MotherWarS.x = 600 MotherWarS.y = -400
-    WolfS.x=-300 WolfS.y=-400
-    WolfSit.x=600 WolfSit.y=-400
-    AlenaOnWolf.x=1200 AlenaOnWolf.y=270
-    AlenaOnWolfNoRibbon.x=1200 AlenaOnWolfNoRibbon.y=270
-    BrotherS.x = 500 BrotherS.y=-400
-    YagaS.x=350 YagaS.y=-400
-    MouseS.x = -100 MouseS.y=200
+function hideSmallCharacters()
+    for i=1, table.getn(charactersSmall) do charactersSmall[i].y = -600 charactersSmall[i].x = 400 charactersSmall[i].isVisible = false end
 end
 
 -- Move layers in the right order
@@ -4332,160 +4590,159 @@ end
 -- Fill up the stage
 local function setStageObjects(stage)
     local stages = {
-        set1 = function()
-            clearStage()
-            removeCharacters()
+        setMotherHouse = function()
+            cleanUpLevel()
 
-            sun = display.newImage(midlayer1, "images/sun.png", true) setAnchor(sun)
+            sun = display.newImage(midlayer1, "images/scenes/act1_sun.png", true) setAnchor(sun)
             sun.x = -100 sun.y = 50 sun.alpha=0
 
-            starsAndMoon = display.newImage(midlayer1, "images/act5_stars.png", true) setAnchor(starsAndMoon)
+            starsAndMoon = display.newImage(midlayer1, "images/scenes/act1_stars.png", true) setAnchor(starsAndMoon)
             starsAndMoon.x = 100 starsAndMoon.y = -500
 
-            landscape3 = display.newImage(midlayer1, "images/act1_landscape3.png", true) setAnchor(landscape3)
+            landscape3 = display.newImage(midlayer1, "images/scenes/act1_landscape3.png", true) setAnchor(landscape3)
             landscape3.x = 1000 landscape3.y = 285
 
-            houseOutside = display.newImage(midlayer1, "images/house_light.png") setAnchor(houseOutside) houseOutside.x = 200
+            houseOutside = display.newImage(midlayer1, "images/scenes/act1_houseLight.png") setAnchor(houseOutside) houseOutside.x = 200
             houseOutside.x = 200 houseOutside.y = -500
 
-            landscape2 = display.newImage(midlayer1, "images/act1_landscape2.png", true) setAnchor(landscape2)
+            landscape2 = display.newImage(midlayer1, "images/scenes/act1_landscape2.png", true) setAnchor(landscape2)
             landscape2.x = -1000 landscape2.y = 375
             
-            landscape1 = display.newImage(midlayer1, "images/act1_landscape1.png", true) 
+            landscape1 = display.newImage(midlayer1, "images/scenes/act1_landscape1.png", true) 
             landscape1.anchorX = 1 landscape1.anchorY=1
             landscape1.x = 1020 landscape1.y = 1300
             landscape1.rotation=-90
 
-            shadowLayer1 = display.newImage(midlayer2, "images/act1_shadowLayer.png", true) setAnchor(shadowLayer1)
+            shadowLayer1 = display.newImage(midlayer2, "images/scenes/act1_shadowLayer.png", true) setAnchor(shadowLayer1)
             shadowLayer1.x=0 shadowLayer1.y=0 shadowLayer1.alpha = 0
 
-            orangeLight = display.newImage(midlayer3, "images/act1_orangeLight.png", true) setAnchor(orangeLight)
+            orangeLight = display.newImage(midlayer3, "images/effects/effect_orangeLight.png", true) setAnchor(orangeLight)
             orangeLight.x=0 orangeLight.y=0 orangeLight.alpha = 0
 
-            AlenaIvanRiding = display.newImage(midlayer3, "images/AlenaIvanRiding.png", true) setAnchor(AlenaIvanRiding)
-            AlenaIvanRiding.x = 400 AlenaIvanRiding.y = -450
 
-            leaves = display.newImage(midlayer3,"images/act3_leavesFall.png", true) setAnchor(leaves) leaves.alpha = 0
+            leaves = display.newImage(midlayer3,"images/effects/effects_leaves.png", true) setAnchor(leaves) leaves.alpha = 0
             leaves.x=700 leaves.y=-550
 
             organizeStage()
         end,
-        set9 = function()
-            clearStage()
-            removeCharacters()
+        setHouseInside = function()
+            cleanUpLevel()
 
-            bed = display.newImage(midlayer1, "images/act2_bed.png", true) setAnchor(bed)
+            bed = display.newImage(midlayer1, "images/scenes/act2_bed.png", true) setAnchor(bed)
             bed.x=280 bed.y = -500
 
-            tableCloth = display.newImage(midlayer1, "images/act2_table.png", true) setAnchor(tableCloth)
+            tableCloth = display.newImage(midlayer1, "images/scenes/act2_table.png", true) setAnchor(tableCloth)
             tableCloth.x = 520 tableCloth.y=-500
 
-            ovenFire = display.newImage(midlayer2, "images/act2_ovenFire.png", true) setAnchor(ovenFire)
+            ovenFire = display.newImage(midlayer2, "images/scenes/act2_ovenFire.png", true) setAnchor(ovenFire)
             ovenFire.x=42 ovenFire.y = 260 ovenFire.alpha = 0
 
-            shadowLayer2 = display.newImage(midlayer2, "images/act2_shadowLayer.png", true) setAnchor(shadowLayer2) 
+            shadowLayer2 = display.newImage(midlayer2, "images/scenes/act2_shadowLayer.png", true) setAnchor(shadowLayer2) 
             shadowLayer2.alpha = 0
 
 
-            broom = display.newImage(midlayer2, "images/act2_broom.png", true) setAnchor(broom)
+            broom = display.newImage(midlayer2, "images/scenes/act2_broom.png", true) setAnchor(broom)
             broom.x=200 broom.y = -600
 
-            dishes = display.newImage(midlayer2, "images/act2_dishes.png", true) setAnchor(dishes)
+            dishes = display.newImage(midlayer2, "images/scenes/act2_dishes.png", true) setAnchor(dishes)
             dishes.x=580 dishes.y = -500
 
-            windowLight = display.newImage(midlayer3, "images/act2_light.png", true) setAnchor(windowLight)
+            windowLight = display.newImage(midlayer3, "images/effects/effect_Windowlight.png", true) setAnchor(windowLight)
             windowLight.x=365 windowLight.y =130 windowLight.alpha =0
 
             organizeStage()
         end,
-        set18 = function()
+        setBasement = function()
             clearStage()
-            basementStage = display.newImage(midlayer1, "images/background4.png", true) setAnchor(basementStage)
+            basementStage = display.newImage(midlayer1, "images/backg/background4.png", true) setAnchor(basementStage)
             basementStage.x=0 basementStage.y = 0 basementStage.alpha=0
             
-            waterFount = display.newImage(midlayer1, "images/act3_water.png", true) setAnchor(waterFount)
+            waterFount = display.newImage(midlayer1, "images/scenes/act3_water.png", true) setAnchor(waterFount)
             waterFount.x=630 waterFount.y = 200 waterFount.alpha = 0
 
-            lights3 = display.newImage(midlayer1, "images/act3_lights.png", true) setAnchor(lights3)
+            lights3 = display.newImage(midlayer1, "images/scenes/act3_lights.png", true) setAnchor(lights3)
             lights3.x=280 lights3.y = -500
 
-            bucket1 = display.newImage(midlayer2, "images/act2_bucket1.png", true) setAnchor(bucket1)
+            bucket1 = display.newImage(midlayer2, "images/scenes/act3_bucket1.png", true) setAnchor(bucket1)
             bucket1.x=130 bucket1.y = -550
 
-            koshPrisoner = display.newImage(midlayer2, "images/kosh_chained.png", true) setAnchor(koshPrisoner)
+            koshPrisoner = display.newImage(midlayer2, "images/chars/kosh_chained.png", true) setAnchor(koshPrisoner)
             koshPrisoner.x=680 koshPrisoner.y = 0 koshPrisoner.alpha=0
 
-            chains = display.newImage(midlayer2, "images/act2_chains.png", true) setAnchor(chains)
+            chains = display.newImage(midlayer2, "images/scenes/act3_chains.png", true) setAnchor(chains)
             chains.x=680 chains.y = 0 chains.alpha=0
 
-            bucket2 = display.newImage(midlayer2, "images/act2_bucket2.png", true) bucket2.anchorY = 0.5 bucket2.anchorX = 1
+            bucket2 = display.newImage(midlayer2, "images/scenes/act3_bucket2.png", true) bucket2.anchorY = 0.5 bucket2.anchorX = 1
             bucket2.x=275 bucket2.y = -55
 
-            bucketTread = display.newImage(midlayer2, "images/act2_bucketTread.png", true) setAnchor(bucketTread)
+            bucketTread = display.newImage(midlayer2, "images/scenes/act3_bucketTread.png", true) setAnchor(bucketTread)
             bucketTread.x=180 bucketTread.y = -600
 
-            icyCurtain = display.newImage(midlayer3, "images/icyCurtain.png", true) setAnchor(icyCurtain)
+            icyCurtain = display.newImage(midlayer3, "images/effects/icyCurtain.png", true) setAnchor(icyCurtain)
             icyCurtain.x=350 icyCurtain.y = 50 icyCurtain.alpha=0
 
             organizeStage()
         end,
-        set39 = function()
+        setForest1 = function()
             clearStage()
 
-            starsAndMoon = display.newImage(midlayer1, "images/act5_stars.png", true) setAnchor(starsAndMoon )
+            eveningDarker = display.newImage(midlayer1, "images/effects/effects_darkBlue.png", true) setAnchor(eveningDarker)
+            eveningDarker.x = 0 eveningDarker.y = 0 eveningDarker.alpha=0
+
+            starsAndMoon = display.newImage(midlayer1, "images/scenes/act1_stars.png", true) setAnchor(starsAndMoon )
             starsAndMoon.x = 100 starsAndMoon.y = -500
 
-            landscape3 = display.newImage(midlayer1, "images/act5_landscape3.png", true) setAnchor(landscape3)
+            landscape3 = display.newImage(midlayer1, "images/scenes/act4_landscape3.png", true) setAnchor(landscape3)
             landscape3.x = -1000 landscape3.y = 230
 
-            landscape2 = display.newImage(midlayer1, "images/act5_landscape2.png", true) setAnchor(landscape2)
+            landscape2 = display.newImage(midlayer1, "images/scenes/act4_landscape2.png", true) setAnchor(landscape2)
             landscape2.x = 1000 landscape2.y = 0
 
 
-            landscape1 = display.newImage(midlayer1, "images/act5_landscape1.png", true) setAnchor(landscape1)
+            landscape1 = display.newImage(midlayer1, "images/scenes/act4_landscape1.png", true) setAnchor(landscape1)
             landscape1.x = 1000 landscape1.y = 400
 
-            fortress2 = display.newImage(midlayer2, "images/act5_fortress2.png", true) setAnchor(fortress2)
+            fortress2 = display.newImage(midlayer2, "images/scenes/act4_fortress2.png", true) setAnchor(fortress2)
             fortress2.x = -115 fortress2.y = 190
 
-            bridge = display.newImage(midlayer2, "images/act5_bridge.png", true) setAnchor(bridge)
+            bridge = display.newImage(midlayer2, "images/scenes/act4_bridge.png", true) setAnchor(bridge)
             bridge.alpha = 0
-            bridge.x = 480 bridge.y = 480
+            bridge.x = 380 bridge.y = 480
             bridge.anchorX = 1 bridge.anchorY = 1
 
-            fortress = display.newImage(midlayer2, "images/act5_fortress.png", true) setAnchor(fortress)
+            fortress = display.newImage(midlayer2, "images/scenes/act4_fortress.png", true) setAnchor(fortress)
             fortress.x = -600 fortress.y = 100
 
-            shadowLayer5 = display.newImage(midlayer2, "images/act5_shadowLayer.png", true) setAnchor(shadowLayer5) shadowLayer5.alpha=0
+            shadowLayer5 = display.newImage(midlayer2, "images/scenes/act4_shadowLayer.png", true) setAnchor(shadowLayer5) shadowLayer5.alpha=0
 
-            stone = display.newImage(midlayer2, "images/act5_stone.png", true) setAnchor(stone)
+            stone = display.newImage(midlayer2, "images/scenes/act4_stone.png", true) setAnchor(stone)
             stone.x = 120 stone.y = -500 
 
             organizeStage()
         end,
-        set52 = function()
+        setUncleCastle = function()
             clearStage()
 
-            landscape3 = display.newImage(midlayer1, "images/act6_landscape3.png", true) setAnchor(landscape3)
+            landscape3 = display.newImage(midlayer1, "images/scenes/act5_landscape3.png", true) setAnchor(landscape3)
             landscape3.x = -1000 landscape3.y = 130
 
             if choices.brother=='Falcon' then
-                landscape2 = display.newImage(midlayer1, "images/act6_landscape2y.png", true)
-                throne = display.newImage(midlayer2, "images/act6_chairRed.png", true)
-                birdSymbol = display.newImage(midlayer2, "images/act6_Falcon_stand.png", true)
+                landscape2 = display.newImage(midlayer1, "images/scenes/act5_landscape2y.png", true)
+                throne = display.newImage(midlayer2, "images/scenes/act5_chairRed.png", true)
+                birdSymbol = display.newImage(midlayer2, "images/scenes/act5_Falcon_stand.png", true)
                 setAnchor(birdSymbol) birdSymbol.x = 210 birdSymbol.y = -200
                 loadBrothers('Falcon')
 
             elseif choices.brother=='Raven' then
-                landscape2 = display.newImage(midlayer1, "images/act6_landscape2b.png", true)
-                throne = display.newImage(midlayer2, "images/act6_chairBlue.png", true)
-                birdSymbol = display.newImage(midlayer2, "images/act6_Raven_stand.png", true)
+                landscape2 = display.newImage(midlayer1, "images/scenes/act5_landscape2b.png", true)
+                throne = display.newImage(midlayer2, "images/scenes/act5_chairBlue.png", true)
+                birdSymbol = display.newImage(midlayer2, "images/scenes/act5_Raven_stand.png", true)
                 setAnchor(birdSymbol) birdSymbol.x = 215 birdSymbol.y = -200
                 loadBrothers('Falcon')
             else
-                landscape2 = display.newImage(midlayer1, "images/act6_landscape2r.png", true)
-                throne = display.newImage(midlayer2, "images/act6_chairGold.png", true)
-                birdSymbol = display.newImage(midlayer2, "images/act6_Eagle_stand.png", true)
+                landscape2 = display.newImage(midlayer1, "images/scenes/act5_landscape2r.png", true)
+                throne = display.newImage(midlayer2, "images/scenes/act5_chairGold.png", true)
+                birdSymbol = display.newImage(midlayer2, "images/scenes/act5_Eagle_stand.png", true)
                 setAnchor(birdSymbol) birdSymbol.x = 200 birdSymbol.y = -200
                 loadBrothers('Eagle')
             end
@@ -4493,16 +4750,24 @@ local function setStageObjects(stage)
             setAnchor(landscape2) landscape2.x = 0 landscape2.y = -1000
             setAnchor(throne) throne.x = 250 throne.y = -600
 
-            shadowLayer6 = display.newImage(midlayer1, "images/act6_shadowLayer.png", true) setAnchor(shadowLayer6) shadowLayer6.alpha=0
+            shadowLayer6 = display.newImage(midlayer1, "images/scenes/act5_shadowLayer.png", true) setAnchor(shadowLayer6) shadowLayer6.alpha=0
+
+            GoldenApple = display.newImage(midlayer3, "images/scenes/act5_goldenApple.png", true) setAnchor(GoldenApple)
+            GoldenApple.x=500  GoldenApple.y=-500
+
+            GoldenHorse = display.newImage(midlayer2, "images/scenes/act5_goldenHorse.png", true) setAnchor(GoldenHorse)
+            GoldenHorse.x=750  GoldenHorse.y=-500
 
             organizeStage() 
         end,
-        set62 = function()
-            removeCharacters()
+        setAppleGarden = function()
             clearStage() 
 
             landscape3 = display.newImage(midlayer1, "images/background7.png", true) setAnchor(landscape3)
             landscape3.x = 0 landscape3.y = 0
+
+            starsWay = display.newImage(midlayer1, "images/effects_stars.png", true) setAnchor(starsWay)
+            starsWay.x = 0 starsWay.y = 0 starsWay.alpha = 0
 
             landscape2 = display.newImage(midlayer1, "images/act5_landscape2.png", true) setAnchor(landscape2)
             landscape2.x = -400 landscape2.y = 0
@@ -4550,6 +4815,7 @@ local function setStageObjects(stage)
 
             organizeStage() 
         end,
+        --[[
         set73 = function()
             clearStage()
 
@@ -4985,7 +5251,7 @@ local function setStageObjects(stage)
             lightningLayer.alpha=0
 
             organizeStage()
-        end,
+        end, ]]--
 
     }
     stages[stage]()
@@ -4997,6 +5263,8 @@ function sceneTextTouch(event)
     print('scene text touch' .. event.target.linkedText.text)
     if event.phase == "began" and event.target.follows then
         event.target:setFillColor( 0.7, 0.7, 0.7 )
+        local S_turnEffect = audio.loadStream( "sounds/pageEffect.mp3")
+            S_ClickSfxCh = audio.play( S_turnEffect, {loops=0} )
     end
     if event.phase == "ended" and event.target.follows then
         event.target:setFillColor( 1,1,1 )
@@ -5009,8 +5277,9 @@ function sceneTextTouch(event)
         -- effects on clicked block go here
 
         -- move everything into the place it is supposed to be at the end of the scene
-        scenes[event.target.index].animationComplete()
         transition.cancel()
+        scenes[event.target.index].animationComplete()
+
 
         -- load relevant scene we attached earlier
         loadScene(scenes[event.target.follows])
@@ -5035,6 +5304,13 @@ function loadScene(s)
         if(s.soundEffect) then 
             local S_soundEffect = audio.loadStream( "sounds/"..s.soundEffect)
             S_BgSfxCh = audio.play( S_soundEffect, {loops=0, fadein=500} )
+        end
+
+        if s.curtain then 
+            select1Container.curtain  = true
+            select2Container.curtain  = true
+            select3Container.curtain  = true
+            textContainer.curtain = true
         end
 
         -- Set the text or call it depending on the type
@@ -5128,16 +5404,6 @@ function loadScene(s)
         if(s.setStage) then
             setStageObjects(s.setStage)
         end
-        if(s.backgr) then
-            background:removeSelf()
-            background = nil
-            background = display.newImage( "images/"..s.backgr, true ) setCenter(background) setAnchor(background)
-        end
-        if(s.foregr) then
-            foreground:removeSelf()
-            foreground = nil
-            foreground = display.newImage(foregoundGr, "images/"..s.foregr, true ) setCenter(foreground) setAnchor(foreground)
-        end
         if(s.animations) then
             s.animations()
         end
@@ -5151,26 +5417,28 @@ end
 -- Loading game for a first time
 local myListener
 myListener = function( event )
-    print("myListener called")
-    background:removeEventListener("touch", myListener)
-    setAnchor(textContainer)
-    setAnchor(textContainerNA)
+    if event.phase == "ended" then 
+        print("myListener called")
+        background:removeEventListener("touch", myListener)
+        setAnchor(textContainer)
+        setAnchor(textContainerNA)
 
-    setAnchor(select1Text)
-    setAnchor(select2Text)
-    setAnchor(select3Text)
+        setAnchor(select1Text)
+        setAnchor(select2Text)
+        setAnchor(select3Text)
 
-    print('Now adding Listeners in main')
-    -- listeners for the right blocks
-    select1Container:addEventListener( "touch", sceneTextTouch)
-    select2Container:addEventListener( "touch", sceneTextTouch)
-    select3Container:addEventListener( "touch", sceneTextTouch)
-    
-    -- listener for the main text
-    textContainer:addEventListener( "touch", sceneTextTouch)
-
-    loadScene(scenes[9])
-    return true
+        print('Now adding Listeners in main')
+        -- listeners for the right blocks
+        select1Container:addEventListener( "touch", sceneTextTouch)
+        select2Container:addEventListener( "touch", sceneTextTouch)
+        select3Container:addEventListener( "touch", sceneTextTouch)
+        
+        -- listener for the main text
+        textContainer:addEventListener( "touch", sceneTextTouch)
+        -- 57 - brother Castle 1
+        loadScene(scenes[57])
+        return true
+    end
 end
 
 background:addEventListener( "touch", myListener )
