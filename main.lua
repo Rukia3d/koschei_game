@@ -223,18 +223,18 @@ local S_ClickSfxCh
 --
 -----------------------------------------------------------------------------------------
 
-local menuButton = display.newImage(buttonLayers, "images/closeButtonOff.png") setAnchor(menuButton) 
-    menuButton.isVisible = true menuButton.x=100 menuButton.y=0 
-local menuButtonActive = display.newImage(buttonLayers, "images/closeButtonOn.png") setAnchor(menuButtonActive) 
-    menuButtonActive.isVisible = true menuButtonActive.x=0 menuButtonActive.y=0
+local menuButton = display.newImage(buttonLayers, "images/menuButtonOff.png") setAnchor(menuButton) 
+    menuButton.isVisible = false menuButton.x=10 menuButton.y=10 
+local menuButtonActive = display.newImage(buttonLayers, "images/menuButtonOn.png") setAnchor(menuButtonActive) 
+    menuButtonActive.isVisible = false menuButtonActive.x=10 menuButtonActive.y=10
 
 local menuBack = display.newImage(buttonLayers, "images/menu_back.png") setAnchor(menuBack) 
-    menuBack.isVisible = true menuBack.x=100 menuBack.y=0
+    menuBack.isVisible = false menuBack.x=0 menuBack.y=0
 
-local menuClose = display.newImage(buttonLayers, "images/menuButtonOff.png") setAnchor(menuClose) 
-    menuClose.isVisible = true menuClose.x=600 menuClose.y=0
-local menuCloseActive = display.newImage(buttonLayers, "images/menuButtonOn.png") setAnchor(menuCloseActive) 
-    menuCloseActive.isVisible = true menuCloseActive.x=600 menuCloseActive.y=0
+local menuClose = display.newImage(buttonLayers, "images/closeButtonOff.png") setAnchor(menuClose) 
+    menuClose.isVisible = false menuClose.x=450 menuClose.y=70
+local menuCloseActive = display.newImage(buttonLayers, "images/closeButtonOn.png") setAnchor(menuCloseActive) 
+    menuCloseActive.isVisible = false menuCloseActive.x=450 menuCloseActive.y=70
 
 
 -----------------------------------------------------------------------------------------
@@ -6181,12 +6181,12 @@ end
 
 -- Main text listener
 function sceneTextTouch(event)
-    if event.phase == "began" and event.target.follows then
+    if event.phase == "began" and event.target.follows and menuBack.isVisible==false then
         event.target:setFillColor( 0.7, 0.7, 0.7 )
         local S_turnEffect = audio.loadStream( "sounds/pageEffect.mp3")
             S_ClickSfxCh = audio.play( S_turnEffect, {loops=0} )
     end
-    if event.phase == "ended" and event.target.follows then
+    if event.phase == "ended" and event.target.follows and menuBack.isVisible==false then
         event.target:setFillColor( 1,1,1 )
 
         transition.cancel()
@@ -6200,12 +6200,57 @@ function sceneTextTouch(event)
     return true
 end
 
+-- Menu listener
+function menuButtonListener(event)
+    print('We are in menuButtonListener')
+    if menuBack.isVisible==false then
+        if event.phase == "began" then 
+            print('We are in menuButtonListener and event phase began')
+            menuButtonActive.isVisible=true 
+        end
+        if event.phase == "ended" then
+        print('We are in menuButtonListener and event phase ended')
+            menuButtonActive.isVisible=true
+            menuButton.isVisible=false
+            menuBack.isVisible=true
+            menuClose.isVisible=true
+        end
+    end
+end
+
+-- Menu close listener
+function menuCloseListener(event)
+    print('We are in menuCloseListener')
+    if menuBack.isVisible==true then
+        if event.phase == "began" then 
+            print('We are in menuCloseListener and event phase began')
+            menuCloseActive.isVisible=true
+        end
+        if event.phase == "ended" then 
+            print('We are in menuCloseListener and event phase ended')
+            menuCloseActive.isVisible=false
+            menuButtonActive.isVisible = false
+            menuButton.isVisible=true
+            menuBack.isVisible=false
+            menuClose.isVisible=false
+        end
+    end
+end
+
+
 function loadMenu()
     print('Menu loading...')
+    menuButton:addEventListener( 'touch', menuButtonListener )
+    menuClose:addEventListener( 'touch', menuCloseListener )
+    menuBack.isVisible=false
+    menuButton.isVisible=true
+    menuClose.isVisible=false
+    menuButtonActive.isVisible=false
+    menuCloseActive.isVisible=false
+    buttonLayers:toFront() 
 end
 
 function loadScene(s)
-    loadMenu()
     print('Start displaying scene '..s.sName)
     if s.name == 1000 then 
         showEnding()
@@ -6314,6 +6359,7 @@ function loadScene(s)
         end
         organizeStage()
     end
+    loadMenu()
 end 
 
 
