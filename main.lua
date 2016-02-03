@@ -22,6 +22,7 @@ midlayer3.anchorX = 0 midlayer3.anchorY = 0
 local foregoundGr = display.newGroup()
 foregoundGr.anchorX = 0 foregoundGr.anchorY = 0 
 local textLayers = display.newGroup()
+local achivGroup = display.newGroup()
 
 local buttonLayers = display.newGroup()
 buttonLayers.anchorX = 0 buttonLayers.anchorY = 0 
@@ -48,6 +49,21 @@ dialBack.y=-800 dialBack.x=0
 
 local endingBack = display.newImage(textLayers, "images/effects/endingBack.png", true ) setAnchor(endingBack)
     endingBack.y=-800 endingBack.x=0
+
+-- Background for achivements
+local achivRect = display.newRect( achivGroup, 670, 45, 320, 130 ) setAnchor(achivRect)
+
+local achivRectText = display.newText( achivGroup, 'Testing', 790, 55, 'PTSans-Regular', 19 )
+setAnchor(achivRectText)
+achivRectText.alpha = 1
+transition.to(achivRectText, {alpha=1, time=500}) 
+achivRectText:setFillColor( 0, 0, 0 )
+
+local achivImage = display.newImage(achivGroup, "images/achivements/example100.png")
+setAnchor(achivImage)
+achivImage.alpha = 1
+transition.to(achivImage, {alpha=1, time=500})
+achivImage.x = 680 achivImage.y=55 
 
 -- Small characters for stage, act1
 local AlenaS = display.newImage( characters, "images/chars/alena_f_small.png", true)
@@ -119,15 +135,15 @@ local MouseD = display.newImage( charactersDial, "images/chars/mouseDial.png", f
 local KoscheiPleaNCD = display.newImage( charactersDial, "images/chars/kosh_plea_dialogue_NC.png", false) KoscheiPleaNCD.isVisible = false
 
 -- Charcters for brother's scenes
-local BrotherD = display.newImage(foregoundGr, "images/transparent.png")
-local BrotherS = display.newImage(foregoundGr, "images/transparent.png")
+local BrotherD = display.newImage(foregoundGr, "images/menus/transparent.png")
+local BrotherS = display.newImage(foregoundGr, "images/menus/transparent.png")
 
 
 -- Set main screen
-local background = display.newImage( "images/startScreen.png") background.x = display.contentWidth / 2 background.y = display.contentHeight / 2
+local background = display.newImage( "images/menus/startScreen.png") background.x = display.contentWidth / 2 background.y = display.contentHeight / 2
 
 -- Variables for stage content
-local foreground = display.newImage(foregoundGr, "images/transparent.png")
+local foreground = display.newImage(foregoundGr, "images/menus/transparent.png")
 local settings
 
 -- Arrays for character groups
@@ -135,25 +151,25 @@ local charactersBig = {Mother, Alena, Ivan, Wolf, MotherWar, KoscheiPlea, Kosche
 local charactersSmall = {AlenaS, IvanS, MotherS, WolfS, WolfSit, AlenaCryS, MotherWarS, AlenaHolding, AlenaOnWolf, AlenaNoRibbon, AlenaOnWolfNoRibbon, VasilisaS, VasilisaPlea, AlenaCrySNR, BearS, AlenaIvanRiding, koshAttack, YagaS, MouseS}
 
 -- Variables for text
-local textContainerNA = display.newImage(textLayers, "images/text_back_colour.png")
+local textContainerNA = display.newImage(textLayers, "images/menus/text_back_colour.png")
 textContainerNA.x = 10 textContainerNA.y = 560 
 
-local textContainer = display.newImage(textLayers, "images/text_back.png")
+local textContainer = display.newImage(textLayers, "images/menus/text_back.png")
 textContainer.x = 10 textContainer.y = 560 
 textContainer.isVisible = false
 
 local sceneText = display.newText(textLayers, '', 50, 610, 900, display.contentHeight * 0.5, 'PTSans-Regular', 18)
 
 -- Variables for selections
-local select1Container = display.newImage(textLayers, "images/selection_back.png")
+local select1Container = display.newImage(textLayers, "images/menus/selection_back.png")
 select1Container.anchorX = 0 select1Container.y = 700
 select1Container.isVisible = false
 
-local select2Container = display.newImage(textLayers, "images/selection_back.png")
+local select2Container = display.newImage(textLayers, "images/menus/selection_back.png")
 select2Container.anchorX = 0 select2Container.y = 700
 select2Container.isVisible = false
 
-local select3Container = display.newImage(textLayers, "images/selection_back.png")
+local select3Container = display.newImage(textLayers, "images/menus/selection_back.png")
 select3Container.anchorX = 0 select3Container.y = 700
 select3Container.isVisible = false
 
@@ -223,18 +239,26 @@ local S_ClickSfxCh
 --
 -----------------------------------------------------------------------------------------
 
-local menuButton = display.newImage(buttonLayers, "images/menuButtonOff.png") setAnchor(menuButton) 
+local menuButton = display.newImage(buttonLayers, "images/menus/menuButtonOff.png") setAnchor(menuButton) 
     menuButton.isVisible = false menuButton.x=10 menuButton.y=10 
-local menuButtonActive = display.newImage(buttonLayers, "images/menuButtonOn.png") setAnchor(menuButtonActive) 
+local menuButtonActive = display.newImage(buttonLayers, "images/menus/menuButtonOn.png") setAnchor(menuButtonActive) 
     menuButtonActive.isVisible = false menuButtonActive.x=10 menuButtonActive.y=10
 
-local menuBack = display.newImage(buttonLayers, "images/menu_back.png") setAnchor(menuBack) 
+local menuBack = display.newImage(buttonLayers, "images/menus/menu_back.png") setAnchor(menuBack) 
     menuBack.isVisible = false menuBack.x=0 menuBack.y=0
 
-local menuClose = display.newImage(buttonLayers, "images/closeButtonOff.png") setAnchor(menuClose) 
+local menuClose = display.newImage(buttonLayers, "images/menus/closeButtonOff.png") setAnchor(menuClose) 
     menuClose.isVisible = false menuClose.x=450 menuClose.y=70
-local menuCloseActive = display.newImage(buttonLayers, "images/closeButtonOn.png") setAnchor(menuCloseActive) 
+local menuCloseActive = display.newImage(buttonLayers, "images/menus/closeButtonOn.png") setAnchor(menuCloseActive) 
     menuCloseActive.isVisible = false menuCloseActive.x=450 menuCloseActive.y=70
+
+local achiveBack = display.newImage(buttonLayers, "images/menus/menu_back.png") setAnchor(achiveBack) 
+    achiveBack.isVisible = false achiveBack.x=0 achiveBack.y=0
+
+local menuClose2 = display.newImage(buttonLayers, "images/menus/closeButtonOff.png") setAnchor(menuClose2) 
+    menuClose2.isVisible = false menuClose2.x=450 menuClose.y=70
+local menuCloseActive2 = display.newImage(buttonLayers, "images/menus/closeButtonOn.png") setAnchor(menuCloseActive2) 
+    menuCloseActive2.isVisible = false menuCloseActive2.x=450 menuCloseActive.y=70
 
 
 -----------------------------------------------------------------------------------------
@@ -920,6 +944,162 @@ function showEnding() end
 
 -----------------------------------------------------------------------------------------
 --
+-- ACHIVEMENTS
+--
+-----------------------------------------------------------------------------------------
+local achivCollected = {}
+
+local achivements = {
+    bless = {
+        name = 'bless',
+        title = 'Mother\'s Blessing',
+        img = 'images/achivements/example.png',
+        descr =  'It keeps you from troubles (and witche\'s ovens)'
+    },
+    nanny = {
+        name = 'nanny',
+        title ='Careless Nanny',
+        img = 'images/achivements/example.png',
+        descr =  'One can always get a new brother, right?'
+    },
+    kindG = {
+        name = 'kindG',
+        title ='A kind girl',
+        img = 'images/achivements/example.png',
+        descr =  'You can be too kind for your own good'
+    },
+    obedient = {
+        name = 'obedient',
+        title ='An obedient daughter',
+        img = 'images/achivements/example.png',
+        descr =  'If only all your relatives were more like you'
+    },
+    letDie = {
+        name = 'letDie',
+        title ='Let him die',
+        img = 'images/achivements/example.png',
+        descr =  'Better your horse than you'
+    },
+    brave = {
+        name = 'brave',
+        title ='A brave traveller',
+        img = 'images/achivements/example.png',
+        descr =  'Don\'t allow gloomy premonitions to scare you'
+    },
+    ribbon = {
+        name = 'ribbon',
+        title ='I don\'t care',
+        img = 'images/achivements/example.png',
+        descr =  'Everybody dies, so why bother'
+    },
+    fairest = {
+        name = 'fairest',
+        title ='The fairest of them all',
+        img = 'images/achivements/example.png',
+        descr =  'You really care about your looks'
+    },
+    advice = {
+        name = 'advice',
+        title ='Advisors for the win',
+        img = 'images/achivements/example.png',
+        descr =  'Why have a good adviser if not to listen'
+    },
+    determined = {
+        name = 'determined',
+        title ='Determined',
+        img = 'images/achivements/example.png',
+        descr =  'You are ready to step over people for your goals.' 
+    },
+    sympathetic = {
+        name = 'sympathetic',
+        title ='Sympathetic',
+        img = 'images/achivements/example.png',
+        descr =  'You are not ready to step over people for your goals.'
+    },
+    noBears = {
+        name = 'noBears',
+        title ='No talking animals',
+        img = 'images/achivements/example.png',
+        descr =  'Talking animals are not allowed here!'
+    },
+    wolfDies = {
+        name = 'wolfDies',
+        title ='Bye-Bye friend',
+        img = 'images/achivements/example.png',
+        descr =  'That\'s the road you\'ve chosen. Better him than you, right?'
+    },
+    alenaDies = {
+        name = 'alenaDies',
+        img = 'images/achivements/example.png',
+        title ='Bye-Bye Alena',
+        descr =  'Your self-sacrifice is admirable!'
+    },
+    vasilisaHelp = {
+        name = 'vasilisaHelp',
+        img = 'images/achivements/example.png',
+        title ='Good deeds unpunished',
+        descr =  'You help someone, someone helps you.'
+    },
+    uncleHelp = {
+        name = 'uncleHelp',
+        img = 'images/achivements/example.png',
+        title = 'Contract work',
+        descr =  'You family members keep their promises'
+    },
+    oven = {
+        name = 'oven',
+        img = 'images/achivements/example.png',
+        title ='In the oven',
+        descr =  'Good girls go on their way, while bad girls outsmart Witches'
+    },
+    noBerries = {
+        name = 'noBerries',
+        img = 'images/achivements/example.png',
+        title ='No Berries for you',
+        descr =  'Alena doesn\'t share food!'
+    },
+    guardian = {
+        name = 'guardian',
+        img = 'images/achivements/example.png',
+        title ='Guardian',
+        descr =  'You\'ve spared Koschei, let\'s hope he won\'t escape again.'
+    },
+    executioner = {
+        name = 'executioner',
+        img = 'images/achivements/example.png',
+        title ='Executioner',
+        descr =  'Someone had to do it.'
+    },
+    goodEnd = {
+        name = 'goodEnd',
+        img = 'images/achivements/example.png',
+        title ='All there',
+        descr =  'You finished the game and returned home. Bravo!'
+    },
+    badEnd = {
+        name = 'badEnd',
+        img = 'images/achivements/example.png',
+        title ='Not all there',
+        descr =  'Who needs this dull Wolf around anyway.'
+    },
+}
+
+local function showAchivement(achivKey)
+
+end
+
+local function addSchivement(achivKey)
+    local achivement = achivements[achivKey]
+
+    for i=1, table.getn(achivCollected) do 
+        if achivCollected[1][name] ~= achivKey then 
+            showAchivement(achivKey)
+            table.insert(achivCollected, achivKey)
+        end
+    end
+end
+-----------------------------------------------------------------------------------------
+--
 -- ORGANISING
 --
 -----------------------------------------------------------------------------------------
@@ -934,6 +1114,7 @@ local function organizeStage()
     charactersDial:toFront()
     foregoundGr:toFront()
     textLayers:toFront()
+    achivGroup:toFront()
     buttonLayers:toFront()
 end
 
@@ -6358,6 +6539,10 @@ function loadScene(s)
             s.animations()
         end
         organizeStage()
+        if(s.achiv) then
+            achivGroup:toFront()
+            addSchivement(s.achiv)
+        end
     end
     loadMenu()
 end 
