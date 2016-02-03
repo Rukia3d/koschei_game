@@ -23,6 +23,9 @@ local foregoundGr = display.newGroup()
 foregoundGr.anchorX = 0 foregoundGr.anchorY = 0 
 local textLayers = display.newGroup()
 
+local buttonLayers = display.newGroup()
+buttonLayers.anchorX = 0 buttonLayers.anchorY = 0 
+
 -----------------------------------------------------------------------------------------
 --
 -- CHANGE CENTER FOR IMAGE
@@ -119,25 +122,6 @@ local KoscheiPleaNCD = display.newImage( charactersDial, "images/chars/kosh_plea
 local BrotherD = display.newImage(foregoundGr, "images/transparent.png")
 local BrotherS = display.newImage(foregoundGr, "images/transparent.png")
 
---[[
-
-
-
-
-
-
-
-
-
-local AlenaCryD_NR = display.newImage( charactersDial, "images/chars/alena_cry_dialogueNR.png") AlenaCryD_NR.x = 400 AlenaCryD_NR.y = 800  
-
-
- 
-local Koschei = display.newImage( charactersDial, "images/chars/koschei_f_big.png", false) Koschei.x = 300 Koschei.y = 800
-
-
-]]--
-
 
 -- Set main screen
 local background = display.newImage( "images/startScreen.png") background.x = display.contentWidth / 2 background.y = display.contentHeight / 2
@@ -233,7 +217,24 @@ local S_BgSfxCh
 local S_ClickSfxCh
 
 
+-----------------------------------------------------------------------------------------
+--
+-- MENU AND IT'S MANIPULATIONS for loadMenu()
+--
+-----------------------------------------------------------------------------------------
 
+local menuButton = display.newImage(buttonLayers, "images/closeButtonOff.png") setAnchor(menuButton) 
+    menuButton.isVisible = true menuButton.x=100 menuButton.y=0 
+local menuButtonActive = display.newImage(buttonLayers, "images/closeButtonOn.png") setAnchor(menuButtonActive) 
+    menuButtonActive.isVisible = true menuButtonActive.x=0 menuButtonActive.y=0
+
+local menuBack = display.newImage(buttonLayers, "images/menu_back.png") setAnchor(menuBack) 
+    menuBack.isVisible = true menuBack.x=100 menuBack.y=0
+
+local menuClose = display.newImage(buttonLayers, "images/menuButtonOff.png") setAnchor(menuClose) 
+    menuClose.isVisible = true menuClose.x=600 menuClose.y=0
+local menuCloseActive = display.newImage(buttonLayers, "images/menuButtonOn.png") setAnchor(menuCloseActive) 
+    menuCloseActive.isVisible = true menuCloseActive.x=600 menuCloseActive.y=0
 
 
 -----------------------------------------------------------------------------------------
@@ -435,8 +436,8 @@ local function setStronghold1()
 end  
 
 local function wolfJumpStronghold1()
-    transition.to(AlenaOnWolfNoRibbon, {x=500, delay=1000, time=500})
-    transition.to(AlenaOnWolfNoRibbon, {y=-00, delay=1000, time=500})
+    transition.to(AlenaOnWolfNoRibbon, {x=500, y=0, delay=1000, time=500})
+    transition.to(AlenaOnWolfNoRibbon, {y=-400, delay=1000, time=500})
     transition.to(AlenaOnWolfNoRibbon, {x=600, delay=1500, time=500})
     transition.to(AlenaOnWolfNoRibbon, {y=10, delay=1500, time=500})
 end
@@ -527,7 +528,6 @@ function wolfAlenaInStables()
 end
 
 function loadUncleCastle()
-    print('Loading castle and brother same is '..choices.brother)
     transition.to(landscape3, {x=0, time=1000, delay=1000})
     transition.to(landscape2, {y=0, time=1000, delay=2000})
     transition.to(shadowLayer6, {alpha=1, time=1000, delay=3000})
@@ -535,44 +535,45 @@ function loadUncleCastle()
     transition.to(birdSymbol, {y=320, time=500, delay=4000})
 end
 
-function loadUncleCastleFast(night)
-    background:removeSelf()
-    background = nil
-    if night=='Evening' then
-        background = display.newImage( "images/backg/background7.png", true ) setAnchor(background)
-    end
-
-    if night=='Night' then
-        background = display.newImage( "images/backg/background8.png", true ) setAnchor(background)
-    end
-
-    if night=='Dawn' then
-        background = display.newImage( "images/backg/background9.png", true ) setAnchor(background)
-    end
+function loadUncleCastleFast()
 
     background.x=0 background.y=0
 
-    foreground:removeSelf()
-    foreground = nil
-    foreground = display.newImage(foregoundGr, "images/backg/foreground3.png", true ) setAnchor(foreground)
-    foreground.x=0 foreground.y=0
-
     landscape3.x=0
-    landscape2.y=0
-    shadowLayer6.alpha=1
-    throne.y=-30
-    birdSymbol.y=320
-    BrotherS.y=300
+    transition.to(landscape2, {y=0, time=1000})
+    transition.to(shadowLayer6, {alpha=1, time=1000, delay=1000})
+    transition.to(throne, {y=-30, time=500, delay=2000})
+    transition.to(birdSymbol, {y=320, time=500, delay=2000})
+
+    WolfSit.y = 10 WolfSit.x=700 WolfSit.xScale = 1 WolfSit.alpha=0
+    AlenaNoRibbon.isVisible = true AlenaNoRibbon.y = 20 AlenaNoRibbon.x=610 AlenaNoRibbon.alpha=0
+    GoldenApple.isVisible = true GoldenApple.x=550 GoldenApple.y=0 GoldenApple.alpha=0
+    GoldenHorse.isVisible = true GoldenHorse.x=700 GoldenHorse.y=0 GoldenHorse.alpha=0
+
+    BrotherS.isVisible = true BrotherS.alpha = 0 BrotherS.y=300
+    transition.to(BrotherS, {alpha=1, delay=2000, time=700})
 end
 
 function wolfAtUncleCastle(Obj)
-    WolfSit.y = 10 WolfSit.x=700 WolfSit.xScale = 1
+
     if Obj=='Apple' then
         if choices.appleTaken==true then WolfSit.isVisible = false
         else WolfSit.isVisible = true end
+
+        AlenaNoRibbon.isVisible=true
+        transition.to(AlenaNoRibbon, {alpha=1, time=700, delay=2000})
+        transition.to(WolfSit, {alpha=1, time=700, delay=2000})
+        transition.to(GoldenApple, {alpha=1, time=1000, delay=3000})
+
     elseif Obj=='Horse' then
         if choices.horseTaken==true then WolfSit.isVisible = false
         else WolfSit.isVisible = true end
+
+        AlenaNoRibbon.isVisible=true
+        transition.to(AlenaNoRibbon, {alpha=1, time=700, delay=2000})
+        transition.to(WolfSit, {alpha=1, time=700, delay=2000})
+        transition.to(GoldenHorse, {alpha=1, time=1000, delay=3000})
+
     elseif Obj=='Vasilisa' then
         if choices.vasilisaGo==true then 
             VasilisaS.isVisible = true
@@ -584,6 +585,7 @@ function wolfAtUncleCastle(Obj)
             AlenaVasilisaRiding.isVisible = true
         end
     end
+
 end
 
 function loadBushToHide()
@@ -710,7 +712,7 @@ function crowBlackMagic(number)
     transition.to(BlackWater, {alpha=1, time=500, delay=1500})
     transition.to(BlackWater, {alpha=0, time=500, delay=2500})
     --transition.to(BlackMagic, {y=-220, time=1000, delay=2500})
-    transition.to(crowBig, {y=-200, x=1200, time=1000, delay=3000})
+    transition.to(crowBig, {y=-300, x=1200, time=1000, delay=3000})
     --transition.to(BlackMagic, {y=-800, time=1000, delay=4000})
 end
 
@@ -814,14 +816,12 @@ function yagaOutOfOven()
 end
 
 function setOakLevel() 
-    AlenaOnWolfNoRibbon.xScale=-1 AlenaOnWolfNoRibbon.x=500 AlenaOnWolfNoRibbon.y=-500 AlenaOnWolfNoRibbon.isVisible = true
     transition.to(landscape1, {x=0, time=1000})
     transition.to(landscape2, {x=0, time=1500, delay=500})
     transition.to(landscape3, {x=0, time=1000, delay=1000})
     transition.to(groundLevel, {x=0, time=1500, delay=1500})
     transition.to(grass, {x=0, time=1500, delay=2000})
     transition.to(shadowLayer14, {alpha=1, time=1000, delay=3500})
-    transition.to(AlenaOnWolfNoRibbon, {y=0, time=1000, delay=3500})
 end
 
 function moveToOak()
@@ -934,6 +934,7 @@ local function organizeStage()
     charactersDial:toFront()
     foregoundGr:toFront()
     textLayers:toFront()
+    buttonLayers:toFront()
 end
 
 -----------------------------------------------------------------------------------------
@@ -1342,7 +1343,9 @@ local scenes = {}
         animationComplete = function()
             IvanS.x=560 IvanS.y=0 IvanS.isVisible = true 
             AlenaS.x=190 AlenaS.y=-200  AlenaS.isVisible = true 
-        end
+        end,
+        --Sound: chains
+        soundEffect = 'chainMail.mp3'
     }
     scenes[23] = {
         sName = 23, 
@@ -1587,7 +1590,9 @@ local scenes = {}
             bucketTread.y=-50
             IvanS.isVisible = true IvanS.x=560 IvanS.y=0  IvanS.xScale = 1
             AlenaS.isVisible = true AlenaS.x = 140  AlenaS.y=-200
-        end
+        end,
+        --Sound: chains
+        soundEffect = 'chainMail.mp3'
     }
     scenes[35] = {
         sName = 35,
@@ -2454,14 +2459,15 @@ local scenes = {}
         sName = 80,
         follows = 81,
         setStage = 'setUncleCastle',
+        openingAnimation = {
+            [1] = 'background7.png', 
+            [2] = 'foreground3.png'
+        },
         text='scene 80: Seeing the golden apple, her uncle\'s face flourishes a smile. \"You are a very handy girl,\" says he.',
         animations = function()
-            loadUncleCastleFast('Evening')
+            hideSmallCharacters()
+            loadUncleCastleFast()
             wolfAtUncleCastle('Apple')
-            AlenaOnWolfNoRibbon.isVisible = false
-
-            GoldenApple.isVisible = true GoldenApple.x=550 GoldenApple.y=0
-            AlenaS.isVisible = true AlenaS.y = 20 AlenaS.x=610
         end,
         animationComplete = function()
             landscape3.x=0
@@ -2470,11 +2476,10 @@ local scenes = {}
             throne.y=-30
             birdSymbol.y=320
             BrotherS.y=300
-
             AlenaOnWolfNoRibbon.isVisible = false
 
-            GoldenApple.isVisible = true GoldenApple.x=550 GoldenApple.y=0
-            AlenaS.isVisible = true AlenaS.y = 20 AlenaS.x=610
+            GoldenApple.isVisible = true GoldenApple.x=550 GoldenApple.y=0 GoldenApple.alpha=1
+            AlenaNoRibbon.isVisible = true AlenaNoRibbon.y = 20 AlenaNoRibbon.x=610 AlenaNoRibbon.alpha=1
         end,
         --Sound: door Open Close
         soundEffect = 'doorOpenClose.mp3'
@@ -2730,14 +2735,17 @@ local scenes = {}
         sName = 93,
         follows = 94,
         setStage = 'setUncleCastle',
+        openingAnimation = {
+            [1] = 'background8.png', 
+            [2] = 'foreground3.png'
+        },
         text='scene 93: Seeing the horse with the golden mane, her uncle gets lost in his thoughts for a second. ',
         animations = function()
-            loadUncleCastleFast('Night')
+            removeCurtain()
+            hideBigCharacters()
+            loadUncleCastleFast()
             wolfAtUncleCastle('Horse')
-            AlenaOnWolfNoRibbon.isVisible = false
 
-            GoldenHorse.isVisible = true GoldenHorse.x=700 GoldenHorse.y=0
-            AlenaS.isVisible = true AlenaS.y = 20 AlenaS.x=610
         end,
         animationComplete = function()
             landscape3.x=0
@@ -2749,8 +2757,8 @@ local scenes = {}
 
             AlenaOnWolfNoRibbon.isVisible = false
 
-            GoldenHorse.isVisible = true GoldenHorse.x=700 GoldenHorse.y=0
-            AlenaS.isVisible = true AlenaS.y = 20 AlenaS.x=610
+            GoldenHorse.isVisible = true GoldenHorse.x=700 GoldenHorse.y=0 GoldenHorse.alpha=1
+            AlenaNoRibbon.isVisible = true AlenaNoRibbon.y = 20 AlenaNoRibbon.x=610 AlenaNoRibbon.alpha=1
         end,
         --Sound: door Open Close
         soundEffect = 'doorOpenClose.mp3'
@@ -2806,6 +2814,7 @@ local scenes = {}
         end,
         animationComplete = function()
             removeCurtain()
+            hideBigCharacters()
         end
     }
 
@@ -2828,7 +2837,7 @@ local scenes = {}
     scenes[99] = {
         sName = 99,
         follows = 100,
-        text='scene 99: "I\'ll jump into the garden as fast as I can. Then, you have to grab Vasilisa the Beautiful, and don\'t let go of her until we get back in the forest".',
+        text='scene 99: Grey Wolf: "I\'ll jump into the garden as fast as I can. Then, you have to grab Vasilisa the Beautiful, and don\'t let go of her until we get back in the forest".',
         animations = function() 
             --wolfJumpStronghold1()
             setStronghold3()
@@ -3108,8 +3117,7 @@ local scenes = {}
         text='scene 112: Alena and Gray Wolf continue their journey. Alena tries not to think about Vasilisa\'s fate, as her only goal is to find her lost brother and return him home. "At least this way, I secured my uncle\'s help in case I need it."',
         animations = function()
             forrestSunny.alpha=1
-            AlenaOnWolfNoRibbon.isVisible = true
-            AlenaOnWolfNoRibbon.y=0
+            AlenaOnWolfNoRibbon.isVisible = true AlenaOnWolfNoRibbon.y=0 AlenaOnWolfNoRibbon.alpha=1
             ridingWolftoRight(AlenaOnWolfNoRibbon)
         end,
         animationComplete = function()end
@@ -3897,9 +3905,8 @@ local scenes = {}
         text='scene 153: Time passes and finally, the old crow returns. With one splash of the water of life, Alena and Wolf open their eyes. Uncle frees the little crow, as promised. But Ivan is still in Koschei\'s clutches, and there\'s no winning in any fight with him.',
         animations = function() 
             crowWhiteMagic(330)
-            AlenaNoRibbon.x=600
             WolfSit:toFront() WolfSit.x=400 WolfSit.isVisible=true WolfSit.alpha=0 WolfSit.y=20
-            AlenaNoRibbon:toFront() AlenaNoRibbon.x=340  AlenaNoRibbon.y=30 AlenaNoRibbon.isVisible=true AlenaNoRibbon.alpha=0
+            AlenaNoRibbon:toFront() AlenaNoRibbon.x=600  AlenaNoRibbon.y=30 AlenaNoRibbon.isVisible=true AlenaNoRibbon.alpha=0
             transition.to(AlenaNoRibbon, {alpha=1, time=500, delay=3200})
             transition.to(WolfSit, {alpha=1, time=500, delay=3200})
 
@@ -3911,7 +3918,7 @@ local scenes = {}
             BlueWater.alpha=0
             WhiteMagic.y=-800
             WolfSit:toFront() WolfSit.x=400 WolfSit.isVisible=true WolfSit.alpha=1 WolfSit.y=20
-            AlenaNoRibbon:toFront() AlenaNoRibbon.x=340  AlenaNoRibbon.y=30 AlenaNoRibbon.isVisible=true AlenaNoRibbon.alpha=1
+            AlenaNoRibbon:toFront() AlenaNoRibbon.x=600  AlenaNoRibbon.y=30 AlenaNoRibbon.isVisible=true AlenaNoRibbon.alpha=1
             wolfDown.alpha=0
             alenaDown.alpha=0
         end,
@@ -3950,6 +3957,8 @@ local scenes = {}
         animationComplete = function()
             removeCurtain()
             removeCrows()
+            foregroundIce:removeSelf()
+            foregroundIce = nil
         end
     }
 
@@ -4200,7 +4209,7 @@ local scenes = {}
     scenes[169] = {
         sName = 169,
         follows = 170,
-        text='scene 169: "Behind the dark forest, there\'s a black mountain. On this mountain, there\'s an old oak. On the oak, there\'s a golden chain with a coffer on it."',
+        text='scene 169: "Behind the dark forest, there\'s a black mountain. On this mountain, there\'s an old oak. On the oak, there\'s a golden chain with a chest on it."',
         animations = function() 
             transDialogueBack()
             glowEyesFlicker(700, glowEyes2)
@@ -4218,7 +4227,7 @@ local scenes = {}
     scenes[170] = {
         sName = 170,
         follows = 194,
-        text='scene 170: "Inside the coffer there\'s a hare, inside that - a duck. Inside the duck, there\'s an egg enclosing a needle. Koschei\'s death is on the point of it."',
+        text='scene 170: "Inside the chest there\'s a hare, inside that - a duck. Inside the duck, there\'s an egg enclosing a needle. Koschei\'s death is on the point of it."',
         animations = function()
             glowEyesFlicker(700, glowEyes2)
             glowEyesFlicker(900, glowEyes3)
@@ -4528,7 +4537,7 @@ local scenes = {}
     scenes[191] = {
         sName = 191,
         follows = 192,
-        text='scene 191: "Behind the dark forest, there\'s a black mountain. On this mountain, there\'s an old oak. On the oak, there\'s a gold chain with a locket on it."',
+        text='scene 191: "Behind the dark forest, there\'s a black mountain. On this mountain, there\'s an old oak. On the oak, there\'s a gold chain with a chest on it."',
         animations = function()
             transDialogueBack()
         end,
@@ -4538,7 +4547,7 @@ local scenes = {}
     scenes[192] = {
         sName = 192,
         follows = 193,
-        text='scene 192: "Inside a locket there\'s a hare, inside that - a duck. Inside the duck, there\'s an egg enclosing a needle. Koschei\'s death is on the point of that needle."',
+        text='scene 192: "Inside a chest there\'s a hare, inside that - a duck. Inside the duck, there\'s an egg enclosing a needle. Koschei\'s death is on the point of that needle."',
         animations = function()
             glowEyesFlicker(700, glowEyes2)
             glowEyesFlicker(900, glowEyes3)
@@ -4582,9 +4591,11 @@ local scenes = {}
             [2] = 'foreground14.png'
         },
         text='scene 195: So Alena\'s journey continues. Gray Wolf awaits her on the other side of the fence, and they race along to the end of the forest. It takes them the better part of the night, and they arrive at the mountain in an early morning mist.',
-        animations = function() 
+        animations = function()
+            AlenaOnWolfNoRibbon.xScale=-1 AlenaOnWolfNoRibbon.x=500 AlenaOnWolfNoRibbon.y=-600 AlenaOnWolfNoRibbon.isVisible=true AlenaOnWolfNoRibbon.alpha=1
             setOakLevel()
             transition.to(mistLayer, {alpha=1, time=1000, delay=1000})
+            transition.to(AlenaOnWolfNoRibbon, {y=0, time=1000, delay=3500})
         end,
         animationComplete = function()
             foreground.y=0
@@ -4594,7 +4605,7 @@ local scenes = {}
             groundLevel.x=0
             grass.x=0
             shadowLayer14.alpha=1
-            AlenaOnWolfNoRibbon.xScale=-1 AlenaOnWolfNoRibbon.x=500 AlenaOnWolfNoRibbon.y=0 AlenaOnWolfNoRibbon.isVisible=true
+            AlenaOnWolfNoRibbon.xScale=-1 AlenaOnWolfNoRibbon.x=500 AlenaOnWolfNoRibbon.y=0 AlenaOnWolfNoRibbon.isVisible=true AlenaOnWolfNoRibbon.alpha=1
             mistLayer.alpha=1
         end,
         -- Sound: Opening
@@ -4607,7 +4618,7 @@ local scenes = {}
             if choices.bear==true then scenes[196].follows = 198 
             else scenes[196].follows = 197  end
         end,
-        text='scene 196: The ancient oak is so big, that clouds are tangled in its branches. The oak grouches as the wind rocks the locket hanging from a gold chain dangling from the massive bough. "How can I get to the locket?" wonders Alena.',
+        text='scene 196: The ancient oak is so big, that clouds are tangled in its branches. The oak grouches as the wind rocks the chest hanging from a gold chain dangling from the massive bough. "How can I get to the chest?" wonders Alena.',
         animations = function() 
             moveToOak() 
             transition.to(mistLayer, {alpha=0.5, time=5000})
@@ -4674,7 +4685,7 @@ local scenes = {}
     scenes[200] = {
         sName = 200,
         follows = 202,
-        text='scene 200: The bear clasps the ancient oak and with a loud roar knocks it down. When the locket touches the ground, it opens, and a brown hare escapes from it.',
+        text='scene 200: The bear clasps the ancient oak and with a loud roar knocks it down. When the chest touches the ground, it opens, and a brown hare escapes from it.',
         animations = function() 
             wolfPushTree() 
         end,
@@ -4695,7 +4706,7 @@ local scenes = {}
     scenes[201] = {
         sName = 201,
         follows = 202,
-        text='scene 201: The bear clasps the ancient oak and with a loud roar knocks it down. When the locket touches the ground, it opens, and a brown hare escapes from it.',
+        text='scene 201: The bear clasps the ancient oak and with a loud roar knocks it down. When the chest touches the ground, it opens, and a brown hare escapes from it.',
         animations = function() 
             transDialogueBack() 
             bearPushTree() 
@@ -4775,7 +4786,9 @@ local scenes = {}
     scenes[205] = {
         sName = 205,
         follows = 206,
-        text= 'scene 205: "How can I catch a flying duck?" wonders Alena. And the moment she thinks that, her uncle - '..choices.brother..' appears in the sky. He dives toward the duck.',
+        text= function()
+            return 'scene 205: "How can I catch a flying duck?" wonders Alena. And the moment she thinks that, her uncle - '..choices.brother..' appears in the sky. He dives toward the duck.'
+        end,
         animations = function() catchADuck(1)  end,
         animationComplete = function()
             brotherShape.alpha=1 brotherShape.x=350
@@ -5013,13 +5026,13 @@ local scenes = {}
         text='scene 216: Alena sees her brother standing behind Koschei and feels the stare of her companion. The sky is clear, and the air is full of chirping birds and rustling leaves.',
         animations = function()
             transDialogueBack()
-            IvanS.xScale=-1 IvanS.x=1200 IvanS.y=0 IvanS.isVisible=true
+            IvanS.xScale=-1 IvanS.x=1200 IvanS.y=0 IvanS.isVisible=true IvanS.alpha=1
             transition.to(IvanS, {x=900, time=1000, delay=500})
             transition.to(skyBright, {alpha=1, time=1000, delay=500})
         end,
         animationComplete = function()
             removeCurtain()
-            IvanS.xScale=-1 IvanS.x=900 IvanS.y=0 IvanS.isVisible=true
+            IvanS.xScale=-1 IvanS.x=900 IvanS.y=0 IvanS.isVisible=true IvanS.alpha=1
             skyBright.alpha=1
         end,
         --Sound: oak forest 
@@ -5242,7 +5255,7 @@ local scenes = {}
             loadMotherFinal()
         end,
         animationComplete = function()
-            MotherS.x=400 MotherS.y=0 MotherS.alpha=1 MotherS.isVisible=true
+            MotherS.x=430 MotherS.y=0 MotherS.alpha=1 MotherS.isVisible=true
             MotherWarS.alpha=0 MotherWarS.isVisible=false
         end,
         -- Sound: Birds singing
@@ -5255,7 +5268,7 @@ local scenes = {}
         text='scene 227: Their mother is happy to see them home again. Gray Wolf settles nearby, and they live in health and good cheer for many long years. ',
         animations = function()
             AlenaS.isVisible = true AlenaS.x = 200  AlenaS.alpha=0 AlenaS.y=0
-            IvanS.isVisible = true IvanS.x = 130 IvanS.alpha=0 IvanS.y=0
+            IvanS.isVisible = true IvanS.x = 130 IvanS.alpha=0 IvanS.y=0 IvanS.xScale=1
             WolfSit.isVisible = true WolfSit.x = 500 WolfSit.alpha=0 WolfSit.y=0
             transition.to(AlenaIvanRiding, {alpha=0, time=500})
             transition.to(AlenaS, {alpha=1, time=700, delay=300})
@@ -5264,7 +5277,7 @@ local scenes = {}
         end,
         animationComplete = function()
             AlenaS.isVisible = true AlenaS.x = 200  AlenaS.alpha=1 AlenaS.y=0
-            IvanS.isVisible = true IvanS.x = 130 IvanS.alpha=1 IvanS.y=0
+            IvanS.isVisible = true IvanS.x = 130 IvanS.alpha=1 IvanS.y=0 IvanS.xScale=1
             WolfSit.isVisible = true WolfSit.x = 500 WolfSit.alpha=1 WolfSit.y=0
         end,
         -- Sound: Birds singing
@@ -5398,7 +5411,6 @@ end
 
 function clearStage()
     if(midlayer1) then
-        print("This midlayer1 groop has children: "..midlayer1.numChildren)
         for i=1, midlayer1.numChildren  do
             midlayer1[1]:removeSelf()
             midlayer1[1] = nil
@@ -5406,7 +5418,6 @@ function clearStage()
     end
 
     if(midlayer2) then
-        print("This midlayer2 groop has children: "..midlayer2.numChildren)
         for i=1, midlayer2.numChildren  do
             midlayer2[1]:removeSelf()
             midlayer2[1] = nil
@@ -5414,7 +5425,6 @@ function clearStage()
     end
 
     if(midlayer3) then
-        print("This midlayer3 groop has children: "..midlayer3.numChildren)
         for i=1, midlayer3.numChildren  do
             midlayer3[1]:removeSelf()
             midlayer3[1] = nil
@@ -6171,7 +6181,6 @@ end
 
 -- Main text listener
 function sceneTextTouch(event)
-    print('scene text touch' .. event.target.linkedText.text)
     if event.phase == "began" and event.target.follows then
         event.target:setFillColor( 0.7, 0.7, 0.7 )
         local S_turnEffect = audio.loadStream( "sounds/pageEffect.mp3")
@@ -6179,15 +6188,7 @@ function sceneTextTouch(event)
     end
     if event.phase == "ended" and event.target.follows then
         event.target:setFillColor( 1,1,1 )
-        -- Stats display
-        print('Let us add listener!')
-        print('Adding to scene:') print(event.target.index)
-        print('Scene that should follow:') print(event.target.follows)
 
-        print(scenes[event.target.index])
-        -- effects on clicked block go here
-
-        -- move everything into the place it is supposed to be at the end of the scene
         transition.cancel()
         scenes[event.target.index].animationComplete()
 
@@ -6199,8 +6200,12 @@ function sceneTextTouch(event)
     return true
 end
 
+function loadMenu()
+    print('Menu loading...')
+end
 
 function loadScene(s)
+    loadMenu()
     print('Start displaying scene '..s.sName)
     if s.name == 1000 then 
         showEnding()
@@ -6224,8 +6229,6 @@ function loadScene(s)
 
 
         -- Set the text or call it depending on the type
-        print('printing scene type')
-        print(type(s.text))
         if type(s.text)=='function' then sceneText.text = s.text() else sceneText.text = s.text end
         setAnchor(sceneText)
         sceneText.alpha = 0
@@ -6234,11 +6237,9 @@ function loadScene(s)
         textContainer.isVisible = true
 
         if not s.follows then
-            print('This sceene has Selection'..table.getn(s.selection))
             numSel = table.getn(s.selection)
             checkAlighn(numSel)
             if(s.selection[1]) then
-                print('This sceene has 1 selection')
                 textContainer.isVisible = false
                 select1Container.isVisible = true
                 select1Text.isVisible = true
@@ -6250,13 +6251,11 @@ function loadScene(s)
                 select1Text:setFillColor( 0, 0, 0 )
                 -- Attach the number of the scene to follow
                 select1Container.follows = s.selection[1][2]
-                print(s.selection[1][2])
                 -- Attach the name of the scene we are working in
                 select1Container.index = s.sName
             end
 
             if(s.selection[2]) then
-                print('This sceene has 2 selections')
                 select2Container.isVisible = true
                 select2Text.isVisible = true
                 -- Show text of selection from the scene
@@ -6267,13 +6266,11 @@ function loadScene(s)
                 select2Text:setFillColor( 0, 0, 0 )
                 -- Attach the number of the scene to follow
                 select2Container.follows = s.selection[2][2]
-                print(s.selection[2][2])
                 -- Attach the name of the scene we are working in
                 select2Container.index = s.sName
             end
 
             if(s.selection[3]) then
-                print('This sceene has 3 selections')
                 select3Container.isVisible = true
                 select3Text.isVisible = true
                 -- Show text of selection from the scene
@@ -6284,7 +6281,6 @@ function loadScene(s)
                 select3Text:setFillColor( 0, 0, 0 )
                 -- Attach the number of the scene to follow
                 select3Container.follows = s.selection[3][2]
-                print(s.selection[3][2])
                 -- Attach the name of the scene we are working in
                 select3Container.index = s.sName
             end
@@ -6297,7 +6293,6 @@ function loadScene(s)
         else
             if s.clearSelection then
                 -- Clearing leftovers from the right blocks 
-                print('This sceene needs clearSelection')
                 select1Container.isVisible = false
                 select1Text.isVisible = false
                 select2Container.isVisible = false
@@ -6306,8 +6301,6 @@ function loadScene(s)
                 select3Text.isVisible = false
             end 
 
-            -- Set Main Text
-            print('Scene has no selection')
 
             -- Attaching following scene number and name of the scene we are working in
             textContainer.follows = s.follows
@@ -6319,7 +6312,6 @@ function loadScene(s)
         if(s.animations) then
             s.animations()
         end
-        print('Going to organize stage of '..s.sName)
         organizeStage()
     end
 end 
@@ -6339,7 +6331,6 @@ myListener = function( event )
         setAnchor(select2Text)
         setAnchor(select3Text)
 
-        print('Now adding Listeners in main')
         -- listeners for the right blocks
         select1Container:addEventListener( "touch", sceneTextTouch)
         select2Container:addEventListener( "touch", sceneTextTouch)
