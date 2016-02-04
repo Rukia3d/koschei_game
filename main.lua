@@ -27,6 +27,9 @@ local achivGroup = display.newGroup()
 local buttonLayers = display.newGroup()
 buttonLayers.anchorX = 0 buttonLayers.anchorY = 0 
 
+local menuSet = display.newGroup()
+buttonLayers.anchorX = 200 buttonLayers.anchorY = 200 
+
 -----------------------------------------------------------------------------------------
 --
 -- CHANGE CENTER FOR IMAGE
@@ -216,6 +219,7 @@ end
 local S_MusicCh
 local S_BgSfxCh
 local S_ClickSfxCh
+local S_MenuSfxCh
 
 
 -----------------------------------------------------------------------------------------
@@ -238,9 +242,43 @@ local menuCloseActive = display.newImage(buttonLayers, "images/menus/closeButton
     menuCloseActive.isVisible = false menuCloseActive.x=645 menuCloseActive.y=90
 
 
+local MI_menuText = display.newText(menuSet, 'Menu', 430, 120, 200, 0, 'PTSans-Regular', 45)
+    MI_menuText:setFillColor(0,0,0) MI_menuText.isVisible = false
+local MI_musicText = display.newText(menuSet, 'Music', 270, 200, 200, 0, 'PTSans-Regular', 32)
+    MI_musicText:setFillColor(0,0,0) MI_musicText.isVisible = false
+local MI_soundText = display.newText(menuSet, 'Effects', 270, 270, 200, 0, 'PTSans-Regular', 32)
+    MI_soundText:setFillColor(0,0,0) MI_soundText.isVisible = false
+local MI_restartText = display.newText(menuSet, 'Restart', 270, 340, 200, 0, 'PTSans-Regular', 32)
+    MI_restartText:setFillColor(0,0,0) MI_restartText.isVisible = false
+local MI_achivementsText = display.newText(menuSet, 'Achivements', 270, 410, 200, 0, 'PTSans-Regular', 32)
+    MI_achivementsText:setFillColor(0,0,0) MI_achivementsText.isVisible = false
 
 
+local MI_circle00 = display.newImage(menuSet, "images/menus/volume0.png") setAnchor(MI_circle00) 
+    MI_circle00.isVisible = false MI_circle00.x = 400 MI_circle00.y=180
+local MI_circle01 = display.newImage(menuSet, "images/menus/volume1.png") setAnchor(MI_circle01) 
+    MI_circle01.isVisible = false  MI_circle01.x = 400 MI_circle01.y=180
+local MI_circle02 = display.newImage(menuSet, "images/menus/volume2.png") setAnchor(MI_circle02) 
+    MI_circle02.isVisible = false  MI_circle02.x = 400 MI_circle02.y=180
+local MI_circle03 = display.newImage(menuSet, "images/menus/volume3.png") setAnchor(MI_circle03) 
+    MI_circle03.isVisible = false  MI_circle03.x = 400 MI_circle03.y=180
+local MI_circle04 = display.newImage(menuSet, "images/menus/volume4.png") setAnchor(MI_circle04) 
+    MI_circle04.isVisible = false  MI_circle04.x = 400 MI_circle04.y=180
+local MI_circle05 = display.newImage(menuSet, "images/menus/volume5.png") setAnchor(MI_circle05) 
+    MI_circle05.isVisible = false  MI_circle05.x = 400 MI_circle05.y=180
 
+local MI_circle10 = display.newImage(menuSet, "images/menus/volume0.png") setAnchor(MI_circle10) 
+    MI_circle10.isVisible = false MI_circle10.x = 400 MI_circle10.y=245
+local MI_circle11 = display.newImage(menuSet, "images/menus/volume1.png") setAnchor(MI_circle11) 
+    MI_circle11.isVisible = false  MI_circle11.x = 400 MI_circle11.y=245
+local MI_circle12 = display.newImage(menuSet, "images/menus/volume2.png") setAnchor(MI_circle12) 
+    MI_circle12.isVisible = false  MI_circle12.x = 400 MI_circle12.y=245
+local MI_circle13 = display.newImage(menuSet, "images/menus/volume3.png") setAnchor(MI_circle13) 
+    MI_circle13.isVisible = false  MI_circle13.x = 400 MI_circle13.y=245
+local MI_circle14 = display.newImage(menuSet, "images/menus/volume4.png") setAnchor(MI_circle14) 
+    MI_circle14.isVisible = false  MI_circle14.x = 400 MI_circle14.y=245
+local MI_circle15 = display.newImage(menuSet, "images/menus/volume5.png") setAnchor(MI_circle15) 
+    MI_circle15.isVisible = false  MI_circle15.x = 400 MI_circle15.y=245
 
 
 local achiveBack = display.newImage(buttonLayers, "images/menus/achiveBack.png") setAnchor(achiveBack) 
@@ -1158,6 +1196,7 @@ local function organizeStage()
     textLayers:toFront()
     achivGroup:toFront()
     buttonLayers:toFront()
+    menuSet:toFront()
 end
 
 -----------------------------------------------------------------------------------------
@@ -6424,73 +6463,96 @@ local function setStageObjects(stage)
 end
 
 
--- Main text listener
-function sceneTextTouch(event)
-    if event.phase == "began" and event.target.follows and menuBack.isVisible==false then
-        event.target:setFillColor( 0.7, 0.7, 0.7 )
-        local S_turnEffect = audio.loadStream( "sounds/pageEffect.mp3")
-            S_ClickSfxCh = audio.play( S_turnEffect, {loops=0} )
+function showMenuContent()
+    print('We are in showMenuContent')
+    MI_menuText.isVisible = true
+    MI_musicText.isVisible = true
+    MI_soundText.isVisible = true
+    MI_restartText.isVisible = true
+    MI_achivementsText.isVisible = true
+    displayLoudness('Music')
+    displayLoudness('Effects')
+    menuSet:toFront()
+end
+
+
+function hideMenuContent()
+    print('We are in hideMenuContent')
+    MI_menuText.isVisible = false
+    MI_musicText.isVisible = false
+    MI_soundText.isVisible = false
+    MI_restartText.isVisible = false
+    MI_achivementsText.isVisible = false
+    hideAllMI_circles(0)
+    hideAllMI_circles(1)
+end
+
+function displayLoudness(obj)
+    print('Calling displayLoudness')
+    local loudnessNow
+    local volumeBar1
+    local volumeBar2
+    if obj=='Music' then
+        loudnessNow = audio.getVolume( { channel=S_MusicCh } )
+        print('Loudness is '..loudnessNow)
+        if loudnessNow > 0.8 then
+            volumeBar1 = MI_circle05
+        elseif loudnessNow > 0.6 then
+            volumeBar1 = MI_circle04
+        elseif loudnessNow > 0.4 then
+            volumeBar1 = MI_circle03
+        elseif loudnessNow > 0.2 then
+            volumeBar1 = MI_circle02
+        elseif loudnessNow > 0 then
+            volumeBar1 = MI_circle01
+        else --==0
+            volumeBar1 = MI_circle00
+        end 
+            hideAllMI_circles(0)
+            volumeBar1.isVisible = true
+            volumeBar1.goal = 'Music'
+            volumeBar1:addEventListener( 'touch', loudnessSwitchListener )
+    else
+        loudnessNow = audio.getVolume( { channel=S_BgSfxCh } )
+        print('Loudness is '..loudnessNow)
+        if loudnessNow > 0.8 then
+            volumeBar2 = MI_circle15
+        elseif loudnessNow > 0.6 then
+            volumeBar2 = MI_circle14
+        elseif loudnessNow > 0.4 then
+            volumeBar2 = MI_circle13
+        elseif loudnessNow > 0.2 then
+            volumeBar2 = MI_circle12
+        elseif loudnessNow > 0 then
+            volumeBar2 = MI_circle11
+        else --==0
+            volumeBar2 = MI_circle10
+        end 
+        hideAllMI_circles(1)
+        volumeBar2.isVisible = true
+        volumeBar2.goal = 'Effects'
+        volumeBar2:addEventListener( 'touch', loudnessSwitchListener )
+    end  
+end
+
+
+function hideAllMI_circles(num)
+    if num==0 then 
+        MI_circle05.isVisible = false
+        MI_circle04.isVisible = false
+        MI_circle03.isVisible = false
+        MI_circle02.isVisible = false
+        MI_circle01.isVisible = false
+        MI_circle00.isVisible = false
+    else
+        MI_circle15.isVisible = false
+        MI_circle14.isVisible = false
+        MI_circle13.isVisible = false
+        MI_circle12.isVisible = false
+        MI_circle11.isVisible = false
+        MI_circle10.isVisible = false
     end
-    if event.phase == "ended" and event.target.follows and menuBack.isVisible==false then
-        event.target:setFillColor( 1,1,1 )
-
-        transition.cancel()
-        scenes[event.target.index].animationComplete()
-
-
-        -- load relevant scene we attached earlier
-        loadScene(scenes[event.target.follows])
-    end
-
-    return true
 end
-
--- Menu listener
-function menuButtonListener(event)
-    print('We are in menuButtonListener')
-    if menuBack.isVisible==false then
-        if event.phase == "began" then 
-            print('We are in menuButtonListener and event phase began')
-            menuButtonActive.isVisible=true 
-        end
-        if event.phase == "ended" then
-        print('We are in menuButtonListener and event phase ended')
-            menuButtonActive.isVisible=true
-            menuButton.isVisible=false
-            menuBack.isVisible=true
-            menuClose.isVisible=true
-        end
-    end
-end
-
--- Menu close listener
-function menuCloseListener(event)
-    print('We are in menuCloseListener')
-    if menuBack.isVisible==true then
-        if event.phase == "began" then 
-            print('We are in menuCloseListener and event phase began')
-            menuCloseActive.isVisible=true
-        end
-        if event.phase == "ended" then 
-            print('We are in menuCloseListener and event phase ended')
-            menuCloseActive.isVisible=false
-            menuButtonActive.isVisible = false
-            menuButton.isVisible=true
-            menuBack.isVisible=false
-            menuClose.isVisible=false
-        end
-    end
-end
-
--- Achivements listener
-function achivementsListener(event)
-end
-
--- Achivements close listener
-function achivementsCloseListener(event)
-
-end
-
 
 function loadMenu()
     print('Menu loading...')
@@ -6501,7 +6563,8 @@ function loadMenu()
     menuClose.isVisible=false
     menuButtonActive.isVisible=false
     menuCloseActive.isVisible=false
-    buttonLayers:toFront() 
+    buttonLayers:toFront()
+    menuSet:toFront()
 end
 
 function loadAchivements()
@@ -6624,9 +6687,117 @@ function loadScene(s)
     achivGroup:toFront()
 end 
 
+-----------------------------------------------------------------------------------------
+--
+-- LISTENERS
+--
+-----------------------------------------------------------------------------------------
+-- Main text listener
+function sceneTextTouch(event)
+    if event.phase == "began" and event.target.follows and menuBack.isVisible==false then
+        event.target:setFillColor( 0.7, 0.7, 0.7 )
+        local S_turnEffect = audio.loadStream( "sounds/pageEffect.mp3")
+            S_ClickSfxCh = audio.play( S_turnEffect, {loops=0} )
+    end
+    if event.phase == "ended" and event.target.follows and menuBack.isVisible==false then
+        event.target:setFillColor( 1,1,1 )
+
+        transition.cancel()
+        scenes[event.target.index].animationComplete()
 
 
--- Loading game for a first time
+        -- load relevant scene we attached earlier
+        loadScene(scenes[event.target.follows])
+    end
+
+    return true
+end
+
+-- Menu listener
+function menuButtonListener(event)
+    print('We are in menuButtonListener')
+    if menuBack.isVisible==false then
+        if event.phase == "began" then 
+            print('We are in menuButtonListener and event phase began')
+            menuButtonActive.isVisible=true 
+        end
+        if event.phase == "ended" then
+        print('We are in menuButtonListener and event phase ended')
+            menuButtonActive.isVisible=true
+            menuButton.isVisible=false
+            menuBack.isVisible=true
+            menuClose.isVisible=true
+            showMenuContent()
+        end
+    end
+end
+
+-- Menu close listener
+function menuCloseListener(event)
+    print('We are in menuCloseListener')
+    if menuBack.isVisible==true then
+        if event.phase == "began" then 
+            print('We are in menuCloseListener and event phase began')
+            menuCloseActive.isVisible=true
+        end
+        if event.phase == "ended" then 
+            print('We are in menuCloseListener and event phase ended')
+            menuCloseActive.isVisible=false
+            menuButtonActive.isVisible = false
+            menuButton.isVisible=true
+            menuBack.isVisible=false
+            menuClose.isVisible=false
+            hideMenuContent()
+        end
+    end
+end
+
+-- Achivements listener
+function achivementsListener(event)
+end
+
+-- Achivements close listener
+function achivementsCloseListener(event)
+end
+
+-- Switch loudness listener
+function loudnessSwitchListener(event)
+    if event.phase == "ended" then
+        print(event.target.goal)
+        local desVol
+        print('EventX: '..event.x)
+        print(event.target.goal)
+        if event.x > 610 then
+            desVol = 1
+        elseif event.x > 558 then
+            desVol = 0.8
+        elseif event.x > 506 then
+            desVol = 0.6
+        elseif event.x > 453 then
+            desVol = 0.4
+        elseif event.x > 400 then
+            desVol = 0.2
+        else
+            desVol = 0
+        end
+
+        if event.target.goal=='Music' then
+            loudnessNow = audio.setVolume(desVol, { channel=S_MusicCh } )
+            displayLoudness('Music')
+        else
+            loudnessNow = audio.getVolume(desVol, { channel=S_BgSfxCh } )
+            displayLoudness('Effects')
+        end
+    end
+end
+
+
+-----------------------------------------------------------------------------------------
+--
+-- LOADING GAME FIRST TIME
+--
+-----------------------------------------------------------------------------------------
+
 local myListener
 myListener = function( event )
     if event.phase == "ended" then 
@@ -6663,5 +6834,6 @@ myListener = function( event )
         return true
     end
 end
+
 
 background:addEventListener( "touch", myListener )
