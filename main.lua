@@ -50,21 +50,6 @@ dialBack.y=-800 dialBack.x=0
 local endingBack = display.newImage(textLayers, "images/effects/endingBack.png", true ) setAnchor(endingBack)
     endingBack.y=-800 endingBack.x=0
 
--- Background for achivements
-local achivRect = display.newRect( achivGroup, 670, 45, 320, 130 ) setAnchor(achivRect)
-
-local achivRectText = display.newText( achivGroup, 'Testing', 790, 55, 'PTSans-Regular', 19 )
-setAnchor(achivRectText)
-achivRectText.alpha = 1
-transition.to(achivRectText, {alpha=1, time=500}) 
-achivRectText:setFillColor( 0, 0, 0 )
-
-local achivImage = display.newImage(achivGroup, "images/achivements/example100.png")
-setAnchor(achivImage)
-achivImage.alpha = 1
-transition.to(achivImage, {alpha=1, time=500})
-achivImage.x = 680 achivImage.y=55 
-
 -- Small characters for stage, act1
 local AlenaS = display.newImage( characters, "images/chars/alena_f_small.png", true)
     setAnchor(AlenaS) AlenaS.isVisible = false
@@ -248,17 +233,23 @@ local menuBack = display.newImage(buttonLayers, "images/menus/menu_back.png") se
     menuBack.isVisible = false menuBack.x=0 menuBack.y=0
 
 local menuClose = display.newImage(buttonLayers, "images/menus/closeButtonOff.png") setAnchor(menuClose) 
-    menuClose.isVisible = false menuClose.x=450 menuClose.y=70
+    menuClose.isVisible = false menuClose.x=645 menuClose.y=90
 local menuCloseActive = display.newImage(buttonLayers, "images/menus/closeButtonOn.png") setAnchor(menuCloseActive) 
-    menuCloseActive.isVisible = false menuCloseActive.x=450 menuCloseActive.y=70
+    menuCloseActive.isVisible = false menuCloseActive.x=645 menuCloseActive.y=90
 
-local achiveBack = display.newImage(buttonLayers, "images/menus/menu_back.png") setAnchor(achiveBack) 
-    achiveBack.isVisible = false achiveBack.x=0 achiveBack.y=0
 
-local menuClose2 = display.newImage(buttonLayers, "images/menus/closeButtonOff.png") setAnchor(menuClose2) 
-    menuClose2.isVisible = false menuClose2.x=450 menuClose.y=70
+
+
+
+
+
+local achiveBack = display.newImage(buttonLayers, "images/menus/achiveBack.png") setAnchor(achiveBack) 
+    achiveBack.isVisible = false achiveBack.x=100 achiveBack.y=100
+
+local menuClose2 = display.newImage(buttonLayers, "images/menus/closeButtonOffGr.png") setAnchor(menuClose2) 
+    menuClose2.isVisible = false menuClose2.x=810 menuClose2.y=110
 local menuCloseActive2 = display.newImage(buttonLayers, "images/menus/closeButtonOn.png") setAnchor(menuCloseActive2) 
-    menuCloseActive2.isVisible = false menuCloseActive2.x=450 menuCloseActive.y=70
+    menuCloseActive2.isVisible = false menuCloseActive2.x=810 menuCloseActive2.y=110
 
 
 -----------------------------------------------------------------------------------------
@@ -947,156 +938,207 @@ function showEnding() end
 -- ACHIVEMENTS
 --
 -----------------------------------------------------------------------------------------
-local achivCollected = {}
+-- Background for achivements
+local achivRect = display.newImage( achivGroup, "images/menus/achiveSmallBack.png" ) setAnchor(achivRect)
+achivRect.x=670 achivRect.y=45 achivRect.isVisible = false achivRect.alpha=0
+
+local achivTextOptions = {
+    parent = achivGroup,
+    text = "ACHIVEMENT",     
+    x = 788,
+    y = 60,
+    width = 200,    
+    font = 'PTSans-Regular', --'Droid Serif',   
+    fontSize = 20,
+    align = "center" 
+}
+local achivRectText = display.newText(achivTextOptions)
+setAnchor(achivRectText)
+achivRectText:setFillColor( 0, 0, 0 )
+achivRectText.isVisible = false achivRectText.alpha=0
+
+local achivImage = display.newImage(achivGroup, "images/menus/transparent.png") 
+
+local achivCollected = {'start'}
 
 local achivements = {
     bless = {
         name = 'bless',
         title = 'Mother\'s Blessing',
-        img = 'images/achivements/example.png',
+        img = 'images/achivements/bless100.png',
         descr =  'It keeps you from troubles (and witche\'s ovens)'
     },
     nanny = {
         name = 'nanny',
         title ='Careless Nanny',
-        img = 'images/achivements/example.png',
+        img = 'images/achivements/example100.png',
         descr =  'One can always get a new brother, right?'
     },
     kindG = {
         name = 'kindG',
         title ='A kind girl',
-        img = 'images/achivements/example.png',
+        img = 'images/achivements/example100.png',
         descr =  'You can be too kind for your own good'
     },
     obedient = {
         name = 'obedient',
         title ='An obedient daughter',
-        img = 'images/achivements/example.png',
+        img = 'images/achivements/example100.png',
         descr =  'If only all your relatives were more like you'
     },
     letDie = {
         name = 'letDie',
         title ='Let him die',
-        img = 'images/achivements/example.png',
+        img = 'images/achivements/example100.png',
         descr =  'Better your horse than you'
     },
     brave = {
         name = 'brave',
         title ='A brave traveller',
-        img = 'images/achivements/example.png',
+        img = 'images/achivements/example100.png',
         descr =  'Don\'t allow gloomy premonitions to scare you'
+    },
+    allDies = {
+        title ='I don\'t care',
+        img = 'images/achivements/example100.png',
+        descr =  'Everybody dies, so why bother'
     },
     ribbon = {
         name = 'ribbon',
-        title ='I don\'t care',
-        img = 'images/achivements/example.png',
-        descr =  'Everybody dies, so why bother'
-    },
-    fairest = {
-        name = 'fairest',
         title ='The fairest of them all',
-        img = 'images/achivements/example.png',
+        img = 'images/achivements/example100.png',
         descr =  'You really care about your looks'
     },
     advice = {
         name = 'advice',
         title ='Advisors for the win',
-        img = 'images/achivements/example.png',
+        img = 'images/achivements/example100.png',
         descr =  'Why have a good adviser if not to listen'
     },
     determined = {
         name = 'determined',
         title ='Determined',
-        img = 'images/achivements/example.png',
+        img = 'images/achivements/example100.png',
         descr =  'You are ready to step over people for your goals.' 
     },
     sympathetic = {
         name = 'sympathetic',
         title ='Sympathetic',
-        img = 'images/achivements/example.png',
+        img = 'images/achivements/example100.png',
         descr =  'You are not ready to step over people for your goals.'
     },
     noBears = {
         name = 'noBears',
         title ='No talking animals',
-        img = 'images/achivements/example.png',
+        img = 'images/achivements/example100.png',
         descr =  'Talking animals are not allowed here!'
     },
     wolfDies = {
         name = 'wolfDies',
         title ='Bye-Bye friend',
-        img = 'images/achivements/example.png',
+        img = 'images/achivements/example100.png',
         descr =  'That\'s the road you\'ve chosen. Better him than you, right?'
     },
     alenaDies = {
         name = 'alenaDies',
-        img = 'images/achivements/example.png',
+        img = 'images/achivements/example100.png',
         title ='Bye-Bye Alena',
         descr =  'Your self-sacrifice is admirable!'
     },
     vasilisaHelp = {
         name = 'vasilisaHelp',
-        img = 'images/achivements/example.png',
+        img = 'images/achivements/example100.png',
         title ='Good deeds unpunished',
         descr =  'You help someone, someone helps you.'
     },
     uncleHelp = {
         name = 'uncleHelp',
-        img = 'images/achivements/example.png',
+        img = 'images/achivements/example100.png',
         title = 'Contract work',
         descr =  'You family members keep their promises'
     },
     oven = {
         name = 'oven',
-        img = 'images/achivements/example.png',
+        img = 'images/achivements/example100.png',
         title ='In the oven',
         descr =  'Good girls go on their way, while bad girls outsmart Witches'
     },
     noBerries = {
         name = 'noBerries',
-        img = 'images/achivements/example.png',
+        img = 'images/achivements/example100.png',
         title ='No Berries for you',
         descr =  'Alena doesn\'t share food!'
     },
     guardian = {
         name = 'guardian',
-        img = 'images/achivements/example.png',
+        img = 'images/achivements/example100.png',
         title ='Guardian',
         descr =  'You\'ve spared Koschei, let\'s hope he won\'t escape again.'
     },
     executioner = {
         name = 'executioner',
-        img = 'images/achivements/example.png',
+        img = 'images/achivements/example100.png',
         title ='Executioner',
         descr =  'Someone had to do it.'
     },
     goodEnd = {
         name = 'goodEnd',
-        img = 'images/achivements/example.png',
+        img = 'images/achivements/example100.png',
         title ='All there',
         descr =  'You finished the game and returned home. Bravo!'
     },
     badEnd = {
         name = 'badEnd',
-        img = 'images/achivements/example.png',
+        img = 'images/achivements/example100.png',
         title ='Not all there',
         descr =  'Who needs this dull Wolf around anyway.'
     },
 }
 
 local function showAchivement(achivKey)
+    print('Function for showing achivement '..achivKey..' is called')
+    achivRect.isVisible = true
+    achivRectText.text = 'ACHIVEMENT\n'..achivements[achivKey].title
+    achivRectText.isVisible = true
 
+    achivImage:removeSelf()
+    achivImage = nil
+
+    achivImage = display.newImage(achivGroup, achivements[achivKey].img )
+    setAnchor(achivImage)
+    achivImage.alpha = 1
+    transition.to(achivImage, {alpha=1, time=500})
+    achivImage.x = 680 achivImage.y=55 achivImage.alpha=0
+    achivImage.isVisible = true 
+
+    transition.to(achivRect,{alpha=1, time=1000})
+    transition.to(achivRectText,{alpha=1, time=1000})
+    transition.to(achivImage,{alpha=1, time=1000})
+
+    transition.to(achivRect,{alpha=0, time=1000, delay=4000})
+    transition.to(achivRectText,{alpha=0, time=1000, delay=4000})
+    transition.to(achivImage,{alpha=0, time=1000, delay=4000})
 end
 
-local function addSchivement(achivKey)
-    local achivement = achivements[achivKey]
+local function addAchivement(achivKey)
+    print('Achivement adding: '..achivKey)
+    print('In the achivement collection it is '..achivements[achivKey].name)
+
+    local found = false
 
     for i=1, table.getn(achivCollected) do 
-        if achivCollected[1][name] ~= achivKey then 
-            showAchivement(achivKey)
-            table.insert(achivCollected, achivKey)
+        if achivCollected[i] == achivements[achivKey].name then
+            print('Already in achivCollected')
+            found = true
         end
     end
+
+    if found == false then
+        print('Searched achivement not found in achivCollected')
+        table.insert(achivCollected, achivKey)
+        showAchivement(achivKey)
+    end
+
 end
 -----------------------------------------------------------------------------------------
 --
@@ -1387,7 +1429,8 @@ local scenes = {}
         end,
         animationComplete = function() 
            hideBigCharacters() 
-        end
+        end,
+        achiv = 'nanny'
     }
 
     scenes[15] = {
@@ -1616,7 +1659,8 @@ local scenes = {}
             bucket2.rotation=0
         end,
         --Sound: waterSplash
-        soundEffect = 'waterSplash.mp3'
+        soundEffect = 'waterSplash.mp3',
+        achiv = 'kindG'
     } 
     scenes[28] = {
         sName = 28,
@@ -1727,6 +1771,7 @@ local scenes = {}
             AlenaS.x = 450  AlenaS.y = 0 
             IvanS.x = 350 IvanS.y = 0
         end,
+        achiv = 'obedient',
         -- Sound: Steps two people on wood
         soundEffect = 'stepsTwoWood.mp3'
     }
@@ -1908,6 +1953,7 @@ local scenes = {}
         animationComplete = function()
             removeCurtain()
         end,
+        achiv = 'bless',
         --Sound: Leaves falling
         soundEffect = 'leavesFalling.mp3'
     }
@@ -2031,7 +2077,8 @@ local scenes = {}
             landscape3.x=0
             landscape2.x=0
             landscape1.x=0
-        end 
+        end,
+        achiv = 'letDie' 
     }
 
     scenes[48] = {
@@ -2065,7 +2112,8 @@ local scenes = {}
             landscape3.x=0
             landscape2.x=0
             landscape1.x=0
-        end   
+        end,
+        achiv = 'allDies'   
     }
 
     scenes[49] = {
@@ -2098,7 +2146,8 @@ local scenes = {}
             landscape3.x=0
             landscape2.x=0
             landscape1.x=0
-        end   
+        end,
+        achiv = 'brave' 
     }
 
     scenes[50] = {
@@ -2299,7 +2348,8 @@ local scenes = {}
         end,
         animationComplete =  function()
             removeCurtain()
-        end
+        end,
+        achiv = 'advice'
     }
 
     scenes[62] = {
@@ -2527,6 +2577,7 @@ local scenes = {}
             WolfSit.y=-400
             TreeRibbon.y=500
         end,
+        achiv = 'ribbon',
         --Sound: bell alarm
         soundEffect = 'bellRing.mp3'
     }
@@ -3133,7 +3184,8 @@ local scenes = {}
             AlenaVasilisaRiding.x=400 AlenaVasilisaRiding.alpha=1
             AlenaNoRibbon.isVisible = false AlenaNoRibbon.y=0 AlenaNoRibbon.x=400 AlenaNoRibbon.alpha = 1
             WolfS.xScale = -1 WolfS.isVisible = false WolfS.y=0 WolfS.x=400 WolfS.alpha = 1
-        end
+        end,
+        achiv = 'determined'
     }
 
     scenes[105] = {
@@ -3180,7 +3232,8 @@ local scenes = {}
             AlenaCrySNR.y=-10 AlenaCrySNR.x=370 AlenaCrySNR.isVisible=true AlenaCrySNR.alpha=1
             AlenaNoRibbon.alpha=1 AlenaNoRibbon.isVisible=false
             AlenaVasilisaRiding.isVisible=false
-        end
+        end,
+        achiv = 'sympathetic'
     }
     scenes[107] = {
         sName = 107,
@@ -3516,7 +3569,8 @@ local scenes = {}
         end,
         animationComplete = function()
             hideBigCharacters()
-        end
+        end,
+        achiv = 'noBears'
     }
 
     scenes[125] = {
@@ -3706,6 +3760,7 @@ local scenes = {}
             AlenaCrySNR.x=280 AlenaCrySNR.y=0
             icyCurtain.y=-1000
         end,
+        achiv = 'wolfDies',
         --Sound: Alena Cry
         soundEffect = 'girlCry.mp3'
     }
@@ -3728,6 +3783,7 @@ local scenes = {}
             WolfSit.xScale=-1 WolfSit.x=450 WolfSit.y=0
             icyCurtain.y=-1000
         end,
+        achiv = 'alenaDies',
         --Sound: Wolf Cry
         soundEffect = 'dogHowl.mp3'
     }
@@ -3754,7 +3810,8 @@ local scenes = {}
             wolfDown.y=0 wolfDown.x=300
             VasilisaS.x=370 VasilisaS.y=-50
             icyCurtain.y=-1000
-        end
+        end,
+        achiv='vasilisaHelp'
     }
 
     scenes[137] = {
@@ -3780,7 +3837,8 @@ local scenes = {}
             wolfDown.y=0 wolfDown.x=300
             icyCurtain.y=-1000
             BrotherS.x=400 BrotherS.y=200
-        end
+        end,
+        achiv = 'uncleHelp'
     }
 
     scenes[138] = {
@@ -4518,7 +4576,8 @@ local scenes = {}
         text='scene 177: Mouse: "I thought you were a kind girl, but you are not. But I don\'t want your death on my conscious, so I\'ll help you anyway. Do not believe Baba Yaga! She\'ll light the oven, not to cook for you, but to cook you!"',
         animations = function() end,
         animationComplete = function()
-        end
+        end,
+        achiv = 'noBerries'
     }
 
     scenes[178] = {
@@ -4568,6 +4627,7 @@ local scenes = {}
             AlenaNoRibbon.x=650
             paddle.x=550
         end,
+        achiv = 'oven',
         --Sound: fire in the oven
         soundEffect = 'fireInOven.mp3'
     }
@@ -5248,6 +5308,7 @@ local scenes = {}
             landscape2Light.alpha=1
             landscape3Light.alpha=1
         end,
+        achiv = 'guardian',
         --Sound: oak forest 
         soundEffect = 'oakForest2.mp3'
     }
@@ -5333,6 +5394,7 @@ local scenes = {}
             landscape3Light.alpha=1
 
         end,
+        achiv = 'executioner',
         --Sound: needle break 
         soundEffect = 'needleBreak.mp3'
     }
@@ -5424,6 +5486,7 @@ local scenes = {}
             AlenaIvanRiding.alpha=1 AlenaIvanRiding.x=400
             foreground.y = 0
         end,
+        achiv = 'goodEnd',
         -- Sound: Opening
         soundEffect = 'opening.mp3',
 
@@ -5494,6 +5557,7 @@ local scenes = {}
             IvanS.isVisible = true IvanS.alpha=1 IvanS.x = 130 IvanS.y = 0
             foreground.y = 0
         end,
+        achiv = 'badEnd',
         -- Sound: Opening
         soundEffect = 'opening.mp3',
     }
@@ -6418,6 +6482,15 @@ function menuCloseListener(event)
     end
 end
 
+-- Achivements listener
+function achivementsListener(event)
+end
+
+-- Achivements close listener
+function achivementsCloseListener(event)
+
+end
+
 
 function loadMenu()
     print('Menu loading...')
@@ -6429,6 +6502,9 @@ function loadMenu()
     menuButtonActive.isVisible=false
     menuCloseActive.isVisible=false
     buttonLayers:toFront() 
+end
+
+function loadAchivements()
 end
 
 function loadScene(s)
@@ -6541,10 +6617,11 @@ function loadScene(s)
         organizeStage()
         if(s.achiv) then
             achivGroup:toFront()
-            addSchivement(s.achiv)
+            addAchivement(s.achiv)
         end
     end
     loadMenu()
+    achivGroup:toFront()
 end 
 
 
