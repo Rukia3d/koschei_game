@@ -248,9 +248,9 @@ local MI_musicText = display.newText(menuSet, 'Music', 270, 200, 200, 0, 'PTSans
     MI_musicText:setFillColor(0,0,0) MI_musicText.isVisible = false
 local MI_soundText = display.newText(menuSet, 'Effects', 270, 270, 200, 0, 'PTSans-Regular', 32)
     MI_soundText:setFillColor(0,0,0) MI_soundText.isVisible = false
-local MI_restartText = display.newText(menuSet, 'Restart', 270, 340, 200, 0, 'PTSans-Regular', 32)
+local MI_restartText = display.newText(menuSet, 'Restart', 470, 450, 200, 0, 'PTSans-Regular', 32)
     MI_restartText:setFillColor(0,0,0) MI_restartText.isVisible = false
-local MI_achivementsText = display.newText(menuSet, 'Achivements', 270, 410, 200, 0, 'PTSans-Regular', 32)
+local MI_achivementsText = display.newText(menuSet, 'Achivements', 435, 500, 200, 0, 'PTSans-Regular', 32)
     MI_achivementsText:setFillColor(0,0,0) MI_achivementsText.isVisible = false
 
 
@@ -280,6 +280,24 @@ local MI_circle14 = display.newImage(menuSet, "images/menus/volume4.png") setAnc
 local MI_circle15 = display.newImage(menuSet, "images/menus/volume5.png") setAnchor(MI_circle15) 
     MI_circle15.isVisible = false  MI_circle15.x = 400 MI_circle15.y=245
 
+local restartBack = display.newImage(menuSet, "images/menus/conformation.png") setAnchor(restartBack) 
+    restartBack.isVisible = false  restartBack.x = 300 restartBack.y=300
+local restartTextOptions = {
+    parent = menuSet,
+    text = "Are you sure you want to restart the game?\n All your game progress will be lost.",     
+    x = 550,
+    y = 400,
+    width = 350,    
+    font = 'PTSans-Regular',   
+    fontSize = 18,
+    align = "center" 
+}
+local restartConfirm = display.newText(restartTextOptions)
+    restartConfirm:setFillColor(0,0,0) restartConfirm.isVisible = false
+local restartYes = display.newText(menuSet, 'Restart', 550, 450, 200, 0, 'PTSans-Regular', 24)
+    restartYes:setFillColor(0,0,0) restartYes.isVisible = false
+local restartNo = display.newText(menuSet, 'Cancel', 670, 450, 200, 0, 'PTSans-Regular', 24)
+    restartNo:setFillColor(0,0,0) restartNo.isVisible = false
 
 local achiveBack = display.newImage(buttonLayers, "images/menus/achiveBack.png") setAnchor(achiveBack) 
     achiveBack.isVisible = false achiveBack.x=100 achiveBack.y=100
@@ -6473,6 +6491,8 @@ function showMenuContent()
     displayLoudness('Music')
     displayLoudness('Effects')
     menuSet:toFront()
+    MI_restartText:addEventListener( 'touch', restartTheGameConfirm )
+    MI_achivementsText:addEventListener( 'touch', achivementsListener)
 end
 
 
@@ -6494,7 +6514,7 @@ function displayLoudness(obj)
     local volumeBar2
     if obj=='Music' then
         loudnessNow = audio.getVolume( { channel=S_MusicCh } )
-        print('Loudness is '..loudnessNow)
+        print('Loudness of Music is '..loudnessNow)
         if loudnessNow > 0.8 then
             volumeBar1 = MI_circle05
         elseif loudnessNow > 0.6 then
@@ -6514,7 +6534,7 @@ function displayLoudness(obj)
             volumeBar1:addEventListener( 'touch', loudnessSwitchListener )
     else
         loudnessNow = audio.getVolume( { channel=S_BgSfxCh } )
-        print('Loudness is '..loudnessNow)
+        print('Loudness of SFX is '..loudnessNow)
         if loudnessNow > 0.8 then
             volumeBar2 = MI_circle15
         elseif loudnessNow > 0.6 then
@@ -6538,20 +6558,35 @@ end
 
 function hideAllMI_circles(num)
     if num==0 then 
-        MI_circle05.isVisible = false
-        MI_circle04.isVisible = false
-        MI_circle03.isVisible = false
-        MI_circle02.isVisible = false
-        MI_circle01.isVisible = false
-        MI_circle00.isVisible = false
+        MI_circle05:removeEventListener( 'touch', loudnessSwitchListener )
+        MI_circle04:removeEventListener( 'touch', loudnessSwitchListener )
+        MI_circle03:removeEventListener( 'touch', loudnessSwitchListener )
+        MI_circle02:removeEventListener( 'touch', loudnessSwitchListener )
+        MI_circle01:removeEventListener( 'touch', loudnessSwitchListener )
+        MI_circle00:removeEventListener( 'touch', loudnessSwitchListener )
     else
-        MI_circle15.isVisible = false
-        MI_circle14.isVisible = false
-        MI_circle13.isVisible = false
-        MI_circle12.isVisible = false
-        MI_circle11.isVisible = false
-        MI_circle10.isVisible = false
+        MI_circle15:removeEventListener( 'touch', loudnessSwitchListener )
+        MI_circle14:removeEventListener( 'touch', loudnessSwitchListener )
+        MI_circle13:removeEventListener( 'touch', loudnessSwitchListener )
+        MI_circle12:removeEventListener( 'touch', loudnessSwitchListener )
+        MI_circle11:removeEventListener( 'touch', loudnessSwitchListener )
+        MI_circle10:removeEventListener( 'touch', loudnessSwitchListener )
     end
+end
+
+function removeAllMI_circleListeners()
+    MI_circle05.isVisible = false
+    MI_circle04.isVisible = false
+    MI_circle03.isVisible = false
+    MI_circle02.isVisible = false
+    MI_circle01.isVisible = false
+    MI_circle00.isVisible = false
+    MI_circle15.isVisible = false
+    MI_circle14.isVisible = false
+    MI_circle13.isVisible = false
+    MI_circle12.isVisible = false
+    MI_circle11.isVisible = false
+    MI_circle10.isVisible = false 
 end
 
 function loadMenu()
@@ -6735,7 +6770,7 @@ end
 -- Menu close listener
 function menuCloseListener(event)
     print('We are in menuCloseListener')
-    if menuBack.isVisible==true then
+    if menuBack.isVisible==true and restartBack.isVisible == false then
         if event.phase == "began" then 
             print('We are in menuCloseListener and event phase began')
             menuCloseActive.isVisible=true
@@ -6747,6 +6782,9 @@ function menuCloseListener(event)
             menuButton.isVisible=true
             menuBack.isVisible=false
             menuClose.isVisible=false
+            removeAllMI_circleListeners()
+            MI_restartText:removeEventListener( 'touch', restartTheGameConfirm )
+            MI_achivementsText:removeEventListener( 'touch', achivementsListener) 
             hideMenuContent()
         end
     end
@@ -6762,33 +6800,72 @@ end
 
 -- Switch loudness listener
 function loudnessSwitchListener(event)
-    if event.phase == "ended" then
-        print(event.target.goal)
-        local desVol
-        print('EventX: '..event.x)
-        print(event.target.goal)
-        if event.x > 610 then
-            desVol = 1
-        elseif event.x > 558 then
-            desVol = 0.8
-        elseif event.x > 506 then
-            desVol = 0.6
-        elseif event.x > 453 then
-            desVol = 0.4
-        elseif event.x > 400 then
-            desVol = 0.2
-        else
-            desVol = 0
-        end
+    if menuBack.isVisible==true and restartBack.isVisible == false then
+        if event.phase == "ended" then
+            print(event.target.goal)
+            print('EventX: '..event.x)
+            local desVol
 
-        if event.target.goal=='Music' then
-            loudnessNow = audio.setVolume(desVol, { channel=S_MusicCh } )
-            displayLoudness('Music')
-        else
-            loudnessNow = audio.getVolume(desVol, { channel=S_BgSfxCh } )
-            displayLoudness('Effects')
+            if event.x > 610 then
+                desVol = 1
+            elseif event.x > 558 then
+                desVol = 0.8
+            elseif event.x > 506 then
+                desVol = 0.6
+            elseif event.x > 453 then
+                desVol = 0.4
+            elseif event.x > 400 then
+                desVol = 0.2
+            else
+                desVol = 0
+            end
+
+            if event.target.goal=='Music' then
+                loudnessNow = audio.setVolume(desVol, { channel=S_MusicCh } )
+                displayLoudness('Music')
+            else
+                loudnessNow = audio.getVolume(desVol, { channel=S_BgSfxCh } )
+                displayLoudness('Effects')
+            end
         end
     end
+end
+
+-- Restart the game listener
+function restartTheGameConfirm(event)
+     if menuBack.isVisible==true then
+        if event.phase == "began" then 
+            MI_restartText:setFillColor( 1,1,1 )
+        end
+        if event.phase == "ended" then 
+            MI_restartText:setFillColor( 0,0,0 )
+            restartBack.isVisible = true
+            restartBack:toFront()
+            restartConfirm.isVisible = true
+            restartConfirm:toFront()
+            restartNo.isVisible = true
+            restartNo:toFront()
+            restartNo:addEventListener( 'touch', restartCanceled )
+            restartYes.isVisible = true
+            restartYes:toFront()
+            restartYes:addEventListener( 'touch', restartTheGame )
+        end
+    end
+end
+
+function restartTheGame(event) 
+end
+
+function restartCanceled(event) 
+    if event.phase == "began" then 
+        restartBack.isVisible = false
+        restartConfirm.isVisible = false
+        restartNo:removeEventListener( "touch", restartCanceled )
+        restartNo.isVisible = false
+        restartYes:removeEventListener( "touch", restartTheGame )
+        restartYes.isVisible = false
+    end
+
 end
 
 
