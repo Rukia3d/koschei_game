@@ -6604,6 +6604,8 @@ function showMenuContent()
     MI_menuText.isVisible = true
     MI_musicText.isVisible = true
     MI_soundText.isVisible = true
+    addAllMI_circles(0)
+    addAllMI_circles(1)
     MI_restartText.isVisible = true
     MI_achivementsText.isVisible = true
     displayLoudness('Music')
@@ -6633,49 +6635,65 @@ function displayLoudness(obj)
     if obj=='Music' then
         loudnessNow = audio.getVolume( { channel=S_MusicCh } )
         print('Loudness of Music is '..loudnessNow)
-        if loudnessNow > 0.8 then
+        if loudnessNow > 0.9 then
             volumeBar1 = MI_circle05
-        elseif loudnessNow > 0.6 then
+        elseif loudnessNow > 0.7 then
             volumeBar1 = MI_circle04
-        elseif loudnessNow > 0.4 then
+        elseif loudnessNow > 0.5 then
             volumeBar1 = MI_circle03
-        elseif loudnessNow > 0.2 then
+        elseif loudnessNow > 0.3 then
             volumeBar1 = MI_circle02
         elseif loudnessNow > 0 then
             volumeBar1 = MI_circle01
         else --==0
             volumeBar1 = MI_circle00
         end 
-            hideAllMI_circles(0)
             volumeBar1:toFront()
             volumeBar1.isVisible = true
             volumeBar1.goal = 'Music'
-            volumeBar1:addEventListener( 'touch', loudnessSwitchListener )
     else
         loudnessNow = audio.getVolume( { channel=S_BgSfxCh } )
         print('Loudness of SFX is '..loudnessNow)
-        if loudnessNow > 0.8 then
+        if loudnessNow > 0.9 then
             volumeBar2 = MI_circle15
-        elseif loudnessNow > 0.6 then
+        elseif loudnessNow > 0.7 then
             volumeBar2 = MI_circle14
-        elseif loudnessNow > 0.4 then
+        elseif loudnessNow > 0.5 then
             volumeBar2 = MI_circle13
-        elseif loudnessNow > 0.2 then
+        elseif loudnessNow > 0.3 then
             volumeBar2 = MI_circle12
         elseif loudnessNow > 0 then
             volumeBar2 = MI_circle11
         else --==0
             volumeBar2 = MI_circle10
-        end 
-        hideAllMI_circles(1)
+        end
+        volumeBar2:toFront()
         volumeBar2.isVisible = true
         volumeBar2.goal = 'Effects'
-        volumeBar2:addEventListener( 'touch', loudnessSwitchListener )
     end  
 end
 
+function addAllMI_circles(num)
+    print("Adding all MI circles with "..num)
+    if num==0 then 
+        MI_circle05:addEventListener( 'touch', loudnessSwitchListener )
+        MI_circle04:addEventListener( 'touch', loudnessSwitchListener )
+        MI_circle03:addEventListener( 'touch', loudnessSwitchListener )
+        MI_circle02:addEventListener( 'touch', loudnessSwitchListener )
+        MI_circle01:addEventListener( 'touch', loudnessSwitchListener )
+        MI_circle00:addEventListener( 'touch', loudnessSwitchListener )
+    else
+        MI_circle15:addEventListener( 'touch', loudnessSwitchListener )
+        MI_circle14:addEventListener( 'touch', loudnessSwitchListener )
+        MI_circle13:addEventListener( 'touch', loudnessSwitchListener )
+        MI_circle12:addEventListener( 'touch', loudnessSwitchListener )
+        MI_circle11:addEventListener( 'touch', loudnessSwitchListener )
+        MI_circle10:addEventListener( 'touch', loudnessSwitchListener )
+    end
+end
 
 function hideAllMI_circles(num)
+    print("Hiding all MI circles with "..num)
     if num==0 then 
         MI_circle05:removeEventListener( 'touch', loudnessSwitchListener )
         MI_circle04:removeEventListener( 'touch', loudnessSwitchListener )
@@ -6711,7 +6729,6 @@ end
 function loadMenu()
     print('Menu loading...')
     menuButton:addEventListener( 'touch', menuButtonListener )
-    menuClose:addEventListener( 'touch', menuCloseListener )
     menuBack.isVisible=false
     menuButton.isVisible=true
     menuClose.isVisible=false
@@ -6887,6 +6904,7 @@ function menuButtonListener(event)
         end
         if event.phase == "ended" then
         print('We are in menuButtonListener and event phase ended')
+            menuClose:addEventListener( 'touch', menuCloseListener )
             menuButtonActive.isVisible=true
             menuButton.isVisible=false
             menuBack.isVisible=true
@@ -6976,6 +6994,7 @@ end
 
 -- Switch loudness listener
 function loudnessSwitchListener(event)
+    print("Executing loudnessSwitchListener")
     if menuBack.isVisible==true and restartBack.isVisible == false then
         if event.phase == "ended" then
             print(event.target.goal)
@@ -7000,7 +7019,7 @@ function loudnessSwitchListener(event)
                 loudnessNow = audio.setVolume(desVol, { channel=S_MusicCh } )
                 displayLoudness('Music')
             else
-                loudnessNow = audio.getVolume(desVol, { channel=S_BgSfxCh } )
+                loudnessNow = audio.setVolume(desVol, { channel=S_BgSfxCh } )
                 displayLoudness('Effects')
             end
         end
@@ -7019,24 +7038,30 @@ function restartTheGameConfirm(event)
             restartBack:toFront()
             restartConfirm.isVisible = true
             restartConfirm:toFront()
-            restartNo.isVisible = true
-            restartNo:toFront()
-            restartNo:addEventListener( 'touch', restartCanceled )
+            
             restartYes.isVisible = true
             restartYes:toFront()
-            restartYes:addEventListener( 'touch', restartTheGame )
+            restartYes:addEventListener( 'touch', restartTheGame)
+
+            restartNo.isVisible = true
+            restartNo:toFront()
+            restartNo:addEventListener( 'touch', restartCanceled)
         end
     end
 end
 
 function restartTheGame(event)
-    menuCloseAndRemove()
-    choices.bucket = 0
-    choices.wolfPenalty = 0
-    loadGameBegining() 
+    if event.phase == "began" then 
+        print('Listener restartTheGame called')
+        menuCloseAndRemove()
+        choices.bucket = 0
+        choices.wolfPenalty = 0
+        loadGameBegining()
+    end 
 end
 
 function restartCanceled(event) 
+    print('Listener restartCanceled called')
     if event.phase == "began" then 
         restartBack.isVisible = false
         restartConfirm.isVisible = false
@@ -7045,7 +7070,6 @@ function restartCanceled(event)
         restartYes:removeEventListener( "touch", restartTheGame )
         restartYes.isVisible = false
     end
-
 end
 
 
