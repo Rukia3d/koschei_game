@@ -33,6 +33,9 @@ buttonLayers.anchorX = 200 buttonLayers.anchorY = 200
 local achivLayers = display.newGroup()
 achivLayers.anchorX = 0 achivLayers.anchorY = 0
 
+local achivListDisplay = display.newGroup()
+achivListDisplay.anchorX = 0 achivListDisplay.anchorY = 0
+
 -----------------------------------------------------------------------------------------
 --
 -- CHANGE CENTER FOR IMAGE
@@ -1254,21 +1257,30 @@ local function displayAchivement(toDisplay)
 
     local AI_achivImage = display.newImage( achivLayers, achivements[toDisplay].img ) setAnchor(AI_achivImage)
     AI_achivImage.x=160 AI_achivImage.y=achivPeriodNumber AI_achivImage.isVisible = true
+    achivListDisplay:insert(AI_achivImage)
 
     local AI_achivTitle = display.newText(achivTitleListOptions) setAnchor(AI_achivTitle)
     AI_achivTitle.text = achivements[toDisplay].title AI_achivTitle.y=achivPeriodNumber
     AI_achivTitle:setFillColor(0,0,0) AI_achivTitle.isVisible = true
+    achivListDisplay:insert(AI_achivTitle)
 
     local AI_achivText = display.newText(achivTextListOptions) setAnchor(AI_achivText)
     AI_achivText.text = achivements[toDisplay].descr AI_achivText.y=achivPeriodNumber+40
     AI_achivText:setFillColor(0,0,0) AI_achivText.isVisible = true
+    achivListDisplay:insert(AI_achivText)
 
     achivPeriodNumber = achivPeriodNumber+120
 end
 
 local function hideAchivementList()
     -- how to hide locals from other function?
-
+    print('We are in hide Achivements function, the layer has '..achivListDisplay.numChildren..'children')
+    achivPeriodNumber = 200
+    for i=1, achivListDisplay.numChildren do
+        print(achivListDisplay[1])
+        achivListDisplay[1]:removeSelf()
+        achivListDisplay[1] = nil
+    end
 end
 
 -----------------------------------------------------------------------------------------
@@ -6719,6 +6731,7 @@ function loadAchivements()
             displayAchivement(toDisplay)
         end
     end
+    achivListDisplay:toFront()
 end
 
 function loadScene(s)
@@ -6938,7 +6951,7 @@ function achivementsListener(event)
         achiveBack.isVisible = true
         achivLayers:toFront()
         AM_name.isVisible = true
-        hideAchivementList()
+
         menuClose2.isVisible = true
         menuClose2:addEventListener( "touch", achivementsCloseListener)
         loadAchivements()
@@ -6957,6 +6970,7 @@ function achivementsCloseListener(event)
         menuClose2.isVisible = false
         menuCloseActive2.isVisible = false
         menuClose2:removeEventListener( "touch", achivementsCloseListener)
+        hideAchivementList()
     end
 end
 
