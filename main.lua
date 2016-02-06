@@ -30,6 +30,9 @@ buttonLayers.anchorX = 0 buttonLayers.anchorY = 0
 local menuSet = display.newGroup()
 buttonLayers.anchorX = 200 buttonLayers.anchorY = 200 
 
+local achivLayers = display.newGroup()
+achivLayers.anchorX = 0 achivLayers.anchorY = 0
+
 -----------------------------------------------------------------------------------------
 --
 -- CHANGE CENTER FOR IMAGE
@@ -126,6 +129,11 @@ local KoscheiPleaNCD = display.newImage( charactersDial, "images/chars/kosh_plea
 local BrotherD = display.newImage(foregoundGr, "images/menus/transparent.png")
 local BrotherS = display.newImage(foregoundGr, "images/menus/transparent.png")
 
+-----------------------------------------------------------------------------------------
+--
+-- SCREEN ELEMENTS
+--
+-----------------------------------------------------------------------------------------
 
 -- Set main screen
 local background = display.newImage( "images/menus/startScreen.png") background.x = display.contentWidth / 2 background.y = display.contentHeight / 2
@@ -299,13 +307,18 @@ local restartYes = display.newText(menuSet, 'Restart', 550, 450, 200, 0, 'PTSans
 local restartNo = display.newText(menuSet, 'Cancel', 670, 450, 200, 0, 'PTSans-Regular', 24)
     restartNo:setFillColor(0,0,0) restartNo.isVisible = false
 
-local achiveBack = display.newImage(buttonLayers, "images/menus/achiveBack.png") setAnchor(achiveBack) 
+
+local achiveBack = display.newImage(achivLayers, "images/menus/achiveBack.png") setAnchor(achiveBack) 
     achiveBack.isVisible = false achiveBack.x=100 achiveBack.y=100
 
-local menuClose2 = display.newImage(buttonLayers, "images/menus/closeButtonOffGr.png") setAnchor(menuClose2) 
+local AM_name = display.newText(achivLayers, 'Achivements', 350, 120, 400, 0, 'PTSans-Regular', 45) setAnchor(AM_name)
+    AM_name:setFillColor(0,0,0) AM_name.isVisible = false
+
+local menuClose2 = display.newImage(achivLayers, "images/menus/closeButtonOffGr.png") setAnchor(menuClose2) 
     menuClose2.isVisible = false menuClose2.x=810 menuClose2.y=110
-local menuCloseActive2 = display.newImage(buttonLayers, "images/menus/closeButtonOn.png") setAnchor(menuCloseActive2) 
+local menuCloseActive2 = display.newImage(achivLayers, "images/menus/closeButtonOn.png") setAnchor(menuCloseActive2) 
     menuCloseActive2.isVisible = false menuCloseActive2.x=810 menuCloseActive2.y=110
+
 
 
 -----------------------------------------------------------------------------------------
@@ -1018,6 +1031,12 @@ local achivImage = display.newImage(achivGroup, "images/menus/transparent.png")
 local achivCollected = {'start'}
 
 local achivements = {
+    start = {
+        name = 'start',
+        title = 'Game started',
+        img = 'images/achivements/example100.png',
+        descr =  'Thank you for playing!'
+    },
     bless = {
         name = 'bless',
         title = 'Mother\'s Blessing',
@@ -1151,6 +1170,7 @@ local achivements = {
     },
 }
 
+-- Show achivement annotation during a game
 local function showAchivement(achivKey)
     print('Function for showing achivement '..achivKey..' is called')
     achivRect.isVisible = true
@@ -1176,6 +1196,17 @@ local function showAchivement(achivKey)
     transition.to(achivImage,{alpha=0, time=1000, delay=4000})
 end
 
+local function hidewAchivement()
+    achivRect.alpha = 0
+    achivRect.isVisible = false
+
+    achivRectText.alpha = 0
+    achivRectText.isVisible = false
+
+    achivImage.alpha = 0
+    achivImage.isVisible = false
+end
+
 local function addAchivement(achivKey)
     print('Achivement adding: '..achivKey)
     print('In the achivement collection it is '..achivements[achivKey].name)
@@ -1196,6 +1227,50 @@ local function addAchivement(achivKey)
     end
 
 end
+
+local achivPeriodNumber = 200 -- number for the coordinates of the beginning of the achivements list
+local achivTitleListOptions = {
+    parent = achivLayer,
+    text = "",     
+    x = 270,
+    y = 0,
+    width = 500,    
+    font = 'PTSans-Regular',
+    fontSize = 30,
+    align = "left" 
+}
+local achivTextListOptions = {
+    parent = achivLayer,
+    text = "",     
+    x = 270,
+    y = 0,
+    width = 500,    
+    font = 'PTSans-Regular',  
+    fontSize = 24,
+    align = "left" 
+}
+
+local function displayAchivement(toDisplay)
+
+    local AI_achivImage = display.newImage( achivLayers, achivements[toDisplay].img ) setAnchor(AI_achivImage)
+    AI_achivImage.x=160 AI_achivImage.y=achivPeriodNumber AI_achivImage.isVisible = true
+
+    local AI_achivTitle = display.newText(achivTitleListOptions) setAnchor(AI_achivTitle)
+    AI_achivTitle.text = achivements[toDisplay].title AI_achivTitle.y=achivPeriodNumber
+    AI_achivTitle:setFillColor(0,0,0) AI_achivTitle.isVisible = true
+
+    local AI_achivText = display.newText(achivTextListOptions) setAnchor(AI_achivText)
+    AI_achivText.text = achivements[toDisplay].descr AI_achivText.y=achivPeriodNumber+40
+    AI_achivText:setFillColor(0,0,0) AI_achivText.isVisible = true
+
+    achivPeriodNumber = achivPeriodNumber+120
+end
+
+local function hideAchivementList()
+    -- how to hide locals from other function?
+
+end
+
 -----------------------------------------------------------------------------------------
 --
 -- ORGANISING
@@ -1215,6 +1290,7 @@ local function organizeStage()
     achivGroup:toFront()
     buttonLayers:toFront()
     menuSet:toFront()
+    achivLayers:toFront()
 end
 
 -----------------------------------------------------------------------------------------
@@ -1518,6 +1594,7 @@ local scenes = {}
         animationComplete = function() 
             removeCurtain()
             IvanS.xScale = 1 IvanS.x = -50
+            hidewAchivement()
         end
     }
 
@@ -1543,7 +1620,6 @@ local scenes = {}
         text = 'scene 18: Ivan is not happy but stays in chamber dutifully obeying his big sister.',
         follows = 19,
         clearSelection = true,
-        changeFlow = function() choices.basement = false  end,
         animations = function()
             transDialogueBack()
             IvanS.xScale = -1 
@@ -1741,6 +1817,7 @@ local scenes = {}
             bucket2.x=275
             bucketTread.x=180
             bucket2.rotation=0 
+            hidewAchivement()
         end,
         --Sound: waterSplash
         soundEffect = 'waterSplash.mp3'
@@ -1806,6 +1883,7 @@ local scenes = {}
         animationComplete = function()
             hideBigCharacters()
             transDialogueBack()
+            hidewAchivement()
         end
     }
     scenes[32] = {
@@ -1843,6 +1921,7 @@ local scenes = {}
         animationComplete = function()
             IvanS.xScale = -1
             IvanS.x=-200
+            hidewAchivement()
         end,
         --Sound: summer Forest
         soundEffect = 'summerForest.mp3'
@@ -2054,6 +2133,7 @@ local scenes = {}
             shadowLayer5.alpha=1
             foreground.y=0
             AlenaOnWolf.x=600 AlenaOnWolf.y=0 AlenaOnWolf.isVisible=true
+            hidewAchivement()
         end,
         -- Sound: Opening
         soundEffect = 'opening.mp3',
@@ -2218,6 +2298,7 @@ local scenes = {}
         animationComplete = function()
             fortress.x=-80
             fortress2.x=405
+            hidewAchivement()
         end
 
     }
@@ -2428,6 +2509,7 @@ local scenes = {}
             showDialogueChar(BrotherD, 400, 400)
         end,
         animationComplete =  function()
+            hidewAchivement()
         end
     }
 
@@ -2596,6 +2678,7 @@ local scenes = {}
         clearSelection = true,
         text = 'scene 73: She leaves the ribbon on the branch and gets back to Gray Wolf. "You are a  good girl, daughter of Marya, your mother raised you well," says Gray Wolf and they rush back.',
         follows = 80,
+        changeFlow = function() choices.appleTaken = false end,
         animations = function()
             hideBigCharacters()
             showDialogueBack()
@@ -2656,6 +2739,7 @@ local scenes = {}
             landscape3.x=0
             landscape2.x=0
             landscape1.x=0
+            hidewAchivement()
         end,
     }
 
@@ -2676,6 +2760,7 @@ local scenes = {}
             landscape3.x=0
             landscape2.x=0
             landscape1.x=0
+            hidewAchivement()
         end,
     }
 
@@ -2897,6 +2982,7 @@ local scenes = {}
         sName = 87,
         follows = 93,
         clearSelection = true,
+        changeFlow = function() choices.horseTaken = false end,
         text='scene 87: She leaves the ribbon behind and leads the horse out to Gray Wolf. "You are a good girl, daughter of Marya, your mother raised you well." says Gray Wolf, and they rush back.',
         animations = function()
             hideBigCharacters()
@@ -2912,7 +2998,10 @@ local scenes = {}
         sName = 88,
         follows = 89,
         clearSelection = true,
-        changeFlow = function() choices.wolfPenalty =  choices.wolfPenalty+1 end,
+        changeFlow = function() 
+            choices.wolfPenalty =  choices.wolfPenalty+1 
+            choices.horseTaken = true
+        end,
         text='scene 88: The moment Alena touches the ribbon, an alarm rings out. Alena catches the horse and runs to Gray Wolf.',
         animations = function()
             transition.to(stableRibbon, {rotation=50, x=690, y=350, time=500})
@@ -3257,6 +3346,7 @@ local scenes = {}
         animationComplete = function()
             forrestDawn.alpha=0.5
             AlenaVasilisaRiding.x=500
+            hidewAchivement()
         end,
         --Sound: Alena Cry
         soundEffect = 'roosterDawn.mp3'
@@ -3308,6 +3398,7 @@ local scenes = {}
         animationComplete = function()
             hideBigCharacters()
             hideSmallCharacters()
+            hidewAchivement()
         end
     }
     scenes[108] = {
@@ -3619,7 +3710,7 @@ local scenes = {}
         follows = 125,        
         text='scene 124: Alena: "Go away, you are huge and scary!"',
         clearSelection = true,
-        changeFlow = function() choices.wolfPenalty =  choices.wolfPenalty+1 end,
+        changeFlow = function() choices.bear = false choices.wolfPenalty =  choices.wolfPenalty+1 end,
         animations = function()
             hideBigCharacters()
             showDialogueChar(AlenaNR, 500, 400)
@@ -3642,6 +3733,7 @@ local scenes = {}
         animationComplete = function()
             removeCurtain()
             BearS.xScale=1 BearS.x=-500
+            hidewAchivement()
         end,
         --Sound: fire in the oven
         soundEffect = 'fireInOven.mp3'
@@ -3907,6 +3999,7 @@ local scenes = {}
         animationComplete = function()
             crowSmall.y = -170
             crowBig.y = 0
+            hidewAchivement()
         end,
         --Sound: Crows flying in
         soundEffect = 'wingsFlap1.mp3'
@@ -3920,7 +4013,8 @@ local scenes = {}
         animations = function() loadCrows() end,
         animationComplete = function()
             crowSmall.y = -170
-            crowBig.y = 0 
+            crowBig.y = 0
+            hidewAchivement() 
         end,
         --Sound: Crows flying in
         soundEffect = 'wingsFlap1.mp3'
@@ -3935,6 +4029,7 @@ local scenes = {}
         animationComplete = function()
             crowSmall.y = -170
             crowBig.y = 0
+            hidewAchivement()
         end,
         --Sound: Crows flying in
         soundEffect = 'wingsFlap1.mp3'
@@ -3949,6 +4044,7 @@ local scenes = {}
         animationComplete = function()
             crowSmall.y = -170
             crowBig.y = 0
+            hidewAchivement()
         end,
         --Sound: Crows flying in
         soundEffect = 'wingsFlap1.mp3'
@@ -4629,6 +4725,7 @@ local scenes = {}
     scenes[177] = {
         sName = 177,
         follows = 178,
+        changeFlow = function() choices.berries=false end,
         clearSelection = true,
         text='scene 177: Mouse: "I thought you were a kind girl, but you are not. But I don\'t want your death on my conscious, so I\'ll help you anyway. Do not believe Baba Yaga! She\'ll light the oven, not to cook for you, but to cook you!"',
         animations = function() end,
@@ -4642,7 +4739,10 @@ local scenes = {}
         follows = 179,
         text='scene 178: Mouse: "When she puts you on the oven paddle and shoves you into the stove -  brace your feet against the wall and don\'t let her push you in any further. Hold as firmly as you can. And say that it is not piping hot."',
         animations = function() end,
-        animationComplete = function() hideBigCharacters() end
+        animationComplete = function() 
+            hideBigCharacters() 
+            hidewAchivement()
+        end
     }
     
     scenes[179] = {
@@ -4701,6 +4801,7 @@ local scenes = {}
         end,
         animationComplete = function()
             hideBigCharacters()
+            hidewAchivement()
         end,
         --Sound: fire in the oven
         soundEffect = 'fireInOven.mp3'
@@ -4734,6 +4835,7 @@ local scenes = {}
             alenaSit.x=750 alenaSit.y=150
             ovenCover.x=700
             paddle.x=790 paddle.y=250 paddle.rotation=-10
+            hidewAchivement()
         end
     }
 
@@ -5388,6 +5490,7 @@ local scenes = {}
             IvanAlenaHug.alpha=1
             AlenaNoRibbon.alpha=0
             IvanS.alpha=0
+            hidewAchivement()
         end,
         --Sound: oak forest 
         soundEffect = 'oakForest1.mp3'
@@ -5475,6 +5578,7 @@ local scenes = {}
             effectDust.alpha=0
             AlenaNoRibbon.isVisible=true AlenaNoRibbon.alpha=1 AlenaNoRibbon.x=370 AlenaNoRibbon.y=0
             AlenaHolding.alpha=0
+            hidewAchivement()
         end,
         --Sound: oak forest 
         soundEffect = 'oakForest2.mp3'
@@ -5558,6 +5662,7 @@ local scenes = {}
         animationComplete = function()
             MotherS.x=430 MotherS.y=0 MotherS.alpha=1 MotherS.isVisible=true
             MotherWarS.alpha=0 MotherWarS.isVisible=false
+            hidewAchivement()
         end,
         -- Sound: Birds singing
         soundEffect = 'birdsSinging.mp3',
@@ -5628,6 +5733,7 @@ local scenes = {}
         animationComplete = function()
             MotherS.x=430 MotherS.y=0 MotherS.alpha=1 MotherS.isVisible=true
             MotherWarS.alpha=0 MotherWarS.isVisible=false
+            hidewAchivement()
         end,
         -- Sound: Birds singing
         soundEffect = 'birdsSinging.mp3',
@@ -6529,6 +6635,7 @@ function displayLoudness(obj)
             volumeBar1 = MI_circle00
         end 
             hideAllMI_circles(0)
+            volumeBar1:toFront()
             volumeBar1.isVisible = true
             volumeBar1.goal = 'Music'
             volumeBar1:addEventListener( 'touch', loudnessSwitchListener )
@@ -6600,9 +6707,18 @@ function loadMenu()
     menuCloseActive.isVisible=false
     buttonLayers:toFront()
     menuSet:toFront()
+    achivLayers:toFront()
 end
 
 function loadAchivements()
+    local number = table.getn(achivCollected)
+    for i=number, 1, -1 do 
+        if achivCollected[i] then
+            print('Looking for this achivement to display - '..achivCollected[i])
+            local toDisplay = achivCollected[i]
+            displayAchivement(toDisplay)
+        end
+    end
 end
 
 function loadScene(s)
@@ -6782,20 +6898,66 @@ function menuCloseListener(event)
             menuButton.isVisible=true
             menuBack.isVisible=false
             menuClose.isVisible=false
-            removeAllMI_circleListeners()
-            MI_restartText:removeEventListener( 'touch', restartTheGameConfirm )
-            MI_achivementsText:removeEventListener( 'touch', achivementsListener) 
-            hideMenuContent()
+            menuCloseAndRemove()
         end
     end
 end
 
+function menuCloseAndRemove()
+    removeAllMI_circleListeners()
+
+    menuClose:removeEventListener( 'touch', menuCloseListener )
+
+    MI_restartText:removeEventListener( 'touch', restartTheGameConfirm )
+    MI_restartText:setFillColor( 0,0,0 )
+    restartBack.isVisible = false
+    restartConfirm.isVisible = false
+    restartNo:removeEventListener( "touch", restartCanceled )
+    restartNo.isVisible = false
+    restartYes:removeEventListener( "touch", restartTheGame )
+    restartYes.isVisible = false
+
+    achiveBack.isVisible = false
+    AM_name.isVisible = false
+    menuClose2.isVisible = false
+    menuCloseActive2.isVisible = false
+    menuClose2:removeEventListener( "touch", achivementsCloseListener)
+    MI_achivementsText:removeEventListener( 'touch', achivementsListener) 
+    MI_achivementsText:setFillColor( 0,0,0 )
+
+    hideMenuContent()
+
+end
+
 -- Achivements listener
 function achivementsListener(event)
+    if event.phase == "began" then 
+        MI_achivementsText:setFillColor( 1,1,1 ) 
+    end
+    if event.phase == "ended" then
+        achiveBack.isVisible = true
+        achivLayers:toFront()
+        AM_name.isVisible = true
+        hideAchivementList()
+        menuClose2.isVisible = true
+        menuClose2:addEventListener( "touch", achivementsCloseListener)
+        loadAchivements()
+    end
 end
 
 -- Achivements close listener
 function achivementsCloseListener(event)
+    if event.phase == "began" then
+        MI_achivementsText:setFillColor( 0,0,0 )
+        menuCloseActive2.isVisible = true
+    end
+    if event.phase == "ended" then
+        achiveBack.isVisible = false
+        AM_name.isVisible = false
+        menuClose2.isVisible = false
+        menuCloseActive2.isVisible = false
+        menuClose2:removeEventListener( "touch", achivementsCloseListener)
+    end
 end
 
 -- Switch loudness listener
@@ -6853,7 +7015,11 @@ function restartTheGameConfirm(event)
     end
 end
 
-function restartTheGame(event) 
+function restartTheGame(event)
+    menuCloseAndRemove()
+    choices.bucket = 0
+    choices.wolfPenalty = 0
+    loadGameBegining() 
 end
 
 function restartCanceled(event) 
@@ -6879,37 +7045,41 @@ local myListener
 myListener = function( event )
     if event.phase == "ended" then 
         print("myListener called")
-        background:removeEventListener("touch", myListener)
-        setAnchor(textContainer)
-        setAnchor(textContainerNA)
-
-        setAnchor(select1Text)
-        setAnchor(select2Text)
-        setAnchor(select3Text)
-
-        -- listeners for the right blocks
-        select1Container:addEventListener( "touch", sceneTextTouch)
-        select2Container:addEventListener( "touch", sceneTextTouch)
-        select3Container:addEventListener( "touch", sceneTextTouch)
-        
-        -- listener for the main text
-        textContainer:addEventListener( "touch", sceneTextTouch)
-        -- 44 - forest1
-        -- 57 - brother Castle 1
-        -- 68 - apple garden
-        -- 75 - forest2
-        -- 80 - brother Castle 1
-        -- 89 - forest3
-        -- 93 - brother Castle 1
-        -- 98 - forest4
-        -- 114 - winter forest
-        -- 129 - koschei castle
-        -- 156 - yaga yard
-        -- 163 - yaga hut
-        -- 195 - oak
-        loadScene(scenes[1])
+        loadGameBegining()
         return true
     end
+end
+
+function loadGameBegining()
+    background:removeEventListener("touch", myListener)
+    setAnchor(textContainer)
+    setAnchor(textContainerNA)
+
+    setAnchor(select1Text)
+    setAnchor(select2Text)
+    setAnchor(select3Text)
+
+    -- listeners for the right blocks
+    select1Container:addEventListener( "touch", sceneTextTouch)
+    select2Container:addEventListener( "touch", sceneTextTouch)
+    select3Container:addEventListener( "touch", sceneTextTouch)
+    
+    -- listener for the main text
+    textContainer:addEventListener( "touch", sceneTextTouch)
+    -- 44 - forest1
+    -- 57 - brother Castle 1
+    -- 68 - apple garden
+    -- 75 - forest2
+    -- 80 - brother Castle 1
+    -- 89 - forest3
+    -- 93 - brother Castle 1
+    -- 98 - forest4
+    -- 114 - winter forest
+    -- 129 - koschei castle
+    -- 156 - yaga yard
+    -- 163 - yaga hut
+    -- 195 - oak
+    loadScene(scenes[1])
 end
 
 
