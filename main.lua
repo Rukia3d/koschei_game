@@ -10,6 +10,8 @@
 --
 -----------------------------------------------------------------------------------------
 -- Start with display groups
+local backgroundGr = display.newGroup()
+
 local characters = display.newGroup()
 local charactersDial = display.newGroup()
 
@@ -330,14 +332,12 @@ local menuCloseActive2 = display.newImage(achivLayers, "images/menus/closeButton
 --
 -----------------------------------------------------------------------------------------
 function openingAnimation(backg, foregr)
-    cleanUpLevel()
-
     background:removeSelf()
     background = nil
     foreground:removeSelf()
     foreground = nil
 
-    background = display.newImage( "images/backg/"..backg, true ) setAnchor(background) 
+    background = display.newImage(backgroundGr, "images/backg/"..backg, true ) setAnchor(background) 
     background.isVisible = true
 
     foreground = display.newImage(foregoundGr, "images/backg/"..foregr, true ) setAnchor(foreground)
@@ -1077,6 +1077,7 @@ local achivements = {
         descr =  'Don\'t allow gloomy premonitions to scare you'
     },
     allDies = {
+        name = 'allDies',
         title ='I don\'t care',
         img = 'images/achivements/example100.png',
         descr =  'Everybody dies, so why bother'
@@ -1291,6 +1292,7 @@ end
 
 -- Move layers in the right order
 local function organizeStage()
+    backgroundGr:toFront()
     background:toFront()
     midlayer1:toFront()
     midlayer2:toFront()
@@ -1621,7 +1623,8 @@ local scenes = {}
             transition.to(AlenaS, {x=270, time=1000, delay=1500}) 
         end,
         animationComplete = function()
-            ovenFire.alpha=1 
+            ovenFire.alpha=1
+            AlenaS.isVisible = false 
         end,
         --Sound: fire in the oven
         soundEffect = 'fireInOven.mp3'
@@ -1663,6 +1666,7 @@ local scenes = {}
         animations = function()
         end,
         animationComplete = function()
+            AlenaS.isVisible = false
         end
     }
 
@@ -1705,7 +1709,7 @@ local scenes = {}
         animations = function()
         -- Animation: Alena and Ivan appearing 
             IvanS.isVisible = true IvanS.x=560
-            AlenaS.isVisible = true AlenaS.x=190
+            AlenaS.isVisible = true AlenaS.x=190 AlenaS.y=-500
             transition.to(IvanS, {y=0, time=1000})
             transition.to(AlenaS, {y=-200, time=1000})
         end,
@@ -2000,12 +2004,12 @@ local scenes = {}
             --Sound: wind in the trees
             setHouseAnEvening()
             AlenaCryS.isVisible = true
-            transition.to(AlenaCryS, {y=0, time=1000, delay=500})
+            transition.to(AlenaCryS, {y=-40, time=1000, delay=500})
             leaves.alpha = 1
             leavesFalling(1000)
         end,
         animationComplete = function()
-            AlenaCryS.isVisible = true AlenaCryS.y=0
+            AlenaCryS.isVisible = true AlenaCryS.y=-40
             leaves.alpha=1 leaves.x=500 leaves.y=550
         end,
         --Sound: Leaves falling
@@ -2227,7 +2231,7 @@ local scenes = {}
             landscape2.x=0
             landscape1.x=0
         end,
-        achiv = 'letDie' 
+        achiv = 'letDie', 
     }
 
     scenes[48] = {
@@ -2262,7 +2266,7 @@ local scenes = {}
             landscape2.x=0
             landscape1.x=0
         end,
-        achiv = 'allDies'   
+        achiv = 'allDies',   
     }
 
     scenes[49] = {
@@ -2296,7 +2300,7 @@ local scenes = {}
             landscape2.x=0
             landscape1.x=0
         end,
-        achiv = 'brave' 
+        achiv = 'brave', 
     }
 
     scenes[50] = {
@@ -5934,7 +5938,8 @@ local function setStageObjects(stage)
             organizeStage()
         end,
         setBasement = function()
-            clearStage()
+            cleanUpLevel()
+
             basementStage = display.newImage(midlayer1, "images/backg/background4.png", true) setAnchor(basementStage)
             basementStage.x=0 basementStage.y = 0 basementStage.alpha=0
             
@@ -5965,7 +5970,7 @@ local function setStageObjects(stage)
             organizeStage()
         end,
         setForest1 = function()
-            clearStage()
+            cleanUpLevel()
 
             eveningDarker = display.newImage(midlayer1, "images/effects/effects_darkBlue.png", true) setAnchor(eveningDarker)
             eveningDarker.x = 0 eveningDarker.y = 0 eveningDarker.alpha=0
@@ -6002,7 +6007,7 @@ local function setStageObjects(stage)
             organizeStage()
         end,
         setUncleCastle = function()
-            clearStage()
+            cleanUpLevel()
 
             landscape3 = display.newImage(midlayer1, "images/scenes/act5_landscape3.png", true) setAnchor(landscape3)
             landscape3.x = -1000 landscape3.y = 130
@@ -6043,7 +6048,7 @@ local function setStageObjects(stage)
             organizeStage() 
         end,
         setAppleGarden = function()
-            clearStage() 
+            cleanUpLevel() 
 
             landscape3 = display.newImage(midlayer1, "images/backg/background7.png", true) setAnchor(landscape3)
             landscape3.x = 0 landscape3.y = 0
@@ -6090,7 +6095,7 @@ local function setStageObjects(stage)
 
         end,
         setForest2 = function()
-            clearStage()
+            cleanUpLevel()
 
             starsAndMoon = display.newImage(midlayer1, "images/scenes/stars.png", true) setAnchor(starsAndMoon )
             starsAndMoon.x = 100 starsAndMoon.y = -500
@@ -6121,7 +6126,7 @@ local function setStageObjects(stage)
             organizeStage()
         end,
         setStables = function()
-            clearStage() 
+            cleanUpLevel() 
 
             landscape3 = display.newImage(midlayer1, "images/backg/background8.png", true) setAnchor(landscape3)
             landscape3.x = 0 landscape3.y = 0
@@ -6168,7 +6173,7 @@ local function setStageObjects(stage)
             organizeStage() 
         end,
         setForest3 = function()
-            clearStage()
+            cleanUpLevel()
 
             landscape2 = display.newImage(midlayer1, "images/scenes/act4_landscape2.png", true) setAnchor(landscape2)
             landscape2.x = 1000 landscape2.y = 0
@@ -6200,7 +6205,7 @@ local function setStageObjects(stage)
             organizeStage() 
         end,
         setBerendei = function() 
-            clearStage() 
+            cleanUpLevel() 
 
             landscape3 = display.newImage(midlayer1, "images/backg/background9.png", true) setAnchor(landscape3)
             landscape3.x = 0 landscape3.y = 0
@@ -6240,7 +6245,7 @@ local function setStageObjects(stage)
             organizeStage() 
         end,
         setForest4 = function() 
-            clearStage()
+            cleanUpLevel()
 
             landscape3 = display.newImage(midlayer1, "images/backg/background9.png", true) setAnchor(landscape3)
             landscape3.x = 0 landscape3.y = 0
@@ -6285,7 +6290,7 @@ local function setStageObjects(stage)
             organizeStage()  
         end,
         setWinterForest = function()
-            clearStage()
+            cleanUpLevel()
 
             landscape3 = display.newImage(midlayer1, "images/scenes/snow.png", true) setAnchor(landscape3)
             landscape3.x = 1024 landscape3.y = 0 
@@ -6316,7 +6321,8 @@ local function setStageObjects(stage)
             organizeStage() 
         end,
         setKoshCastle = function() 
-            clearStage()
+            cleanUpLevel()
+
             landscapeBack = display.newImage(midlayer1, "images/backg/background11.png", true) setAnchor(landscapeBack)
             landscapeBack.x = 0 landscapeBack.y = 0
 
@@ -6388,7 +6394,7 @@ local function setStageObjects(stage)
 
         end,
         setYagaYard = function()
-            clearStage()
+            cleanUpLevel()
                
             landscape1 = display.newImage(midlayer1, "images/scenes/autumn_trees.png", true) setAnchor(landscape1)
             landscape1.x = -1710 landscape1.y = 0
@@ -6421,7 +6427,8 @@ local function setStageObjects(stage)
             organizeStage() 
         end,
         setYagaHut = function() 
-            clearStage()
+            cleanUpLevel()
+            
             getsDarker  = display.newImage(midlayer1, "images/effects/effect_darker.png", true) setAnchor(getsDarker)
             getsDarker.x = 0 getsDarker.y = 0 getsDarker.alpha = 0
 
@@ -6475,7 +6482,7 @@ local function setStageObjects(stage)
         end,
 
         setOakMountain = function()
-            clearStage()
+            cleanUpLevel()
 
             skyBright = display.newImage(midlayer1, "images/backg/background14_a.png", true) setAnchor(skyBright)
             skyBright.x = 0 skyBright.y = 0 skyBright.alpha = 0
@@ -6756,23 +6763,9 @@ function loadScene(s)
     if s.name == 1000 then 
         showEnding()
     else
-        if s.openingAnimation then 
-            openingAnimation(s.openingAnimation[1], s.openingAnimation[2]) 
-        end
         if s.changeFlow then 
             s.changeFlow() 
         end
-        
-        --Play the sound if there's one
-        if S_BgSfxCh then
-            audio.stop(S_BgSfxCh)
-        end
-
-        if(s.soundEffect) then 
-            local S_soundEffect = audio.loadStream( "sounds/"..s.soundEffect)
-            S_BgSfxCh = audio.play( S_soundEffect, {loops=0, fadein=500} )
-        end
-
 
         -- Set the text or call it depending on the type
         if type(s.text)=='function' then sceneText.text = s.text() else sceneText.text = s.text end
@@ -6855,6 +6848,22 @@ function loadScene(s)
         if(s.setStage) then
             setStageObjects(s.setStage)
         end
+
+        organizeStage()
+        -- Play opening animation
+        if s.openingAnimation then 
+            openingAnimation(s.openingAnimation[1], s.openingAnimation[2]) 
+        end
+
+        --Play the sound if there's one
+        if S_BgSfxCh then
+            audio.stop(S_BgSfxCh)
+        end
+        if(s.soundEffect) then 
+            local S_soundEffect = audio.loadStream( "sounds/"..s.soundEffect)
+            S_BgSfxCh = audio.play( S_soundEffect, {loops=0, fadein=500} )
+        end
+
         if(s.animations) then
             s.animations()
         end
@@ -7038,7 +7047,7 @@ function restartTheGameConfirm(event)
             restartBack:toFront()
             restartConfirm.isVisible = true
             restartConfirm:toFront()
-            
+
             restartYes.isVisible = true
             restartYes:toFront()
             restartYes:addEventListener( 'touch', restartTheGame)
