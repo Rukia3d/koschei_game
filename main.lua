@@ -38,6 +38,9 @@ achivLayers.anchorX = 0 achivLayers.anchorY = 0
 local achivListDisplay = display.newGroup()
 achivListDisplay.anchorX = 0 achivListDisplay.anchorY = 0
 
+local playlistLayers = display.newGroup()
+playlistLayers.anchorX = 0 playlistLayers.anchorY = 0
+
 -----------------------------------------------------------------------------------------
 --
 -- CHANGE CENTER FOR IMAGE
@@ -134,6 +137,9 @@ local KoscheiPleaNCD = display.newImage( charactersDial, "images/chars/kosh_plea
 local BrotherD = display.newImage(foregoundGr, "images/menus/transparent.png")
 local BrotherS = display.newImage(foregoundGr, "images/menus/transparent.png")
 
+-- Common sounds
+local S_turnEffect = audio.loadSound( "sounds/pageEffect.mp3")
+
 -----------------------------------------------------------------------------------------
 --
 -- SCREEN ELEMENTS
@@ -217,7 +223,7 @@ function checkAlighn(num)
 
     else
         select1Container.x= coStart
-        select1Container.x= coStart
+        select1Text.x= coStart
     end
 end
 
@@ -248,6 +254,8 @@ local menuButtonActive = display.newImage(buttonLayers, "images/menus/menuButton
 
 local menuBack = display.newImage(buttonLayers, "images/menus/menu_back.png") setAnchor(menuBack) 
     menuBack.isVisible = false menuBack.x=0 menuBack.y=0
+menuBack:addEventListener("touch", function() return true end)
+menuBack:addEventListener("tap", function() return true end)
 
 local menuClose = display.newImage(buttonLayers, "images/menus/closeButtonOff.png") setAnchor(menuClose) 
     menuClose.isVisible = false menuClose.x=645 menuClose.y=90
@@ -265,41 +273,43 @@ local MI_restartText = display.newText(menuSet, 'Restart', 470, 450, 200, 0, 'PT
     MI_restartText:setFillColor(0,0,0) MI_restartText.isVisible = false
 local MI_achivementsText = display.newText(menuSet, 'Achivements', 435, 500, 200, 0, 'PTSans-Regular', 32)
     MI_achivementsText:setFillColor(0,0,0) MI_achivementsText.isVisible = false
+local MI_playlistText = display.newText(menuSet, 'Playlist', 470, 550, 200, 0, 'PTSans-Regular', 32)
+    MI_playlistText:setFillColor(0,0,0) MI_playlistText.isVisible = false
 
 
 local MI_circle00 = display.newImage(menuSet, "images/menus/volume0.png") setAnchor(MI_circle00) 
-    MI_circle00.isVisible = false MI_circle00.x = 400 MI_circle00.y=180
+    MI_circle00.isVisible = false MI_circle00.x = 380 MI_circle00.y=165
 local MI_circle01 = display.newImage(menuSet, "images/menus/volume1.png") setAnchor(MI_circle01) 
-    MI_circle01.isVisible = false  MI_circle01.x = 400 MI_circle01.y=180
+    MI_circle01.isVisible = false  MI_circle01.x = 380 MI_circle01.y=165
 local MI_circle02 = display.newImage(menuSet, "images/menus/volume2.png") setAnchor(MI_circle02) 
-    MI_circle02.isVisible = false  MI_circle02.x = 400 MI_circle02.y=180
+    MI_circle02.isVisible = false  MI_circle02.x = 380 MI_circle02.y=165
 local MI_circle03 = display.newImage(menuSet, "images/menus/volume3.png") setAnchor(MI_circle03) 
-    MI_circle03.isVisible = false  MI_circle03.x = 400 MI_circle03.y=180
+    MI_circle03.isVisible = false  MI_circle03.x = 380 MI_circle03.y=165
 local MI_circle04 = display.newImage(menuSet, "images/menus/volume4.png") setAnchor(MI_circle04) 
-    MI_circle04.isVisible = false  MI_circle04.x = 400 MI_circle04.y=180
+    MI_circle04.isVisible = false  MI_circle04.x = 380 MI_circle04.y=165
 local MI_circle05 = display.newImage(menuSet, "images/menus/volume5.png") setAnchor(MI_circle05) 
-    MI_circle05.isVisible = false  MI_circle05.x = 400 MI_circle05.y=180
+    MI_circle05.isVisible = false  MI_circle05.x = 380 MI_circle05.y=165
 
 local MI_circle10 = display.newImage(menuSet, "images/menus/volume0.png") setAnchor(MI_circle10) 
-    MI_circle10.isVisible = false MI_circle10.x = 400 MI_circle10.y=245
+    MI_circle10.isVisible = false MI_circle10.x = 380 MI_circle10.y=235
 local MI_circle11 = display.newImage(menuSet, "images/menus/volume1.png") setAnchor(MI_circle11) 
-    MI_circle11.isVisible = false  MI_circle11.x = 400 MI_circle11.y=245
+    MI_circle11.isVisible = false  MI_circle11.x = 380 MI_circle11.y=235
 local MI_circle12 = display.newImage(menuSet, "images/menus/volume2.png") setAnchor(MI_circle12) 
-    MI_circle12.isVisible = false  MI_circle12.x = 400 MI_circle12.y=245
+    MI_circle12.isVisible = false  MI_circle12.x = 380 MI_circle12.y=235
 local MI_circle13 = display.newImage(menuSet, "images/menus/volume3.png") setAnchor(MI_circle13) 
-    MI_circle13.isVisible = false  MI_circle13.x = 400 MI_circle13.y=245
+    MI_circle13.isVisible = false  MI_circle13.x = 380 MI_circle13.y=235
 local MI_circle14 = display.newImage(menuSet, "images/menus/volume4.png") setAnchor(MI_circle14) 
-    MI_circle14.isVisible = false  MI_circle14.x = 400 MI_circle14.y=245
+    MI_circle14.isVisible = false  MI_circle14.x = 380 MI_circle14.y=235
 local MI_circle15 = display.newImage(menuSet, "images/menus/volume5.png") setAnchor(MI_circle15) 
-    MI_circle15.isVisible = false  MI_circle15.x = 400 MI_circle15.y=245
+    MI_circle15.isVisible = false  MI_circle15.x = 380 MI_circle15.y=235
 
 local restartBack = display.newImage(menuSet, "images/menus/conformation.png") setAnchor(restartBack) 
-    restartBack.isVisible = false  restartBack.x = 300 restartBack.y=300
+    restartBack.isVisible = false  restartBack.x = 0 restartBack.y=0
 local restartTextOptions = {
     parent = menuSet,
     text = "Are you sure you want to restart the game?\n All your game progress will be lost.",     
-    x = 550,
-    y = 400,
+    x = 510,
+    y = 370,
     width = 350,    
     font = 'PTSans-Regular',   
     fontSize = 18,
@@ -307,22 +317,35 @@ local restartTextOptions = {
 }
 local restartConfirm = display.newText(restartTextOptions)
     restartConfirm:setFillColor(0,0,0) restartConfirm.isVisible = false
-local restartYes = display.newText(menuSet, 'Restart', 550, 450, 200, 0, 'PTSans-Regular', 24)
+local restartYes = display.newText(menuSet, 'Restart', 500, 420, 200, 0, 'PTSans-Regular', 24)
     restartYes:setFillColor(0,0,0) restartYes.isVisible = false
-local restartNo = display.newText(menuSet, 'Cancel', 670, 450, 200, 0, 'PTSans-Regular', 24)
+local restartNo = display.newText(menuSet, 'Cancel', 630, 420, 200, 0, 'PTSans-Regular', 24)
     restartNo:setFillColor(0,0,0) restartNo.isVisible = false
 
 
 local achiveBack = display.newImage(achivLayers, "images/menus/achiveBack.png") setAnchor(achiveBack) 
-    achiveBack.isVisible = false achiveBack.x=100 achiveBack.y=100
+    achiveBack.isVisible = false achiveBack.x=0 achiveBack.y=0
+achiveBack:addEventListener("touch", function() return true end)
+achiveBack:addEventListener("tap", function() return true end)
 
-local AM_name = display.newText(achivLayers, 'Achivements', 350, 120, 400, 0, 'PTSans-Regular', 45) setAnchor(AM_name)
+local AM_name = display.newText(achivLayers, 'Achivements', 350, 130, 400, 0, 'PTSans-Regular', 45) setAnchor(AM_name)
     AM_name:setFillColor(0,0,0) AM_name.isVisible = false
-
 local menuClose2 = display.newImage(achivLayers, "images/menus/closeButtonOffGr.png") setAnchor(menuClose2) 
-    menuClose2.isVisible = false menuClose2.x=810 menuClose2.y=110
+    menuClose2.isVisible = false menuClose2.x=810 menuClose2.y=120
 local menuCloseActive2 = display.newImage(achivLayers, "images/menus/closeButtonOn.png") setAnchor(menuCloseActive2) 
-    menuCloseActive2.isVisible = false menuCloseActive2.x=810 menuCloseActive2.y=110
+    menuCloseActive2.isVisible = false menuCloseActive2.x=810 menuCloseActive2.y=120
+
+local playlistBack = display.newImage(playlistLayers, "images/menus/achiveBack.png") setAnchor(playlistBack) 
+    playlistBack.isVisible = false playlistBack.x=0 playlistBack.y=0
+playlistBack:addEventListener("touch", function() return true end)
+playlistBack:addEventListener("tap", function() return true end)
+
+local PL_name = display.newText(playlistLayers, 'Playlist', 350, 120, 400, 0, 'PTSans-Regular', 45) setAnchor(PL_name)
+    PL_name:setFillColor(0,0,0) PL_name.isVisible = false
+local menuClose3 = display.newImage(playlistLayers, "images/menus/closeButtonOffGr.png") setAnchor(menuClose3) 
+    menuClose3.isVisible = false menuClose3.x=810 menuClose3.y=120
+local menuCloseActive3 = display.newImage(playlistLayers, "images/menus/closeButtonOn.png") setAnchor(menuCloseActive3) 
+    menuCloseActive3.isVisible = false menuCloseActive3.x=810 menuCloseActive3.y=120
 
 
 
@@ -1007,22 +1030,65 @@ function showEnding() end
 
 -----------------------------------------------------------------------------------------
 --
+-- PLAYLIST
+--
+-----------------------------------------------------------------------------------------
+
+local playlistCompositions = {
+    [1] = {
+        composition = "composition1",
+        performer = "performer1",
+        a_file = "smth",
+    },
+    [2] = {
+        composition = "composition2",
+        performer = "performer2",
+        a_file = "smth",
+    },
+    [3] = {
+        composition = "composition3",
+        performer = "performer3",
+        a_file = "smth",
+    },
+    [4] = {
+        composition = "composition4",
+        performer = "performer4",
+        a_file = "smth",
+    },
+    [5] = {
+        composition = "composition5",
+        performer = "performer5",
+        a_file = "smth",
+    },
+
+}
+function showPlayList()
+    local PL_text1 = ''
+
+end
+function hidePlayList()
+end
+
+
+-----------------------------------------------------------------------------------------
+--
 -- ACHIVEMENTS
 --
 -----------------------------------------------------------------------------------------
--- Background for achivements
+
+-- Background, text and maps for achivements
 local achivRect = display.newImage( achivGroup, "images/menus/achiveSmallBack.png" ) setAnchor(achivRect)
-achivRect.x=670 achivRect.y=45 achivRect.isVisible = false achivRect.alpha=0
+achivRect.x=710 achivRect.y=45 achivRect.isVisible = false achivRect.alpha=0
 
 local achivTextOptions = {
     parent = achivGroup,
     text = "ACHIVEMENT",     
-    x = 788,
+    x = 800,
     y = 60,
     width = 200,    
     font = 'PTSans-Regular', --'Droid Serif',   
-    fontSize = 20,
-    align = "center" 
+    fontSize = 18,
+    align = "left" 
 }
 local achivRectText = display.newText(achivTextOptions)
 setAnchor(achivRectText)
@@ -1035,148 +1101,255 @@ local achivCollected = {'start'}
 
 local achivements = {
     start = {
+        -- Alena standing
         name = 'start',
         title = 'Game started',
-        img = 'images/achivements/example100.png',
+        img70 = 'images/achivements/start70.png', 
+        img50 = 'images/achivements/start50.png', 
+        img50_g = 'images/achivements/start50g.png',
         descr =  'Thank you for playing!'
     },
     bless = {
+        -- Mother in dress
         name = 'bless',
         title = 'Mother\'s Blessing',
-        img = 'images/achivements/bless100.png',
+        img70 = 'images/achivements/bless70.png', 
+        img50 = 'images/achivements/bless50.png', 
+        img50_g = 'images/achivements/bless50g.png',
         descr =  'It keeps you from troubles (and witche\'s ovens)'
     },
     nanny = {
+        -- Ivan hand to face
         name = 'nanny',
         title ='Careless Nanny',
-        img = 'images/achivements/example100.png',
+        img70 = 'images/achivements/nanny70.png', 
+        img50 = 'images/achivements/nanny50.png', 
+        img50_g = 'images/achivements/nanny50g.png',
         descr =  'One can always get a new brother, right?'
     },
     kindG = {
+        -- Water basket
         name = 'kindG',
         title ='A kind girl',
-        img = 'images/achivements/example100.png',
+        img70 = 'images/achivements/kindG70.png', 
+        img50 = 'images/achivements/kindG50.png', 
+        img50_g = 'images/achivements/kindG50g.png',
         descr =  'You can be too kind for your own good'
     },
     obedient = {
+        -- Alena in tha house
         name = 'obedient',
         title ='An obedient daughter',
-        img = 'images/achivements/example100.png',
+        img70 = 'images/achivements/obedient70.png', 
+        img50 = 'images/achivements/obedient50.png', 
+        img50_g = 'images/achivements/obedient0g.png',
         descr =  'If only all your relatives were more like you'
     },
     letDie = {
+        -- Stone and wolf
         name = 'letDie',
         title ='Let him die',
-        img = 'images/achivements/example100.png',
+        img70 = 'images/achivements/letDie70.png', 
+        img50 = 'images/achivements/letDie50.png', 
+        img50_g = 'images/achivements/letDie0g.png',
         descr =  'Better your horse than you'
     },
     brave = {
+        -- Stone and Alena
         name = 'brave',
         title ='A brave traveller',
-        img = 'images/achivements/example100.png',
+        img70 = 'images/achivements/brave70.png', 
+        img50 = 'images/achivements/brave50.png', 
+        img50_g = 'images/achivements/brave50g.png',
         descr =  'Don\'t allow gloomy premonitions to scare you'
     },
     allDies = {
+        -- Stone
         name = 'allDies',
         title ='I don\'t care',
-        img = 'images/achivements/example100.png',
+        img70 = 'images/achivements/allDies70.png', 
+        img50 = 'images/achivements/allDies50.png', 
+        img50_g = 'images/achivements/allDies50g.png',
         descr =  'Everybody dies, so why bother'
     },
-    ribbon = {
-        name = 'ribbon',
-        title ='The fairest of them all',
-        img = 'images/achivements/example100.png',
-        descr =  'You really care about your looks'
-    },
     advice = {
+        -- Wolf sitting
         name = 'advice',
         title ='Advisors for the win',
-        img = 'images/achivements/example100.png',
+        img70 = 'images/achivements/advice70.png', 
+        img50 = 'images/achivements/advice50.png', 
+        img50_g = 'images/achivements/advice50g.png',
         descr =  'Why have a good adviser if not to listen'
     },
+    ribbon = {
+        -- Ribbon
+        name = 'ribbon',
+        title ='The fairest of them all',
+        img70 = 'images/achivements/ribbon70.png', 
+        img50 = 'images/achivements/ribbon50.png', 
+        img50_g = 'images/achivements/ribbon50g.png',
+        descr =  'You really care about your looks'
+    },
     determined = {
+        -- Vasilisa crying
         name = 'determined',
         title ='Determined',
-        img = 'images/achivements/example100.png',
+        img70 = 'images/achivements/determined70.png', 
+        img50 = 'images/achivements/determined50.png', 
+        img50_g = 'images/achivements/determined50g.png',
         descr =  'You are ready to step over people for your goals.' 
     },
     sympathetic = {
+        --- Vasilisa garden
         name = 'sympathetic',
         title ='Sympathetic',
-        img = 'images/achivements/example100.png',
+        img70 = 'images/achivements/sympathetic70.png', 
+        img50 = 'images/achivements/sympathetic50.png', 
+        img50_g = 'images/achivements/sympathetic50g.png',
         descr =  'You are not ready to step over people for your goals.'
     },
     noBears = {
+        -- Bear
         name = 'noBears',
         title ='No talking animals',
-        img = 'images/achivements/example100.png',
+        img70 = 'images/achivements/noBears70.png', 
+        img50 = 'images/achivements/noBears50.png', 
+        img50_g = 'images/achivements/noBears50g.png',
         descr =  'Talking animals are not allowed here!'
     },
     wolfDies = {
+        -- Wolf down, stone
         name = 'wolfDies',
         title ='Bye-Bye friend',
-        img = 'images/achivements/example100.png',
+        img70 = 'images/achivements/wolfDies70.png', 
+        img50 = 'images/achivements/wolfDies50.png', 
+        img50_g = 'images/achivements/wolfDies50g.png',
         descr =  'That\'s the road you\'ve chosen. Better him than you, right?'
     },
     alenaDies = {
+        -- Alena down, stone
         name = 'alenaDies',
-        img = 'images/achivements/example100.png',
-        title ='Bye-Bye Alena',
+        img70 = 'images/achivements/alenaDies70.png', 
+        img50 = 'images/achivements/alenaDies50.png', 
+        img50_g = 'images/achivements/alenaDies50g.png',
+        title = 'Bye-Bye Alena',
         descr =  'Your self-sacrifice is admirable!'
     },
     vasilisaHelp = {
+        -- Vasilisa and bird
         name = 'vasilisaHelp',
-        img = 'images/achivements/example100.png',
-        title ='Good deeds unpunished',
+        img70 = 'images/achivements/vasilisaHelp70.png', 
+        img50 = 'images/achivements/vasilisaHelp50.png', 
+        img50_g = 'images/achivements/vasilisaHelp50g.png',
+        title = 'Good deeds unpunished',
         descr =  'You help someone, someone helps you.'
     },
     uncleHelp = {
+        -- Uncle and bird
         name = 'uncleHelp',
-        img = 'images/achivements/example100.png',
+        img70 = 'images/achivements/uncleHelp70.png', 
+        img50 = 'images/achivements/uncleHelp50.png', 
+        img50_g = 'images/achivements/uncleHelp50g.png',
         title = 'Contract work',
         descr =  'You family members keep their promises'
     },
     oven = {
+        -- Yaga and oven
         name = 'oven',
-        img = 'images/achivements/example100.png',
-        title ='In the oven',
+        img70 = 'images/achivements/oven70.png', 
+        img50 = 'images/achivements/oven50.png', 
+        img50_g = 'images/achivements/oven50g.png',
+        title = 'In the oven',
         descr =  'Good girls go on their way, while bad girls outsmart Witches'
     },
     noBerries = {
+        -- mouse
         name = 'noBerries',
-        img = 'images/achivements/example100.png',
-        title ='No Berries for you',
+        img70 = 'images/achivements/noBerries70.png', 
+        img50 = 'images/achivements/noBerries50.png', 
+        img50_g = 'images/achivements/noBerries50g.png',
+        title = 'No Berries for you',
         descr =  'Alena doesn\'t share food!'
     },
+    bearHelp =  {
+        -- fallen oak
+        name = 'bearHelp',
+        img70 = 'images/achivements/bearHelp70.png', 
+        img50 = 'images/achivements/bearHelp50.png', 
+        img50_g = 'images/achivements/bearHelp50g.png',
+        title = 'Got a big help',
+        descr =  'Bear helped you to drop the oak'
+    }, 
+    mouseHelp = {
+        -- mouse with egg
+        name = 'mouseHelp',
+        img70 = 'images/achivements/mouseHelp70.png', 
+        img50 = 'images/achivements/mouseHelp50.png', 
+        img50_g = 'images/achivements/mouseHelp50g.png',
+        title = 'Got a little help',
+        descr =  'Mouse helped you to find an egg'
+    }, 
     guardian = {
+        -- Koschei in chains
         name = 'guardian',
-        img = 'images/achivements/example100.png',
-        title ='Guardian',
+        img70 = 'images/achivements/guardian70.png', 
+        img50 = 'images/achivements/guardian50.png', 
+        img50_g = 'images/achivements/guardian50g.png',
+        title = 'Guardian',
         descr =  'You\'ve spared Koschei, let\'s hope he won\'t escape again.'
     },
     executioner = {
+        -- Broken needle
         name = 'executioner',
-        img = 'images/achivements/example100.png',
-        title ='Executioner',
+        img70 = 'images/achivements/example70.png', 
+        img50 = 'images/achivements/example50.png', img50_g = 'images/achivements/example50g.png',
+        title = 'Executioner',
         descr =  'Someone had to do it.'
     },
     goodEnd = {
+        -- Alena Ivan Wolf
         name = 'goodEnd',
-        img = 'images/achivements/example100.png',
-        title ='All there',
+        img70 = 'images/achivements/example70.png', 
+        img50 = 'images/achivements/example50.png', img50_g = 'images/achivements/example50g.png',
+        title = 'All there',
         descr =  'You finished the game and returned home. Bravo!'
     },
     badEnd = {
+        -- Alena Ivan
         name = 'badEnd',
-        img = 'images/achivements/example100.png',
-        title ='Not all there',
+        img70 = 'images/achivements/example70.png', 
+        img50 = 'images/achivements/example50.png', img50_g = 'images/achivements/example50g.png',
+        title = 'Not all there',
         descr =  'Who needs this dull Wolf around anyway.'
     },
 }
 
+-- Scroll
+local scrollView = nil 
+function createScroll()
+    local widget = require( "widget" )
+    scrollView = widget.newScrollView(
+        {
+            top = 190,
+            left = 120,
+            width = 680,
+            height = 400,
+            scrollWidth = 600,
+            scrollHeight = 400,
+            --listener = scrollListener,
+            hideBackground = true,
+            hideScrollBar = false
+        }
+    )
+
+    scrollView.isVisible = false
+    achivLayers:insert(scrollView)
+end
+
 -- Show achivement annotation during a game
 local function showAchivement(achivKey)
     print('Function for showing achivement '..achivKey..' is called')
+    achivLayers:toFront()
     achivRect.isVisible = true
     achivRectText.text = 'ACHIVEMENT\n'..achivements[achivKey].title
     achivRectText.isVisible = true
@@ -1184,13 +1357,14 @@ local function showAchivement(achivKey)
     achivImage:removeSelf()
     achivImage = nil
 
-    achivImage = display.newImage(achivGroup, achivements[achivKey].img )
+    achivImage = display.newImage(achivGroup, achivements[achivKey].img70 )
     setAnchor(achivImage)
     achivImage.alpha = 1
     transition.to(achivImage, {alpha=1, time=500})
-    achivImage.x = 680 achivImage.y=55 achivImage.alpha=0
+    achivImage.x = 720 achivImage.y=55 achivImage.alpha=0
     achivImage.isVisible = true 
 
+    achivRect:addEventListener( "touch", achivementsListListener )
     transition.to(achivRect,{alpha=1, time=1000})
     transition.to(achivRectText,{alpha=1, time=1000})
     transition.to(achivImage,{alpha=1, time=1000})
@@ -1232,45 +1406,59 @@ local function addAchivement(achivKey)
 
 end
 
-local achivPeriodNumber = 200 -- number for the coordinates of the beginning of the achivements list
+local achivPeriodNumber = 0 -- number for the coordinates of the beginning of the achivements list
 local achivTitleListOptions = {
     parent = achivLayer,
     text = "",     
-    x = 270,
+    x = 140,
     y = 0,
     width = 500,    
     font = 'PTSans-Regular',
-    fontSize = 30,
+    fontSize = 20,
     align = "left" 
 }
 local achivTextListOptions = {
     parent = achivLayer,
     text = "",     
-    x = 270,
+    x = 140,
     y = 0,
     width = 500,    
     font = 'PTSans-Regular',  
-    fontSize = 24,
+    fontSize = 18,
     align = "left" 
 }
 
 local function displayAchivement(toDisplay)
+    print ("Print achivements collected")
+    for i=1, table.getn(achivCollected) do 
+        print(achivCollected[i])
+    end
 
-    local AI_achivImage = display.newImage( achivLayers, achivements[toDisplay].img ) setAnchor(AI_achivImage)
-    AI_achivImage.x=160 AI_achivImage.y=achivPeriodNumber AI_achivImage.isVisible = true
+    local AI_achivImage = display.newImage( achivLayers, achivements[toDisplay].img50 ) setAnchor(AI_achivImage)
+    AI_achivImage.x=80 AI_achivImage.y=achivPeriodNumber AI_achivImage.isVisible = true
     achivListDisplay:insert(AI_achivImage)
+    scrollView:insert(AI_achivImage)
 
     local AI_achivTitle = display.newText(achivTitleListOptions) setAnchor(AI_achivTitle)
     AI_achivTitle.text = achivements[toDisplay].title AI_achivTitle.y=achivPeriodNumber
     AI_achivTitle:setFillColor(0,0,0) AI_achivTitle.isVisible = true
     achivListDisplay:insert(AI_achivTitle)
+    scrollView:insert(AI_achivTitle)
 
     local AI_achivText = display.newText(achivTextListOptions) setAnchor(AI_achivText)
-    AI_achivText.text = achivements[toDisplay].descr AI_achivText.y=achivPeriodNumber+40
+    AI_achivText.text = achivements[toDisplay].descr AI_achivText.y=achivPeriodNumber+25
     AI_achivText:setFillColor(0,0,0) AI_achivText.isVisible = true
     achivListDisplay:insert(AI_achivText)
+    scrollView:insert(AI_achivText)
 
-    achivPeriodNumber = achivPeriodNumber+120
+    local AI_separator = display.newImage( achivLayers, "images/menus/achiv_separator.png" ) setAnchor(AI_separator)
+    AI_separator.x= 60 AI_separator.y=achivPeriodNumber+55 AI_separator.isVisible = true
+    achivListDisplay:insert(AI_separator)
+    scrollView:insert(AI_separator)
+
+    achivPeriodNumber = achivPeriodNumber+60
+
+
 end
 
 local function hideAchivementList()
@@ -1304,6 +1492,7 @@ local function organizeStage()
     achivGroup:toFront()
     buttonLayers:toFront()
     menuSet:toFront()
+    playlistLayers:toFront()
     achivLayers:toFront()
 end
 
@@ -1531,6 +1720,7 @@ local scenes = {}
             -- Animation: midday, Alena and Ivan in
             AlenaS.isVisible = true AlenaS.x = 450 
             IvanS.isVisible = true IvanS.x = 350
+
             transition.to(AlenaS, {y=0, time=1000, delay=1000})
             transition.to(IvanS, {y=0, time=1000, delay=1500}) 
 
@@ -1541,6 +1731,7 @@ local scenes = {}
         animationComplete = function()
             AlenaS.isVisible = true AlenaS.x = 450  AlenaS.y = 0 
             IvanS.isVisible = true IvanS.x = 350 IvanS.y = 0
+
             shadowLayer2.alpha = 0.5
             windowLight.alpha = 1
         end,
@@ -2117,6 +2308,7 @@ local scenes = {}
          --Effect: leaves fly
             removeCurtain()
             leavesFalling(0)
+
         end,
         animationComplete = function()
             removeCurtain()
@@ -2862,6 +3054,7 @@ local scenes = {}
         animationComplete = function()
             landscape3.x=0
             landscape2.y=0
+            foreground.y=0
             shadowLayer6.alpha=1
             throne.y=-30
             birdSymbol.y=320
@@ -2871,8 +3064,6 @@ local scenes = {}
             GoldenApple.isVisible = true GoldenApple.x=550 GoldenApple.y=0 GoldenApple.alpha=1
             AlenaNoRibbon.isVisible = true AlenaNoRibbon.y = 20 AlenaNoRibbon.x=610 AlenaNoRibbon.alpha=1
         end,
-        --Sound: door Open Close
-        soundEffect = 'doorOpenClose.mp3'
     }
 
     scenes[81] = {
@@ -3142,20 +3333,20 @@ local scenes = {}
 
         end,
         animationComplete = function()
+            foreground.x = 0
             landscape3.x=0
             landscape2.y=0
             shadowLayer6.alpha=1
             throne.y=-30
             birdSymbol.y=320
             BrotherS.y=300
+            foreground.y=0
 
             AlenaOnWolfNoRibbon.isVisible = false
 
             GoldenHorse.isVisible = true GoldenHorse.x=700 GoldenHorse.y=0 GoldenHorse.alpha=1
             AlenaNoRibbon.isVisible = true AlenaNoRibbon.y = 20 AlenaNoRibbon.x=610 AlenaNoRibbon.alpha=1
         end,
-        --Sound: door Open Close
-        soundEffect = 'doorOpenClose.mp3'
     }
     scenes[94] = {
         sName = 94,
@@ -3532,7 +3723,9 @@ local scenes = {}
             transition.to(AlenaNoRibbon, {x=300, time=1500, delay=500})
             transition.to(WolfS, {x=450, time=1000, delay=1300})
         end,
-        animationComplete = function()end
+        animationComplete = function()
+
+        end
     }
 
 -------- Act 4 Scenes 105 - 146
@@ -3546,7 +3739,7 @@ local scenes = {}
         follows = 115,
         text='scene 114: It is getting colder. The sun is powerless to blow away the snowy gloom. The chilly wind swipes the Gray earth and sways the bony trees barren of all leaves. Slowly even Gray Wolf grows tired of ceaselessly galloping against the snowstorm.',
         animations = function()
-            AlenaOnWolfNoRibbon.isVisible = true
+            AlenaOnWolfNoRibbon.isVisible = true AlenaOnWolfNoRibbon.alpha=1
             AlenaOnWolfNoRibbon.xScale =-1 AlenaOnWolfNoRibbon.x=-250 AlenaOnWolfNoRibbon.y=0
             transition.to(shadowLayer9, {alpha=1, time=1000, delay=2000})
             transition.to(landscape3, {x=0, time=1000, delay=1000})
@@ -3555,7 +3748,8 @@ local scenes = {}
         end,
         animationComplete = function()
             foreground.y=0
-            AlenaOnWolfNoRibbon.isVisible = true AlenaOnWolfNoRibbon.xScale =-1 AlenaOnWolfNoRibbon.x=300 AlenaOnWolfNoRibbon.y=0
+            AlenaOnWolfNoRibbon.isVisible = true AlenaOnWolfNoRibbon.xScale =-1 
+            AlenaOnWolfNoRibbon.x=300 AlenaOnWolfNoRibbon.y=0 AlenaOnWolfNoRibbon.alpha=1
             landscape3.x=0
             snowFall.isVisible = false snowFall2.isVisible = false
         end,
@@ -5081,7 +5275,9 @@ local scenes = {}
         animations = function() bearAndTree() end,
         animationComplete = function()
             BearS.alpha=1 BearS.isVisible=true BearS.x=530 BearS.y=0 BearS.xScale = -1
+            mistLayer.alpha=0
         end,
+        achiv = 'bearHelp',
         --Sound: Bush shake
         soundEffect = 'bushShake.mp3'
     }
@@ -5095,7 +5291,10 @@ local scenes = {}
             showDialogueBack()
             showDialogueChar(Bear, 400, 400)
         end,
-        animationComplete = function() hideBigCharacters() end
+        animationComplete = function() 
+            hideBigCharacters()
+            hidewAchivement()
+        end
     }
 
     scenes[200] = {
@@ -5249,6 +5448,7 @@ local scenes = {}
         animationComplete = function()
             MouseS.y=-130 MouseS.x=500 MouseS.alpha=1 MouseS.isVisible=true
         end,
+        achiv = 'mouseHelp',
         --Sound: mouse
         soundEffect = 'mouseSqueak.mp3'
     }
@@ -5266,6 +5466,7 @@ local scenes = {}
             MouseS.xScale=-1 MouseS.x=670
             eggWhole.alpha=1 eggWhole.y=350 eggWhole.x=470
             AlenaNoRibbon.x=300
+            hidewAchivement()
         end
     }
 
@@ -6428,7 +6629,7 @@ local function setStageObjects(stage)
         end,
         setYagaHut = function() 
             cleanUpLevel()
-            
+
             getsDarker  = display.newImage(midlayer1, "images/effects/effect_darker.png", true) setAnchor(getsDarker)
             getsDarker.x = 0 getsDarker.y = 0 getsDarker.alpha = 0
 
@@ -6615,11 +6816,16 @@ function showMenuContent()
     addAllMI_circles(1)
     MI_restartText.isVisible = true
     MI_achivementsText.isVisible = true
+    MI_playlistText.isVisible = true
+
+    menuSet:toFront()
+
     displayLoudness('Music')
     displayLoudness('Effects')
-    menuSet:toFront()
+
+    MI_playlistText:addEventListener( 'touch', playListShowListener )
     MI_restartText:addEventListener( 'touch', restartTheGameConfirm )
-    MI_achivementsText:addEventListener( 'touch', achivementsListener)
+    MI_achivementsText:addEventListener( 'touch', achivementsListListener)
 end
 
 
@@ -6629,7 +6835,9 @@ function hideMenuContent()
     MI_musicText.isVisible = false
     MI_soundText.isVisible = false
     MI_restartText.isVisible = false
+    MI_playlistText.isVisible = false
     MI_achivementsText.isVisible = false
+
     hideAllMI_circles(0)
     hideAllMI_circles(1)
 end
@@ -6744,6 +6952,7 @@ function loadMenu()
     buttonLayers:toFront()
     menuSet:toFront()
     achivLayers:toFront()
+    playlistLayers:toFront()
 end
 
 function loadAchivements()
@@ -6860,8 +7069,10 @@ function loadScene(s)
             audio.stop(S_BgSfxCh)
         end
         if(s.soundEffect) then 
-            local S_soundEffect = audio.loadStream( "sounds/"..s.soundEffect)
-            S_BgSfxCh = audio.play( S_soundEffect, {loops=0, fadein=500} )
+            local S_soundEffect = audio.loadSound( "sounds/"..s.soundEffect)
+            S_BgSfxCh = audio.play( S_soundEffect,
+                { loops=0, fadein=500, onComplete = function() audio.dispose(S_soundEffect) end }
+            )
         end
 
         if(s.animations) then
@@ -6884,12 +7095,11 @@ end
 -----------------------------------------------------------------------------------------
 -- Main text listener
 function sceneTextTouch(event)
-    if event.phase == "began" and event.target.follows and menuBack.isVisible==false then
+    if event.phase == "began" and event.target.follows then
         event.target:setFillColor( 0.7, 0.7, 0.7 )
-        local S_turnEffect = audio.loadStream( "sounds/pageEffect.mp3")
             S_ClickSfxCh = audio.play( S_turnEffect, {loops=0} )
     end
-    if event.phase == "ended" and event.target.follows and menuBack.isVisible==false then
+    if event.phase == "ended" and event.target.follows then
         event.target:setFillColor( 1,1,1 )
 
         transition.cancel()
@@ -6938,6 +7148,7 @@ function menuCloseListener(event)
             menuButton.isVisible=true
             menuBack.isVisible=false
             menuClose.isVisible=false
+
             menuCloseAndRemove()
         end
     end
@@ -6957,20 +7168,60 @@ function menuCloseAndRemove()
     restartYes:removeEventListener( "touch", restartTheGame )
     restartYes.isVisible = false
 
+    MI_achivementsText:removeEventListener( 'touch', achivementsListListener) 
+    MI_achivementsText:setFillColor( 0,0,0 )
     achiveBack.isVisible = false
     AM_name.isVisible = false
     menuClose2.isVisible = false
     menuCloseActive2.isVisible = false
     menuClose2:removeEventListener( "touch", achivementsCloseListener)
-    MI_achivementsText:removeEventListener( 'touch', achivementsListener) 
-    MI_achivementsText:setFillColor( 0,0,0 )
+
+    MI_playlistText:removeEventListener( 'touch', playListShowListener) 
+    MI_playlistText:setFillColor( 0,0,0 )
+    playlistBack.isVisible = false
+    PL_name.isVisible = false
+    menuClose3.isVisible = false
+    menuCloseActive3.isVisible = false
+    menuClose3:removeEventListener( "touch", playlistCloseListener)
+
 
     hideMenuContent()
 
 end
 
+-- Playlist listener
+function playListShowListener(event)
+    if event.phase == "began" then 
+        MI_playlistText:setFillColor( 1,1,1 ) 
+    end
+    if event.phase == "ended" then
+        playlistLayers:toFront()
+        playlistBack.isVisible = true
+        PL_name.isVisible = true
+
+        menuClose3.isVisible = true
+        menuClose3:addEventListener( "touch", playlistCloseListener)
+        showPlayList()
+    end
+end
+
+function playlistCloseListener(event)
+    if event.phase == "began" then
+        MI_playlistText:setFillColor( 0,0,0 )
+        menuCloseActive3.isVisible = true
+    end
+    if event.phase == "ended" then
+        playlistBack.isVisible = false
+        PL_name.isVisible = false
+        menuClose3.isVisible = false
+        menuCloseActive3.isVisible = false
+        menuClose3:removeEventListener( "touch", playlistCloseListener)
+        hidePlayList()
+    end
+end
+
 -- Achivements listener
-function achivementsListener(event)
+function achivementsListListener(event)
     if event.phase == "began" then 
         MI_achivementsText:setFillColor( 1,1,1 ) 
     end
@@ -6979,6 +7230,7 @@ function achivementsListener(event)
         achivLayers:toFront()
         AM_name.isVisible = true
 
+        scrollView.isVisible = true
         menuClose2.isVisible = true
         menuClose2:addEventListener( "touch", achivementsCloseListener)
         loadAchivements()
@@ -6995,6 +7247,7 @@ function achivementsCloseListener(event)
         achiveBack.isVisible = false
         AM_name.isVisible = false
         menuClose2.isVisible = false
+        scrollView.isVisible = false
         menuCloseActive2.isVisible = false
         menuClose2:removeEventListener( "touch", achivementsCloseListener)
         hideAchivementList()
@@ -7080,7 +7333,27 @@ function restartCanceled(event)
         restartYes.isVisible = false
     end
 end
+--[[
+local function scrollListener( event )
 
+    local phase = event.phase
+    if ( phase == "began" ) then print( "Scroll view was touched" )
+    elseif ( phase == "moved" ) then print( "Scroll view was moved" )
+    elseif ( phase == "ended" ) then print( "Scroll view was released" )
+    end
+
+    -- In the event a scroll limit is reached...
+    if ( event.limitReached ) then
+        if ( event.direction == "up" ) then print( "Reached bottom limit" )
+        elseif ( event.direction == "down" ) then print( "Reached top limit" )
+        elseif ( event.direction == "left" ) then print( "Reached right limit" )
+        elseif ( event.direction == "right" ) then print( "Reached left limit" )
+        end
+    end
+
+    return true
+end
+]]
 
 -----------------------------------------------------------------------------------------
 --
@@ -7098,6 +7371,7 @@ myListener = function( event )
 end
 
 function loadGameBegining()
+    dialBack.y=0
     background:removeEventListener("touch", myListener)
     setAnchor(textContainer)
     setAnchor(textContainerNA)
@@ -7113,6 +7387,23 @@ function loadGameBegining()
     
     -- listener for the main text
     textContainer:addEventListener( "touch", sceneTextTouch)
+
+    -- Clear all selections
+    choices.bless = false
+    choices.basement = false
+    choices.bucket = 0
+    choices.brother = 'NoInfo'
+    choices.brother1 = 'NoInfo'
+    choices.vasilisa = 'NoInfo'
+    choices.vasilisaGo = false
+    choices.bear = false
+    choices.berries = false
+    choices.wolfPenalty = 0
+    choices.appleTaken = false
+    choices.horseTaken = false
+
+    achivCollected = {'start'}
+
     -- 44 - forest1
     -- 57 - brother Castle 1
     -- 68 - apple garden
