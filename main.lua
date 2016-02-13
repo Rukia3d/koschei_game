@@ -1324,27 +1324,24 @@ local achivements = {
     },
 }
 
--- Scroll
-local scrollView = nil 
-function createScroll()
-    local widget = require( "widget" )
-    scrollView = widget.newScrollView(
-        {
-            top = 190,
-            left = 120,
-            width = 680,
-            height = 400,
-            scrollWidth = 600,
-            scrollHeight = 400,
-            --listener = scrollListener,
-            hideBackground = true,
-            hideScrollBar = false
-        }
-    )
+-- Scroll 
+local widget = require( "widget" )
+local scrollView = widget.newScrollView(
+    {
+        top = 190,
+        left = 120,
+        width = 680,
+        height = 400,
+        scrollWidth = 600,
+        scrollHeight = 400,
+        --listener = scrollListener,
+        hideBackground = true,
+        hideScrollBar = false
+    }
+)
 
-    scrollView.isVisible = false
-    achivLayers:insert(scrollView)
-end
+scrollView.isVisible = false
+achivLayers:insert(scrollView)
 
 -- Show achivement annotation during a game
 local function showAchivement(achivKey)
@@ -6955,6 +6952,18 @@ function loadMenu()
     playlistLayers:toFront()
 end
 
+function clearAchivHistory()
+    for i=1, achivListDisplay.numChildren do
+        achivListDisplay[1]:removeSelf()
+        achivListDisplay[1] = nil
+    end
+    print("Scrollview num children "..scrollView.numChildren)
+    for i=1, scrollView.numChildren do
+        --scrollView[1]:removeSelf()
+        --scrollView[1] = nil
+    end
+end
+
 function loadAchivements()
     local number = table.getn(achivCollected)
     for i=number, 1, -1 do 
@@ -7228,9 +7237,9 @@ function achivementsListListener(event)
     if event.phase == "ended" then
         achiveBack.isVisible = true
         achivLayers:toFront()
+        scrollView.isVisible = true
         AM_name.isVisible = true
 
-        scrollView.isVisible = true
         menuClose2.isVisible = true
         menuClose2:addEventListener( "touch", achivementsCloseListener)
         loadAchivements()
