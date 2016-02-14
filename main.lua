@@ -35,8 +35,8 @@ buttonLayers.anchorX = 200 buttonLayers.anchorY = 200
 local achivLayers = display.newGroup()
 achivLayers.anchorX = 0 achivLayers.anchorY = 0
 
-local achivListDisplay = display.newGroup()
-achivListDisplay.anchorX = 0 achivListDisplay.anchorY = 0
+--local achivListDisplay = display.newGroup()
+--achivListDisplay.anchorX = 0 achivListDisplay.anchorY = 0
 
 local playlistLayers = display.newGroup()
 playlistLayers.anchorX = 0 playlistLayers.anchorY = 0
@@ -235,10 +235,9 @@ end
 --
 -----------------------------------------------------------------------------------------
 
-local S_MusicCh
-local S_BgSfxCh
-local S_ClickSfxCh
-local S_MenuSfxCh
+local S_MusicCh = 1
+local S_BgSfxCh = 2
+local S_ClickSfxCh = 3
 
 
 -----------------------------------------------------------------------------------------
@@ -278,30 +277,30 @@ local MI_playlistText = display.newText(menuSet, 'Playlist', 470, 550, 200, 0, '
 
 
 local MI_circle00 = display.newImage(menuSet, "images/menus/volume0.png") setAnchor(MI_circle00) 
-    MI_circle00.isVisible = false MI_circle00.x = 380 MI_circle00.y=165
+    MI_circle00.isVisible = false MI_circle00.x = 330 MI_circle00.y=165
 local MI_circle01 = display.newImage(menuSet, "images/menus/volume1.png") setAnchor(MI_circle01) 
-    MI_circle01.isVisible = false  MI_circle01.x = 380 MI_circle01.y=165
+    MI_circle01.isVisible = false  MI_circle01.x = 330 MI_circle01.y=165
 local MI_circle02 = display.newImage(menuSet, "images/menus/volume2.png") setAnchor(MI_circle02) 
-    MI_circle02.isVisible = false  MI_circle02.x = 380 MI_circle02.y=165
+    MI_circle02.isVisible = false  MI_circle02.x = 330 MI_circle02.y=165
 local MI_circle03 = display.newImage(menuSet, "images/menus/volume3.png") setAnchor(MI_circle03) 
-    MI_circle03.isVisible = false  MI_circle03.x = 380 MI_circle03.y=165
+    MI_circle03.isVisible = false  MI_circle03.x = 330 MI_circle03.y=165
 local MI_circle04 = display.newImage(menuSet, "images/menus/volume4.png") setAnchor(MI_circle04) 
-    MI_circle04.isVisible = false  MI_circle04.x = 380 MI_circle04.y=165
+    MI_circle04.isVisible = false  MI_circle04.x = 330 MI_circle04.y=165
 local MI_circle05 = display.newImage(menuSet, "images/menus/volume5.png") setAnchor(MI_circle05) 
-    MI_circle05.isVisible = false  MI_circle05.x = 380 MI_circle05.y=165
+    MI_circle05.isVisible = false  MI_circle05.x = 330 MI_circle05.y=165
 
 local MI_circle10 = display.newImage(menuSet, "images/menus/volume0.png") setAnchor(MI_circle10) 
-    MI_circle10.isVisible = false MI_circle10.x = 380 MI_circle10.y=235
+    MI_circle10.isVisible = false MI_circle10.x = 330 MI_circle10.y=235
 local MI_circle11 = display.newImage(menuSet, "images/menus/volume1.png") setAnchor(MI_circle11) 
-    MI_circle11.isVisible = false  MI_circle11.x = 380 MI_circle11.y=235
+    MI_circle11.isVisible = false  MI_circle11.x = 330 MI_circle11.y=235
 local MI_circle12 = display.newImage(menuSet, "images/menus/volume2.png") setAnchor(MI_circle12) 
-    MI_circle12.isVisible = false  MI_circle12.x = 380 MI_circle12.y=235
+    MI_circle12.isVisible = false  MI_circle12.x = 330 MI_circle12.y=235
 local MI_circle13 = display.newImage(menuSet, "images/menus/volume3.png") setAnchor(MI_circle13) 
-    MI_circle13.isVisible = false  MI_circle13.x = 380 MI_circle13.y=235
+    MI_circle13.isVisible = false  MI_circle13.x = 330 MI_circle13.y=235
 local MI_circle14 = display.newImage(menuSet, "images/menus/volume4.png") setAnchor(MI_circle14) 
-    MI_circle14.isVisible = false  MI_circle14.x = 380 MI_circle14.y=235
+    MI_circle14.isVisible = false  MI_circle14.x = 330 MI_circle14.y=235
 local MI_circle15 = display.newImage(menuSet, "images/menus/volume5.png") setAnchor(MI_circle15) 
-    MI_circle15.isVisible = false  MI_circle15.x = 380 MI_circle15.y=235
+    MI_circle15.isVisible = false  MI_circle15.x = 330 MI_circle15.y=235
 
 local restartBack = display.newImage(menuSet, "images/menus/conformation.png") setAnchor(restartBack) 
     restartBack.isVisible = false  restartBack.x = 0 restartBack.y=0
@@ -1325,23 +1324,26 @@ local achivements = {
 }
 
 -- Scroll 
-local widget = require( "widget" )
-local scrollView = widget.newScrollView(
-    {
-        top = 190,
-        left = 120,
-        width = 680,
-        height = 400,
-        scrollWidth = 600,
-        scrollHeight = 400,
-        --listener = scrollListener,
-        hideBackground = true,
-        hideScrollBar = false
-    }
-)
 
-scrollView.isVisible = false
-achivLayers:insert(scrollView)
+local widget = require( "widget" )
+local scrollView
+function createScroll()
+    scrollView = widget.newScrollView(
+        {
+            top = 190,
+            left = 120,
+            width = 680,
+            height = 400,
+            scrollWidth = 600,
+            scrollHeight = 400,
+            --listener = scrollListener,
+            hideBackground = true,
+            hideScrollBar = false
+        }
+    )
+
+    achivLayers:insert(scrollView)
+end
 
 -- Show achivement annotation during a game
 local function showAchivement(achivKey)
@@ -1371,7 +1373,7 @@ local function showAchivement(achivKey)
     transition.to(achivImage,{alpha=0, time=1000, delay=4000})
 end
 
-local function hidewAchivement()
+local function hideAnnotAchivement()
     achivRect.alpha = 0
     achivRect.isVisible = false
 
@@ -1403,7 +1405,6 @@ local function addAchivement(achivKey)
 
 end
 
-local achivPeriodNumber = 0 -- number for the coordinates of the beginning of the achivements list
 local achivTitleListOptions = {
     parent = achivLayer,
     text = "",     
@@ -1425,48 +1426,47 @@ local achivTextListOptions = {
     align = "left" 
 }
 
-local function displayAchivement(toDisplay)
+local function displayAchivement(toDisplay, achivPeriodNumber, putHereGroup)
     print ("Print achivements collected")
     for i=1, table.getn(achivCollected) do 
         print(achivCollected[i])
     end
 
-    local AI_achivImage = display.newImage( achivLayers, achivements[toDisplay].img50 ) setAnchor(AI_achivImage)
+    local AI_achivImage = display.newImage(achivements[toDisplay].img50 ) setAnchor(AI_achivImage)
     AI_achivImage.x=80 AI_achivImage.y=achivPeriodNumber AI_achivImage.isVisible = true
-    achivListDisplay:insert(AI_achivImage)
-    scrollView:insert(AI_achivImage)
+    putHereGroup:insert(AI_achivImage)
+    print ("putHereGroup child Image"..putHereGroup.numChildren)
 
     local AI_achivTitle = display.newText(achivTitleListOptions) setAnchor(AI_achivTitle)
     AI_achivTitle.text = achivements[toDisplay].title AI_achivTitle.y=achivPeriodNumber
     AI_achivTitle:setFillColor(0,0,0) AI_achivTitle.isVisible = true
-    achivListDisplay:insert(AI_achivTitle)
-    scrollView:insert(AI_achivTitle)
+    putHereGroup:insert(AI_achivTitle)
+    print ("putHereGroup child Title"..putHereGroup.numChildren)
 
     local AI_achivText = display.newText(achivTextListOptions) setAnchor(AI_achivText)
     AI_achivText.text = achivements[toDisplay].descr AI_achivText.y=achivPeriodNumber+25
     AI_achivText:setFillColor(0,0,0) AI_achivText.isVisible = true
-    achivListDisplay:insert(AI_achivText)
-    scrollView:insert(AI_achivText)
+    putHereGroup:insert(AI_achivText)
+    print ("Scroll child Text"..putHereGroup.numChildren)
 
-    local AI_separator = display.newImage( achivLayers, "images/menus/achiv_separator.png" ) setAnchor(AI_separator)
-    AI_separator.x= 60 AI_separator.y=achivPeriodNumber+55 AI_separator.isVisible = true
-    achivListDisplay:insert(AI_separator)
-    scrollView:insert(AI_separator)
-
-    achivPeriodNumber = achivPeriodNumber+60
-
-
+    local AI_separator = display.newImage("images/menus/achiv_separator.png" ) setAnchor(AI_separator)
+    AI_separator.x=80 AI_separator.y=achivPeriodNumber+55 AI_separator.isVisible = true
+    putHereGroup:insert(AI_separator)
+    print ("Scroll child Separator"..putHereGroup.numChildren)
 end
 
 local function hideAchivementList()
     -- how to hide locals from other function?
-    print('We are in hide Achivements function, the layer has '..achivListDisplay.numChildren..'children')
-    achivPeriodNumber = 200
-    for i=1, achivListDisplay.numChildren do
-        print(achivListDisplay[1])
-        achivListDisplay[1]:removeSelf()
-        achivListDisplay[1] = nil
+    print('We are in hide Achivements function, the layer has '..scrollView.numChildren..'children')
+    for i=1, scrollView.numChildren do
+        print(scrollView[1])
+        scrollView[1]:removeSelf()
+        scrollView[1] = nil
     end
+    
+    scrollView:removeSelf()
+    scrollView = nil
+    print ('Cycle went normal')
 end
 
 -----------------------------------------------------------------------------------------
@@ -1796,7 +1796,7 @@ local scenes = {}
         animationComplete = function() 
             removeCurtain()
             IvanS.xScale = 1 IvanS.x = -50
-            hidewAchivement()
+            hideAnnotAchivement()
         end
     }
 
@@ -2021,7 +2021,7 @@ local scenes = {}
             bucket2.x=275
             bucketTread.x=180
             bucket2.rotation=0 
-            hidewAchivement()
+            hideAnnotAchivement()
         end,
         --Sound: waterSplash
         soundEffect = 'waterSplash.mp3'
@@ -2087,7 +2087,7 @@ local scenes = {}
         animationComplete = function()
             hideBigCharacters()
             transDialogueBack()
-            hidewAchivement()
+            hideAnnotAchivement()
         end
     }
     scenes[32] = {
@@ -2125,7 +2125,7 @@ local scenes = {}
         animationComplete = function()
             IvanS.xScale = -1
             IvanS.x=-200
-            hidewAchivement()
+            hideAnnotAchivement()
         end,
         --Sound: summer Forest
         soundEffect = 'summerForest.mp3'
@@ -2338,7 +2338,7 @@ local scenes = {}
             shadowLayer5.alpha=1
             foreground.y=0
             AlenaOnWolf.x=600 AlenaOnWolf.y=0 AlenaOnWolf.isVisible=true
-            hidewAchivement()
+            hideAnnotAchivement()
         end,
         -- Sound: Opening
         soundEffect = 'opening.mp3',
@@ -2503,7 +2503,7 @@ local scenes = {}
         animationComplete = function()
             fortress.x=-80
             fortress2.x=405
-            hidewAchivement()
+            hideAnnotAchivement()
         end
 
     }
@@ -2714,7 +2714,7 @@ local scenes = {}
             showDialogueChar(BrotherD, 400, 400)
         end,
         animationComplete =  function()
-            hidewAchivement()
+            hideAnnotAchivement()
         end
     }
 
@@ -2944,7 +2944,7 @@ local scenes = {}
             landscape3.x=0
             landscape2.x=0
             landscape1.x=0
-            hidewAchivement()
+            hideAnnotAchivement()
         end,
     }
 
@@ -2965,7 +2965,7 @@ local scenes = {}
             landscape3.x=0
             landscape2.x=0
             landscape1.x=0
-            hidewAchivement()
+            hideAnnotAchivement()
         end,
     }
 
@@ -3550,7 +3550,7 @@ local scenes = {}
         animationComplete = function()
             forrestDawn.alpha=0.5
             AlenaVasilisaRiding.x=500
-            hidewAchivement()
+            hideAnnotAchivement()
         end,
         --Sound: Alena Cry
         soundEffect = 'roosterDawn.mp3'
@@ -3602,7 +3602,7 @@ local scenes = {}
         animationComplete = function()
             hideBigCharacters()
             hideSmallCharacters()
-            hidewAchivement()
+            hideAnnotAchivement()
         end
     }
     scenes[108] = {
@@ -3940,7 +3940,7 @@ local scenes = {}
         animationComplete = function()
             removeCurtain()
             BearS.xScale=1 BearS.x=-500
-            hidewAchivement()
+            hideAnnotAchivement()
         end,
         --Sound: fire in the oven
         soundEffect = 'fireInOven.mp3'
@@ -4206,7 +4206,7 @@ local scenes = {}
         animationComplete = function()
             crowSmall.y = -170
             crowBig.y = 0
-            hidewAchivement()
+            hideAnnotAchivement()
         end,
         --Sound: Crows flying in
         soundEffect = 'wingsFlap1.mp3'
@@ -4221,7 +4221,7 @@ local scenes = {}
         animationComplete = function()
             crowSmall.y = -170
             crowBig.y = 0
-            hidewAchivement() 
+            hideAnnotAchivement() 
         end,
         --Sound: Crows flying in
         soundEffect = 'wingsFlap1.mp3'
@@ -4236,7 +4236,7 @@ local scenes = {}
         animationComplete = function()
             crowSmall.y = -170
             crowBig.y = 0
-            hidewAchivement()
+            hideAnnotAchivement()
         end,
         --Sound: Crows flying in
         soundEffect = 'wingsFlap1.mp3'
@@ -4251,7 +4251,7 @@ local scenes = {}
         animationComplete = function()
             crowSmall.y = -170
             crowBig.y = 0
-            hidewAchivement()
+            hideAnnotAchivement()
         end,
         --Sound: Crows flying in
         soundEffect = 'wingsFlap1.mp3'
@@ -4948,7 +4948,7 @@ local scenes = {}
         animations = function() end,
         animationComplete = function() 
             hideBigCharacters() 
-            hidewAchivement()
+            hideAnnotAchivement()
         end
     }
     
@@ -5008,7 +5008,7 @@ local scenes = {}
         end,
         animationComplete = function()
             hideBigCharacters()
-            hidewAchivement()
+            hideAnnotAchivement()
         end,
         --Sound: fire in the oven
         soundEffect = 'fireInOven.mp3'
@@ -5042,7 +5042,7 @@ local scenes = {}
             alenaSit.x=750 alenaSit.y=150
             ovenCover.x=700
             paddle.x=790 paddle.y=250 paddle.rotation=-10
-            hidewAchivement()
+            hideAnnotAchivement()
         end
     }
 
@@ -5290,7 +5290,7 @@ local scenes = {}
         end,
         animationComplete = function() 
             hideBigCharacters()
-            hidewAchivement()
+            hideAnnotAchivement()
         end
     }
 
@@ -5463,7 +5463,7 @@ local scenes = {}
             MouseS.xScale=-1 MouseS.x=670
             eggWhole.alpha=1 eggWhole.y=350 eggWhole.x=470
             AlenaNoRibbon.x=300
-            hidewAchivement()
+            hideAnnotAchivement()
         end
     }
 
@@ -5704,7 +5704,7 @@ local scenes = {}
             IvanAlenaHug.alpha=1
             AlenaNoRibbon.alpha=0
             IvanS.alpha=0
-            hidewAchivement()
+            hideAnnotAchivement()
         end,
         --Sound: oak forest 
         soundEffect = 'oakForest1.mp3'
@@ -5792,7 +5792,7 @@ local scenes = {}
             effectDust.alpha=0
             AlenaNoRibbon.isVisible=true AlenaNoRibbon.alpha=1 AlenaNoRibbon.x=370 AlenaNoRibbon.y=0
             AlenaHolding.alpha=0
-            hidewAchivement()
+            hideAnnotAchivement()
         end,
         --Sound: oak forest 
         soundEffect = 'oakForest2.mp3'
@@ -5876,7 +5876,7 @@ local scenes = {}
         animationComplete = function()
             MotherS.x=430 MotherS.y=0 MotherS.alpha=1 MotherS.isVisible=true
             MotherWarS.alpha=0 MotherWarS.isVisible=false
-            hidewAchivement()
+            hideAnnotAchivement()
         end,
         -- Sound: Birds singing
         soundEffect = 'birdsSinging.mp3',
@@ -5947,7 +5947,7 @@ local scenes = {}
         animationComplete = function()
             MotherS.x=430 MotherS.y=0 MotherS.alpha=1 MotherS.isVisible=true
             MotherWarS.alpha=0 MotherWarS.isVisible=false
-            hidewAchivement()
+            hideAnnotAchivement()
         end,
         -- Sound: Birds singing
         soundEffect = 'birdsSinging.mp3',
@@ -6864,7 +6864,7 @@ function displayLoudness(obj)
             volumeBar1.isVisible = true
             volumeBar1.goal = 'Music'
     else
-        loudnessNow = audio.getVolume( { channel=S_BgSfxCh } )
+        loudnessNow = audio.getVolume( { channel=S_ClickSfxCh } )
         print('Loudness of SFX is '..loudnessNow)
         if loudnessNow > 0.9 then
             volumeBar2 = MI_circle15
@@ -6953,6 +6953,7 @@ function loadMenu()
 end
 
 function clearAchivHistory()
+    --[[
     for i=1, achivListDisplay.numChildren do
         achivListDisplay[1]:removeSelf()
         achivListDisplay[1] = nil
@@ -6962,18 +6963,28 @@ function clearAchivHistory()
         --scrollView[1]:removeSelf()
         --scrollView[1] = nil
     end
+    ]]
 end
 
 function loadAchivements()
+    createScroll()
+
+    local putHereGroup = display.newGroup()
+    putHereGroup.anchorX = 0 putHereGroup.anchorY = 0
+
     local number = table.getn(achivCollected)
+    local achivPeriodNumber = 0
+
     for i=number, 1, -1 do 
         if achivCollected[i] then
             print('Looking for this achivement to display - '..achivCollected[i])
             local toDisplay = achivCollected[i]
-            displayAchivement(toDisplay)
+            displayAchivement(toDisplay, achivPeriodNumber, putHereGroup)
+            achivPeriodNumber = achivPeriodNumber+60
         end
     end
-    achivListDisplay:toFront()
+    achivLayers:toFront()
+    scrollView:insert(putHereGroup)
 end
 
 function loadScene(s)
@@ -7079,8 +7090,11 @@ function loadScene(s)
         end
         if(s.soundEffect) then 
             local S_soundEffect = audio.loadSound( "sounds/"..s.soundEffect)
-            S_BgSfxCh = audio.play( S_soundEffect,
-                { loops=0, fadein=500, onComplete = function() audio.dispose(S_soundEffect) end }
+            
+            local loudnessClick = audio.getVolume({ channel=S_ClickSfxCh } )
+            audio.setVolume( loudnessClick, { channel=S_BgSfxCh })
+            audio.play( S_soundEffect,
+                { loops=0, fadein=500, channel=S_BgSfxCh, onComplete = function() audio.dispose(S_soundEffect) end }
             )
         end
 
@@ -7106,7 +7120,7 @@ end
 function sceneTextTouch(event)
     if event.phase == "began" and event.target.follows then
         event.target:setFillColor( 0.7, 0.7, 0.7 )
-            S_ClickSfxCh = audio.play( S_turnEffect, {loops=0} )
+            audio.play( S_turnEffect, {loops=0, channel=S_ClickSfxCh} )
     end
     if event.phase == "ended" and event.target.follows then
         event.target:setFillColor( 1,1,1 )
@@ -7237,7 +7251,7 @@ function achivementsListListener(event)
     if event.phase == "ended" then
         achiveBack.isVisible = true
         achivLayers:toFront()
-        scrollView.isVisible = true
+    
         AM_name.isVisible = true
 
         menuClose2.isVisible = true
@@ -7256,7 +7270,7 @@ function achivementsCloseListener(event)
         achiveBack.isVisible = false
         AM_name.isVisible = false
         menuClose2.isVisible = false
-        scrollView.isVisible = false
+
         menuCloseActive2.isVisible = false
         menuClose2:removeEventListener( "touch", achivementsCloseListener)
         hideAchivementList()
@@ -7276,21 +7290,22 @@ function loudnessSwitchListener(event)
                 desVol = 1
             elseif event.x > 558 then
                 desVol = 0.8
-            elseif event.x > 506 then
+            elseif event.x > 500 then
                 desVol = 0.6
-            elseif event.x > 453 then
+            elseif event.x > 445 then
                 desVol = 0.4
-            elseif event.x > 400 then
+            elseif event.x > 390 then
                 desVol = 0.2
             else
                 desVol = 0
             end
 
             if event.target.goal=='Music' then
-                loudnessNow = audio.setVolume(desVol, { channel=S_MusicCh } )
+                audio.setVolume(desVol, { channel=S_MusicCh } )
                 displayLoudness('Music')
             else
-                loudnessNow = audio.setVolume(desVol, { channel=S_BgSfxCh } )
+                audio.setVolume(desVol, { channel=S_ClickSfxCh } )
+                audio.play(S_turnEffect, {channel=S_ClickSfxCh} )
                 displayLoudness('Effects')
             end
         end
@@ -7300,6 +7315,7 @@ end
 -- Restart the game listener
 function restartTheGameConfirm(event)
      if menuBack.isVisible==true then
+        audio.play(S_turnEffect, {channel=S_ClickSfxCh} )
         if event.phase == "began" then 
             MI_restartText:setFillColor( 1,1,1 )
         end
@@ -7390,6 +7406,12 @@ function loadGameBegining()
     setAnchor(select3Text)
 
     -- listeners for the right blocks
+    select1Container.isVisible = false
+    select2Container.isVisible = false
+    select3Container.isVisible = false
+    select1Text.text = ''
+    select2Text.text = ''
+    select3Text.text = ''
     select1Container:addEventListener( "touch", sceneTextTouch)
     select2Container:addEventListener( "touch", sceneTextTouch)
     select3Container:addEventListener( "touch", sceneTextTouch)
