@@ -1610,6 +1610,7 @@ local scenes = {}
         text = 'scene 5: Alena doesn\'t really care about the rules. They have something to do with not playing near the basement, but nothing ever happens in the house, so Alena isn\'t worried.',
         follows = 6,
         clearSelection = true,
+        -- If she doesn't care about rules - she won't get her mother's blessing
         changeFlow = function() choices.bless = false end,
         animations = function()
             transDialogueBack()
@@ -1623,6 +1624,7 @@ local scenes = {}
         sName = 6,
         text = 'scene 6: Mom: Promise me you\'ll follow the rules.',
         follows = 9,
+        -- If she cares about rules she gets her mother's blessing
         changeFlow = function() choices.bless = true end,
         animations = function()
             hideBigCharacters()
@@ -1756,6 +1758,7 @@ local scenes = {}
         sName = 14,
         text = 'scene 14: Alena: "Sure, but promise me you won\'t open the basement door."',
         follows = 16,
+        -- If she allowed her brother to go to the basement, she'll get "disobedient daughter" scene with Koshei (30)
         changeFlow = function() choices.basement = true  end,
         clearSelection = true,
         animations = function() 
@@ -1773,6 +1776,7 @@ local scenes = {}
         text = 'scene 15: Alena: "No, stay here in the greatroom."', 
         follows = 18,
         clearSelection = true,
+        -- If she doesn't allow her brother to go to the basement, she'll get "no use for a little girl" scene with Koshei (29)
         changeFlow = function() choices.basement = false  end,
         animations = function() 
             showDialogueBack()
@@ -1929,7 +1933,7 @@ local scenes = {}
         clearSelection = true,
         selection = {
             [1] = {'Give water', 27},
-            [2] = {'Refuse', 31}
+            [2] = {'Refuse', 32}
         },
         curtain = true,
         animations = function()
@@ -1961,7 +1965,7 @@ local scenes = {}
         clearSelection = true,
         selection = {
             [1] = {'Give water', 27},
-            [2] = {'Refuse', 31}
+            [2] = {'Refuse', 32}
         },
         curtain = true,
         animations = function() 
@@ -1980,7 +1984,7 @@ local scenes = {}
         curtain = true,
         selection = {
             [1] = {'Give water', 28},
-            [2] = {'Refuse', 31}
+            [2] = {'Refuse', 32}
         },
         animations = function()
         -- Animation: Bucket
@@ -2001,13 +2005,17 @@ local scenes = {}
     } 
     scenes[28] = {
         sName = 28,
-        changeFlow = function() choices.bucket = 2 end,
+        changeFlow = function() 
+            choices.bucket = 2
+            if choices.basement==true then scenes[28].selection[1][2] = 30
+            else scenes[28].selection[1][2] = 29 end
+        end,
         text = 'scene 28: Prisoner: "Thank you child. (He drinks the bucket in one gulp.) Neither food nor drink has passed my lips for ages. Please, will you fetch me another bucket?"',
         clearSelection = true,
         curtain = true,
         selection = {
             [1] = {'Give water', 29},
-            [2] = {'Refuse', 31}
+            [2] = {'Refuse', 32}
         },
         animations = function()
         -- Animation: Bucket
@@ -2028,8 +2036,8 @@ local scenes = {}
     }
     scenes[29] = {
         sName = 29,
-        text = 'scene 29: Prisoner: "Thank you, girl, for your kindness. For that I won\'t eat you. But you are a disobedient daughter, so I don\'t need you. I\'ll take your brother instead!"',
-        follows = 30,
+        text = 'scene 29: Prisoner: "Thank you, girl, for your kindness. For that I won\'t eat you. But I have no use for a little girl in my castle. I\'ll take your brother instead!"',
+        follows = 31,
         clearSelection = true,
         curtain = true,
         animations = function()
@@ -2044,14 +2052,33 @@ local scenes = {}
     }
     scenes[30] = {
         sName = 30,
-        text = 'scene 30: With these words, he tears off all twelve chains, grabs Ivan, swirls on the spot, and in the next second, they are both gone.',
-        follows = 36,
+        text = 'scene 30: Prisoner: "Thank you, girl, for your kindness. For that I won\'t eat you. But you are a disobedient daughter, so I don\'t need you. I\'ll take your brother instead!"',
+        follows = 31,
+        clearSelection = true,
+        curtain = true,
+        animations = function()
+            hideBigCharacters()
+            showDialogueBack()
+            showDialogueChar(Koschei, 400, 400)
+        end,
+        animationComplete = function()
+            hideBigCharacters()
+            bucketTread.isVisible=false
+        end
+    }
+    scenes[31] = {
+        sName = 31,
+        text = 'scene 31: With these words, he tears off all twelve chains, grabs Ivan, swirls on the spot, and in the next second, they are both gone.',
+        follows = 37,
         clearSelection = true,
         curtain = true,
         animations = function()
         -- Animation: Ivans kidnepping
             transDialogueBack()
             icyCurtainMoving()
+            transition.to(AlenaS, {alpha = 0, time=700, delay=3000})
+            AlenaCryS.isVisible = true
+            transition.to(AlenaCryS, {y=-40, time=1000, delay=3000})
         end,
         animationComplete = function()
             removeCurtain()
@@ -2059,24 +2086,27 @@ local scenes = {}
             chains.alpha=1
             koshPrisoner.alpha=0
             IvanS.y=-600
-            removeCurtain()
+            AlenaS.alpha = 1
+            AlenaCryS.isVisible = false AlenaCryS.y=-400
         end,
         --Sound: Wind gust
         soundEffect = 'windKoschei.mp3'
     }
-    scenes[31] = {
-        sName = 31,
-        text = 'scene 31: Prisoner: "Aren\'t you tired of always listening to your mother? Don\'t you want to think for yourself and make decisions like a grown up?" he tries to persuade Alena.',
+    scenes[32] = {
+        sName = 32,
+        text = 'scene 32: Prisoner: "Aren\'t you tired of always listening to your mother? Don\'t you want to think for yourself and make decisions like a grown up?" he tries to persuade Alena.',
         clearSelection = true,
         selection = {
-            [1] = {'Give water', 28},
-            [2] = {'Refuse', 32}
+            [1] = {'Give water', 29},
+            [2] = {'Refuse', 33}
         },
         curtain = true,
         changeFlow = function()
             if choices.bucket == 0 then scenes[28].selection[1][2] = 27
             elseif choices.bucket == 1 then scenes[28].selection[1][2] = 28
-            elseif choices.bucket == 2 then scenes[28].selection[1][2] = 29
+            elseif choices.bucket == 2 then
+                if choices.basement==true then scenes[28].selection[1][2] = 30
+                else scenes[28].selection[1][2] = 29 end 
             end
         end,
         animations = function()
@@ -2090,11 +2120,11 @@ local scenes = {}
             hideAnnotAchivement()
         end
     }
-    scenes[32] = {
-        sName = 32,
+    scenes[33] = {
+        sName = 33,
         setStage = 'setHouseInside',
-        text = 'scene 32: Alena takes her brother and closes the door to the basement. When they go up, Ivan reproaches her for being so harsh on the prisoner. "Aren\'t we supposed to respect our elders?" asks Ivan.',
-        follows = 33,
+        text = 'scene 33: Alena takes her brother and closes the door to the basement. When they go up, Ivan reproaches her for being so harsh on the prisoner. "Aren\'t we supposed to respect our elders?" asks Ivan.',
+        follows = 34,
         curtain = true,
         clearSelection = true,
         animations = function()
@@ -2114,28 +2144,34 @@ local scenes = {}
         -- Sound: Steps two people on wood
         soundEffect = 'stepsTwoWood.mp3'
     }
-    scenes[33] = {
-        sName = 33,
-        text = 'scene 33: Alena says that they should follow mother\'s orders first and foremost. Back in the greatroom, she puts Ivan to bed and nestles near him. In a second, her eyes close and she falls fast asleep.',
-        follows = 34,
+    scenes[34] = {
+        sName = 34,
+        text = 'scene 34: Alena says that they should follow mother\'s orders first and foremost. Back in the greatroom, she puts Ivan to bed and nestles near him. In a second, her eyes close and she falls fast asleep.',
+        follows = 35,
         animations = function()
-            IvanS.xScale = -1
-            transition.to(IvanS, {x=-200, time=1000, delay=1500})  
+            transition.to(IvanS, {alpha=0, time=700})
+            transition.to(AlenaS, {alpha=0, time=700})
+            IvanSleeping.isVisible = true  
+            AlenaSleeping.isVisible = true 
+            transition.to(AlenaSleeping, {alpha=1, time=700, delay=700})
+            transition.to(IvanSleeping, {alpha=1, time=700, delay=700})
         end,
         animationComplete = function()
-            IvanS.xScale = -1
-            IvanS.x=-200
             hideAnnotAchivement()
+            IvanS.isVisible = false IvanS.alpha=1
+            AlenaS.isVisible = false AlenaS.alpha=1
+            IvanSleeping.isVisible = true  IvanSleeping.alpha=1
+            AlenaSleeping.isVisible = true AlenaSleeping.alpha=1
         end,
         --Sound: summer Forest
         soundEffect = 'summerForest.mp3'
 
     }
-    scenes[34] = {
-        sName = 34,
+    scenes[35] = {
+        sName = 35,
         setStage = 'setBasement',
-        text = 'scene 34: When she wakes up, her brother is nowhere to be found. Panic-stricken, she runs to the basement and sees the open door and an empty buсket on the floor near the prisoner.',
-        follows = 35,
+        text = 'scene 35: When she wakes up, her brother is nowhere to be found. Panic-stricken, she runs to the basement and sees the open door and an empty buсket on the floor near the prisoner.',
+        follows = 36,
         clearSelection = true,
         animations = function() 
             setBasementFast()
@@ -2144,6 +2180,8 @@ local scenes = {}
             IvanS.xScale = 1
             transition.to(AlenaS, {y=-200, time=500, delay=1000})
             transition.to(IvanS, {y=0, time=1000, delay=1500})
+            bucketTread.y=-100 bucketTread.x=680
+            bucket2.rotation=-80 bucket2.y=415 bucket2.x=775
         end,
         animationComplete = function()
             foreground.y = 0
@@ -2152,18 +2190,18 @@ local scenes = {}
             waterFount.alpha=1
             koshPrisoner.alpha=1
             bucket1.y=-50
-            bucket2.y=470
-            bucketTread.y=-50
             IvanS.isVisible = true IvanS.x=560 IvanS.y=0  IvanS.xScale = 1
             AlenaS.isVisible = true AlenaS.x = 140  AlenaS.y=-200
+            bucketTread.y=-100 bucketTread.x=680
+            bucket2.rotation=-80 bucket2.y=415 bucket2.x=775
         end,
         --Sound: chains
         soundEffect = 'chainMail.mp3'
     }
-    scenes[35] = {
-        sName = 35,
-        text = 'scene 35: "Thank you, Ivan, for your kindness. For that I\'ll take you with me!" says the bony prisoner and tears off all twelve of his chains, grabs Ivan, swirls on the spot, and in the next second, both are gone.',
-        follows = 36,
+    scenes[36] = {
+        sName = 36,
+        text = 'scene 36: "Thank you, Ivan, for your kindness. For that I\'ll take you with me!" says the bony prisoner and tears off all twelve of his chains, grabs Ivan, swirls on the spot, and in the next second, both are gone.',
+        follows = 37,
         clearSelection = true,
         animations = function()            
             transition.to(icyCurtain, {alpha=1, time=500})
@@ -2171,8 +2209,13 @@ local scenes = {}
             transition.to(chains, {alpha=1, time=1000, delay=500})
             transition.to(koshPrisoner, {alpha = 0, time=1000, delay=500})
             transition.to(IvanS, {alpha = 0, time=1000, delay=500})
+            transition.to(AlenaS, {alpha = 0, time=1000, delay=500})
+            AlenaCryS.isVisible = true
+            transition.to(AlenaCryS, {y=-40, time=1000, delay=500})
         end,
         animationComplete = function()
+            AlenaS.alpha = 1
+            AlenaCryS.isVisible = false AlenaCryS.y=-400
             icyCurtain.y=-1000
             chains.alpha=1
             koshPrisoner.alpha=0
@@ -2182,10 +2225,10 @@ local scenes = {}
         --Sound: Wind gust
         soundEffect = 'windKoschei.mp3'
     }
-    scenes[36] = {
-        sName = 36,
-        text = "scene 36: Alena runs outside, screaming her brother\'s name, but gets only the moaning of the wind and the whispering of the forest in reply.",
-        follows = 37,
+    scenes[37] = {
+        sName = 37,
+        text = "scene 37: Alena runs outside, screaming her brother\'s name, but gets only the moaning of the wind and the whispering of the forest in reply.",
+        follows = 38,
         setStage = 'setMotherHouse',
         animations = function()
             --Effect: leaves fly
@@ -2203,10 +2246,10 @@ local scenes = {}
         --Sound: Leaves falling
         soundEffect = 'leavesFalling.mp3'
     }
-    scenes[37] = {
-        sName = 37,
-        text = 'scene 37: Alena\'s mother returns home early, with the strange feeling that something might have happened. Alena can\'t look her in the eyes. She stumbles and mumbles but eventually tells the whole truth.',
-        follows = 38,
+    scenes[38] = {
+        sName = 38,
+        text = 'scene 38: Alena\'s mother returns home early, with the strange feeling that something might have happened. Alena can\'t look her in the eyes. She stumbles and mumbles but eventually tells the whole truth.',
+        follows = 39,
         animations = function()
             MotherS.isVisible = true
             MotherS.x=500
@@ -2218,10 +2261,10 @@ local scenes = {}
         --Sound: Alena Cry
         soundEffect = 'girlCry.mp3'
     }
-    scenes[38] = {
-        sName = 38,
-        text = 'scene 38: Mom: "Now Koschei will summon his armies and storm the Tsar-gorod. He\'s had dozen of years to plan his revenge for his imprisonment. The Tsar will need my help, so you have to find your brother on your own."',
-        follows = 39,
+    scenes[39] = {
+        sName = 39,
+        text = 'scene 39: Mom: "Now Koschei will summon his armies and storm the Tsar-gorod. He\'s had dozen of years to plan his revenge for his imprisonment. The Tsar will need my help, so you have to find your brother on your own."',
+        follows = 40,
         curtain = true,
         animations = function()
             hideBigCharacters()
@@ -2237,10 +2280,10 @@ local scenes = {}
             MotherWarS.isVisible = true MotherWarS.y=0 MotherWarS.x=500
         end
     }
-    scenes[39] = {
-        sName = 39,
-        text = 'scene 39: Alena\'s mother, no other than Marya Morevna, the famous warrior princess, whistles and a second later, the depths of the forest open, and a huge Gray wolf appears before Alena\'s eyes.',
-        follows = 40,
+    scenes[40] = {
+        sName = 40,
+        text = 'scene 40: Alena\'s mother, no other than Marya Morevna, the famous warrior princess, whistles and a second later, the depths of the forest open, and a huge Gray wolf appears before Alena\'s eyes.',
+        follows = 41,
         animations = function()
             transDialogueBack()
             WolfS.xScale = -1 
@@ -2256,10 +2299,10 @@ local scenes = {}
         soundEffect = 'bushShake.mp3'
 
     }
-    scenes[40] = {
-        sName = 40,
-        text='scene 40: Mom: "That\'s my old friend and loyal companion, Gray Wolf. He helped me to imprison the Koschei last time. He will serve you as good as he served me." says Alena\'s mother. ',
-        follows = 41,
+    scenes[41] = {
+        sName = 41,
+        text='scene 41: Mom: "That\'s my old friend and loyal companion, Gray Wolf. He helped me to imprison the Koschei last time. He will serve you as good as he served me." says Alena\'s mother. ',
+        follows = 42,
         animations = function()
             hideBigCharacters()
             showDialogueBack()
@@ -2268,12 +2311,12 @@ local scenes = {}
         animationComplete = function()
         end
     }
-    scenes[41] = {
-        sName = 41,
+    scenes[42] = {
+        sName = 42,
         changeFlow = function()
-            if choices.bless==true then scenes[41].follows=42 else scenes[41].follows=43 end
+            if choices.bless==true then scenes[42].follows=43 else scenes[42].follows=44 end
         end,
-        text='scene 41: Mom: "Koschei lives in an icy stronghold to the north. He is Deathless, so there\'s no killing him, but you can get into his castle to save your brother, while he is busy fighting me and the Tsar."',
+        text='scene 42: Mom: "Koschei lives in an icy stronghold to the north. He is Deathless, so there\'s no killing him, but you can get into his castle to save your brother, while he is busy fighting me and the Tsar."',
         animations = function()
 
         end,
@@ -2282,10 +2325,10 @@ local scenes = {}
             transDialogueBack()
         end
     }
-    scenes[42] = {
-        sName = 42,
-        text='scene 42: Alena promises that she\'ll find her brother, though the road to Koschei\'s stronghold is unknown and untrodden. Her mother kisses her on forehead and gives her a motherly blessing.',
-        follows = 44,
+    scenes[43] = {
+        sName = 43,
+        text='scene 43: Alena promises that she\'ll find her brother, though the road to Koschei\'s stronghold is unknown and untrodden. Her mother kisses her on forehead and gives her a motherly blessing.',
+        follows = 45,
         animations = function()
             removeCurtain()
             leavesFalling(0)
@@ -2297,10 +2340,10 @@ local scenes = {}
         --Sound: Leaves falling
         soundEffect = 'leavesFalling.mp3'
     }
-    scenes[43] = {
-        sName = 43,
-        text='scene 43: Alena promises that she\'ll find her brother, though the road to Koschei\'s stronghold is unknown and untrodden. Her mother opens a big trunk, takes out her sword and armor. Mother and daughter say their goodbyes.',
-        follows = 44,
+    scenes[44] = {
+        sName = 44,
+        text='scene 44: Alena promises that she\'ll find her brother, though the road to Koschei\'s stronghold is unknown and untrodden. Her mother opens a big trunk, takes out her sword and armor. Mother and daughter say their goodbyes.',
+        follows = 45,
         animations = function()
          --Effect: leaves fly
             removeCurtain()
@@ -2315,7 +2358,7 @@ local scenes = {}
     }
 
 
--------- Act 2 Scenes 44 - 61
+-------- Act 2 Scenes 45 - 61
 
     scenes[44] = {
         sName = 44,
@@ -3020,7 +3063,10 @@ local scenes = {}
 
     scenes[79] = {
         sName = 79,
-        follows = 80,
+        changeFlow = function() 
+            if choices.appleTaken==true then scenes[79].follows = 80
+            else scenes[79].follows = 81 end
+        end,
         text = function()
             return "scene 79: Soon after Gray Wolf returns, and Alena and her companion run to "..choices.brother.."\'s domain in silence. "
         end,
@@ -3046,7 +3092,11 @@ local scenes = {}
         animations = function()
             hideSmallCharacters()
             loadUncleCastleFast()
-            wolfAtUncleCastle('Apple')
+            WolfSit.isVisible = false
+            AlenaNoRibbon.isVisible=true
+
+            transition.to(AlenaNoRibbon, {alpha=1, time=700, delay=2000})
+            transition.to(GoldenApple, {alpha=1, time=1000, delay=3000})
         end,
         animationComplete = function()
             landscape3.x=0
@@ -3057,6 +3107,40 @@ local scenes = {}
             birdSymbol.y=320
             BrotherS.y=300
             AlenaOnWolfNoRibbon.isVisible = false
+            WolfSit.isVisible = false WolfSit.alpha=1
+            GoldenApple.isVisible = true GoldenApple.x=550 GoldenApple.y=0 GoldenApple.alpha=1
+            AlenaNoRibbon.isVisible = true AlenaNoRibbon.y = 20 AlenaNoRibbon.x=610 AlenaNoRibbon.alpha=1
+        end,
+    }
+
+    scenes[81] = {
+        sName = 81,
+        follows = 82,
+        setStage = 'setUncleCastle',
+        openingAnimation = {
+            [1] = 'background7.png', 
+            [2] = 'foreground3.png'
+        },
+        text='scene 80: Seeing the golden apple, her uncle\'s face flourishes a smile. \"You are a very handy girl,\" says he.',
+        animations = function()
+            hideSmallCharacters()
+            loadUncleCastleFast()
+            WolfSit.isVisible = true
+            AlenaNoRibbon.isVisible=true
+            transition.to(AlenaNoRibbon, {alpha=1, time=700, delay=2000})
+            transition.to(WolfSit, {alpha=1, time=700, delay=2000})
+            transition.to(GoldenApple, {alpha=1, time=1000, delay=3000})
+        end,
+        animationComplete = function()
+            landscape3.x=0
+            landscape2.y=0
+            foreground.y=0
+            shadowLayer6.alpha=1
+            throne.y=-30
+            birdSymbol.y=320
+            BrotherS.y=300
+            AlenaOnWolfNoRibbon.isVisible = false
+            WolfSit.alpha=1 WolfSit.isVisible=true
 
             GoldenApple.isVisible = true GoldenApple.x=550 GoldenApple.y=0 GoldenApple.alpha=1
             AlenaNoRibbon.isVisible = true AlenaNoRibbon.y = 20 AlenaNoRibbon.x=610 AlenaNoRibbon.alpha=1
@@ -4126,7 +4210,7 @@ local scenes = {}
         selection = {
             [1] = {'What to do...', 139}
         },
-        text='scene 135: When the snow settles there\'s nothing left except the mortally wounded Alena, who couldn\'t defend herself from Koschei, and the echo of Ivan\'s cries, as he is carried back into the tower. Gray Wolf is devastated. He couldn\'t help his companion, so he howls and wails.',
+        text='scene 135: When the snow settles there\'s nothing left except the mortally wounded Alena and the echo of Ivan\'s cries, as he is carried back into the tower. Gray Wolf is devastated. He couldn\'t help his companion, so he howls and wails.',
         animations = function()
             transition.to(alenaDown, {y=-20, time=1000})
             WolfSit.xScale=-1 WolfSit.x=450 WolfSit.isVisible = true WolfSit.y=0
@@ -5884,7 +5968,7 @@ local scenes = {}
 
     scenes[227] = {
         sName = 227,
-        follows = 1000,
+        follows = 231,
         text='scene 227: Their mother is happy to see them home again. Gray Wolf settles nearby, and they live in health and good cheer for many long years. ',
         animations = function()
             AlenaS.isVisible = true AlenaS.x = 200  AlenaS.alpha=0 AlenaS.y=0
@@ -5955,7 +6039,7 @@ local scenes = {}
 
     scenes[230] = {
         sName = 230,
-        follows = 1000,
+        follows = 231,
         text='scene 230: They live in health and in good cheer for many long years. ',
         animations = function() end,
         animationComplete = function()end,
@@ -5963,16 +6047,16 @@ local scenes = {}
         soundEffect = 'birdsSinging.mp3',
     }
 
-    scenes[1000] = {
-        sName = 1000,
-        follows = 1001,
-        text='The end',
+    scenes[231] = {
+        sName = 231,
+        follows = 232,
+        text='',
         animations = function() loadEndingBack() end,
         animationComplete = function()end
     }
 
-    scenes[1001] = {
-        sName = 1001,
+    scenes[232] = {
+        sName = 232,
         animations = function() end,
         animationComplete = function()end
     }
@@ -6113,6 +6197,12 @@ local function setStageObjects(stage)
 
             bed = display.newImage(midlayer1, "images/scenes/bed.png", true) setAnchor(bed)
             bed.x=280 bed.y = -500
+
+            IvanSleeping = display.newImage(midlayer1, "images/scenes/IvanSleeping.png", true) setAnchor(IvanSleeping)
+            IvanSleeping.x=350 IvanSleeping.y=356 IvanSleeping.isVisible = false IvanSleeping.alpha=0
+
+            AlenaSleeping = display.newImage(midlayer1, "images/scenes/AlenaSleeping.png", true) setAnchor(AlenaSleeping)
+            AlenaSleeping.x=415 AlenaSleeping.y=356 AlenaSleeping.isVisible = false AlenaSleeping.alpha=0
 
             tableCloth = display.newImage(midlayer1, "images/scenes/table.png", true) setAnchor(tableCloth)
             tableCloth.x = 520 tableCloth.y=-500
@@ -7358,27 +7448,7 @@ function restartCanceled(event)
         restartYes.isVisible = false
     end
 end
---[[
-local function scrollListener( event )
 
-    local phase = event.phase
-    if ( phase == "began" ) then print( "Scroll view was touched" )
-    elseif ( phase == "moved" ) then print( "Scroll view was moved" )
-    elseif ( phase == "ended" ) then print( "Scroll view was released" )
-    end
-
-    -- In the event a scroll limit is reached...
-    if ( event.limitReached ) then
-        if ( event.direction == "up" ) then print( "Reached bottom limit" )
-        elseif ( event.direction == "down" ) then print( "Reached top limit" )
-        elseif ( event.direction == "left" ) then print( "Reached right limit" )
-        elseif ( event.direction == "right" ) then print( "Reached left limit" )
-        end
-    end
-
-    return true
-end
-]]
 
 -----------------------------------------------------------------------------------------
 --
@@ -7435,7 +7505,7 @@ function loadGameBegining()
 
     achivCollected = {'start'}
 
-    -- 44 - forest1
+    -- 45 - forest1
     -- 57 - brother Castle 1
     -- 68 - apple garden
     -- 75 - forest2
@@ -7448,7 +7518,7 @@ function loadGameBegining()
     -- 156 - yaga yard
     -- 163 - yaga hut
     -- 195 - oak
-    loadScene(scenes[1])
+    loadScene(scenes[10])
 end
 
 
