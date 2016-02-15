@@ -41,6 +41,9 @@ achivLayers.anchorX = 0 achivLayers.anchorY = 0
 local playlistLayers = display.newGroup()
 playlistLayers.anchorX = 0 playlistLayers.anchorY = 0
 
+local actChangeLevel = display.newGroup()
+actChangeLevel.anchorX = 0 actChangeLevel.anchorY = 0
+
 -----------------------------------------------------------------------------------------
 --
 -- CHANGE CENTER FOR IMAGE
@@ -60,9 +63,6 @@ end
 -- Background for dialogue stage
 local dialBack = display.newImage(charactersDial, "images/effects/dialBack.png", true ) setAnchor(dialBack)
 dialBack.y=-800 dialBack.x=0
-
-local endingBack = display.newImage(textLayers, "images/effects/endingBack.png", true ) setAnchor(endingBack)
-    endingBack.y=-800 endingBack.x=0
 
 -- Small characters for stage, act1
 local AlenaS = display.newImage( characters, "images/chars/alena_f_small.png", true)
@@ -159,13 +159,13 @@ local charactersSmall = {AlenaS, IvanS, MotherS, WolfS, WolfSit, AlenaCryS, Moth
 
 -- Variables for text
 local textContainerNA = display.newImage(textLayers, "images/menus/text_back_colour.png")
-textContainerNA.x = 10 textContainerNA.y = 560 
+textContainerNA.x = 20 textContainerNA.y = 560 
 
 local textContainer = display.newImage(textLayers, "images/menus/text_back.png")
-textContainer.x = 10 textContainer.y = 560 
+textContainer.x = 20 textContainer.y = 560 
 textContainer.isVisible = false
 
-local sceneText = display.newText(textLayers, '', 50, 610, 900, display.contentHeight * 0.5, 'PTSans-Regular', 18)
+local sceneText = display.newText(textLayers, '', 60, 610, 900, display.contentHeight * 0.5, 'PTSans-Regular', 18)
 
 -- Variables for selections
 local select1Container = display.newImage(textLayers, "images/menus/selection_back.png")
@@ -227,7 +227,12 @@ function checkAlighn(num)
     end
 end
 
+-- ending
+local endingBack = display.newImage(actChangeLevel, "images/effects/endingBack.png", true ) setAnchor(endingBack)
+    endingBack.y=-800 endingBack.x=0
 
+local endingContainer = display.newImage(actChangeLevel, "images/menus/text_back_big.png") setAnchor(endingContainer)
+endingContainer.x = 20 endingContainer.y = 200 endingContainer.isVisible = false endingContainer.alpha=0
 
 -----------------------------------------------------------------------------------------
 --
@@ -1491,6 +1496,7 @@ local function organizeStage()
     menuSet:toFront()
     playlistLayers:toFront()
     achivLayers:toFront()
+    actChangeLevel:toFront()
 end
 
 -----------------------------------------------------------------------------------------
@@ -2354,21 +2360,27 @@ local scenes = {}
             removeCurtain()
         end,
         --Sound: Leaves falling
-        soundEffect = 'leavesFalling.mp3'
+        soundEffect = 'leavesFalling.mp3',
     }
 
 
 -------- Act 2 Scenes 45 - 61
 
-    scenes[44] = {
-        sName = 44,
+    scenes[45] = {
+        actEnding = {
+            follows = 46,
+            back = '',
+            progressBar = '',
+            act = 1
+        },
+        sName = 45,
         openingAnimation = {
             [1] = 'background6.png', 
             [2] = 'foreground6.png'
             },
         setStage = 'setForest1',
-        text='scene 44: Alena sits on Gray Wolf\'s back, hugs his massive neck, and he starts to run - so fast that before the sun touches down on the treetops to the west, they have already reached the crossroads on the other side of the forest.',
-        follows = 45,
+        text='scene 45: Alena sits on Gray Wolf\'s back, hugs his massive neck, and he starts to run - so fast that before the sun touches down on the treetops to the west, they have already reached the crossroads on the other side of the forest.',
+        follows = 46,
         animations = function()
             loadForest1()
             AlenaOnWolf.x=600 AlenaOnWolf.y=-600 AlenaOnWolf.isVisible=true
@@ -2387,10 +2399,10 @@ local scenes = {}
         soundEffect = 'opening.mp3',
     }
 
-    scenes[45] = {
-        sName = 45,
+    scenes[46] = {
+        sName = 46,
         text='scene 45: The road splits into three directions with big engraved stone pointing the way. Alena dismounts from Gray Wolf to read the tattered letters.',
-        follows = 46,
+        follows = 47,
         animations = function()
             WolfS.isVisible = true  WolfS.xScale = 1 WolfS.x=650 WolfS.y=0 WolfS.alpha=0
             AlenaS.isVisible = true AlenaS.x=500  AlenaS.y=0 AlenaS.alpha=0
@@ -2410,13 +2422,13 @@ local scenes = {}
         soundEffect = 'walkInForest.mp3'
     }
 
-    scenes[46] = {
-        sName = 46,
+    scenes[47] = {
+        sName = 47,
         text = 'scene 46: "If you ride to the left, you will lose your horse. If you ride to the right, you will lose your head. If you ride straight ahead, you will lose both."',
         selection = {
-            [1] = {'Go left', 47}, --WolfDies
-            [2] = {'Go straight', 48}, --Both die
-            [3] = {'Go right', 49} --Alena dies
+            [1] = {'Go left', 48}, --WolfDies
+            [2] = {'Go straight', 49}, --Both die
+            [3] = {'Go right', 50} --Alena dies
         },
         changeFlow = function()
         end,
@@ -7077,10 +7089,33 @@ function loadAchivements()
     scrollView:insert(putHereGroup)
 end
 
+function showActEnding(info)
+    print("Loading act ending")
+    actChangeLevel:toFront()
+    textContainer.isVisible = false
+    sceneText.isVisible = false
+    select1Container.isVisible = false
+    select1Text.isVisible = false
+    select2Container.isVisible = false
+    select2Text.isVisible = false
+    select3Container.isVisible = false
+    select3Text.isVisible = false
+
+    audio.stop(S_BgSfxCh)
+
+    transition.to(endingBack, {y=0, time=500})
+    endingContainer.isVisible=true
+    transition.to(endingContainer, {alpha=1, time=500, delay=500})
+    --follows = 46,
+    --back = '',
+    --progressBar = '',
+    --act = 1
+end
+
 function loadScene(s)
     print('Start displaying scene '..s.sName)
-    if s.name == 1000 then 
-        showEnding()
+    if s.actEnding then 
+        showActEnding(s.actEnding)
     else
         if s.changeFlow then 
             s.changeFlow() 
@@ -7089,6 +7124,7 @@ function loadScene(s)
         -- Set the text or call it depending on the type
         if type(s.text)=='function' then sceneText.text = s.text() else sceneText.text = s.text end
         setAnchor(sceneText)
+        sceneText.isVisible = true
         sceneText.alpha = 0
         transition.to(sceneText, {alpha=1, time=2000}) 
         sceneText:setFillColor( 0, 0, 0 )
@@ -7518,7 +7554,7 @@ function loadGameBegining()
     -- 156 - yaga yard
     -- 163 - yaga hut
     -- 195 - oak
-    loadScene(scenes[10])
+    loadScene(scenes[21])
 end
 
 
