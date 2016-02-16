@@ -159,13 +159,13 @@ local charactersSmall = {AlenaS, IvanS, MotherS, WolfS, WolfSit, AlenaCryS, Moth
 
 -- Variables for text
 local textContainerNA = display.newImage(textLayers, "images/menus/text_back_colour.png")
-textContainerNA.x = 20 textContainerNA.y = 560 
+textContainerNA.x = 17 textContainerNA.y = 560 
 
 local textContainer = display.newImage(textLayers, "images/menus/text_back.png")
-textContainer.x = 20 textContainer.y = 560 
+textContainer.x = 17 textContainer.y = 560 
 textContainer.isVisible = false
 
-local sceneText = display.newText(textLayers, '', 60, 610, 900, display.contentHeight * 0.5, 'PTSans-Regular', 18)
+local sceneText = display.newText(textLayers, '', 62, 610, 900, display.contentHeight * 0.5, 'PTSans-Regular', 18)
 
 -- Variables for selections
 local select1Container = display.newImage(textLayers, "images/menus/selection_back.png")
@@ -227,12 +227,68 @@ function checkAlighn(num)
     end
 end
 
--- ending
+-- ending (actending function showActEnding)
 local endingBack = display.newImage(actChangeLevel, "images/effects/endingBack.png", true ) setAnchor(endingBack)
     endingBack.y=-800 endingBack.x=0
 
+endingBack:addEventListener("touch", function() return true end)
+endingBack:addEventListener("tap", function() return true end)
+
 local endingContainer = display.newImage(actChangeLevel, "images/menus/text_back_big.png") setAnchor(endingContainer)
-endingContainer.x = 20 endingContainer.y = 200 endingContainer.isVisible = false endingContainer.alpha=0
+endingContainer.x = 20 endingContainer.y = 180 endingContainer.isVisible = false endingContainer.alpha=0
+
+local textARoptions = {
+    parent = actChangeLevel,
+    text = "",     
+    x = 212,
+    y = 260,
+    width = 600,    
+    font = 'PTSans-Regular',   
+    fontSize = 20,
+    align = "center"    
+}
+
+local buttonsARoptions1 = {
+    parent = actChangeLevel,
+    text = "Replay",     
+    x = 262,
+    y = 470,
+    width = 200,    
+    font = 'PTSans-Regular',   
+    fontSize = 18,
+    align = "center"    
+}
+
+local buttonsARoptions2 = {
+    parent = actChangeLevel,
+    text = "Continue",     
+    x = 562,
+    y = 470,
+    width = 200,    
+    font = 'PTSans-Regular',   
+    fontSize = 18,
+    align = "center"    
+}
+
+local AR_text = display.newText(textARoptions) setAnchor(AR_text)
+AR_text:setFillColor(0,0,0) AR_text.isVisible = false AR_text.alpha=0
+
+local AR_progressBar = display.newImage(actChangeLevel, "images/menus/transparent.png") setAnchor(AR_progressBar) 
+AR_progressBar.isVisible = false AR_progressBar.x=0 AR_progressBar.y=0 
+
+local AR_reloadButton = display.newImage(actChangeLevel, "images/menus/selection_back.png") setAnchor(AR_reloadButton) 
+AR_reloadButton.isVisible = false AR_reloadButton.x=262 AR_reloadButton.y=450 AR_reloadButton.alpha = 0
+
+local AR_continueButton = display.newImage(actChangeLevel, "images/menus/selection_back.png") setAnchor(AR_continueButton) 
+AR_continueButton.isVisible = false AR_continueButton.x=562 AR_continueButton.y=450 AR_continueButton.alpha = 0
+
+local AR_reloadText = display.newText(buttonsARoptions1) setAnchor(AR_reloadText)
+AR_reloadText:setFillColor(0,0,0) AR_reloadText.isVisible = true
+
+local AR_continueText = display.newText(buttonsARoptions2) setAnchor(AR_continueText)
+AR_continueText:setFillColor(0,0,0) AR_continueText.isVisible = true
+
+
 
 -----------------------------------------------------------------------------------------
 --
@@ -1521,11 +1577,12 @@ choices = {
     horseTaken = false
 }
 
+
 local dialogBackground;
 
 local scenes = {} 
 
--------- Act 1 Scenes 1 - 43
+-------- Act 1 Scenes 1 - 45
 
     scenes[1] = {
         sName = 1,
@@ -2368,19 +2425,22 @@ local scenes = {}
 
     scenes[45] = {
         actEnding = {
-            follows = 46,
-            back = '',
-            progressBar = '',
-            act = 1
-        },
-        sName = 45,
+            text = 'You finished Act 1.\n You can proceed to Act 2 or you can replay Act 1 to change the story.\n\nProgress:',
+            follow = 46,
+            progressBar = 'progress5.png',
+            act = 1,
+            cont = 2,
+        }
+    }
+    scenes[46] = {
+        sName = 46,
         openingAnimation = {
             [1] = 'background6.png', 
             [2] = 'foreground6.png'
             },
         setStage = 'setForest1',
-        text='scene 45: Alena sits on Gray Wolf\'s back, hugs his massive neck, and he starts to run - so fast that before the sun touches down on the treetops to the west, they have already reached the crossroads on the other side of the forest.',
-        follows = 46,
+        text='scene 46: Alena sits on Gray Wolf\'s back, hugs his massive neck, and he starts to run - so fast that before the sun touches down on the treetops to the west, they have already reached the crossroads on the other side of the forest.',
+        follows = 47,
         animations = function()
             loadForest1()
             AlenaOnWolf.x=600 AlenaOnWolf.y=-600 AlenaOnWolf.isVisible=true
@@ -2399,10 +2459,10 @@ local scenes = {}
         soundEffect = 'opening.mp3',
     }
 
-    scenes[46] = {
-        sName = 46,
-        text='scene 45: The road splits into three directions with big engraved stone pointing the way. Alena dismounts from Gray Wolf to read the tattered letters.',
-        follows = 47,
+    scenes[47] = {
+        sName = 47,
+        text='scene 47: The road splits into three directions with big engraved stone pointing the way. Alena dismounts from Gray Wolf to read the tattered letters.',
+        follows = 48,
         animations = function()
             WolfS.isVisible = true  WolfS.xScale = 1 WolfS.x=650 WolfS.y=0 WolfS.alpha=0
             AlenaS.isVisible = true AlenaS.x=500  AlenaS.y=0 AlenaS.alpha=0
@@ -7106,17 +7166,38 @@ function showActEnding(info)
     transition.to(endingBack, {y=0, time=500})
     endingContainer.isVisible=true
     transition.to(endingContainer, {alpha=1, time=500, delay=500})
-    --follows = 46,
-    --back = '',
-    --progressBar = '',
-    --act = 1
+
+    AR_text.isVisible = true
+    AR_text.text = info.text
+    transition.to(AR_text, {alpha=1, time=500, delay=500})
+
+    AR_progressBar:removeSelf()
+    AR_progressBar = nil
+
+    AR_progressBar = display.newImage(actChangeLevel, "images/menus/"..info.progressBar) setAnchor(AR_progressBar) 
+    AR_progressBar.isVisible = true AR_progressBar.alpha=0 AR_progressBar.x=312 AR_progressBar.y=350 
+
+    transition.to(AR_progressBar, {alpha=1, time=500, delay=500})
+
+    AR_reloadButton.isVisible = true AR_reloadButton.reload = info.act AR_reloadButton.follow = info.follow
+    AR_continueButton.isVisible = true AR_continueButton.continue = info.cont AR_continueButton.follow = info.follow
+
+    transition.to(AR_reloadButton, {alpha=1, time=500, delay=500})
+    transition.to(AR_continueButton, {alpha=1, time=500, delay=500})
+
+    AR_reloadButton:addEventListener( "touch", reloadActListener)
+    AR_continueButton:addEventListener( "touch", continueActListener)
+
+end
+
+function clearActEnding()
 end
 
 function loadScene(s)
-    print('Start displaying scene '..s.sName)
     if s.actEnding then 
         showActEnding(s.actEnding)
     else
+        print('Start displaying scene '..s.sName)
         if s.changeFlow then 
             s.changeFlow() 
         end
@@ -7485,6 +7566,37 @@ function restartCanceled(event)
     end
 end
 
+-- Listeners for restarting
+function reloadActListener(event)
+    print("Getting act to restart. Act num "..event.target.reload)
+    local actToRestart = event.target.reload
+    if actToRestart==1 then 
+        choices.bless = false
+        choices.basement = false
+        choices.bucket = 0
+    end
+
+    if actToRestart==2 then 
+    end
+    
+    if actToRestart==3 then 
+    end
+    
+    if actToRestart==4 then 
+    end
+    
+    if actToRestart==5 then 
+    end
+
+    if event.phase == "began" then
+        clearActEnding()
+        loadScene(scenes[event.target.reload])
+    end
+    --loadScene(scenes[event.target.reload])
+end
+
+function continueActListener(event)
+end
 
 -----------------------------------------------------------------------------------------
 --
@@ -7554,7 +7666,7 @@ function loadGameBegining()
     -- 156 - yaga yard
     -- 163 - yaga hut
     -- 195 - oak
-    loadScene(scenes[21])
+    loadScene(scenes[37])
 end
 
 
