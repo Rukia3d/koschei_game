@@ -1018,7 +1018,7 @@ function bearPushTree()
     transition.to(chestOpen, {alpha=1, time=10, delay=1500})
     transition.to(BearS, {x=1500, time=1000, delay=2000})
     hareRun.xScale = -1
-    transition.to(hareRun, {alpha=1, time=500, delay=2500})
+    transition.to(hareRun, {y=-220, time=500, delay=2500})
 end
 
 function wolfPushTree()
@@ -1032,7 +1032,7 @@ function wolfPushTree()
     transition.to(BearS, {alpha=0, time=700, delay=2000})
     transition.to(MagicWolf, {y=-800, time=700, delay=2700})
     hareRun.xScale = -1
-    transition.to(hareRun, {alpha=1, time=500, delay=2500})
+    transition.to(hareRun, {y=-220, time=500, delay=2500})
 end
 
 function bearAndTree()
@@ -1556,9 +1556,12 @@ choices = {
     brother = 'NoInfo',
     brother1 = 'NoInfo',
     vasilisa = 'NoInfo',
-    vasilisaGo = false,
-    bear = false,
-    berries = false,
+    --vasilisaGo = false,
+    vasilisaGo = true,
+    --bear = false,
+    bear = true,
+    --berries = false,
+    berries = true,
     wolfPenalty = 0,
     wolfPenaltyAct3 = 0
 }
@@ -5074,7 +5077,7 @@ local scenes = {}
         clearSelection = true,
         changeFlow = function() 
             if choices.bless == true then scenes[178].follows = 179
-            else scenes[178].follows = 206 end
+            else scenes[178].follows = 183 end
         end,
         text='scene 178: "My name is Alena, Nana. Koschei the Deathless took my brother. Koshei is immortal, so he keeps his death hidden far away. I need to find it. Can you help me?"',
         animations = function()
@@ -5135,7 +5138,7 @@ local scenes = {}
 
     scenes[182] = {
         sName = 182,
-        follows = 194,
+        follows = 206,
         text='scene 182: "Inside the chest there\'s a hare, inside that - a duck. Inside the duck, there\'s an egg enclosing a needle. Koschei\'s death is on the point of it."',
         animations = function()
             glowEyesFlicker(700, glowEyes2)
@@ -5501,7 +5504,7 @@ local scenes = {}
     scenes[207] = {
         actEnding = {
             text = 'You finished Act 4.\n You can proceed to Act 5 or you can replay Act 4 to change the story.\n\nProgress:',
-            follow = 168,
+            follow = 208,
             progressBar = 'progress4.png',
             act = 4,
             cont = 5,
@@ -5538,11 +5541,11 @@ local scenes = {}
         soundEffect = 'opening.mp3',
     }
 
-    scenes[196] = {
-        sName = 196,
+    scenes[209] = {
+        sName = 209,
         changeFlow = function()
-            if choices.bear==true then scenes[196].follows = 198 
-            else scenes[196].follows = 197 end
+            if choices.bear == true then scenes[209].follows = 211 
+            else scenes[209].follows = 210 end
         end,
         text='scene 196: The ancient oak is so big, that clouds are tangled in its branches. The oak grouches as the wind rocks the chest hanging from a gold chain dangling from the massive bough. "How can I get to the chest?" wonders Alena.',
         animations = function() 
@@ -5566,10 +5569,10 @@ local scenes = {}
         end
     }
 
-    scenes[197] = {
-        sName = 197,
-        follows = 200,
-        text='scene 197: "What would you do without me." says Gray Wolf, turning himself into a huge bear.',
+    scenes[210] = {
+        sName = 210,
+        follows = 213,
+        text='scene 210: "What would you do without me." says Gray Wolf, turning himself into a huge bear.',
         animations = function() 
             wolfAndTree() 
             transition.to(mistLayer, {alpha=0, time=2000})
@@ -5584,12 +5587,13 @@ local scenes = {}
         soundEffect = 'wolfMagic.mp3'
     }
 
-    scenes[198] = {
-        sName = 198,
-        follows = 199,
-        text='scene 198: But just as if hearing her doubts, a big bear appears near the oak.',
+    scenes[211] = {
+        sName = 211,
+        follows = 212,
+        text='scene 211: But just as if hearing her doubts, a big bear appears near the oak.',
         animations = function() bearAndTree() end,
         animationComplete = function()
+            WolfS:toBack()
             BearS.alpha=1 BearS.isVisible=true BearS.x=530 BearS.y=0 BearS.xScale = -1
             mistLayer.alpha=0
         end,
@@ -5598,10 +5602,10 @@ local scenes = {}
         soundEffect = 'bushShake.mp3'
     }
 
-    scenes[199] = {
-        sName = 199,
-        follows = 201,
-        text='scene 199: "You were kind to me, little one, so let me be of service!" says the bear.',
+    scenes[212] = {
+        sName = 212,
+        follows = 214,
+        text='scene 212: "You were kind to me, little one, so let me be of service!" says the bear.',
         animations = function() 
             hideBigCharacters()
             showDialogueBack()
@@ -5613,10 +5617,10 @@ local scenes = {}
         end
     }
 
-    scenes[200] = {
-        sName = 200,
-        follows = 202,
-        text='scene 200: The bear clasps the ancient oak and with a loud roar knocks it down. When the chest touches the ground, it opens, and a brown hare escapes from it.',
+    scenes[213] = {
+        sName = 213,
+        follows = 215,
+        text='scene 213: The bear clasps the ancient oak and with a loud roar knocks it down. When the chest touches the ground, it opens, and a brown hare escapes from it.',
         animations = function() 
             wolfPushTree() 
         end,
@@ -5627,17 +5631,17 @@ local scenes = {}
             WolfS.alpha=1
             BearS.alpha=0
             MagicWolf.y=-800
-            hareRun.alpha=1
+            hareRun.y=-220
             hareRun.xScale=-1
         end,
         --Sound: wolf Magic
         soundEffect = 'wolfMagic2.mp3'
     }
 
-    scenes[201] = {
-        sName = 201,
-        follows = 202,
-        text='scene 201: The bear clasps the ancient oak and with a loud roar knocks it down. When the chest touches the ground, it opens, and a brown hare escapes from it.',
+    scenes[214] = {
+        sName = 214,
+        follows = 215,
+        text='scene 214: The bear clasps the ancient oak and with a loud roar knocks it down. When the chest touches the ground, it opens, and a brown hare escapes from it.',
         animations = function() 
             transDialogueBack() 
             bearPushTree() 
@@ -5650,17 +5654,17 @@ local scenes = {}
             WolfS.alpha=1
             BearS.alpha=0
             MagicWolf.y=-800
-            hareRun.alpha=1
+            hareRun.y=-220
             hareRun.xScale=-1
         end,
         --Sound: oak falls
         soundEffect = 'oakFalls.mp3'
     }
 
-    scenes[202] = {
-        sName = 202,
-        follows = 203,
-        text='scene 202: "How can I get this hare, he is so fast!" wonders Alena and looks at Gray Wolf.',
+    scenes[215] = {
+        sName = 215,
+        follows = 216,
+        text='scene 215: "How can I get this hare, he is so fast!" wonders Alena and looks at Gray Wolf.',
         animations = function()
             hareRun.xScale=-1
             transition.to(hareRun, {x=1200, y=0, time=500, delay=1000})
@@ -5671,11 +5675,11 @@ local scenes = {}
 
     }
 
-    scenes[203] = {
-        sName = 203,
+    scenes[216] = {
+        sName = 216,
         changeFlow = function() 
-            if choices.vasilisaGo==true then scenes[203].follows = 204 
-            else scenes[203].follows = 205 end
+            if choices.vasilisaGo==true then scenes[216].follows = 217 
+            else scenes[216].follows = 218 end
         end,
         text='scene 203: "What would you do without me." says Gray Wolf and immediately goes after his prey. He catches up with brown hare, but the moment his paws touch the rabbit, a white duck flies out of him.',
         animations = function()
@@ -5688,7 +5692,7 @@ local scenes = {}
             transition.to(duckFly, {y=-300, x=300, time=500, delay=1010})
         end,
         animationComplete = function()
-            hareRun.alpha=0
+            hareRun.isVisible = false
             WolfS.x=550
             duckFly.alpha=1 duckFly.y=-300 duckFly.x=300
         end,
@@ -5696,10 +5700,10 @@ local scenes = {}
         soundEffect = 'eggMagic.mp3'
     }
 
-    scenes[204] = {
-        sName = 204,
-        follows = 206,
-        text='scene 204: "How can I catch a flying duck?" wonders Alena. But her loyal companion doesn\'t let her down. Gray Wolf turns himself into a big drake and follows the duck. ',
+    scenes[217] = {
+        sName = 217,
+        follows = 219,
+        text='scene 217: "How can I catch a flying duck?" wonders Alena. But her loyal companion doesn\'t let her down. Gray Wolf turns himself into a big drake and follows the duck. ',
         animations = function() 
             catchADuck(0) 
             transition.to(AlenaNoRibbon, {x=200, time=1000})
@@ -5714,11 +5718,11 @@ local scenes = {}
         soundEffect = 'wolfMagic.mp3'
     }
 
-    scenes[205] = {
-        sName = 205,
-        follows = 206,
+    scenes[218] = {
+        sName = 218,
+        follows = 219,
         text= function()
-            return 'scene 205: "How can I catch a flying duck?" wonders Alena. And the moment she thinks that, her uncle - '..choices.brother..' appears in the sky. He dives toward the duck.'
+            return 'scene 218: "How can I catch a flying duck?" wonders Alena. And the moment she thinks that, her uncle - '..choices.brother..' appears in the sky. He dives toward the duck.'
         end,
         animations = function() catchADuck(1)  end,
         animationComplete = function()
@@ -5728,13 +5732,13 @@ local scenes = {}
         soundEffect = 'wingsFlap1.mp3'
     }
 
-    scenes[206] = {
-        sName = 206, 
+    scenes[219] = {
+        sName = 219, 
         changeFlow = function() 
-            if choices.berries==true then scenes[206].follows = 207 
-            else scenes[206].follows = 209 end
+            if choices.berries==true then scenes[219].follows = 220 
+            else scenes[219].follows = 222 end
         end,
-        text='scene 206: The duck, unable to evade him, lets out an egg. It falls down into a field of tall grass. "How can I find the egg in all this green?" thinks Alena. ',
+        text='scene 219: The duck, unable to evade him, lets out an egg. It falls down into a field of tall grass. "How can I find the egg in all this green?" thinks Alena. ',
         animations = function()
             transition.to(brotherShape, {x=200, y=-200, time=1000})
             transition.to(duckFly, {x=200, y=-500, time=1000})
@@ -5752,10 +5756,10 @@ local scenes = {}
         soundEffect = 'eggMagic.mp3'
     }
 
-    scenes[207] = {
-        sName = 207,
-        follows = 208,
-        text='scene 207: Then she hears squeaking.',
+    scenes[220] = {
+        sName = 220,
+        follows = 221,
+        text='scene 220: Then she hears squeaking.',
         animations = function()
             WolfS.alpha=1 WolfS.isVisible = true WolfS.x=650
             MouseS.y=-130 MouseS.x=600 MouseS.alpha=1 MouseS.isVisible=true MouseS.xScale=-1
@@ -5769,10 +5773,10 @@ local scenes = {}
         soundEffect = 'mouseSqueak.mp3'
     }
 
-    scenes[208] = {
-        sName = 208,
-        follows = 211,
-        text='scene 208: "You helped me and now, I\'ll help you!" says the mouse she met at Baba Yaga\'s hut jumping into the grass.',
+    scenes[221] = {
+        sName = 221,
+        follows = 224,
+        text='scene 221: "You\'ve shared your food with me, so I\'ll help you!" says the mouse she met at Baba Yaga\'s hut jumping into the grass.',
         animations = function()
             hideBigCharacters()
             showDialogueBack()
@@ -5786,10 +5790,10 @@ local scenes = {}
         end
     }
 
-    scenes[209] = {
-        sName = 209,
-        follows = 210,
-        text='scene 209: \"What would you do without me.\" says Gray Wolf and turns himself into a mouse and jumps into the grass. For a moment, all Alena can hear is the moaning of the wind.',
+    scenes[222] = {
+        sName = 222,
+        follows = 223,
+        text='scene 222: \"What would you do without me.\" says Gray Wolf and turns himself into a mouse and jumps into the grass. For a moment, all Alena can hear is the moaning of the wind.',
         animations = function() 
             MouseS.xScale = -1 MouseS.isVisible = true MouseS.alpha=0 MouseS.x=600 MouseS.y=-100 MouseS:toFront()
             WolfS.alpha=1 WolfS.isVisible = true WolfS.x=650
@@ -5811,10 +5815,10 @@ local scenes = {}
         soundEffect = 'wolfMagic.mp3'
     }
 
-    scenes[210] = {
-        sName = 210,
-        follows = 212,
-        text='scene 210: "Here you go!" says Gray Wolf in the form of the mouse offering Alena the precious egg. ',
+    scenes[223] = {
+        sName = 223,
+        follows = 225,
+        text='scene 223: "Here you go!" says Gray Wolf in the form of the mouse offering Alena the precious egg. ',
         animations = function()
             AlenaHolding.x=300 AlenaHolding.y=0 AlenaHolding.alpha=0 AlenaHolding.isVisible=true
             transition.to(MouseS, {x=600, time=700, delay=500})
@@ -5835,10 +5839,10 @@ local scenes = {}
         end
     }
 
-    scenes[211] = {
-        sName = 211,
-        follows = 212,
-        text='scene 211: "Here you go!" says the mouse offering Alena the precious egg. ',
+    scenes[224] = {
+        sName = 224,
+        follows = 225,
+        text='scene 224: "Here you go!" says the mouse offering Alena the precious egg. ',
         animations = function() 
             transDialogueBack()
             AlenaHolding.x=300 AlenaHolding.y=0 AlenaHolding.alpha=0 AlenaHolding.isVisible=true
@@ -5859,10 +5863,10 @@ local scenes = {}
         end
     }
 
-    scenes[212] = {
-        sName = 212,
-        follows = 213,
-        text='scene 212: A thunderstorm is forming on the horizon, as Alena breaks the egg and pulls out a shining needle. Koschei the Deathless appears in front of her and with him, the sky blackens, and the ground shakes. ',
+    scenes[225] = {
+        sName = 225,
+        follows = 226,
+        text='scene 225: A thunderstorm is forming on the horizon, as Alena breaks the egg and pulls out a shining needle. Koschei the Deathless appears in front of her and with him, the sky blackens, and the ground shakes. ',
         animations = function()
             transition.to(eggWhole, {alpha=0, time=700, delay=500})
             transition.to(eggBroken, {alpha=1, time=700, delay=500})
@@ -5888,10 +5892,10 @@ local scenes = {}
         soundEffect = 'thunderBolt.mp3'
     }
 
-    scenes[213] = {
-        sName = 213,
-        follows = 214,
-        text='scene 213: Birds in the forest stop singing. Hoarfrost begins to spread across the green grass starting from his feet. The leaves on the trees freeze when he breathes on them.',
+    scenes[226] = {
+        sName = 226,
+        follows = 227,
+        text='scene 226: Birds in the forest stop singing. Hoarfrost begins to spread across the green grass starting from his feet. The leaves on the trees freeze when he breathes on them.',
         animations = function() 
             transition.to(iceLayer, {alpha=1, time=2000, delay=500}) 
             transition.to(foregroundNew, {alpha=0.8, time=2000, delay=1000})  
@@ -5905,10 +5909,10 @@ local scenes = {}
         soundEffect = 'windKoschei.mp3'
     }
     
-    scenes[214] = {
-        sName = 214,
-        follows = 215,
-        text='scene 214: But the moment Koschei sees the needle in Alena\'s hand, the storm disappears.',
+    scenes[227] = {
+        sName = 227,
+        follows = 228,
+        text='scene 227: But the moment Koschei sees the needle in Alena\'s hand, the storm disappears.',
         animations = function() 
             transition.to(iceLayer, {alpha=0, time=2000, delay=500}) 
             transition.to(foregroundNew, {alpha=0, time=2000, delay=1000})
@@ -5935,10 +5939,10 @@ local scenes = {}
         soundEffect = 'windKoschei.mp3'
     }
 
-    scenes[215] = {
-        sName = 215,
-        follows = 216,
-        text='scene 215: Koschei: \"Spare me, Alena. Don\'t kill me. I\'ll free your brother, and you can imprison me in your dungeon again. Just don\'t break the tip of that needle!\"',
+    scenes[228] = {
+        sName = 228,
+        follows = 229,
+        text='scene 228: Koschei: \"Spare me, Alena. Don\'t kill me. I\'ll free your brother, and you can imprison me in your dungeon again. Just don\'t break the tip of that needle!\"',
         animations = function()
             hideBigCharacters()
             showDialogueBack()
@@ -5950,13 +5954,13 @@ local scenes = {}
         end
     }
 
-    scenes[216] = {
-        sName = 216,
+    scenes[229] = {
+        sName = 229,
         selection = {
-            [1] = {'Break the needle', 221},
-            [2] = {'Spare Koschei', 217},
+            [1] = {'Break the needle', 234},
+            [2] = {'Spare Koschei', 230},
         },
-        text='scene 216: Alena sees her brother standing behind Koschei and feels the stare of her companion. The sky is clear, and the air is full of chirping birds and rustling leaves.',
+        text='scene 229: Alena sees her brother standing behind Koschei and feels the stare of her companion. The sky is clear, and the air is full of chirping birds and rustling leaves.',
         animations = function()
             transDialogueBack()
             IvanS.xScale=-1 IvanS.x=1200 IvanS.y=0 IvanS.isVisible=true IvanS.alpha=1
@@ -5972,14 +5976,15 @@ local scenes = {}
         soundEffect = 'oakForest1.mp3'
     }
 
-    scenes[217] = {
-        sName = 217,
+    scenes[230] = {
+        sName = 230,
         clearSelection = true,
-        follows = 218,
+        follows = 231,
         changeFlow = function() choices.wolfPenalty =  choices.wolfPenalty-1 end,
-        text='scene 217: \"I am not as ruthless as you are!\" says Alena, and she orders Koschei to return to his prison, mend the chains, and put them on.',
+        text='scene 230: \"I am not as ruthless as you are!\" says Alena, and she orders Koschei to return to his prison, mend the chains, and put them on.',
         animations = function()
             sunRise.alpha = 1
+            transition.to(AddBlackening, {alpha=0, time=1000, delay=1000})
             transition.to(koshPleaNC, {alpha=0, time=1200, delay=1500})
             transition.to(sunRise, {y=-250, time=1000})
             transition.to(lightLayer, {alpha=1, time=1000, delay=500})
@@ -5989,6 +5994,7 @@ local scenes = {}
             transition.to(landscape3Light, {alpha=1, time=1000, delay=1000})
         end,
         animationComplete = function()
+            AddBlackening.alpha = 0
             sunRise.alpha = 1
             koshPleaNC.x=-200
             sunRise.y=-250
@@ -6005,11 +6011,11 @@ local scenes = {}
         soundEffect = 'oakForest2.mp3'
     }
 
-    scenes[218] = {
-        sName = 218,
+    scenes[231] = {
+        sName = 231,
         changeFlow = function() 
-            if choices.wolfPenalty < 2 then scenes[218].follows =  219
-            else scenes[218].follows = 223 end
+            if choices.wolfPenalty < 2 then scenes[231].follows =  232
+            else scenes[231].follows = 236 end
         end,
         text='scene 218: Ivan runs to his sister, and they finally embrace each other.',
         animations = function()
@@ -6029,10 +6035,10 @@ local scenes = {}
         soundEffect = 'oakForest1.mp3'
     }
 
-    scenes[219] = {
-        sName = 219,
-        follows = 220,
-        text='scene 219: "You are a brave girl, Alena. I started to help you as a debt to your mother, but now I see you are someone worthy not just of my service, but of my friendship as well." says Gray Wolf. ',
+    scenes[232] = {
+        sName = 232,
+        follows = 233,
+        text='scene 232: "You are a brave girl, Alena. I started to help you as a debt to your mother, but now I see you are someone worthy not just of my service, but of my friendship as well." says Gray Wolf. ',
         animations = function() 
             hideBigCharacters()
             showDialogueBack()
@@ -6041,10 +6047,10 @@ local scenes = {}
         animationComplete = function() hideBigCharacters() end
     }
 
-    scenes[220] = {
-        sName = 220,
-        follows = 225,
-        text='scene 220: \"Jump on my back with Ivan, and I\'ll carry you both home!\"',
+    scenes[233] = {
+        sName = 233,
+        follows = 238,
+        text='scene 233: \"Jump on my back with Ivan, and I\'ll carry you both home!\"',
         animations = function() 
             transDialogueBack()
             AlenaIvanRiding.y=10 AlenaIvanRiding.alpha=0 AlenaIvanRiding.isVisible=true
@@ -6060,14 +6066,15 @@ local scenes = {}
         end
     }
 
-    scenes[221] = {
-        sName = 221,
+    scenes[234] = {
+        sName = 234,
         clearSelection = true,
-        follows = 222,
+        follows = 235,
         changeFlow = function() choices.wolfPenalty = choices.wolfPenalty+1 end,
-        text='scene 221: "You\'ve caused too much suffering, and you have to pay for that!" says Alena breaking the needle. A bright ray of sunlight pierces the warlock like a knife. ',
+        text='scene 234: "You\'ve caused too much suffering, and you have to pay for that!" says Alena breaking the needle. A bright ray of sunlight pierces the warlock like a knife. ',
         animations = function()
             sunRise.alpha = 1
+            transition.to(AddBlackening, {alpha=0, time=1000, delay=1000})
             transition.to(needle, {alpha=0, time=500})
             transition.to(needleBroken, {alpha=1, time=500})
             transition.to(sunRise, {y=-250, time=1000, delay=500})
@@ -6078,6 +6085,7 @@ local scenes = {}
             transition.to(landscape3Light, {alpha=1, time=1000, delay=1000})
         end,
         animationComplete = function()
+            AddBlackening.alpha=0
             needle.alpha=0
             sunRise.y=-250 sunRise.alpha = 1
             lightLayer.alpha=0.5
@@ -6092,10 +6100,10 @@ local scenes = {}
         soundEffect = 'needleBreak.mp3'
     }
 
-    scenes[222] = {
-        sName = 222,
-        follows = 218,
-        text='scene 222: Koschei screams, but soon his screaming weakens. His bones scatter as he falls to the ground, a handful of gray dust.',
+    scenes[235] = {
+        sName = 235,
+        follows = 231,
+        text='scene 235: Koschei screams, but soon his screaming weakens. His bones scatter as he falls to the ground, a handful of gray dust.',
         animations = function() 
             --dust flies
             transition.to(effectDust, {alpha=1, time=1000, delay=500})
@@ -6117,10 +6125,10 @@ local scenes = {}
         soundEffect = 'oakForest2.mp3'
     }
 
-    scenes[223] = {
-        sName = 223,
-        follows = 224,
-        text='scene 223: \"I am not disputing your decisions, Alena, but with this, my debt to your mother is paid in full,\" says Grey Wolf. \"You can return home and tell her that.\"',
+    scenes[236] = {
+        sName = 236,
+        follows = 237,
+        text='scene 236: \"I am not disputing your decisions, Alena, but with this, my debt to your mother is paid in full,\" says Grey Wolf. \"You can return home and tell her that.\"',
         animations = function() 
             hideBigCharacters()
             showDialogueBack()
@@ -6134,10 +6142,10 @@ local scenes = {}
         end
     }
 
-    scenes[224] = {
-        sName = 224,
-        follows = 228,
-        text='scene 224: So Alena says her goodbye and with sadness in her heart, she watches Gray Wolf disappear into the forest.',
+    scenes[237] = {
+        sName = 237,
+        follows = 238,
+        text='scene 237: So Alena says her goodbye and with sadness in her heart, she watches Gray Wolf disappear into the forest.',
         animations = function() 
             transDialogueBack()
             transition.to(WolfS, {x=1300, time=1000, delay=1000}) 
@@ -6148,15 +6156,15 @@ local scenes = {}
 
 -------- Act 8 (Ending) Scenes 215 - 220
 
-    scenes[225] = {
-        sName = 225,
-        follows = 226,
+    scenes[238] = {
+        sName = 238,
+        follows = 239,
         openingAnimation = {
             [1] = 'background1.png', 
             [2] = 'foreground1.png'
         },
         setStage = 'setMotherHouse',
-        text='scene 225: So they return home together. ',
+        text='scene 238: So they return home together. ',
         animations = function() 
             loadHomeSet()
             sun.x=300
@@ -6185,9 +6193,9 @@ local scenes = {}
         soundEffect = 'opening.mp3',
 
     }
-    scenes[226] = {
-        sName = 226,
-        follows = 227,
+    scenes[239] = {
+        sName = 239,
+        follows = 240,
         text='scene 226: Without Koschei\'s witchcraft, Alena\'s mother, Marya Morevna, easily overpowers his minions, and peace and prosperity falls across the land.',
         animations = function()
             loadMotherFinal()
@@ -6201,10 +6209,10 @@ local scenes = {}
         soundEffect = 'birdsSinging.mp3',
     }
 
-    scenes[227] = {
-        sName = 227,
-        follows = 231,
-        text='scene 227: Their mother is happy to see them home again. Gray Wolf settles nearby, and they live in health and good cheer for many long years. ',
+    scenes[240] = {
+        sName = 240,
+        follows = 244,
+        text='scene 240: Their mother is happy to see them home again. Gray Wolf settles nearby, and they live in health and good cheer for many long years. ',
         animations = function()
             AlenaS.isVisible = true AlenaS.x = 200 AlenaS.alpha=0 AlenaS.y=0
             IvanS.isVisible = true IvanS.x = 130 IvanS.alpha=0 IvanS.y=0 IvanS.xScale=1
@@ -6223,15 +6231,15 @@ local scenes = {}
         soundEffect = 'birdsSinging.mp3',
     }
 
-    scenes[228] = {
-        sName = 228,
+    scenes[241] = {
+        sName = 241,
         openingAnimation = {
             [1] = 'background1_a.png', 
             [2] = 'foreground1.png'
         },
         setStage = 'setMotherHouse',
-        follows = 229,
-        text='scene 228: It is a long way home for for Alena and her brother.',
+        follows = 242,
+        text='scene 241: It is a long way home for for Alena and her brother.',
         animations = function() 
             loadHomeSet() 
             AlenaS.isVisible = true AlenaS.alpha=1 AlenaS.x = 200 
@@ -6257,10 +6265,10 @@ local scenes = {}
         soundEffect = 'opening.mp3',
     }
 
-    scenes[229] = {
-        sName = 229,
-        follows = 230,
-        text='scene 229: Without Koschei\'s witchcraft, Alena\'s mother, Marya Morevna, easily overpowers his minions, and peace and prosperity falls across the land. ',
+    scenes[242] = {
+        sName = 242,
+        follows = 243,
+        text='scene 242: Without Koschei\'s witchcraft, Alena\'s mother, Marya Morevna, easily overpowers his minions, and peace and prosperity falls across the land. ',
         animations = function() loadMotherFinal() 
         end,
         animationComplete = function()
@@ -6272,26 +6280,26 @@ local scenes = {}
         soundEffect = 'birdsSinging.mp3',
     }
 
-    scenes[230] = {
-        sName = 230,
-        follows = 231,
-        text='scene 230: They live in health and in good cheer for many long years. ',
+    scenes[243] = {
+        sName = 243,
+        follows = 244,
+        text='scene 243: They live in health and in good cheer for many long years. ',
         animations = function() end,
         animationComplete = function()end,
         -- Sound: Birds singing
         soundEffect = 'birdsSinging.mp3',
     }
 
-    scenes[231] = {
-        sName = 231,
-        follows = 232,
+    scenes[244] = {
+        sName = 244,
+        follows = 245,
         text='',
-        animations = function() loadEndingBack() end,
+        animations = function() loadEnding() end,
         animationComplete = function()end
     }
 
-    scenes[232] = {
-        sName = 232,
+    scenes[245] = {
+        sName = 245,
         animations = function() end,
         animationComplete = function()end
     }
@@ -6307,9 +6315,19 @@ function setCenter(img)
     img.x = display.contentWidth / 2 img.y = display.contentHeight / 2
 end
 
-function loadEndingBack()
-    endingBack:toFront()
-    transition.to(endingBack, {y=0, time=1000})
+function loadEnding()
+    foregoundGr:insert(endingBack)
+    transition.to(endingBack, {y=0, time=500})
+    textContainer.isVisible = false
+    endingContainer.isVisible = false
+    textContainerNA.isVisible = false
+    sceneText.isVisible = false
+    select1Container.isVisible = false
+    select1Text.isVisible = false
+    select2Container.isVisible = false
+    select2Text.isVisible = false
+    select3Container.isVisible = false
+    select3Text.isVisible = false
 end
 
 
@@ -7074,7 +7092,7 @@ local function setStageObjects(stage)
             eggBroken.x = 345 eggBroken.y = 275 eggBroken.alpha=0
 
             hareRun = display.newImage(midlayer2, "images/chars/hare.png", true) setAnchor(hareRun)
-            hareRun.x = 830 hareRun.y = -220 hareRun.alpha=0
+            hareRun.x = 830 hareRun.y = -600 hareRun.alpha=1
             duckFly = display.newImage(midlayer3, "images/chars/duck.png", true) setAnchor(duckFly)
             duckFly.x = 500 duckFly.y = -100 duckFly.alpha = 0
 
@@ -7125,8 +7143,8 @@ local function setStageObjects(stage)
             lightningLayer.x=0 lightningLayer.y=0
             lightningLayer.alpha=0
 
-
-
+            AddBlackening = display.newImage(midlayer2, "images/effects/additional_blackening.png", true) setAnchor(AddBlackening)
+            AddBlackening.x=0 AddBlackening.y=0
 
 
             organizeStage()
@@ -7862,6 +7880,8 @@ function loadGameBegining()
     textContainer:addEventListener( "touch", sceneTextTouch)
 
     -- Clear all selections
+    print('Clearing all selections')
+    --[[
     choices.bless = false
     choices.basement = false
     choices.bucket = 0
@@ -7873,6 +7893,7 @@ function loadGameBegining()
     choices.berries = false
     choices.wolfPenalty = 0
     choices.horseTaken = false
+    ]]
 
     achivCollected = {'start'}
 
@@ -7889,7 +7910,7 @@ function loadGameBegining()
     -- 156 - yaga yard
     -- 163 - yaga hut
     -- 195 - oak
-    loadScene(scenes[167])
+    loadScene(scenes[207])
 end
 
 
