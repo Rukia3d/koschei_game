@@ -6303,6 +6303,19 @@ local scenes = {}
         animations = function() end,
         animationComplete = function()end
     }
+local creditsLine = 'Development: Inga Pflaumer\n\nThanks to cgtextures.com for free textures\n\nThanks to pixabay.com for free references\n\nThanks to musopen.org for royalty free music\n'
+
+local creditOptions = {
+    parent = textLayers,
+    text = creditsLine,     
+    x = 512,
+    y = 800,
+    width = 600,    
+    font = 'PTSans-Regular',   
+    fontSize = 24,
+    align = "center" 
+}
+
 
 -----------------------------------------------------------------------------------
 --
@@ -6328,6 +6341,8 @@ function loadEnding()
     select2Text.isVisible = false
     select3Container.isVisible = false
     select3Text.isVisible = false
+    local textualInfo = display.newText(creditOptions)
+    transition.to(textualInfo, {y=-200,time=10000})
 end
 
 
