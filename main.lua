@@ -5547,7 +5547,7 @@ local scenes = {}
             if choices.bear == true then scenes[209].follows = 211 
             else scenes[209].follows = 210 end
         end,
-        text='scene 196: The ancient oak is so big, that clouds are tangled in its branches. The oak grouches as the wind rocks the chest hanging from a gold chain dangling from the massive bough. "How can I get to the chest?" wonders Alena.',
+        text='scene 209: The ancient oak is so big, that clouds are tangled in its branches. The oak grouches as the wind rocks the chest hanging from a gold chain dangling from the massive bough. "How can I get to the chest?" wonders Alena.',
         animations = function() 
             moveToOak() 
             transition.to(mistLayer, {alpha=0.5, time=5000})
@@ -5897,7 +5897,8 @@ local scenes = {}
         follows = 227,
         text='scene 226: Birds in the forest stop singing. Hoarfrost begins to spread across the green grass starting from his feet. The leaves on the trees freeze when he breathes on them.',
         animations = function() 
-            transition.to(iceLayer, {alpha=1, time=2000, delay=500}) 
+            transition.to(iceLayer, {alpha=1, time=2000, delay=500})
+            foregroundNew:toFront() 
             transition.to(foregroundNew, {alpha=0.8, time=2000, delay=1000})  
         end,
         animationComplete = function()
@@ -6305,17 +6306,6 @@ local scenes = {}
     }
 local creditsLine = 'Development: Inga Pflaumer\n\nThanks to cgtextures.com for free textures\n\nThanks to pixabay.com for free references\n\nThanks to musopen.org for royalty free music\n'
 
-local creditOptions = {
-    parent = textLayers,
-    text = creditsLine,     
-    x = 512,
-    y = 800,
-    width = 600,    
-    font = 'PTSans-Regular',   
-    fontSize = 24,
-    align = "center" 
-}
-
 
 -----------------------------------------------------------------------------------
 --
@@ -6341,10 +6331,40 @@ function loadEnding()
     select2Text.isVisible = false
     select3Container.isVisible = false
     select3Text.isVisible = false
+    local creditOptions = {
+        parent = foregoundGr,
+        text = creditsLine,     
+        x = 512,
+        y = 1000,
+        width = 600,    
+        font = 'PTSans-Regular',   
+        fontSize = 24,
+        align = "center" 
+    }
+
+    local restartOptions = {
+        parent = foregoundGr,
+        text = 'The end\nRestart the game',     
+        x = 512,
+        y = 400,
+        width = 250,    
+        font = 'PTSans-Regular',   
+        fontSize = 34,
+        align = "center" 
+    }
     local textualInfo = display.newText(creditOptions)
-    transition.to(textualInfo, {y=-200,time=10000})
+    transition.to(textualInfo, {y=-200,time=9000, delay=1000})
+
+    local restartYes = display.newText(restartOptions)
+    restartYes:setFillColor(1,1,1) restartYes.alpha = 0
+
+    transition.to(restartYes, {alpha=1,delay=10000, time=1})
+    restartYes:addEventListener( 'touch', restartTheGame)
+
 end
 
+function clearCredits()
+end
 
 -- Display Dialogues functions
 function showDialogueBack()
@@ -7140,7 +7160,6 @@ local function setStageObjects(stage)
             lightLayer.x = 420 lightLayer.y = 0 lightLayer.alpha=0
 
 
-
             needle = display.newImage(midlayer3, "images/scenes/needle.png", true) setAnchor(needle)
             needle.x = 430 needle.y = 200 needle.alpha=0 needle.rotation = 30
 
@@ -7786,6 +7805,7 @@ end
 
 function restartTheGame(event)
     if event.phase == "began" then 
+        endingBack.y=-800
         print('Listener restartTheGame called')
         menuCloseAndRemove()
         choices.bucket = 0
