@@ -4,6 +4,7 @@
 --
 -----------------------------------------------------------------------------------------
 
+
 -----------------------------------------------------------------------------------------
 --
 -- DISPLAY GROUNPS
@@ -43,6 +44,9 @@ playlistLayers.anchorX = 0 playlistLayers.anchorY = 0
 
 local actChangeLevel = display.newGroup()
 actChangeLevel.anchorX = 0 actChangeLevel.anchorY = 0
+
+local creditsLayer = display.newGroup()
+creditsLayer.anchorX = 0 creditsLayer.anchorY = 0
 
 -----------------------------------------------------------------------------------------
 --
@@ -1083,37 +1087,84 @@ function showEnding() end
 
 local playlistCompositions = {
     [1] = {
-        composition = "composition1",
-        performer = "performer1",
-        a_file = "smth",
+        composition = "Pictures at an Exhibition \"Promenade\" by Modest Mussorgsky",
+        performer = "Skidmore College Orchestra",
     },
     [2] = {
-        composition = "composition2",
-        performer = "performer2",
-        a_file = "smth",
+        composition = "Pictures at an Exhibition \"The Market at Limoges\" by Modest Mussorgsky",
+        performer = "Skidmore College Orchestra",
     },
     [3] = {
-        composition = "composition3",
-        performer = "performer3",
-        a_file = "smth",
+        composition = "Pictures at an Exhibition \"Catacombs\" by Modest Mussorgsky",
+        performer = "Skidmore College Orchestra",
     },
     [4] = {
-        composition = "composition4",
-        performer = "performer4",
-        a_file = "smth",
+        composition = "Pictures at an Exhibition \"The Hut on Fowl's Legs\" by Modest Mussorgsky",
+        performer = "Skidmore College Orchestra",
     },
     [5] = {
-        composition = "composition5",
-        performer = "performer5",
-        a_file = "smth",
+        composition = "Pictures at an Exhibition \"The Great Gate of Kiev\" by Modest Mussorgsky",
+        performer = "Skidmore College Orchestra",
     },
 
 }
-function showPlayList()
-    local PL_text1 = ''
+PL_compOptions = {
+    parent = playlistLayers,
+    text = "",     
+    x = 445,
+    y = 500,
+    width = 540,    
+    font = 'PTSans-Regular',   
+    fontSize = 20,
+    align = "left" 
+} 
 
+PL_perfOptions = {
+    parent = playlistLayers,
+    text = "",     
+    x = 650,
+    y = 500,
+    width = 400,    
+    font = 'PTSans-Regular',   
+    fontSize = 16,
+    align = "right" 
+}
+
+
+function showPlayList()
+    print("Showing playlist")
+    displayList = display.newGroup()
+    displayList.anchorX = 0 displayList.anchorY = 0
+
+    local yMove = 210
+
+    for i=1, 5 do
+        displayComposition(playlistCompositions[i], yMove, displayList)
+        yMove = yMove+80
+    end
 end
+
+function displayComposition(comp, yMove, displayList)
+    local PL_comp = display.newText(PL_compOptions) PL_comp.isVisible = true
+    PL_comp:setFillColor( 0, 0, 0 )
+    PL_comp.text = comp.composition  PL_comp.y = yMove 
+    displayList:insert(PL_comp)
+
+    local PL_perf = display.newText(PL_perfOptions) PL_perf.isVisible = true
+    PL_perf:setFillColor( 0, 0, 0 )
+    PL_perf.text = comp.performer  PL_perf.y = yMove+20 
+    displayList:insert(PL_perf)
+
+    local PL_separator = display.newImage("images/menus/achiv_separator.png" ) setAnchor(PL_separator)
+    PL_separator.x=170 PL_separator.y=yMove+25 PL_separator.isVisible = true
+    displayList:insert(PL_separator)
+end
+
 function hidePlayList()
+    for i=1, displayList.numChildren do
+        displayList[1]:removeSelf()
+        displayList[1] = nil
+    end
 end
 
 
@@ -1348,24 +1399,24 @@ local achivements = {
     executioner = {
         -- Broken needle
         name = 'executioner',
-        img70 = 'images/achivements/example70.png', 
-        img50 = 'images/achivements/example50.png', img50_g = 'images/achivements/example50g.png',
+        img70 = 'images/achivements/executioner70.png', 
+        img50 = 'images/achivements/executioner50.png', img50_g = 'images/achivements/executioner50g.png',
         title = 'Executioner',
         descr =  'Someone had to do it.'
     },
     goodEnd = {
         -- Alena Ivan Wolf
         name = 'goodEnd',
-        img70 = 'images/achivements/example70.png', 
-        img50 = 'images/achivements/example50.png', img50_g = 'images/achivements/example50g.png',
+        img70 = 'images/achivements/goodEnd70.png', 
+        img50 = 'images/achivements/goodEnd50.png', img50_g = 'images/achivements/goodEnd50g.png',
         title = 'All there',
         descr =  'You finished the game and returned home. Bravo!'
     },
     badEnd = {
         -- Alena Ivan
         name = 'badEnd',
-        img70 = 'images/achivements/example70.png', 
-        img50 = 'images/achivements/example50.png', img50_g = 'images/achivements/example50g.png',
+        img70 = 'images/achivements/badEnd70.png', 
+        img50 = 'images/achivements/badEnd50.png', img50_g = 'images/achivements/badEnd50g.png',
         title = 'Not all there',
         descr =  'Who needs this dull Wolf around anyway.'
     },
@@ -1556,24 +1607,37 @@ choices = {
     brother = 'NoInfo',
     brother1 = 'NoInfo',
     vasilisa = 'NoInfo',
-    --vasilisaGo = false,
-    vasilisaGo = true,
-    --bear = false,
-    bear = true,
-    --berries = false,
-    berries = true,
+    vasilisaGo = false,
+    bear = false,
+    berries = false,
     wolfPenalty = 0,
-    wolfPenaltyAct3 = 0
+    wolfPenaltyAct3 = 0,
+    wolfPenaltyAct4 = 0
 }
 
+local function restartAllChoices() 
+    choices.bless = false
+    choices.basement = false
+    choices.bucket = 0
+    choices.brother = 'NoInfo'
+    choices.brother1 = 'NoInfo'
+    choices.vasilisa = 'NoInfo'
+    choices.vasilisaGo = false
+    choices.bear = false
+    choices.berries = false
+    choices.wolfPenalty = 0
+    choices.wolfPenaltyAct3 = 0
+    choices.wolfPenaltyAct4 = 0
+end
 
 local dialogBackground;
 
 local scenes = {} 
 
--------- Act 1 Scenes 1 - 45
+-------- Act I Scenes 1 - 45
 
     scenes[1] = {
+        saveGame = true,
         sName = 1,
         openingAnimation = {
             [1] = 'background1.png', 
@@ -1727,6 +1791,7 @@ local scenes = {}
     }
 
     scenes[10] = {
+        saveGame = true,
         sName = 10,
         setStage = 'setHouseInside',
         openingAnimation = {
@@ -1919,6 +1984,7 @@ local scenes = {}
     }
 
     scenes[21] = {
+        saveGame = true,
         sName = 21,
         setStage = 'setBasement',
         openingAnimation = {
@@ -2177,6 +2243,7 @@ local scenes = {}
         end
     }
     scenes[33] = {
+        saveGame = true,
         sName = 33,
         setStage = 'setHouseInside',
         text = 'scene 33: Alena takes her brother and closes the door to the basement. When they go up, Ivan reproaches her for being so harsh on the prisoner. "Aren\'t we supposed to respect our elders?" asks Ivan.',
@@ -2224,6 +2291,7 @@ local scenes = {}
 
     }
     scenes[35] = {
+        saveGame = true,
         sName = 35,
         setStage = 'setBasement',
         text = 'scene 35: When she wakes up, her brother is nowhere to be found. Panic-stricken, she runs to the basement and sees the open door and an empty buсket on the floor near the prisoner.',
@@ -2282,6 +2350,7 @@ local scenes = {}
         soundEffect = 'windKoschei.mp3'
     }
     scenes[37] = {
+        saveGame = true,
         sName = 37,
         text = "scene 37: Alena runs outside, screaming her brother\'s name, but gets only the moaning of the wind and the whispering of the forest in reply.",
         follows = 38,
@@ -2413,19 +2482,22 @@ local scenes = {}
         soundEffect = 'leavesFalling.mp3',
     }
 
-
--------- Act 2 Scenes 45 - 61
+-------- ACT II
 
     scenes[45] = {
+        sName = 45,
         actEnding = {
             text = 'You finished Act 1.\n You can proceed to Act 2 or you can replay Act 1 to change the story.\n\nProgress:',
             follow = 46,
+            reload = 1,
             progressBar = 'progress1.png',
             act = 1,
             cont = 2,
+            music = 'MusicTrack2.mp3',
         }
     }
     scenes[46] = {
+        saveGame = true,
         sName = 46,
         openingAnimation = {
             [1] = 'background6.png', 
@@ -2708,6 +2780,7 @@ local scenes = {}
     }
 
     scenes[59] = {
+        saveGame = true,
         sName = 59,
         setStage = 'setUncleCastle',
         openingAnimation = {
@@ -2776,7 +2849,9 @@ local scenes = {}
         text = 'scene 62: Alena: "That\'s the reception I get from my own uncle?"',
         follows = 63,
         clearSelection = true,
-        changeFlow = function() choices.wolfPenalty = choices.wolfPenalty+1 end,
+        changeFlow = function() 
+            choices.wolfPenalty = choices.wolfPenalty+1 
+        end,
         animations = function() 
             showDialogueChar(Alena, 400, 400)
         end,
@@ -2801,7 +2876,9 @@ local scenes = {}
         text = 'scene 64: Alena turns to Gray Wolf for advice, and he tells her to offer help instead of demanding help. Though not sure how it might work, Alena offers to help her uncle deal with his predicament.',
         follows = 66,
         clearSelection = true,
-        changeFlow = function() choices.wolfPenalty = choices.wolfPenalty-1 end,
+        changeFlow = function() 
+            choices.wolfPenalty = choices.wolfPenalty-1 
+        end,
         animations = function() 
             transDialogueBack()
             hideBigCharacters()
@@ -2887,8 +2964,8 @@ local scenes = {}
         end
     }
 
--------- Act 3 Scenes 70 - 104
     scenes[71] = {
+        saveGame = true,
         setStage = 'setAppleGarden',
         sName = 71,
         text = 'scene 71: They rush at full speed, so the lights of the stars in the sky flow together into a river of spilled milk. On the way, the north wind tears away a ribbon from Alena\'s braid.',
@@ -3043,6 +3120,7 @@ local scenes = {}
     }
 
     scenes[78] = {
+        saveGame = true,
         sName = 78,
         setStage = 'setForest2',
         clearSelection = true,
@@ -3064,6 +3142,7 @@ local scenes = {}
     }
 
     scenes[79] = {
+        saveGame = true,
         sName = 79,
         setStage = 'setForest2',
         clearSelection = true,
@@ -3150,6 +3229,7 @@ local scenes = {}
     }
 
     scenes[83] = {
+        saveGame = true,
         sName = 83,
         follows = 85,
         setStage = 'setUncleCastle',
@@ -3183,6 +3263,7 @@ local scenes = {}
     }
 
     scenes[84] = {
+        saveGame = true,
         sName = 84,
         follows = 85,
         setStage = 'setUncleCastle',
@@ -3238,6 +3319,7 @@ local scenes = {}
     }
 
     scenes[86] = {
+        saveGame = true,
         sName = 86,
         setStage = 'setStables',
         follows = 88,
@@ -3257,6 +3339,7 @@ local scenes = {}
     }
 
     scenes[87] = {
+        saveGame = true,
         sName = 87,
         setStage = 'setStables',
         follows = 88,
@@ -3376,6 +3459,7 @@ local scenes = {}
     }
 
     scenes[93] = {
+        saveGame = true,
         sName = 93,
         follows = 94,
         setStage = 'setForest3',
@@ -3464,6 +3548,7 @@ local scenes = {}
         end
     }
     scenes[97] = {
+        saveGame = true,
         sName = 97,
         follows = 99,
         setStage = 'setUncleCastle',
@@ -3504,6 +3589,7 @@ local scenes = {}
     }
 
     scenes[98] = {
+        saveGame = true,
         sName = 98,
         follows = 99,
         setStage = 'setUncleCastle',
@@ -3597,6 +3683,7 @@ local scenes = {}
     }
 
     scenes[103] = {
+        saveGame = true,
         sName = 103,
         setStage = 'setBerendei',
         follows = 104,
@@ -3735,6 +3822,7 @@ local scenes = {}
     }
 
     scenes[110] = {
+        saveGame = true,
         sName = 110,
         follows = 116,
         setStage = 'setForest4',
@@ -3803,6 +3891,7 @@ local scenes = {}
         end
     }
     scenes[113] = {
+        saveGame = true,
         sName = 113,
         setStage = 'setForest4',
         follows = 114,
@@ -3867,6 +3956,7 @@ local scenes = {}
     }
 
     scenes[116] = {
+        saveGame = true,
         sName = 116,
         setStage = 'setUncleCastle',
         openingAnimation = {
@@ -3924,6 +4014,7 @@ local scenes = {}
     }
 
     scenes[118] = {
+        saveGame = true,
         sName = 118,
         setStage = 'setForest4',
         follows = 119,
@@ -3974,6 +4065,7 @@ local scenes = {}
     }
 
     scenes[121] = {
+        saveGame = true,
         sName = 121,
         setStage = 'setForest4',
         follows = 122,
@@ -4001,18 +4093,22 @@ local scenes = {}
         animationComplete = function()end
     }
 
--------- Act 4 Scenes 105 - 146
+-------- ACT III
     scenes[123] = {
+        sName = 123,
         actEnding = {
             text = 'You finished Act 2.\n You can proceed to Act 3 or you can replay Act 2 to change the story.\n\nProgress:',
             follow = 124,
+            reload = 46,
             progressBar = 'progress2.png',
             act = 2,
             cont = 3,
+            music = 'MusicTrack3.mp3',
         }
     }
 
     scenes[124] = {
+        saveGame = true,
         sName = 124,
         openingAnimation = {
             [1] = 'background11.png', 
@@ -4259,7 +4355,7 @@ local scenes = {}
 
     scenes[137] = {
         sName = 137,
-        follows = 139,
+        follows = 140,
         text='scene 137: Alena, soothed by the heat of fire and the warmth of Gray Wolf\'s fur barely notices when the blizzard has finally passed. But she has to continue her journey in search for Ivan, so they leave their cosy shelter behind.',
         animations = function()
             transDialogueBack()
@@ -4299,6 +4395,7 @@ local scenes = {}
     }
 
     scenes[140] = {
+        saveGame = true,
         sName = 140,
         follows = 141,
         setStage='setKoshCastle',
@@ -4866,17 +4963,21 @@ local scenes = {}
         end
     }
 
--------- Act 5 Scenes 156 - 163
+-------- ACT IV
     scenes[167] = {
+        sName = 167,
         actEnding = {
             text = 'You finished Act 3.\n You can proceed to Act 4 or you can replay Act 3 to change the story.\n\nProgress:',
             follow = 168,
+            reload = 124,
             progressBar = 'progress3.png',
             act = 4,
             cont = 5,
+            music = 'MusicTrack4.mp3',
         }
     }
     scenes[168] = {
+        saveGame = true,
         sName = 168,
         setStage = 'setYagaYard',
         openingAnimation = {
@@ -5001,9 +5102,9 @@ local scenes = {}
         soundEffect = 'hutSqueak.mp3'
     }
 
--------- Act 6 Scenes 163 - 194
 
     scenes[175] = {
+        saveGame = true,
         sName = 175,
         setStage='setYagaHut',
         openingAnimation = {
@@ -5500,18 +5601,22 @@ local scenes = {}
         animationComplete = function()end
     }
 
--------- Act 7 Scenes 195 - 202
+-------- Act V
     scenes[207] = {
+        sName = 207,
         actEnding = {
             text = 'You finished Act 4.\n You can proceed to Act 5 or you can replay Act 4 to change the story.\n\nProgress:',
             follow = 208,
+            reload = 168,
             progressBar = 'progress4.png',
             act = 4,
             cont = 5,
+            music = 'MusicTrack5.mp3',
         }
     }
 
     scenes[208] = {
+        saveGame = true,
         sName = 208,
         follows = 209,
         setStage = 'setOakMountain',
@@ -5981,7 +6086,10 @@ local scenes = {}
         sName = 230,
         clearSelection = true,
         follows = 231,
-        changeFlow = function() choices.wolfPenalty =  choices.wolfPenalty-1 end,
+        changeFlow = function() 
+            choices.wolfPenalty =  choices.wolfPenalty-1
+            choices.wolfPenaltyAct4 =  -1
+        end,
         text='scene 230: \"I am not as ruthless as you are!\" says Alena, and she orders Koschei to return to his prison, mend the chains, and put them on.',
         animations = function()
             sunRise.alpha = 1
@@ -6071,7 +6179,10 @@ local scenes = {}
         sName = 234,
         clearSelection = true,
         follows = 235,
-        changeFlow = function() choices.wolfPenalty = choices.wolfPenalty+1 end,
+        changeFlow = function() 
+            choices.wolfPenalty = choices.wolfPenalty+1
+            choices.wolfPenaltyAct4 = 1 
+        end,
         text='scene 234: "You\'ve caused too much suffering, and you have to pay for that!" says Alena breaking the needle. A bright ray of sunlight pierces the warlock like a knife. ',
         animations = function()
             sunRise.alpha = 1
@@ -6145,7 +6256,7 @@ local scenes = {}
 
     scenes[237] = {
         sName = 237,
-        follows = 238,
+        follows = 241,
         text='scene 237: So Alena says her goodbye and with sadness in her heart, she watches Gray Wolf disappear into the forest.',
         animations = function() 
             transDialogueBack()
@@ -6155,9 +6266,8 @@ local scenes = {}
         animationComplete = function() removeCurtain() WolfS.x=1300 end
     }
 
--------- Act 8 (Ending) Scenes 215 - 220
-
     scenes[238] = {
+        saveGame = true,
         sName = 238,
         follows = 239,
         openingAnimation = {
@@ -6233,6 +6343,7 @@ local scenes = {}
     }
 
     scenes[241] = {
+        saveGame = true,
         sName = 241,
         openingAnimation = {
             [1] = 'background1_a.png', 
@@ -6304,6 +6415,8 @@ local scenes = {}
         animations = function() end,
         animationComplete = function()end
     }
+
+
 local creditsLine = 'Development: Inga Pflaumer\n\nThanks to cgtextures.com for free textures\n\nThanks to pixabay.com for free references\n\nThanks to musopen.org for royalty free music\n'
 
 
@@ -6332,7 +6445,7 @@ function loadEnding()
     select3Container.isVisible = false
     select3Text.isVisible = false
     local creditOptions = {
-        parent = foregoundGr,
+        parent = creditsLayer,
         text = creditsLine,     
         x = 512,
         y = 1000,
@@ -6343,8 +6456,8 @@ function loadEnding()
     }
 
     local restartOptions = {
-        parent = foregoundGr,
-        text = 'The end\nRestart the game',     
+        parent = creditsLayer,
+        text = 'The end\n',     
         x = 512,
         y = 400,
         width = 250,    
@@ -6352,18 +6465,23 @@ function loadEnding()
         fontSize = 34,
         align = "center" 
     }
+    creditsLayer:toFront()
+
     local textualInfo = display.newText(creditOptions)
     transition.to(textualInfo, {y=-200,time=9000, delay=1000})
 
-    local restartYes = display.newText(restartOptions)
-    restartYes:setFillColor(1,1,1) restartYes.alpha = 0
+    local endgame = display.newText(restartOptions)
+    endgame:setFillColor(1,1,1) endgame.alpha = 0
 
-    transition.to(restartYes, {alpha=1,delay=10000, time=1})
-    restartYes:addEventListener( 'touch', restartTheGame)
+    transition.to(endgame, {alpha=1,delay=10000, time=1})
 
 end
 
 function clearCredits()
+    for i=1, creditsLayer.numChildren do
+        creditsLayer[1]:removeSelf()
+        creditsLayer[1] = nil
+    end
 end
 
 -- Display Dialogues functions
@@ -6439,6 +6557,7 @@ local function organizeStage()
     charactersDial:toFront()
     foregoundGr:toFront()
     textLayers:toFront()
+    creditsLayer:toFront()
 end
 
 -- Fill up the stage
@@ -7188,6 +7307,65 @@ local function setStageObjects(stage)
     stages[stage]()
 end
 
+-----------------------------------------------------------------------------------------
+--
+-- SAVING AND LOADING GAME
+--
+-----------------------------------------------------------------------------------------
+local loadsave = require( "loadsave" )
+
+--- save last act played
+function saveGame(scene)
+    local gameState = {
+        scene = scene.sName,
+        choices = choices,
+        achivCollected = achivCollected
+    }
+    print("Saving game state")
+    loadsave.print_r(gameState)
+    print("Scene is ")
+    loadsave.print_r(scene)
+    print("Achiv is ")
+    loadsave.print_r(achivCollected)
+    loadsave.saveTable(gameState, "save.json")
+end
+
+function saveLoudness()
+    local gameSound = {
+        music = audio.getVolume( { channel=S_MusicCh } ),
+        effects = audio.getVolume( { channel=S_BgSfxCh } ),
+    }
+    loadsave.saveTable(gameSound, "sound.json")
+end
+
+function loadLoudness()
+    if loadsave.loadTable("sound.json") then
+        local gameSound = loadsave.loadTable("sound.json")
+        loudnessMusic = gameSound.music
+        loudnessEffects = gameSound.effects
+        audio.setVolume( loudnessMusic, { channel=S_MusicCh })
+        audio.setVolume( loudnessEffects, { channel=S_BgSfxCh })
+    end
+end
+
+function loadGame()
+    transition.cancel()
+    loadLoudness()
+    loadGameBegining()
+    local gameState = loadsave.loadTable("save.json")
+
+    achivCollected = gameState.achivCollected
+    choices = gameState.choices
+
+    clearActEnding()
+    loadScene(scenes[gameState.scene]) 
+end
+
+-----------------------------------------------------------------------------------------
+--
+-- MENU FUNCTIONS
+--
+-----------------------------------------------------------------------------------------
 
 function showMenuContent()
     print('We are in showMenuContent')
@@ -7337,20 +7515,6 @@ function loadMenu()
     playlistLayers:toFront()
 end
 
-function clearAchivHistory()
-    --[[
-    for i=1, achivListDisplay.numChildren do
-        achivListDisplay[1]:removeSelf()
-        achivListDisplay[1] = nil
-    end
-    print("Scrollview num children "..scrollView.numChildren)
-    for i=1, scrollView.numChildren do
-        --scrollView[1]:removeSelf()
-        --scrollView[1] = nil
-    end
-    ]]
-end
-
 function loadAchivements()
     createScroll()
 
@@ -7370,6 +7534,22 @@ function loadAchivements()
     end
     achivLayers:toFront()
     scrollView:insert(putHereGroup)
+end
+
+function loadActMusic(music)
+    local S_soundtrack = audio.loadStream( "sounds/soundtrack/"..music)    
+    -- local loudnessMusic = audio.getVolume({ channel=S_MusicCh } )
+    local loudnessMusic = 'x'
+    print('Loading music track '..music..', volume '..loudnessMusic)
+    -- audio.setVolume( loudnessMusic, { channel=S_MusicCh })
+    if audio.isChannelActive(S_MusicCh) then
+        audio.stop(S_MusicCh)
+    end
+    audio.play(S_soundtrack,
+        { 
+            loops=-1, fadein=500, channel=S_MusicCh, onComplete = function() audio.dispose(S_soundtrack) S_soundtrack = nil end 
+        }
+    )
 end
 
 function showActEnding(info)
@@ -7402,7 +7582,7 @@ function showActEnding(info)
 
     transition.to(AR_progressBar, {alpha=1, time=500, delay=500})
 
-    AR_reloadButton.isVisible = true AR_reloadButton.reload = info.act AR_reloadButton.follow = info.follow
+    AR_reloadButton.isVisible = true AR_reloadButton.reload = info.act AR_reloadButton.follow = info.reload AR_reloadButton.music = info.music
     AR_continueButton.isVisible = true AR_continueButton.continue = info.cont AR_continueButton.follow = info.follow
 
     transition.to(AR_reloadButton, {alpha=1, time=500, delay=500})
@@ -7453,8 +7633,15 @@ function clearActEnding()
 end
 
 function loadScene(s)
-    if s.actEnding then 
+    if s.saveGame then
+        saveGame(s)
+    end
+    if s.actEnding then
+        print('Start displaying ending '..s.actEnding.music)
+        hideAnnotAchivement() 
         showActEnding(s.actEnding)
+        -- audio.stop(S_MusicCh)
+        loadActMusic(s.actEnding.music)
     else
         print('Start displaying scene '..s.sName)
         if s.changeFlow then 
@@ -7557,10 +7744,10 @@ function loadScene(s)
         if(s.soundEffect) then 
             local S_soundEffect = audio.loadSound( "sounds/"..s.soundEffect)
             
-            local loudnessClick = audio.getVolume({ channel=S_ClickSfxCh } )
-            audio.setVolume( loudnessClick, { channel=S_BgSfxCh })
+            -- local loudnessClick = audio.getVolume({ channel=S_ClickSfxCh } )
+            -- audio.setVolume( loudnessClick, { channel=S_BgSfxCh })
             audio.play( S_soundEffect,
-                { loops=0, fadein=500, channel=S_BgSfxCh, onComplete = function() audio.dispose(S_soundEffect) end }
+                { loops=0, fadein=500, channel=S_BgSfxCh, onComplete = function() audio.dispose(S_soundEffect) S_soundEffect = nil end }
             )
         end
 
@@ -7774,6 +7961,7 @@ function loudnessSwitchListener(event)
                 audio.play(S_turnEffect, {channel=S_ClickSfxCh} )
                 displayLoudness('Effects')
             end
+            saveLoudness()
         end
     end
 end
@@ -7804,13 +7992,17 @@ function restartTheGameConfirm(event)
 end
 
 function restartTheGame(event)
-    if event.phase == "began" then 
+    if event.phase == "began" then
+        if(creditsLayer) then clearCredits() end
+
+        if loadsave.loadTable("save.json") then loadsave.remove("save.json") end
+
         endingBack.y=-800
         print('Listener restartTheGame called')
         menuCloseAndRemove()
-        choices.bucket = 0
-        choices.wolfPenalty = 0
-        loadGameBegining()
+        clearActEnding()
+        loadActMusic('MusicTrack1.mp3')
+        reinitializeGame()
     end 
 end
 
@@ -7826,14 +8018,15 @@ function restartCanceled(event)
     end
 end
 
--- Listeners for restarting
-function reloadActListener(event)
-    print("Getting act to restart. Act num "..event.target.reload)
-    local actToRestart = event.target.reload
+function reloadAct(actToRestart)
+    print("Getting act to restart. Act num "..actToRestart)
+    -- audio.stop(S_MusicCh)
+
     if actToRestart==1 then 
         choices.bless = false
         choices.basement = false
         choices.bucket = 0
+        loadActMusic('MusicTrack1.mp3')
     end
 
     if actToRestart==2 then 
@@ -7842,25 +8035,39 @@ function reloadActListener(event)
         choices.wolfPenalty = 0
         choices.vasilisa = 'NoInfo'
         choices.vasilisaGo = false
+        loadActMusic('MusicTrack2.mp3')
     end
     
     if actToRestart==3 then 
-        choices.wolfPenalty = choices.wolfPenalty + choices.wolfPenaltyAct3
         choices.bear = false
+        if choices.wolfPenaltyAct3 > 0 then choices.wolfPenalty = choices.wolfPenalty - 1
+        else choices.wolfPenalty = choices.wolfPenalty + 1 end
+        loadActMusic('MusicTrack3.mp3')
     end
     
     if actToRestart==4 then 
+        choices.berries = false
+        loadActMusic('MusicTrack4.mp3')
     end
     
     if actToRestart==5 then 
+        if choices.wolfPenaltyAct4 > 0 then choices.wolfPenalty = choices.wolfPenalty - 1
+        else choices.wolfPenalty = choices.wolfPenalty + 1 end
+        loadActMusic('MusicTrack5.mp3')
     end
+end
+
+-- Listeners for restarting
+function reloadActListener(event)
+    local actToRestart = event.target.reload
 
     if event.phase == "began" then
         AR_reloadButtonY.isVisible = true 
     end
     if event.phase == "ended" then
         clearActEnding()
-        loadScene(scenes[event.target.reload])
+        reloadAct(actToRestart)
+        loadScene(scenes[event.target.follow])
     end
 end
 
@@ -7875,6 +8082,7 @@ function continueActListener(event)
     end
 end
 
+
 -----------------------------------------------------------------------------------------
 --
 -- LOADING GAME FIRST TIME
@@ -7885,50 +8093,28 @@ local myListener
 myListener = function( event )
     if event.phase == "ended" then 
         print("myListener called")
-        loadGameBegining()
+        if loadsave.loadTable("save.json") then 
+            loadGame()
+        else 
+            loadGameBegining()
+            reinitializeGame()
+        end
         return true
     end
 end
 
-function loadGameBegining()
-    dialBack.y=0
-    background:removeEventListener("touch", myListener)
-    setAnchor(textContainer)
-    setAnchor(textContainerNA)
-
-    setAnchor(select1Text)
-    setAnchor(select2Text)
-    setAnchor(select3Text)
-
-    -- listeners for the right blocks
+function reinitializeGame()
+    -- clear selects
     select1Container.isVisible = false
     select2Container.isVisible = false
     select3Container.isVisible = false
     select1Text.text = ''
     select2Text.text = ''
     select3Text.text = ''
-    select1Container:addEventListener( "touch", sceneTextTouch)
-    select2Container:addEventListener( "touch", sceneTextTouch)
-    select3Container:addEventListener( "touch", sceneTextTouch)
-    
-    -- listener for the main text
-    textContainer:addEventListener( "touch", sceneTextTouch)
 
     -- Clear all selections
     print('Clearing all selections')
-    --[[
-    choices.bless = false
-    choices.basement = false
-    choices.bucket = 0
-    choices.brother = 'NoInfo'
-    choices.brother1 = 'NoInfo'
-    choices.vasilisa = 'NoInfo'
-    choices.vasilisaGo = false
-    choices.bear = false
-    choices.berries = false
-    choices.wolfPenalty = 0
-    choices.horseTaken = false
-    ]]
+    restartAllChoices()
 
     achivCollected = {'start'}
 
@@ -7945,8 +8131,32 @@ function loadGameBegining()
     -- 156 - yaga yard
     -- 163 - yaga hut
     -- 195 - oak
-    loadScene(scenes[207])
+    loadScene(scenes[1])
+end
+
+function loadGameBegining()
+    dialBack.y=0
+    clearActEnding()
+    if(creditsLayer) then clearCredits() end
+    background:removeEventListener("touch", myListener)
+
+    setAnchor(textContainer)
+    setAnchor(textContainerNA)
+
+    setAnchor(select1Text)
+    setAnchor(select2Text)
+    setAnchor(select3Text)
+
+    -- listeners for the right blocks
+    select1Container:addEventListener( "touch", sceneTextTouch)
+    select2Container:addEventListener( "touch", sceneTextTouch)
+    select3Container:addEventListener( "touch", sceneTextTouch)
+    
+    -- listener for the main text
+    textContainer:addEventListener( "touch", sceneTextTouch)
 end
 
 
+
 background:addEventListener( "touch", myListener )
+loadActMusic('MusicTrack1.mp3')
