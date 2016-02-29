@@ -1648,6 +1648,7 @@ local scenes = {}
         follows = 2,
         animations = function()
         -- Animation: Home on the edge of the forest set, Alena and Ivan down
+            removeCurtain()
             AlenaS.isVisible = true AlenaS.x = 200 
             IvanS.isVisible = true IvanS.x = 130
 
@@ -1802,6 +1803,7 @@ local scenes = {}
         follows = 11,
         animations = function()
         -- Animation: setting insides of the house
+            removeCurtain()
             setStageHome()
         end,
         animationComplete = function()
@@ -1996,6 +1998,7 @@ local scenes = {}
         clearSelection = true,
         animations = function()
         -- Animation: Basement shows
+            removeCurtain()
             setBasementStage()
         end,
         animationComplete = function()
@@ -2298,6 +2301,7 @@ local scenes = {}
         follows = 36,
         clearSelection = true,
         animations = function() 
+            removeCurtain()
             setBasementFast()
             AlenaS.isVisible = true AlenaS.x = 140 
             IvanS.isVisible = true IvanS.x = 560
@@ -2358,6 +2362,7 @@ local scenes = {}
         animations = function()
             --Effect: leaves fly
             --Sound: wind in the trees
+            removeCurtain()
             setHouseAnEvening()
             AlenaCryS.isVisible = true
             transition.to(AlenaCryS, {y=-40, time=1000, delay=500})
@@ -2507,6 +2512,7 @@ local scenes = {}
         text='scene 46: Alena sits on Gray Wolf\'s back, hugs his massive neck, and he starts to run - so fast that before the sun touches down on the treetops to the west, they have already reached the crossroads on the other side of the forest.',
         follows = 47,
         animations = function()
+            removeCurtain()
             loadForest1()
             AlenaOnWolf.x=600 AlenaOnWolf.y=-600 AlenaOnWolf.isVisible=true
             transition.to(AlenaOnWolf, {y=0, time=1000, delay=3000})
@@ -2790,6 +2796,7 @@ local scenes = {}
         text = 'scene 59: Her uncle is standing in a great hall wearing a gloomy look. ',
         follows = 60,
         animations = function() 
+            removeCurtain()
             hideSmallCharacters()
             loadUncleCastle()
 
@@ -2974,6 +2981,7 @@ local scenes = {}
             [2] = {'Forget it', 73},
         },
         animations = function()
+            removeCurtain()
             hideSmallCharacters()
             loosingRibbon()
             transition.to(starsWay, {alpha=0.5, time=2000})
@@ -3127,6 +3135,7 @@ local scenes = {}
         text = 'scene 78: Gray Wolf grabs Alena and leaps over the wall. "You should have listened to me," he says. "Now Falcon\'s hounds will follow us to his brother\'s stronghold!"',
         follows = 80,
         animations = function()
+            removeCurtain()
             setForestFast()
             hideSmallCharacters()
             ridingWolftoRight(AlenaOnWolfNoRibbon)
@@ -3149,6 +3158,7 @@ local scenes = {}
         text = 'scene 79: Gray Wolf grabs Alena and leaps over the wall. "You should have listened to me," he says. "Now Raven\'s hounds will follow us to his brother\'s stronghold!"',
         follows = 80,
         animations = function() 
+            removeCurtain()
             setForestFast()
             hideSmallCharacters()
             ridingWolftoRight(AlenaOnWolfNoRibbon)
@@ -3239,6 +3249,7 @@ local scenes = {}
         },
         text='scene 83: Seeing the golden apple, her uncle\'s face flourishes a smile. \"You are a very handy girl,\" says he.',
         animations = function()
+            removeCurtain()
             hideSmallCharacters()
             loadUncleCastleFast()
             WolfSit.isVisible = false
@@ -3273,6 +3284,7 @@ local scenes = {}
         },
         text='scene 84: Seeing the golden apple, her uncle\'s face flourishes a smile. \"You are a very handy girl,\" says he.',
         animations = function()
+            removeCurtain()
             hideSmallCharacters()
             loadUncleCastleFast()
             WolfSit.isVisible = true
@@ -3325,6 +3337,7 @@ local scenes = {}
         follows = 88,
         text='scene 86: As the moon climbs high in the sky, Alena and her loyal companion dash to Eagle\'s castle.',
         animations = function()
+            removeCurtain()
             setForestFast()
             hideSmallCharacters()
             ridingWolftoLeft(AlenaOnWolfNoRibbon)
@@ -3345,6 +3358,7 @@ local scenes = {}
         follows = 88,
         text='scene 88: As the moon climbs high in the sky, Alena and her loyal companion dash to Falcon\'s castle.',
         animations = function()
+            removeCurtain()
             setForestFast()
             hideSmallCharacters()
             ridingWolftoLeft(AlenaOnWolfNoRibbon)
@@ -3465,6 +3479,7 @@ local scenes = {}
         setStage = 'setForest3',
         text='scene 93: "You should have listened to me," says he. "This horse is not as fast as I am. It may run fast through the courtyard, but outside the wall, they can catch us!"',
         animations = function()
+            removeCurtain()
             setForest3Fast()
             hideSmallCharacters()
             GoldenHorse.isVisible=true GoldenHorse.y=-35 GoldenHorse.x=1200
@@ -3689,6 +3704,7 @@ local scenes = {}
         follows = 104,
         text='scene 103: The western edge of the sky grows lighter as Alena, seated on Gray Wolf\'s back rushes to Berendei\'s kingdom. Near the castle wall, they stop. ',
         animations = function()
+            removeCurtain()
             hideSmallCharacters() 
             ridingWolftoLeft(AlenaOnWolfNoRibbon)
             transition.to(StrongholdBer, {x=600, time=1000, delay=2000})
@@ -3828,6 +3844,7 @@ local scenes = {}
         setStage = 'setForest4',
         text='scene 110: The sun is slowly coming up, dispersing the morning gloom. The first cockcrows are waking up. Alena is worried. "Can my brother see this dawn from Koschei\'s castle?" she wonders and hopes that with her uncle\'s help she can save him.',
         animations = function()
+            removeCurtain()
             transition.to(forrestDawn, {alpha=0.5, time=1000})
             ridingWolftWithVasilisa(1000)
         end,
@@ -3897,7 +3914,7 @@ local scenes = {}
         follows = 114,
         text='scene 113: The sun is slowly coming up, dispersing the morning gloom. The first cockcrows are waking up.',
         animations = function()
-            transDialogueBack()
+            removeCurtain()
 
             AlenaOnWolfNoRibbon.alpha=1 AlenaOnWolfNoRibbon.isVisible = true AlenaOnWolfNoRibbon.x=1200 AlenaOnWolfNoRibbon.y=0 AlenaOnWolfNoRibbon.xScale=1
             transition.to(forrestDawn, {alpha=0.5, time=1000})
@@ -3968,6 +3985,7 @@ local scenes = {}
             return 'scene 116: The servants lead Alena and '..choices.vasilisa..'  to the '..choices.brother
             end,        
         animations = function()
+            removeCurtain()
             loadUncleCastleFast()
             forrestDawn.alpha=1
             VasilisaS.x=600 VasilisaS.y = -600 VasilisaS.isVisible = true VasilisaS.alpha=1
@@ -4020,6 +4038,7 @@ local scenes = {}
         follows = 119,
         text='scene 118: Alena follows the road on foot.',
         animations = function()
+            removeCurtain()
             hideSmallCharacters()
             forrestDawn.alpha=1
             forrestSunny.alpha=0
@@ -4071,6 +4090,7 @@ local scenes = {}
         follows = 122,
         text='scene 121: Alena and Gray Wolf continue their journey. Alena tries not to think about Vasilisa\'s fate, as her only goal is to find her lost brother and return him home.',
         animations = function()
+            removeCurtain()
             forrestDawn.alpha=1
             forrestSunny.alpha=0
             hideSmallCharacters()
@@ -4118,6 +4138,7 @@ local scenes = {}
         follows = 125,
         text='scene 125: It is getting colder. The sun is powerless to blow away the snowy gloom. The chilly wind swipes the Gray earth and sways the bony trees barren of all leaves. Slowly even Gray Wolf grows tired of ceaselessly galloping against the snowstorm.',
         animations = function()
+            removeCurtain()
             AlenaOnWolfNoRibbon.isVisible = true AlenaOnWolfNoRibbon.alpha=1
             AlenaOnWolfNoRibbon.xScale =-1 AlenaOnWolfNoRibbon.x=-250 AlenaOnWolfNoRibbon.y=0
             transition.to(shadowLayer9, {alpha=1, time=1000, delay=2000})
@@ -4401,6 +4422,7 @@ local scenes = {}
         setStage='setKoshCastle',
         text='scene 141: After a while they get to Koschei\'s stronghold, an impregnable ice castle stands opposite them. There is no way of knowing if its ruthless overlord is inside. Gray Wolf sniffs the air. ',
         animations = function()
+            removeCurtain()
             AlenaOnWolfNoRibbon.isVisible=true AlenaOnWolfNoRibbon.xScale = -1
             AlenaOnWolfNoRibbon.x=-100 AlenaOnWolfNoRibbon.y=0
             transition.to(AlenaOnWolfNoRibbon, {x=650, time=1500, delay=500})
@@ -4987,6 +5009,7 @@ local scenes = {}
         follows = 169,
         text='scene 168: The old witch, called Baba Yaga, lives in a hut set high on fowl\'s legs standing in the thick of the forest. They say she eats uninvited guests and uses their bones for her fence.',
         animations = function()
+            removeCurtain()
             foreground.y=0 
             loadYagaForest()
             AlenaOnWolfNoRibbon.x=500 AlenaOnWolfNoRibbon.y=-600 AlenaOnWolfNoRibbon.isVisible = true AlenaOnWolfNoRibbon.alpha=1
@@ -5114,6 +5137,7 @@ local scenes = {}
         follows = 176,
         text='scene 175: The moment she steps over the threshold, Baba Yaga riding in a mortar, wielding a pestle, flies into the doorway.',
         animations = function()
+            removeCurtain()
             loadYagaHut()
             glowEyesFlicker(500, glowEyes2)
         end,
@@ -5626,6 +5650,7 @@ local scenes = {}
         },
         text='scene 208: So Alena\'s journey continues. Gray Wolf awaits her on the other side of the fence, and they race along to the end of the forest. It takes them the better part of the night, and they arrive at the mountain in an early morning mist.',
         animations = function()
+            removeCurtain()
             AlenaOnWolfNoRibbon.xScale=-1 AlenaOnWolfNoRibbon.x=500 AlenaOnWolfNoRibbon.y=-600 AlenaOnWolfNoRibbon.isVisible=true AlenaOnWolfNoRibbon.alpha=1
             setOakLevel()
             transition.to(mistLayer, {alpha=1, time=1000, delay=1000})
@@ -6277,6 +6302,7 @@ local scenes = {}
         setStage = 'setMotherHouse',
         text='scene 238: So they return home together. ',
         animations = function() 
+            removeCurtain()
             loadHomeSet()
             sun.x=300
             AlenaIvanRiding.xScale = -1 AlenaIvanRiding.isVisible=true AlenaIvanRiding.y=-600 
@@ -6352,7 +6378,8 @@ local scenes = {}
         setStage = 'setMotherHouse',
         follows = 242,
         text='scene 241: It is a long way home for for Alena and her brother.',
-        animations = function() 
+        animations = function()
+            removeCurtain() 
             loadHomeSet() 
             AlenaS.isVisible = true AlenaS.alpha=1 AlenaS.x = 200 
             IvanS.isVisible = true IvanS.alpha=1 IvanS.x = 130
@@ -6417,7 +6444,7 @@ local scenes = {}
     }
 
 
-local creditsLine = 'Development: Inga Pflaumer\n\nThanks to cgtextures.com for free textures\n\nThanks to pixabay.com for free references\n\nThanks to musopen.org for royalty free music\n'
+local creditsLine = 'Development: Inga Pflaumer\n\nThanks to cgtextures.com for free textures\n\nThanks to pixabay.com for free references\n\nThanks to freesound.org for sound effects\n\nThanks to musopen.org for royalty free music\n'
 
 
 -----------------------------------------------------------------------------------
@@ -8062,7 +8089,8 @@ function reloadActListener(event)
     local actToRestart = event.target.reload
 
     if event.phase == "began" then
-        AR_reloadButtonY.isVisible = true 
+        AR_reloadButtonY.isVisible = true
+        audio.play( S_turnEffect, {loops=0, channel=S_ClickSfxCh} ) 
     end
     if event.phase == "ended" then
         clearActEnding()
@@ -8074,7 +8102,8 @@ end
 function continueActListener(event)
     print("Getting act to continue. Act num "..event.target.follow)
     if event.phase == "began" then
-        AR_continueButtonY.isVisible = true 
+        AR_continueButtonY.isVisible = true
+        audio.play( S_turnEffect, {loops=0, channel=S_ClickSfxCh} ) 
     end
     if event.phase == "ended" then
         clearActEnding()
