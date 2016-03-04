@@ -4632,7 +4632,7 @@ local scenes = {}
         sName = 150,
         follows = 153,
         clearSelection = true,
-        text='scene 150: "The springs!" remembers Gray Wolf. "The springs that Bear talked about! But only Crows know where they are." \nGray Wolf looks around and soon notices two crows sitting on a tree branch. "I need to catch them and make them bring me some of those waters!"',
+        text='scene 150: "The springs!" remembers Gray Wolf. "The springs that Bear talked about! But only Crows know where they are." Gray Wolf looks around and soon notices two crows sitting on a tree branch. "I need to catch them and make them bring me some of those waters!"',
         animations = function() loadCrows() end,
         animationComplete = function()
             crowSmall.y = -170
@@ -6444,7 +6444,7 @@ local scenes = {}
     }
 
 
-local creditsLine = 'Development: Inga Pflaumer\n\nThanks to cgtextures.com for free textures\n\nThanks to pixabay.com for free references\n\nThanks to freesound.org for sound effects\n\nThanks to musopen.org for royalty free music\n'
+local creditsLine = 'Development: Inga Pflaumer\n\nPowered by Corona SDK\n\nThanks to cgtextures.com for free textures\n\nThanks to pixabay.com for free references\n\nThanks to freesound.org for sound effects\n\nThanks to musopen.org for royalty free music\n'
 
 
 -----------------------------------------------------------------------------------
