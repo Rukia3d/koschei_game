@@ -127,15 +127,15 @@ local Mother = display.newImage( charactersDial, "images/chars/mother_s_dialogue
 local MotherWar = display.newImage( charactersDial, "images/chars/mother_f_dialogue.png", true) MotherWar.isVisible = false
 local KoscheiPlea = display.newImage( charactersDial, "images/chars/kosh_plea_dialogue.png", true) KoscheiPlea.isVisible = false
 local Koschei = display.newImage( charactersDial, "images/chars/koschei_f_big.png", true) Koschei.isVisible = false
-local Wolf = display.newImage( charactersDial, "images/chars/wolf_dialogue.png", false) Wolf.isVisible = false 
-local AlenaNR = display.newImage( charactersDial, "images/chars/alena_f_dialogueNR.png", false) AlenaNR.isVisible = false 
-local VasilisaD = display.newImage( charactersDial, "images/chars/vasilisa_f_dialogue.png", false) VasilisaD.isVisible = false
-local VasilisaCry = display.newImage( charactersDial, "images/chars/vasilisa_s_dialogue.png", false) VasilisaCry.isVisible = false
-local Bear = display.newImage( charactersDial, "images/chars/bear_dialogue.png", false) Bear.isVisible = false
-local CrowD = display.newImage( charactersDial, "images/chars/crow_f_dialogue.png", false) CrowD.isVisible = false
-local YagaD = display.newImage( charactersDial, "images/chars/yaga_dialogue.png", false) YagaD.isVisible = false
-local MouseD = display.newImage( charactersDial, "images/chars/mouseDial.png", false) MouseD.isVisible = false
-local KoscheiPleaNCD = display.newImage( charactersDial, "images/chars/kosh_plea_dialogue_NC.png", false) KoscheiPleaNCD.isVisible = false
+local Wolf = display.newImage( charactersDial, "images/chars/wolf_dialogue.png", true) Wolf.isVisible = false 
+local AlenaNR = display.newImage( charactersDial, "images/chars/alena_f_dialogueNR.png", true) AlenaNR.isVisible = false 
+local VasilisaD = display.newImage( charactersDial, "images/chars/vasilisa_f_dialogue.png", true) VasilisaD.isVisible = false
+local VasilisaCry = display.newImage( charactersDial, "images/chars/vasilisa_s_dialogue.png", true) VasilisaCry.isVisible = false
+local Bear = display.newImage( charactersDial, "images/chars/bear_dialogue.png", true) Bear.isVisible = false
+local CrowD = display.newImage( charactersDial, "images/chars/crow_f_dialogue.png", true) CrowD.isVisible = false
+local YagaD = display.newImage( charactersDial, "images/chars/yaga_dialogue.png", true) YagaD.isVisible = false
+local MouseD = display.newImage( charactersDial, "images/chars/mouseDial.png", true) MouseD.isVisible = false
+local KoscheiPleaNCD = display.newImage( charactersDial, "images/chars/kosh_plea_dialogue_NC.png", true) KoscheiPleaNCD.isVisible = false
 
 -- Charcters for brother's scenes
 local BrotherD = display.newImage(foregoundGr, "images/menus/transparent.png")
