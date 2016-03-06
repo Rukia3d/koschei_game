@@ -1,6 +1,6 @@
 application =
 {
-
+	showRuntimeErrors = true,
 	content =
 	{
 		width = 768,

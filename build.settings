@@ -5,7 +5,19 @@
 
 settings =
 {
-	
+	plugins =
+    {
+        ["CoronaProvider.analytics.flurry"] =
+        {
+            publisherId = "com.coronalabs",
+            supportedPlatforms = { iphone=true, android=true }
+        },
+        ["CoronaProvider.gameNetwork.google"] =
+        {
+            publisherId = "com.coronalabs",
+            supportedPlatforms = { android=true }
+        },
+    },
 	orientation =
 	{
 		default = "landscapeRight",
@@ -26,6 +38,16 @@ settings =
 	{
 		plist =
 		{
+            NSAppTransportSecurity = {
+                 NSExceptionDomains =
+                 {
+                      ["flurry.com"] =
+                      {
+                         NSIncludesSubdomains = true,
+                         NSThirdPartyExceptionAllowsInsecureHTTPLoads = true
+                      },
+                 },
+            },
 			CFBundleDisplayName = "Koschei the Deathless",
             CFBundleName = "Koschei the Deathless",
 			UIStatusBarHidden = false,
