@@ -27,6 +27,8 @@ local midlayer3 = display.newGroup()
 midlayer3.anchorX = 0 midlayer3.anchorY = 0 
 local foregoundGr = display.newGroup()
 foregoundGr.anchorX = 0 foregoundGr.anchorY = 0 
+local foregrAdditional = display.newGroup()
+foregrAdditional.anchorX = 0 foregrAdditional.anchorY = 0 
 local textLayers = display.newGroup()
 local achivGroup = display.newGroup()
 
@@ -1577,6 +1579,7 @@ local function organizeStage()
     midlayer3:toFront()
     charactersDial:toFront()
     foregoundGr:toFront()
+    foregrAdditional:toFront()
     textLayers:toFront()
     achivGroup:toFront()
     buttonLayers:toFront()
@@ -1584,6 +1587,7 @@ local function organizeStage()
     playlistLayers:toFront()
     achivLayers:toFront()
     actChangeLevel:toFront()
+    creditsLayer:toFront()
 end
 
 -----------------------------------------------------------------------------------------
@@ -1631,6 +1635,7 @@ local scenes = {}
 
     scenes[1] = {
         saveGame = true,
+        mtrack = 'MusicTrack1.mp3',
         sName = 1,
         openingAnimation = {
             [1] = 'background1.png', 
@@ -1682,7 +1687,7 @@ local scenes = {}
     }
     scenes[3] = {
         sName = 3,
-        text = "scene 3: Alena, as the oldest, has to watch over her little brother, and every morning before going to the city, her mother gives her a set of three instructions to follow throughout the day.",
+        text = "Alena, as the oldest, has to watch over her little brother, and every morning before going to the city, her mother gives her a set of three instructions to follow throughout the day.",
         follows = 4,
         animations = function()
         -- Animation: showing Mother figure
@@ -1786,6 +1791,7 @@ local scenes = {}
 
     scenes[10] = {
         saveGame = true,
+        mtrack = 'MusicTrack1.mp3',
         sName = 10,
         setStage = 'setHouseInside',
         openingAnimation = {
@@ -1980,6 +1986,7 @@ local scenes = {}
 
     scenes[21] = {
         saveGame = true,
+        mtrack = 'MusicTrack1.mp3',
         sName = 21,
         setStage = 'setBasement',
         openingAnimation = {
@@ -2240,6 +2247,7 @@ local scenes = {}
     }
     scenes[33] = {
         saveGame = true,
+        mtrack = 'MusicTrack1.mp3', 
         sName = 33,
         setStage = 'setHouseInside',
         text = 'Alena takes her brother and closes the door to the basement. When they go up, Ivan reproaches her for being so harsh on the prisoner. "Aren\'t we supposed to respect our elders?" asks Ivan.',
@@ -2288,6 +2296,7 @@ local scenes = {}
     }
     scenes[35] = {
         saveGame = true,
+        mtrack = 'MusicTrack1.mp3',
         sName = 35,
         setStage = 'setBasement',
         text = 'When she wakes up, her brother is nowhere to be found. Panic-stricken, she runs to the basement and sees the open door and an empty buсket on the floor near the prisoner.',
@@ -2348,6 +2357,7 @@ local scenes = {}
     }
     scenes[37] = {
         saveGame = true,
+        mtrack = 'MusicTrack1.mp3',
         sName = 37,
         text = "Alena runs outside, screaming her brother\'s name, but gets only the moaning of the wind and the whispering of the forest in reply.",
         follows = 38,
@@ -2490,12 +2500,13 @@ local scenes = {}
             reload = 1,
             progressBar = 'progress1.png',
             act = 1,
-            cont = 2,
+            contin = 2,
             music = 'MusicTrack2.mp3',
         }
     }
     scenes[46] = {
         saveGame = true,
+        mtrack = 'MusicTrack2.mp3',
         sName = 46,
         openingAnimation = {
             [1] = 'background6.png', 
@@ -2780,6 +2791,7 @@ local scenes = {}
 
     scenes[59] = {
         saveGame = true,
+        mtrack = 'MusicTrack2.mp3',
         sName = 59,
         setStage = 'setUncleCastle',
         openingAnimation = {
@@ -2967,6 +2979,7 @@ local scenes = {}
     scenes[71] = {
         saveGame = true,
         setStage = 'setAppleGarden',
+        mtrack = 'MusicTrack2.mp3',
         sName = 71,
         text = 'They rush at full speed, so the lights of the stars in the sky flow together into a river of spilled milk. On the way, the north wind tears away a ribbon from Alena\'s braid.',
         selection = {
@@ -3122,6 +3135,7 @@ local scenes = {}
 
     scenes[78] = {
         saveGame = true,
+        mtrack = 'MusicTrack2.mp3',
         sName = 78,
         setStage = 'setForest2',
         clearSelection = true,
@@ -3145,6 +3159,7 @@ local scenes = {}
 
     scenes[79] = {
         saveGame = true,
+        mtrack = 'MusicTrack2.mp3',
         sName = 79,
         setStage = 'setForest2',
         clearSelection = true,
@@ -3233,6 +3248,7 @@ local scenes = {}
 
     scenes[83] = {
         saveGame = true,
+        mtrack = 'MusicTrack2.mp3',
         sName = 83,
         follows = 85,
         setStage = 'setUncleCastle',
@@ -3268,6 +3284,7 @@ local scenes = {}
 
     scenes[84] = {
         saveGame = true,
+        mtrack = 'MusicTrack2.mp3',
         sName = 84,
         follows = 85,
         setStage = 'setUncleCastle',
@@ -3325,6 +3342,7 @@ local scenes = {}
 
     scenes[86] = {
         saveGame = true,
+        mtrack = 'MusicTrack2.mp3',
         sName = 86,
         setStage = 'setStables',
         follows = 88,
@@ -3347,6 +3365,7 @@ local scenes = {}
     scenes[87] = {
         saveGame = true,
         sName = 87,
+        mtrack = 'MusicTrack2.mp3',
         setStage = 'setStables',
         follows = 88,
         text='As the moon climbs high in the sky, Alena and her loyal companion dash to Falcon\'s castle.',
@@ -3467,6 +3486,7 @@ local scenes = {}
 
     scenes[93] = {
         saveGame = true,
+        mtrack = 'MusicTrack2.mp3',
         sName = 93,
         follows = 94,
         setStage = 'setForest3',
@@ -3557,6 +3577,7 @@ local scenes = {}
     }
     scenes[97] = {
         saveGame = true,
+        mtrack = 'MusicTrack2.mp3',
         sName = 97,
         follows = 99,
         setStage = 'setUncleCastle',
@@ -3598,6 +3619,7 @@ local scenes = {}
 
     scenes[98] = {
         saveGame = true,
+        mtrack = 'MusicTrack2.mp3',
         sName = 98,
         follows = 99,
         setStage = 'setUncleCastle',
@@ -3692,6 +3714,7 @@ local scenes = {}
 
     scenes[103] = {
         saveGame = true,
+        mtrack = 'MusicTrack2.mp3',
         sName = 103,
         setStage = 'setBerendei',
         follows = 104,
@@ -3832,6 +3855,7 @@ local scenes = {}
 
     scenes[110] = {
         saveGame = true,
+        mtrack = 'MusicTrack2.mp3',
         sName = 110,
         follows = 116,
         setStage = 'setForest4',
@@ -3902,6 +3926,7 @@ local scenes = {}
     }
     scenes[113] = {
         saveGame = true,
+        mtrack = 'MusicTrack2.mp3',
         sName = 113,
         setStage = 'setForest4',
         follows = 114,
@@ -3967,6 +3992,7 @@ local scenes = {}
 
     scenes[116] = {
         saveGame = true,
+        mtrack = 'MusicTrack2.mp3',
         sName = 116,
         setStage = 'setUncleCastle',
         openingAnimation = {
@@ -4026,6 +4052,7 @@ local scenes = {}
 
     scenes[118] = {
         saveGame = true,
+        mtrack = 'MusicTrack2.mp3',
         sName = 118,
         setStage = 'setForest4',
         follows = 119,
@@ -4078,6 +4105,7 @@ local scenes = {}
 
     scenes[121] = {
         saveGame = true,
+        mtrack = 'MusicTrack2.mp3',
         sName = 121,
         setStage = 'setForest4',
         follows = 122,
@@ -4115,13 +4143,14 @@ local scenes = {}
             reload = 46,
             progressBar = 'progress2.png',
             act = 2,
-            cont = 3,
+            contin = 3,
             music = 'MusicTrack3.mp3',
         }
     }
 
     scenes[124] = {
         saveGame = true,
+        mtrack = 'MusicTrack3.mp3',
         sName = 124,
         openingAnimation = {
             [1] = 'background11.png', 
@@ -4214,7 +4243,9 @@ local scenes = {}
             [1] = {'What?', 128},
         },
         animations = function()
-            midlayer3:insert(BearS)
+            if midlayer3 then
+                midlayer3:insert(BearS)
+            end
             BearS.isVisible = true BearS.xScale=-1 BearS.x=-200 BearS.y=30
             transition.to(BearS, {x=600, time=1000})
         end,
@@ -4410,6 +4441,7 @@ local scenes = {}
 
     scenes[140] = {
         saveGame = true,
+        mtrack = 'MusicTrack3.mp3',
         sName = 140,
         follows = 141,
         setStage='setKoshCastle',
@@ -4987,12 +5019,13 @@ local scenes = {}
             reload = 124,
             progressBar = 'progress3.png',
             act = 4,
-            cont = 5,
+            contin = 5,
             music = 'MusicTrack4.mp3',
         }
     }
     scenes[168] = {
         saveGame = true,
+        mtrack = 'MusicTrack4.mp3',
         sName = 168,
         setStage = 'setYagaYard',
         openingAnimation = {
@@ -5121,6 +5154,7 @@ local scenes = {}
 
     scenes[175] = {
         saveGame = true,
+        mtrack = 'MusicTrack4.mp3',
         sName = 175,
         setStage='setYagaHut',
         openingAnimation = {
@@ -5627,13 +5661,14 @@ local scenes = {}
             reload = 168,
             progressBar = 'progress4.png',
             act = 4,
-            cont = 5,
+            contin = 5,
             music = 'MusicTrack5.mp3',
         }
     }
 
     scenes[208] = {
         saveGame = true,
+        mtrack = 'MusicTrack5.mp3',
         sName = 208,
         follows = 209,
         setStage = 'setOakMountain',
@@ -6286,6 +6321,7 @@ local scenes = {}
 
     scenes[238] = {
         saveGame = true,
+        mtrack = 'MusicTrack5.mp3',
         sName = 238,
         follows = 239,
         openingAnimation = {
@@ -6363,6 +6399,7 @@ local scenes = {}
 
     scenes[241] = {
         saveGame = true,
+        mtrack = 'MusicTrack5.mp3',
         sName = 241,
         openingAnimation = {
             [1] = 'background1_a.png', 
@@ -6567,18 +6604,6 @@ function hideSmallCharacters()
     for i=1, table.getn(charactersSmall) do charactersSmall[i].y = -700 charactersSmall[i].x = 400 charactersSmall[i].isVisible = false end
 end
 
--- Move layers in the right order
-local function organizeStage()
-    background:toFront()
-    midlayer1:toFront()
-    midlayer2:toFront()
-    characters:toFront()
-    midlayer3:toFront()
-    charactersDial:toFront()
-    foregoundGr:toFront()
-    textLayers:toFront()
-    creditsLayer:toFront()
-end
 
 -- Fill up the stage
 local function setStageObjects(stage)
@@ -7036,7 +7061,7 @@ local function setStageObjects(stage)
             shadowLayer9 = display.newImage(midlayer3, "images/scenes/act9_shadowLayer.png", true) setAnchor(shadowLayer9) 
             shadowLayer9.alpha=0
 
-            foregroundIce = display.newImage(foregoundGr, "images/effects/effect_snowLayer.png", true ) setAnchor(foregroundIce)
+            foregroundIce = display.newImage(foregrAdditional, "images/effects/effect_snowLayer.png", true ) setAnchor(foregroundIce)
             foregroundIce.x=0 foregroundIce.y=0 foregroundIce.alpha=0
             organizeStage() 
         end,
@@ -7102,14 +7127,14 @@ local function setStageObjects(stage)
             foreground = nil
             foreground = display.newImage(foregoundGr, "images/backg/foreground7.png", true ) setAnchor(foreground)
 
-            foregroundIce = display.newImage(foregoundGr, "images/effects/effect_snowLayer.png", true ) setAnchor(foregroundIce)
+            foregroundIce = display.newImage(foregrAdditional, "images/effects/effect_snowLayer.png", true ) setAnchor(foregroundIce)
             foregroundIce.x=0 foregroundIce.y=0 foregroundIce.alpha=0
             organizeStage()  
 
-            crowBig = display.newImage(foregoundGr, "images/chars/crow_big.png", true) setAnchor(crowBig)
+            crowBig = display.newImage(foregrAdditional, "images/chars/crow_big.png", true) setAnchor(crowBig)
             crowBig.x=200 crowBig.y = -400
 
-            crowSmall = display.newImage(foregoundGr, "images/chars/crow_small.png", true) setAnchor(crowSmall)
+            crowSmall = display.newImage(foregrAdditional, "images/chars/crow_small.png", true) setAnchor(crowSmall)
             crowSmall.x=200 crowSmall.y = -400
 
         end,
@@ -7270,7 +7295,7 @@ local function setStageObjects(stage)
             duckFly = display.newImage(midlayer3, "images/chars/duck.png", true) setAnchor(duckFly)
             duckFly.x = 500 duckFly.y = -100 duckFly.alpha = 0
 
-            foregroundNew = display.newImage(foregoundGr, "images/backg/foreground14_a.png", true) setAnchor(foregroundNew) 
+            foregroundNew = display.newImage(foregrAdditional, "images/backg/foreground14_a.png", true) setAnchor(foregroundNew) 
             foregroundNew.x=0 foregroundNew.y=0
             foregroundNew.alpha=0
 
@@ -7312,7 +7337,7 @@ local function setStageObjects(stage)
             effectDust = display.newImage(midlayer3, "images/effects/effect_dust.png", true) setAnchor(effectDust) 
             effectDustx=-500 effectDust.y=0 effectDust.alpha=0
 
-            lightningLayer = display.newImage(foregoundGr, "images/effects/lighningLayer.png", true) setAnchor(lightningLayer) 
+            lightningLayer = display.newImage(foregrAdditional, "images/effects/lighningLayer.png", true) setAnchor(lightningLayer) 
             lightningLayer.x=0 lightningLayer.y=0
             lightningLayer.alpha=0
 
@@ -7339,8 +7364,8 @@ function saveGame(scene)
     local gameState = {
         scene = scene.sName,
         choices = choices,
-        achivCollected = achivCollected
-    }
+        achivCollected = achivCollected,
+    } 
     debugPrint("Saving game state")
     loadsave.print_r(gameState)
     debugPrint("Scene is ")
@@ -7373,7 +7398,8 @@ function loadGame()
     loadLoudness()
     loadGameBegining()
     local gameState = loadsave.loadTable("save.json")
-
+    local scene = scenes[gameState.scene]
+    loadActMusic(scene.mtrack)
     achivCollected = gameState.achivCollected
     choices = gameState.choices
 
@@ -7601,8 +7627,8 @@ function showActEnding(info)
 
     transition.to(AR_progressBar, {alpha=1, time=500, delay=500})
 
-    AR_reloadButton.isVisible = true AR_reloadButton.continue = info.cont AR_reloadButton.reload = info.act AR_reloadButton.follow = info.reload AR_reloadButton.music = info.music
-    AR_continueButton.isVisible = true AR_continueButton.continue = info.cont AR_continueButton.follow = info.follow AR_continueButton.reload = info.act
+    AR_reloadButton.isVisible = true AR_reloadButton.continue = info.contin AR_reloadButton.reload = info.act AR_reloadButton.follow = info.reload AR_reloadButton.music = info.music
+    AR_continueButton.isVisible = true AR_continueButton.continue = info.contin AR_continueButton.follow = info.follow AR_continueButton.reload = info.act
 
     transition.to(AR_reloadButton, {alpha=1, time=500, delay=500})
     transition.to(AR_continueButton, {alpha=1, time=500, delay=500})
@@ -8004,13 +8030,19 @@ function restartTheGameConfirm(event)
     end
 end
 
+function clearForegrounds() 
+    for i=1, foregrAdditional.numChildren do
+            foregrAdditional[1]:removeSelf()
+            foregrAdditional[1] = nil
+    end
+end
+
 function restartTheGame(event)
     if event.phase == "began" then
         analytics.logEvent( "RestartGame")
         if(creditsLayer) then clearCredits() end
 
         if loadsave.loadTable("save.json") then loadsave.remove("save.json") end
-
         endingBack.y=-800
         debugPrint('Listener restartTheGame called')
         menuCloseAndRemove()
@@ -8074,7 +8106,7 @@ end
 -- Listeners for restarting
 function reloadActListener(event)
     local actToRestart = event.target.reload
-    analytics.logEvent( "ReloadAct-".. event.target.cont)
+    analytics.logEvent( "ReloadAct-".. event.target.continue)
     if event.phase == "began" then
         AR_reloadButtonY.isVisible = true
         audio.play( S_turnEffect, {loops=0, channel=S_ClickSfxCh} ) 
@@ -8088,7 +8120,7 @@ end
 
 function continueActListener(event)
     debugPrint("Getting act to continue. Act num "..event.target.follow)
-    analytics.logEvent( "ContinueAct-"..event.target.act)
+    analytics.logEvent( "ContinueAct-"..event.target.reload)
     if event.phase == "began" then
         AR_continueButtonY.isVisible = true
         audio.play( S_turnEffect, {loops=0, channel=S_ClickSfxCh} ) 
@@ -8107,7 +8139,7 @@ end
 -----------------------------------------------------------------------------------------
 
 local myListener
-myListener = function( event )
+myListener = function( event ) 
     if event.phase == "ended" then 
         debugPrint("myListener called")
         if loadsave.loadTable("save.json") then 
@@ -8134,7 +8166,7 @@ function reinitializeGame()
     restartAllChoices()
 
     achivCollected = {'start'}
-
+    clearForegrounds()
     -- 45 - forest1
     -- 57 - brother Castle 1
     -- 68 - apple garden
