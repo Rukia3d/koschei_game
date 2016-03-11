@@ -174,7 +174,7 @@ local textContainer = display.newImage(textLayers, "images/menus/text_back.png")
 textContainer.x = 17 textContainer.y = 560 
 textContainer.isVisible = false
 
-local sceneText = display.newText(textLayers, '', 62, 610, 900, display.contentHeight * 0.5, 'PTSans-Regular', 18)
+local sceneText = display.newText(textLayers, '', 62, 610, 900, display.contentHeight * 0.5, 'Baldur.ttf', 18)
 
 -- Variables for selections
 local select1Container = display.newImage(textLayers, "images/menus/selection_back.png")
@@ -195,7 +195,7 @@ local textOptions = {
     x = -200,
     y = 685,
     width = 200,    
-    font = 'PTSans-Regular',   
+    font = 'Baldur.ttf',   
     fontSize = 18,
     align = "center" 
 }
@@ -252,7 +252,7 @@ local textARoptions = {
     x = 212,
     y = 260,
     width = 600,    
-    font = 'PTSans-Regular',   
+    font = 'Baldur.ttf',   
     fontSize = 20,
     align = "center"    
 }
@@ -263,7 +263,7 @@ local buttonsARoptions1 = {
     x = 262,
     y = 470,
     width = 200,    
-    font = 'PTSans-Regular',   
+    font = 'Baldur.ttf',   
     fontSize = 18,
     align = "center"    
 }
@@ -274,7 +274,7 @@ local buttonsARoptions2 = {
     x = 562,
     y = 470,
     width = 200,    
-    font = 'PTSans-Regular',   
+    font = 'Baldur.ttf',   
     fontSize = 18,
     align = "center"    
 }
@@ -338,17 +338,17 @@ local menuCloseActive = display.newImage(buttonLayers, "images/menus/closeButton
     menuCloseActive.isVisible = false menuCloseActive.x=645 menuCloseActive.y=90
 
 
-local MI_menuText = display.newText(menuSet, 'Menu', 430, 120, 200, 0, 'PTSans-Regular', 45)
+local MI_menuText = display.newText(menuSet, 'Menu', 430, 120, 200, 0, 'Augusta.ttf', 45)
     MI_menuText:setFillColor(0,0,0) MI_menuText.isVisible = false
-local MI_musicText = display.newText(menuSet, 'Music', 270, 200, 200, 0, 'PTSans-Regular', 32)
+local MI_musicText = display.newText(menuSet, 'Music', 270, 200, 200, 0, 'Augusta.ttf', 32)
     MI_musicText:setFillColor(0,0,0) MI_musicText.isVisible = false
-local MI_soundText = display.newText(menuSet, 'Effects', 270, 270, 200, 0, 'PTSans-Regular', 32)
+local MI_soundText = display.newText(menuSet, 'Effects', 270, 270, 200, 0, 'Augusta.ttf', 32)
     MI_soundText:setFillColor(0,0,0) MI_soundText.isVisible = false
-local MI_restartText = display.newText(menuSet, 'Restart', 470, 450, 200, 0, 'PTSans-Regular', 32)
+local MI_restartText = display.newText(menuSet, 'Restart', 470, 450, 200, 0, 'Augusta.ttf', 32)
     MI_restartText:setFillColor(0,0,0) MI_restartText.isVisible = false
-local MI_achivementsText = display.newText(menuSet, 'Achivements', 435, 500, 200, 0, 'PTSans-Regular', 32)
+local MI_achivementsText = display.newText(menuSet, 'Achivements', 435, 500, 200, 0, 'Augusta.ttf', 32)
     MI_achivementsText:setFillColor(0,0,0) MI_achivementsText.isVisible = false
-local MI_playlistText = display.newText(menuSet, 'Playlist', 470, 550, 200, 0, 'PTSans-Regular', 32)
+local MI_playlistText = display.newText(menuSet, 'Playlist', 470, 550, 200, 0, 'Augusta.ttf', 32)
     MI_playlistText:setFillColor(0,0,0) MI_playlistText.isVisible = false
 
 
@@ -403,7 +403,7 @@ local achiveBack = display.newImage(achivLayers, "images/menus/achiveBack.png") 
 achiveBack:addEventListener("touch", function() return true end)
 achiveBack:addEventListener("tap", function() return true end)
 
-local AM_name = display.newText(achivLayers, 'Achivements', 350, 130, 400, 0, 'PTSans-Regular', 45) setAnchor(AM_name)
+local AM_name = display.newText(achivLayers, 'Achivements', 350, 130, 400, 0, 'Augusta.ttf', 45) setAnchor(AM_name)
     AM_name:setFillColor(0,0,0) AM_name.isVisible = false
 local menuClose2 = display.newImage(achivLayers, "images/menus/closeButtonOffGr.png") setAnchor(menuClose2) 
     menuClose2.isVisible = false menuClose2.x=810 menuClose2.y=120
@@ -415,7 +415,7 @@ local playlistBack = display.newImage(playlistLayers, "images/menus/achiveBack.p
 playlistBack:addEventListener("touch", function() return true end)
 playlistBack:addEventListener("tap", function() return true end)
 
-local PL_name = display.newText(playlistLayers, 'Playlist', 350, 120, 400, 0, 'PTSans-Regular', 45) setAnchor(PL_name)
+local PL_name = display.newText(playlistLayers, 'Playlist', 350, 120, 400, 0, 'Augusta.ttf', 45) setAnchor(PL_name)
     PL_name:setFillColor(0,0,0) PL_name.isVisible = false
 local menuClose3 = display.newImage(playlistLayers, "images/menus/closeButtonOffGr.png") setAnchor(menuClose3) 
     menuClose3.isVisible = false menuClose3.x=810 menuClose3.y=120
@@ -1189,7 +1189,7 @@ local achivTextOptions = {
     x = 800,
     y = 60,
     width = 200,    
-    font = 'PTSans-Regular', --'Droid Serif',   
+    font = 'Augusta.ttf',   
     fontSize = 18,
     align = "left" 
 }
@@ -1707,7 +1707,7 @@ local scenes = {}
     }
     scenes[4] = {
         sName = 4,
-        text = '"Alena, I\'m going to Tsar-gorod, so keep an eye on your brother. I\'ll be back before the sun goes down. Do you remember the rules?"',
+        text = 'Mother: "Alena, I\'m going to Tsar-gorod, so keep an eye on your brother. I\'ll be back before the sun goes down. Do you remember the rules?"',
         selection = {
             [1] = {'I don\'t care', 5},
             [2] = {'Remind me, please', 7},
@@ -1737,7 +1737,7 @@ local scenes = {}
     }
     scenes[6] = {
         sName = 6,
-        text = 'Mom: Promise me you\'ll follow the rules.',
+        text = 'Mom: "Promise me you\'ll follow the rules."',
         follows = 9,
         -- If she cares about rules she gets her mother's blessing
         changeFlow = function() choices.bless = true end,
@@ -1765,7 +1765,7 @@ local scenes = {}
     }
     scenes[8] = {
         sName = 8,
-        text = 'Mom: Don\'t go into the forest. Don\'t let your brother run around in the house.\nDon\'t go into the basement, no matter what you hear from there. Promise me.',
+        text = 'Mother: "Don\'t go into the forest. Don\'t let your brother run around in the house.\nDon\'t go into the basement, no matter what you hear from there. Promise me."',
         follows = 9,
         clearSelection = true,
         curtain = true,
@@ -1778,7 +1778,7 @@ local scenes = {}
     }
     scenes[9] = {
         sName = 9,
-        text = 'Alena: I\'ll follow your rules, I promise.',
+        text = 'Alena: "I\'ll follow your rules, I promise."',
         follows = 10,
         curtain = true,
         animations = function()
@@ -6474,7 +6474,7 @@ local scenes = {}
     }
 
 
-local creditsLine = 'Development: Inga Pflaumer\n\nPowered by Corona SDK\n\nThanks to cgtextures.com for free textures\n\nThanks to pixabay.com for free references\n\nThanks to freesound.org for sound effects\n\nThanks to musopen.org for royalty free music\n'
+local creditsLine = 'Development: Inga Pflaumer (DropBearLabs)\n\nPowered by Corona SDK\n\nThanks to cgtextures.com for free textures\n\nThanks to pixabay.com for free references\n\nThanks to freesound.org for sound effects\n\nThanks to musopen.org for royalty free music\n\nFonts by Dieter Steffmann'
 
 
 -----------------------------------------------------------------------------------
