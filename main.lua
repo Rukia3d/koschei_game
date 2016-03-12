@@ -235,6 +235,9 @@ function checkAlighn(num)
         select1Text.x= coStart
     end
 end
+-- How to play
+local howtoBack = display.newImage(foregoundGr, "images/menus/foregrAdditional.png", true ) setAnchor(howtoBack)
+howtoBack.y=0 howtoBack.x=0 howtoBack.isVisible=false howtoBack.alpha=0
 
 -- ending (actending function showActEnding)
 local endingBack = display.newImage(actChangeLevel, "images/effects/endingBack.png", true ) setAnchor(endingBack)
@@ -452,6 +455,9 @@ local function loadHomeSet()
     transition.to(landscape1, {rotation=0, y=630, time=1000, delay=2500})
     transition.to(shadowLayer1, {alpha=1, time=1000, delay=3500})
     transition.to(houseOutside, {y=0, time=1000, delay=3700})
+    transition.to(howtoBack, {alpha=1, time=300, delay=4000})
+    howtoBack.isVisible = true
+    howtoBack:toFront()
 end 
 
 local function sunSet() 
@@ -1737,7 +1743,7 @@ local scenes = {}
     }
     scenes[6] = {
         sName = 6,
-        text = 'Mom: "Promise me you\'ll follow the rules."',
+        text = 'Mother: "Promise me you\'ll follow the rules."',
         follows = 9,
         -- If she cares about rules she gets her mother's blessing
         changeFlow = function() choices.bless = true end,
@@ -2396,7 +2402,7 @@ local scenes = {}
     }
     scenes[39] = {
         sName = 39,
-        text = 'Mom: "Now Koschei will summon his armies and storm the Tsar-gorod. He\'s had dozen of years to plan his revenge for his imprisonment. The Tsar will need my help, so you have to find your brother on your own."',
+        text = 'Mother: "Now Koschei will summon his armies and storm the Tsar-gorod. He\'s had dozen of years to plan his revenge for his imprisonment. The Tsar will need my help, so you have to find your brother on your own."',
         follows = 40,
         curtain = true,
         animations = function()
@@ -2434,7 +2440,7 @@ local scenes = {}
     }
     scenes[41] = {
         sName = 41,
-        text='Mom: "That\'s my old friend and loyal companion, Gray Wolf. He helped me to imprison the Koschei last time. He will serve you as good as he served me." says Alena\'s mother. ',
+        text='"That\'s my old friend and loyal companion, Gray Wolf. He helped me to imprison the Koschei last time. He will serve you as good as he served me." says Alena\'s mother. ',
         follows = 42,
         animations = function()
             hideBigCharacters()
@@ -2449,7 +2455,7 @@ local scenes = {}
         changeFlow = function()
             if choices.bless==true then scenes[42].follows=43 else scenes[42].follows=44 end
         end,
-        text='Mom: "Koschei lives in an icy stronghold to the north. He is Deathless, so there\'s no killing him, but you can get into his castle to save your brother, while he is busy fighting me and the Tsar."',
+        text='Mother: "Koschei lives in an icy stronghold to the north. He is Deathless, so there\'s no killing him, but you can get into his castle to save your brother, while he is busy fighting me and the Tsar."',
         animations = function()
 
         end,
@@ -7678,6 +7684,8 @@ function clearActEnding()
 end
 
 function loadScene(s)
+    howtoBack.isVisible = false
+
     if s.saveGame then
         analytics.logEvent( "GameSaved-"..s.sName)
         saveGame(s)
