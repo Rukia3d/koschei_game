@@ -17,6 +17,10 @@ settings =
             publisherId = "com.coronalabs",
             supportedPlatforms = { android=true }
         },
+        ["plugin.facebook.v4"] =
+        {
+            publisherId = "com.coronalabs"
+        },
     },
 	orientation =
 	{
@@ -40,13 +44,53 @@ settings =
 		{
             NSAppTransportSecurity = {
                  NSExceptionDomains =
-                 {
-                      ["flurry.com"] =
-                      {
+                {
+                    ["flurry.com"] =
+                    {
                          NSIncludesSubdomains = true,
                          NSThirdPartyExceptionAllowsInsecureHTTPLoads = true
-                      },
+                    },
+                    ["fbcdn.net"] = 
+                    {
+                        NSIncludesSubdomains = true,
+                        NSExceptionRequiresForwardSecrecy = false,
+                    },
+                    ["facebook.com"] = 
+                    {
+                        NSIncludesSubdomains = true,
+                        NSExceptionRequiresForwardSecrecy = false,
+                    },
+                    ["akamaihd.net"] = 
+                    {
+                        NSIncludesSubdomains = true,
+                        NSExceptionRequiresForwardSecrecy = false,
+                    },
                  },
+            },
+            LSApplicationQueriesSchemes = 
+            {
+                "fbapi",
+                "fbapi20130214",
+                "fbapi20130410",
+                "fbapi20130702",
+                "fbapi20131010",
+                "fbapi20131219",
+                "fbapi20140410",
+                "fbapi20140116",
+                "fbapi20150313",
+                "fbapi20150629",
+                "fbauth",
+                "fbauth2",
+                "fb-messenger-api20140430",
+                "fbshareextension",
+                "fb1516120688693312"
+            },
+            UIApplicationExitsOnSuspend = false,
+            FacebookAppID = "1516120688693312",  --replace XXXXXXXXXX with your Facebook App ID
+            FacebookDisplayName = "Koschei the Deathless",
+            CFBundleURLTypes =
+            {
+                { CFBundleURLSchemes = { "fb1516120688693312", } }  --replace XXXXXXXXXX with your Facebook App ID
             },
 			CFBundleDisplayName = "Koschei the Deathless",
             CFBundleName = "Koschei the Deathless",
@@ -183,19 +227,6 @@ settings =
 				"Icon-Small-50.png",
 				"Icon-Small-50@2x.png",
 			},
-
-			--[[
-			-- iOS app URL schemes:
-			CFBundleURLTypes =
-			{
-				{
-					CFBundleURLSchemes =
-					{
-						"fbXXXXXXXXX",  -- replace XXXXXXXXX with your Facebook appId
-					}
-				}
-			},
-			--]]
 		}
 	},
 	--

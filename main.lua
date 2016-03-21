@@ -354,6 +354,11 @@ local MI_achivementsText = display.newText(menuSet, 'Achivements', 435, 500, 200
 local MI_playlistText = display.newText(menuSet, 'Playlist', 470, 550, 200, 0, 'Augusta.ttf', 32)
     MI_playlistText:setFillColor(0,0,0) MI_playlistText.isVisible = false
 
+local MI_policyText = display.newText(menuSet, 'Privacy Policy', 380, 630, 200, 0, 'PTSans-Regular', 16)
+    MI_policyText:setFillColor(0,0,0) MI_policyText.isVisible = false
+local MI_contactText = display.newText(menuSet, 'Support', 620, 630, 200, 0, 'PTSans-Regular', 16)
+    MI_contactText:setFillColor(0,0,0) MI_contactText.isVisible = false
+
 
 local MI_circle00 = display.newImage(menuSet, "images/menus/volume0.png") setAnchor(MI_circle00) 
     MI_circle00.isVisible = false MI_circle00.x = 330 MI_circle00.y=165
@@ -395,9 +400,9 @@ local restartTextOptions = {
 }
 local restartConfirm = display.newText(restartTextOptions)
     restartConfirm:setFillColor(0,0,0) restartConfirm.isVisible = false
-local restartYes = display.newText(menuSet, 'Restart', 500, 420, 200, 0, 'PTSans-Regular', 24)
+local restartYes = display.newText(menuSet, 'Restart', 500, 420, 200, 0, 'Augusta', 24)
     restartYes:setFillColor(0,0,0) restartYes.isVisible = false
-local restartNo = display.newText(menuSet, 'Cancel', 630, 420, 200, 0, 'PTSans-Regular', 24)
+local restartNo = display.newText(menuSet, 'Cancel', 630, 420, 200, 0, 'Augusta', 24)
     restartNo:setFillColor(0,0,0) restartNo.isVisible = false
 
 
@@ -471,7 +476,7 @@ end
 local function setHouseAnEvening()
     background:removeSelf()
     background = nil
-    background = display.newImage( "images/backg/background5.png", true ) setAnchor(background)
+    background = display.newImage( "images/backg/background5.jpg", true ) setAnchor(background)
     background.x=0 background.y=0
 
     foreground:removeSelf()
@@ -507,7 +512,7 @@ local function setStageHomeFast()
     foreground.x=0 foreground.y=0
     background:removeSelf()
     background = nil
-    background = display.newImage( "images/backg/background2.png", true ) setAnchor(background)
+    background = display.newImage( "images/backg/background2.jpg", true ) setAnchor(background)
     background.x=0 background.y=0
     bed.y=0
     tableCloth.y=5
@@ -558,7 +563,7 @@ local function setBasementFast()
     koshPrisoner.alpha=1
     background:removeSelf()
     background = nil
-    background = display.newImage( "images/backg/background3.png", true ) setAnchor(background)
+    background = display.newImage( "images/backg/background3.jpg", true ) setAnchor(background)
     background.x=0 background.y=0
     foreground:removeSelf()
     foreground = nil
@@ -813,7 +818,7 @@ end
 function setForestFast()
     background:removeSelf()
     background = nil
-    background = display.newImage( "images/backg/background7.png", true ) setAnchor(background)
+    background = display.newImage( "images/backg/background7.jpg", true ) setAnchor(background)
     background.x=0 background.y=0
 
     foreground:removeSelf()
@@ -825,7 +830,7 @@ end
 function setForest3Fast()
     background:removeSelf()
     background = nil
-    background = display.newImage( "images/backg/background8.png", true ) setAnchor(background)
+    background = display.newImage( "images/backg/background8.jpg", true ) setAnchor(background)
     background.x=0 background.y=0
 
     foreground:removeSelf()
@@ -1125,7 +1130,7 @@ PL_compOptions = {
     x = 445,
     y = 500,
     width = 540,    
-    font = 'PTSans-Regular',   
+    font = 'Baldur.ttf',   
     fontSize = 20,
     align = "left" 
 } 
@@ -1136,7 +1141,7 @@ PL_perfOptions = {
     x = 650,
     y = 500,
     width = 400,    
-    font = 'PTSans-Regular',   
+    font = 'Baldur.ttf',   
     fontSize = 16,
     align = "right" 
 }
@@ -1216,7 +1221,7 @@ local achivements = {
         img70 = 'images/achivements/start70.png', 
         img50 = 'images/achivements/start50.png', 
         img50_g = 'images/achivements/start50g.png',
-        descr =  'Thank you for playing!'
+        descr =  'Thank you for joining the adventure!'
     },
     bless = {
         -- Mother in dress
@@ -1225,7 +1230,7 @@ local achivements = {
         img70 = 'images/achivements/bless70.png', 
         img50 = 'images/achivements/bless50.png', 
         img50_g = 'images/achivements/bless50g.png',
-        descr =  'It keeps you from troubles (and witche\'s ovens)'
+        descr =  'Your mother\'s blessing will keep you from troubles (and witches\' ovens)!'
     },
     nanny = {
         -- Ivan hand to face
@@ -1243,7 +1248,7 @@ local achivements = {
         img70 = 'images/achivements/kindG70.png', 
         img50 = 'images/achivements/kindG50.png', 
         img50_g = 'images/achivements/kindG50g.png',
-        descr =  'You can be too kind for your own good'
+        descr =  'You might be too kind for your own good!'
     },
     obedient = {
         -- Alena in tha house
@@ -1252,7 +1257,7 @@ local achivements = {
         img70 = 'images/achivements/obedient70.png', 
         img50 = 'images/achivements/obedient50.png', 
         img50_g = 'images/achivements/obedient0g.png',
-        descr =  'If only all your relatives were more like you'
+        descr =  'If only all your relatives were more like you!'
     },
     letDie = {
         -- Stone and wolf
@@ -1261,7 +1266,7 @@ local achivements = {
         img70 = 'images/achivements/letDie70.png', 
         img50 = 'images/achivements/letDie50.png', 
         img50_g = 'images/achivements/letDie0g.png',
-        descr =  'Better your horse than you'
+        descr =  'Better your horse than you!'
     },
     brave = {
         -- Stone and Alena
@@ -1270,7 +1275,7 @@ local achivements = {
         img70 = 'images/achivements/brave70.png', 
         img50 = 'images/achivements/brave50.png', 
         img50_g = 'images/achivements/brave50g.png',
-        descr =  'Don\'t allow gloomy premonitions to scare you'
+        descr =  'Don\'t allow gloomy premonitions to scare you off!'
     },
     allDies = {
         -- Stone
@@ -1279,7 +1284,7 @@ local achivements = {
         img70 = 'images/achivements/allDies70.png', 
         img50 = 'images/achivements/allDies50.png', 
         img50_g = 'images/achivements/allDies50g.png',
-        descr =  'Everybody dies, so why bother'
+        descr =  'Everybody has to die someday.'
     },
     advice = {
         -- Wolf sitting
@@ -1288,7 +1293,7 @@ local achivements = {
         img70 = 'images/achivements/advice70.png', 
         img50 = 'images/achivements/advice50.png', 
         img50_g = 'images/achivements/advice50g.png',
-        descr =  'Why have a good adviser if not to listen'
+        descr =  'Why ask for advice if you’re not going to heed it.'
     },
     ribbon = {
         -- Ribbon
@@ -1297,7 +1302,7 @@ local achivements = {
         img70 = 'images/achivements/ribbon70.png', 
         img50 = 'images/achivements/ribbon50.png', 
         img50_g = 'images/achivements/ribbon50g.png',
-        descr =  'You really care about your looks'
+        descr =  'You really care about your looks. Vanity is no virtue.'
     },
     determined = {
         -- Vasilisa crying
@@ -1306,7 +1311,7 @@ local achivements = {
         img70 = 'images/achivements/determined70.png', 
         img50 = 'images/achivements/determined50.png', 
         img50_g = 'images/achivements/determined50g.png',
-        descr =  'You are ready to step over people for your goals.' 
+        descr =  'You are ruthless and ready to step over people for your goals.' 
     },
     sympathetic = {
         --- Vasilisa garden
@@ -1315,7 +1320,7 @@ local achivements = {
         img70 = 'images/achivements/sympathetic70.png', 
         img50 = 'images/achivements/sympathetic50.png', 
         img50_g = 'images/achivements/sympathetic50g.png',
-        descr =  'You are not ready to step over people for your goals.'
+        descr =  'You are too considerate to step over people for your goals.'
     },
     noBears = {
         -- Bear
@@ -1329,7 +1334,7 @@ local achivements = {
     wolfDies = {
         -- Wolf down, stone
         name = 'wolfDies',
-        title ='Bye-Bye friend',
+        title ='Bye-Bye, old friend',
         img70 = 'images/achivements/wolfDies70.png', 
         img50 = 'images/achivements/wolfDies50.png', 
         img50_g = 'images/achivements/wolfDies50g.png',
@@ -1341,7 +1346,7 @@ local achivements = {
         img70 = 'images/achivements/alenaDies70.png', 
         img50 = 'images/achivements/alenaDies50.png', 
         img50_g = 'images/achivements/alenaDies50g.png',
-        title = 'Bye-Bye Alena',
+        title = 'Bye-Bye, Alena',
         descr =  'Your self-sacrifice is admirable!'
     },
     vasilisaHelp = {
@@ -1351,7 +1356,7 @@ local achivements = {
         img50 = 'images/achivements/vasilisaHelp50.png', 
         img50_g = 'images/achivements/vasilisaHelp50g.png',
         title = 'Good deeds unpunished',
-        descr =  'You help someone, someone helps you.'
+        descr =  'Scratch my back, and I’ll scratch yours.'
     },
     uncleHelp = {
         -- Uncle and bird
@@ -1360,7 +1365,7 @@ local achivements = {
         img50 = 'images/achivements/uncleHelp50.png', 
         img50_g = 'images/achivements/uncleHelp50g.png',
         title = 'Contract work',
-        descr =  'You family members keep their promises'
+        descr =  'Your family members keep their promises'
     },
     oven = {
         -- Yaga and oven
@@ -1368,8 +1373,8 @@ local achivements = {
         img70 = 'images/achivements/oven70.png', 
         img50 = 'images/achivements/oven50.png', 
         img50_g = 'images/achivements/oven50g.png',
-        title = 'In the oven',
-        descr =  'Good girls go on their way, while bad girls outsmart Witches'
+        title = 'Into the oven',
+        descr =  'Good girls go on their way, while bad girls must outsmart witches'
     },
     noBerries = {
         -- mouse
@@ -1377,7 +1382,7 @@ local achivements = {
         img70 = 'images/achivements/noBerries70.png', 
         img50 = 'images/achivements/noBerries50.png', 
         img50_g = 'images/achivements/noBerries50g.png',
-        title = 'No Berries for you',
+        title = 'No berries for you',
         descr =  'Alena doesn\'t share food!'
     },
     bearHelp =  {
@@ -1386,8 +1391,8 @@ local achivements = {
         img70 = 'images/achivements/bearHelp70.png', 
         img50 = 'images/achivements/bearHelp50.png', 
         img50_g = 'images/achivements/bearHelp50g.png',
-        title = 'Got a big help',
-        descr =  'Bear helped you to drop the oak'
+        title = 'Get a big help',
+        descr =  'Bear helps you to drop the oak.'
     }, 
     mouseHelp = {
         -- mouse with egg
@@ -1395,8 +1400,8 @@ local achivements = {
         img70 = 'images/achivements/mouseHelp70.png', 
         img50 = 'images/achivements/mouseHelp50.png', 
         img50_g = 'images/achivements/mouseHelp50g.png',
-        title = 'Got a little help',
-        descr =  'Mouse helped you to find an egg'
+        title = 'Get a little help',
+        descr =  'Mouse helps you to find an egg.'
     }, 
     guardian = {
         -- Koschei in chains
@@ -1405,13 +1410,14 @@ local achivements = {
         img50 = 'images/achivements/guardian50.png', 
         img50_g = 'images/achivements/guardian50g.png',
         title = 'Guardian',
-        descr =  'You\'ve spared Koschei, let\'s hope he won\'t escape again.'
+        descr =  'You\'ve spared Koschei. Let\'s hope he won\'t escape again.'
     },
     executioner = {
         -- Broken needle
         name = 'executioner',
         img70 = 'images/achivements/executioner70.png', 
-        img50 = 'images/achivements/executioner50.png', img50_g = 'images/achivements/executioner50g.png',
+        img50 = 'images/achivements/executioner50.png', 
+        img50_g = 'images/achivements/executioner50g.png',
         title = 'Executioner',
         descr =  'Someone had to do it.'
     },
@@ -1419,17 +1425,19 @@ local achivements = {
         -- Alena Ivan Wolf
         name = 'goodEnd',
         img70 = 'images/achivements/goodEnd70.png', 
-        img50 = 'images/achivements/goodEnd50.png', img50_g = 'images/achivements/goodEnd50g.png',
+        img50 = 'images/achivements/goodEnd50.png', 
+        img50_g = 'images/achivements/goodEnd50g.png',
         title = 'All there',
-        descr =  'You finished the game and returned home. Bravo!'
+        descr =  'You’ve finished the game and returned home. Bravo!'
     },
     badEnd = {
         -- Alena Ivan
         name = 'badEnd',
         img70 = 'images/achivements/badEnd70.png', 
-        img50 = 'images/achivements/badEnd50.png', img50_g = 'images/achivements/badEnd50g.png',
+        img50 = 'images/achivements/badEnd50.png', 
+        img50_g = 'images/achivements/badEnd50g.png',
         title = 'Not all there',
-        descr =  'Who needs this dull Wolf around anyway.'
+        descr =  'Who needs that annoying wolf around anyway.'
     },
 }
 
@@ -1459,7 +1467,7 @@ end
 local function showAchivement(achivKey)
     achivLayers:toFront()
     achivRect.isVisible = true
-    achivRectText.text = 'ACHIVEMENT\n'..achivements[achivKey].title
+    achivRectText.text = 'Achivement\n'..achivements[achivKey].title
     achivRectText.isVisible = true
 
     achivImage:removeSelf()
@@ -1519,7 +1527,7 @@ local achivTitleListOptions = {
     x = 140,
     y = 0,
     width = 500,    
-    font = 'PTSans-Regular',
+    font = 'Baldur.ttf',
     fontSize = 20,
     align = "left" 
 }
@@ -1529,7 +1537,7 @@ local achivTextListOptions = {
     x = 140,
     y = 0,
     width = 500,    
-    font = 'PTSans-Regular',  
+    font = 'Baldur.ttf',  
     fontSize = 18,
     align = "left" 
 }
@@ -1555,8 +1563,28 @@ local function displayAchivement(toDisplay, achivPeriodNumber, putHereGroup)
     putHereGroup:insert(AI_achivText)
 
     local AI_separator = display.newImage("images/menus/achiv_separator.png" ) setAnchor(AI_separator)
-    AI_separator.x=80 AI_separator.y=achivPeriodNumber+55 AI_separator.isVisible = true
+    AI_separator.x=80 AI_separator.y=achivPeriodNumber+75 AI_separator.isVisible = true
     putHereGroup:insert(AI_separator)
+    --[[
+    local AI_fb_act = display.newImage("images/menus/fb_act.png") setAnchor(AI_fb_act)
+    AI_fb_act.x = 500 AI_fb_act.y=achivPeriodNumber AI_fb_act.isVisible = false
+    putHereGroup:insert(AI_fb_act) 
+    AI_fb_act.addr = achivements[toDisplay].name
+    AI_fb_act:addEventListener( 'touch', facebookShareListener )
+    ]]
+
+    local AI_fb = display.newImage("images/menus/fb.png") setAnchor(AI_fb)
+    AI_fb.x = 600 AI_fb.y=achivPeriodNumber AI_fb.isVisible = true
+    putHereGroup:insert(AI_fb)
+    AI_fb.addr = achivements[toDisplay].name 
+    AI_fb:addEventListener( 'touch', facebookShareListener )
+
+    --[[
+    --tail images for changing on click
+    AI_fb_act.buttonChange = AI_fb
+    AI_fb.buttonChange = AI_fb_act
+    ]]
+
 end
 
 local function hideAchivementList()
@@ -1644,7 +1672,7 @@ local scenes = {}
         mtrack = 'MusicTrack1.mp3',
         sName = 1,
         openingAnimation = {
-            [1] = 'background1.png', 
+            [1] = 'background1.jpg', 
             [2] = 'foreground1.png'
         },
         setStage = 'setMotherHouse',
@@ -1801,7 +1829,7 @@ local scenes = {}
         sName = 10,
         setStage = 'setHouseInside',
         openingAnimation = {
-            [1] = 'background2.png', 
+            [1] = 'background2.jpg', 
             [2] = 'foreground2.png'
         },
         text = 'After hearing that reassurance, her mother leaves, and Alena is alone with her brother. She is soon bored, but being an obedient daughter, she refrains from running around the house and dutifully keeps an eye on her brother. ',
@@ -1996,7 +2024,7 @@ local scenes = {}
         sName = 21,
         setStage = 'setBasement',
         openingAnimation = {
-            [1] = 'background3.png', 
+            [1] = 'background3.jpg', 
             [2] = 'foreground3.png'
         },
         text = 'Suddenly, Alena sees that the heavy wooden door to the basement is ajar, and she hears a faint whispering "Water, please, give me some water..."',
@@ -2515,7 +2543,7 @@ local scenes = {}
         mtrack = 'MusicTrack2.mp3',
         sName = 46,
         openingAnimation = {
-            [1] = 'background6.png', 
+            [1] = 'background6.jpg', 
             [2] = 'foreground6.png'
             },
         setStage = 'setForest1',
@@ -2801,7 +2829,7 @@ local scenes = {}
         sName = 59,
         setStage = 'setUncleCastle',
         openingAnimation = {
-            [1] = 'background7.png', 
+            [1] = 'background7.jpg', 
             [2] = 'foreground3.png'
         },
         text = 'Her uncle is standing in a great hall wearing a gloomy look. ',
@@ -2841,7 +2869,7 @@ local scenes = {}
         end,
         animationComplete =  function()
             AlenaS.isVisible = true AlenaS.y = 20 AlenaS.x=610
-            WolfSit.isVisible = true WolfSit.y = 10 WolfSit.x=700
+            WolfSit.isVisible = true WolfSit.y = 10 WolfSit.x=700 WolfSit.xScale = 1
         end
     }
 
@@ -2935,8 +2963,8 @@ local scenes = {}
         text = 'Uncle: "So if you want to help me - steal at least one golden apple and the horse for me. Then I\'ll think about telling you how to get into Koschei\'s castle."',
         changeFlow = function()
             if choices.brother == 'Falcon' then scenes[67].follows = 68
-            elseif choices.brother == 'Raven' then scenes[67].follows = 69
-            else scenes[67].follows = 70
+            elseif choices.brother == 'Raven' then scenes[67].follows = 69 --!
+            else scenes[67].follows = 70 --yes
             end
         end,
         animations = function() 
@@ -2949,7 +2977,7 @@ local scenes = {}
     scenes[68] = {
         sName = 68,
         text = 'Alena reluctantly agrees, though she has no idea how she is going to steal the horse or apples from her uncles Raven and Eagle. But Gray Wolf tells her not to grieve and before the moon comes up, they are racing to the Raven domain.',
-        follows = 69,
+        follows = 71,
         animations = function()
             transDialogueBack() 
         end,
@@ -3259,7 +3287,7 @@ local scenes = {}
         follows = 85,
         setStage = 'setUncleCastle',
         openingAnimation = {
-            [1] = 'background7.png', 
+            [1] = 'background7.jpg', 
             [2] = 'foreground3.png'
         },
         text='Seeing the golden apple, her uncle\'s face flourishes a smile. \"You are a very handy girl,\" says he.',
@@ -3295,7 +3323,7 @@ local scenes = {}
         follows = 85,
         setStage = 'setUncleCastle',
         openingAnimation = {
-            [1] = 'background7.png', 
+            [1] = 'background7.jpg', 
             [2] = 'foreground3.png'
         },
         text='Seeing the golden apple, her uncle\'s face flourishes a smile. \"You are a very handy girl,\" says he.',
@@ -3329,9 +3357,9 @@ local scenes = {}
         sName = 85,
         changeFlow = function() 
             if choices.brother=='Eagle' then
-                scenes[85].follows = 86
-            else
                 scenes[85].follows = 87
+            else
+                scenes[85].follows = 86
             end
         end,
         text='Uncle: \"Maybe you really can save Ivan. But for now, go and fetch me the horse with the golden mane from my other brother.\"',
@@ -3588,7 +3616,7 @@ local scenes = {}
         follows = 99,
         setStage = 'setUncleCastle',
         openingAnimation = {
-            [1] = 'background8.png', 
+            [1] = 'background8.jpg', 
             [2] = 'foreground3.png'
         },
         text='Seeing the horse with the golden mane, her uncle gets lost in his thoughts for a second. ',
@@ -3630,7 +3658,7 @@ local scenes = {}
         follows = 99,
         setStage = 'setUncleCastle',
         openingAnimation = {
-            [1] = 'background8.png', 
+            [1] = 'background8.jpg', 
             [2] = 'foreground3.png'
         },
         text='Seeing the horse with the golden mane, her uncle gets lost in his thoughts for a second. ',
@@ -4002,7 +4030,7 @@ local scenes = {}
         sName = 116,
         setStage = 'setUncleCastle',
         openingAnimation = {
-            [1] = 'background9.png', 
+            [1] = 'background9.jpg', 
             [2] = 'foreground3.png'
         },
         follows = 117,
@@ -4159,7 +4187,7 @@ local scenes = {}
         mtrack = 'MusicTrack3.mp3',
         sName = 124,
         openingAnimation = {
-            [1] = 'background11.png', 
+            [1] = 'background11.jpg', 
             [2] = 'foreground7.png'
         },
         setStage = 'setWinterForest',
@@ -5035,7 +5063,7 @@ local scenes = {}
         sName = 168,
         setStage = 'setYagaYard',
         openingAnimation = {
-            [1] = 'background12.png', 
+            [1] = 'background12.jpg', 
             [2] = 'foreground8.png'
         },
         follows = 169,
@@ -5164,7 +5192,7 @@ local scenes = {}
         sName = 175,
         setStage='setYagaHut',
         openingAnimation = {
-            [1] = 'background13.png', 
+            [1] = 'background13.jpg', 
             [2] = 'foreground9.png'
         },
         follows = 176,
@@ -5679,7 +5707,7 @@ local scenes = {}
         follows = 209,
         setStage = 'setOakMountain',
         openingAnimation = {
-            [1] = 'background14.png', 
+            [1] = 'background14.jpg', 
             [2] = 'foreground14.png'
         },
         text='So Alena\'s journey continues. Gray Wolf awaits her on the other side of the fence, and they race along to the end of the forest. It takes them the better part of the night, and they arrive at the mountain in an early morning mist.',
@@ -6331,7 +6359,7 @@ local scenes = {}
         sName = 238,
         follows = 239,
         openingAnimation = {
-            [1] = 'background1.png', 
+            [1] = 'background1.jpg', 
             [2] = 'foreground1.png'
         },
         setStage = 'setMotherHouse',
@@ -6408,7 +6436,7 @@ local scenes = {}
         mtrack = 'MusicTrack5.mp3',
         sName = 241,
         openingAnimation = {
-            [1] = 'background1_a.png', 
+            [1] = 'background1_a.jpg', 
             [2] = 'foreground1.png'
         },
         setStage = 'setMotherHouse',
@@ -6520,11 +6548,11 @@ function loadEnding()
 
     local restartOptions = {
         parent = creditsLayer,
-        text = 'The end\n',     
+        text = 'Restart the Game\n',     
         x = 512,
         y = 400,
         width = 250,    
-        font = 'PTSans-Regular',   
+        font = 'Baldur.ttf',   
         fontSize = 34,
         align = "center" 
     }
@@ -6535,8 +6563,8 @@ function loadEnding()
 
     local endgame = display.newText(restartOptions)
     endgame:setFillColor(1,1,1) endgame.alpha = 0
-
     transition.to(endgame, {alpha=1,delay=10000, time=1})
+    endgame:addEventListener("touch", restartTheGame)
 
 end
 
@@ -6685,7 +6713,7 @@ local function setStageObjects(stage)
         setBasement = function()
             cleanUpLevel()
 
-            basementStage = display.newImage(midlayer1, "images/backg/background4.png", true) setAnchor(basementStage)
+            basementStage = display.newImage(midlayer1, "images/backg/background4.jpg", true) setAnchor(basementStage)
             basementStage.x=0 basementStage.y = 0 basementStage.alpha=0
             
             waterFount = display.newImage(midlayer1, "images/scenes/water.png", true) setAnchor(waterFount)
@@ -6801,7 +6829,7 @@ local function setStageObjects(stage)
         setAppleGarden = function()
             cleanUpLevel() 
 
-            landscape3 = display.newImage(midlayer1, "images/backg/background7.png", true) setAnchor(landscape3)
+            landscape3 = display.newImage(midlayer1, "images/backg/background7.jpg", true) setAnchor(landscape3)
             landscape3.x = 0 landscape3.y = 0
 
             starsWay = display.newImage(midlayer1, "images/effects/effects_stars.png", true) setAnchor(starsWay)
@@ -6822,7 +6850,7 @@ local function setStageObjects(stage)
                 StrongholdB1 = display.newImage("images/scenes/Raven_stronghold.png", false)
             end
 
-            setAnchor(StrongholdB1) StrongholdB1.x=1200 StrongholdB1.y=150
+            setAnchor(StrongholdB1) StrongholdB1.x=1200 StrongholdB1.y=30
             midlayer2:insert(StrongholdB1)
             StrongholdB1:toFront()
 
@@ -6879,7 +6907,7 @@ local function setStageObjects(stage)
         setStables = function()
             cleanUpLevel() 
 
-            landscape3 = display.newImage(midlayer1, "images/backg/background8.png", true) setAnchor(landscape3)
+            landscape3 = display.newImage(midlayer1, "images/backg/background8.jpg", true) setAnchor(landscape3)
             landscape3.x = 0 landscape3.y = 0
     
             landscape2 = display.newImage(midlayer1, "images/scenes/act4_landscape2.png", true) setAnchor(landscape2)
@@ -6894,7 +6922,7 @@ local function setStageObjects(stage)
                 StrongholdB2 =  display.newImage("images/scenes/Eagle_stronghold.png", false) 
             end
 
-            setAnchor(StrongholdB2) StrongholdB2.x=1200 StrongholdB2.y=150
+            setAnchor(StrongholdB2) StrongholdB2.x=1200 StrongholdB2.y=30
             midlayer2:insert(StrongholdB2)
             StrongholdB2:toFront()
 
@@ -6958,7 +6986,7 @@ local function setStageObjects(stage)
         setBerendei = function() 
             cleanUpLevel() 
 
-            landscape3 = display.newImage(midlayer1, "images/backg/background9.png", true) setAnchor(landscape3)
+            landscape3 = display.newImage(midlayer1, "images/backg/background9.jpg", true) setAnchor(landscape3)
             landscape3.x = 0 landscape3.y = 0
 
             landscape2 = display.newImage(midlayer1, "images/scenes/act4_landscape2.png", true) setAnchor(landscape2)
@@ -6998,13 +7026,13 @@ local function setStageObjects(stage)
         setForest4 = function() 
             cleanUpLevel()
 
-            landscape3 = display.newImage(midlayer1, "images/backg/background9.png", true) setAnchor(landscape3)
+            landscape3 = display.newImage(midlayer1, "images/backg/background9.jpg", true) setAnchor(landscape3)
             landscape3.x = 0 landscape3.y = 0
 
             forrestDawn = display.newImage(midlayer1, "images/effects/effect_forestDown.png", true) setAnchor(forrestDawn)
             forrestDawn.x = 0 forrestDawn.y = 0 forrestDawn.alpha = 0
 
-            forrestSunny = display.newImage(midlayer1, "images/backg/background10.png", true) setAnchor(forrestSunny)
+            forrestSunny = display.newImage(midlayer1, "images/backg/background10.jpg", true) setAnchor(forrestSunny)
             forrestSunny.x = 0 forrestSunny.y = 0 forrestSunny.alpha = 0
 
             landscape2 = display.newImage(midlayer1, "images/scenes/act4_landscape2.png", true) setAnchor(landscape2)
@@ -7074,7 +7102,7 @@ local function setStageObjects(stage)
         setKoshCastle = function() 
             cleanUpLevel()
 
-            landscapeBack = display.newImage(midlayer1, "images/backg/background11.png", true) setAnchor(landscapeBack)
+            landscapeBack = display.newImage(midlayer1, "images/backg/background11.jpg", true) setAnchor(landscapeBack)
             landscapeBack.x = 0 landscapeBack.y = 0
 
             landscape3 = display.newImage(midlayer1, "images/scenes/snow.png", true) setAnchor(landscape3)
@@ -7238,7 +7266,7 @@ local function setStageObjects(stage)
         setOakMountain = function()
             cleanUpLevel()
 
-            skyBright = display.newImage(midlayer1, "images/backg/background14_a.png", true) setAnchor(skyBright)
+            skyBright = display.newImage(midlayer1, "images/backg/background14_a.jpg", true) setAnchor(skyBright)
             skyBright.x = 0 skyBright.y = 0 skyBright.alpha = 0
 
             sunRise = display.newImage(midlayer1, "images/scenes/sun.png", true) setAnchor(sunRise)
@@ -7429,6 +7457,8 @@ function showMenuContent()
     MI_restartText.isVisible = true
     MI_achivementsText.isVisible = true
     MI_playlistText.isVisible = true
+    MI_contactText.isVisible = true
+    MI_policyText.isVisible = true
 
     menuSet:toFront()
 
@@ -7438,6 +7468,9 @@ function showMenuContent()
     MI_playlistText:addEventListener( 'touch', playListShowListener )
     MI_restartText:addEventListener( 'touch', restartTheGameConfirm )
     MI_achivementsText:addEventListener( 'touch', achivementsListListener)
+
+    MI_contactText:addEventListener( 'touch', gotoContactListener )
+    MI_policyText:addEventListener( 'touch', gotoPolicyListener )
 end
 
 
@@ -7449,6 +7482,8 @@ function hideMenuContent()
     MI_restartText.isVisible = false
     MI_playlistText.isVisible = false
     MI_achivementsText.isVisible = false
+    MI_contactText.isVisible = false
+    MI_policyText.isVisible = false
 
     hideAllMI_circles(0)
     hideAllMI_circles(1)
@@ -7581,7 +7616,7 @@ function loadAchivements()
             debugPrint('Looking for this achivement to display - '..achivCollected[i])
             local toDisplay = achivCollected[i]
             displayAchivement(toDisplay, achivPeriodNumber, putHereGroup)
-            achivPeriodNumber = achivPeriodNumber+60
+            achivPeriodNumber = achivPeriodNumber+100
         end
     end
     achivLayers:toFront()
@@ -7715,6 +7750,7 @@ function loadScene(s)
             checkAlighn(numSel)
             if(s.selection[1]) then
                 textContainer.isVisible = false
+                textContainerNA.isVisible = true
                 select1Container.isVisible = true
                 select1Text.isVisible = true
                 -- Show text of selection from the scene
@@ -7908,6 +7944,9 @@ function menuCloseAndRemove()
     menuClose3.isVisible = false
     menuCloseActive3.isVisible = false
     menuClose3:removeEventListener( "touch", playlistCloseListener)
+
+    MI_contactText:removeEventListener( 'touch', gotoContactListener )
+    MI_policyText:removeEventListener( 'touch', gotoPolicyListener )
 
 
     hideMenuContent()
@@ -8139,6 +8178,71 @@ function continueActListener(event)
     end
 end
 
+-- LINKS
+function gotoContactListener(event)
+    if event.phase == "began" then
+        debugPrint("gotoContactListener")
+        system.openURL('http://koscheigame.com/index.html#contact')
+    end
+end
+
+function gotoPolicyListener(event)
+    if event.phase == "began" then
+        debugPrint("gotoPolicyListener")
+        system.openURL('http://koscheigame.com/privacy.html')
+    end
+end
+
+-----------------------------------------------------------------------------------------
+--
+-- SOCIAL FUNCTIONS
+--
+-----------------------------------------------------------------------------------------
+local facebook = require( "plugin.facebook.v4" )
+
+function facebookShareListener(event)
+    debugPrint('facebookShareListener called')
+
+    if event.phase == "began" then
+        --[[
+        local AI_fb_dark = event.target.buttonChange
+        AI_fb_dark.isVisible = true
+
+    end
+
+    if event.phase == "ended" then
+
+        local AI_fb_light = event.target.buttonChange
+        AI_fb_light.isVisible = true
+        ]]
+        debugPrint("http://koscheigame-com.s3-website-us-west-2.amazonaws.com/achievements/"..event.target.addr..".html")
+        local fbAppID = "1516120688693312"
+        --facebook.login( fbAppID, facebookListener, { "user_friends", "email" } )
+        facebook.showDialog("link", {
+            link = "http://koscheigame-com.s3-website-us-west-2.amazonaws.com/achievements/"..event.target.addr..".html",
+        })
+    end
+
+
+
+    --facebook.logout()
+end
+
+
+--[[
+function facebookListener(event)
+    print("Facebook event:")
+    loadsave.print_r(event)
+
+    facebook.showDialog("link", {
+        link = "http://koscheigame-com.s3-website-us-west-2.amazonaws.com/achivements/start.html",
+        description = "I started a game"
+    })
+end
+]]
+
+function twitterShareListener(event)
+end
 
 -----------------------------------------------------------------------------------------
 --
